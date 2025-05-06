@@ -1,0 +1,24 @@
+body{
+    background-color: white;
+    margin: 0;
+}
+.main {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+
+    .collapse.show + .nav-link i,
+    .nav-link[aria-expanded="true"] i {
+        transform: rotate(180deg);
+    }
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
