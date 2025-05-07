@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use Document;
 class MainController extends Controller
@@ -20,7 +21,8 @@ class MainController extends Controller
         Document::pushScript('js/home.min.js');
         $this->vars['styles'] = Document::getStyles();
         $this->vars['scripts'] = Document::getScripts();
-        $this->vars['data'] = ['name' => 'Dima'];
+        $this->vars['user'] = Auth::user();
+
 
         return response()->view($this->template, $this->vars + $vars);
     }

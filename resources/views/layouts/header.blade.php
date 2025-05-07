@@ -3,6 +3,7 @@
         <div class="container">
 
             <a class="navbar-brand" href="#">multi-sm</a>
+            <div class="navbar-brand">{{$user['name']}}</div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -15,6 +16,10 @@
                 </ul>
             </div>
         </div>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-outline-danger">Вийти</button>
+        </form>
     </nav>
 
 </div>

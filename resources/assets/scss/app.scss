@@ -4,13 +4,26 @@ body{
 }
 .main {
     display: flex;
+    width: 100%;
     min-height: 100vh;
+}
+
+.wrapper{
+    padding: 40px 20px;
+    width: 100%;
+}
+
+.title{
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
 }
 
 .sidebar {
     width: 240px;
     background-color: #f8f9fa;
     border-right: 1px solid #dee2e6;
+    flex-shrink: 0;
 
     .collapse.show + .nav-link i,
     .nav-link[aria-expanded="true"] i {

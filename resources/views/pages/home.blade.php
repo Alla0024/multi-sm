@@ -1,5 +1,9 @@
 @extends('layouts.app')
 @section('content')
-    Hello world!
-    <div>{{$data['name']}}</div>
+
+    <div class="wrapper">
+        <div class="title">
+            Hello {{$user['name']}}!
+        </div>
+    </div>
 @endsection
