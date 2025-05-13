@@ -2,7 +2,11 @@
     <ul class="nav flex-column px-3 pt-4">
 
         <li class="nav-item mb-2">
-            <a class="nav-link active" href="#">Головна</a>
+            <a class="nav-link active" href="/">Головна</a>
+        </li>
+
+        <li class="nav-item mb-2">
+            <a class="nav-link active" href="/manufacturers">Виробники</a>
         </li>
 
         <li class="nav-item mb-2">

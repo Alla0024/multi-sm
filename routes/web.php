@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Pages\HomeController;
+use App\Http\Controllers\Pages\ManufacturerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 /*
@@ -20,6 +21,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Адмінка (всі сторінки всередині адмінки)
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/manufacturers', [ManufacturerController::class, 'index']);
+    Route::get('/manufacturers/edit', [ManufacturerController::class, 'edit']);
     // інші адмінські маршрути
 });
 

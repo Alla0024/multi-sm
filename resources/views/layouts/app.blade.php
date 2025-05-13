@@ -20,8 +20,12 @@
 
 
 </head>
-<body>
-
+<body x-data>
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('page', JSON.parse(@json($alpine)));
+    })
+</script>
 
 @include('layouts.header')
 <div class="main">
@@ -31,13 +35,10 @@
 @include('layouts.footer')
 
 
-
-
-
 @stack('scripts')
 
 @foreach($scripts as $script)
-    <script src="{{$script['href']}}"></script>
+    <script type="module" src="{{$script['href']}}"></script>
 @endforeach
 
 </body>
