@@ -40,6 +40,7 @@
 @foreach($scripts as $script)
     <script type="module" src="{{$script['href']}}"></script>
 @endforeach
+<script src="https://cdn.ckeditor.com/4.21.0/full/ckeditor.js"></script>
 
 </body>
 </html>

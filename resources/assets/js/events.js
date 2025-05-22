@@ -1,0 +1,48 @@
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+
+        // Input search
+        document.querySelectorAll('.input-list-search').forEach(block => {
+            const input = block.querySelector('input');
+            const list = block.querySelector('.custom-list');
+
+            const updateList = () => {
+                const value = input.value.trim().toLowerCase();
+                let hasMatch = false;
+
+                list.querySelectorAll('li').forEach(li => {
+                    const match = li.textContent.toLowerCase().includes(value);
+                    li.style.display = match ? 'block' : 'none';
+                    if (match) hasMatch = true;
+                });
+
+                if (value && hasMatch) {
+                    list.classList.remove('hide');
+                }
+            };
+
+            input.addEventListener('focus', () => {
+                list.classList.remove('hide');
+                updateList(); // одразу відфільтрувати
+            });
+
+            input.addEventListener('input', updateList);
+
+            list.querySelectorAll('li').forEach(li => {
+                li.addEventListener('click', () => {
+                    input.value = li.textContent;
+                    list.classList.add('hide');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!block.contains(e.target)) {
+                    list.classList.add('hide');
+                }
+            });
+        });
+
+
+})

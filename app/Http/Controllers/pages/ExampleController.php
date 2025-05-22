@@ -5,22 +5,22 @@ use Document;
 
 use App\Http\Controllers\MainController;
 
-class ManufacturerController extends MainController
+class ExampleController extends MainController
 {
     public function __construct()
     {
-        $this->template = 'pages.manufacturers.list';
+        $this->template = 'pages.example.list';
         parent::__construct();
     }
     public function index()
     {
-        $vars['title'] = 'Виробники';
+        $vars['title'] = 'Приклади';
         return $this->renderOutput($vars);
     }
     public function edit()
     {
         $vars['title'] = 'Редагування';
-        $this->template = 'pages.manufacturers.item';
+        $this->template = 'pages.example.item';
         return $this->renderOutput($vars);
     }
 }

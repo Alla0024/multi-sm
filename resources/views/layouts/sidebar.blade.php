@@ -10,6 +10,10 @@
         </li>
 
         <li class="nav-item mb-2">
+            <a class="nav-link active" href="/example">Приклади</a>
+        </li>
+
+        <li class="nav-item mb-2">
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#submenu1" role="button" aria-expanded="false" aria-controls="submenu1">
                 Налаштування
                 <i class="bi bi-chevron-down transition" style="transition: transform 0.2s;" data-bs-toggle="collapse" data-bs-target="#submenu1"></i>

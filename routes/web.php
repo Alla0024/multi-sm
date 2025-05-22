@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\pages\ExampleController;
 use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\Pages\ManufacturerController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/manufacturers', [ManufacturerController::class, 'index']);
     Route::get('/manufacturers/edit', [ManufacturerController::class, 'edit']);
+
+    Route::get('/example', [ExampleController::class, 'index']);
+    Route::get('/example/edit', [ExampleController::class, 'edit']);
     // інші адмінські маршрути
 });
 
