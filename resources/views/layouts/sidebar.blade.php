@@ -10,7 +10,7 @@
         </li>
 
         <li class="nav-item mb-2">
-            <a class="nav-link active" href="/example">Приклади</a>
+            <a class="nav-link active" href="/aikqweu/example">Приклади</a>
         </li>
 
         <li class="nav-item mb-2">

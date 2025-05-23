@@ -192,6 +192,18 @@
                 </div>
             </div>
 
+            <div class="input-block input-tags flex">
+                <div class="name">Тип матраца</div>
+                <div class="input">
+                    <select class="tag-select" name="mattress_types[]" multiple>
+                        <option value="1">Безпружинний</option>
+                        <option value="2">На залежних пружинах</option>
+                        <option value="3">На незалежних пружинах</option>
+                        <option value="4">Скручується в рулон</option>
+                    </select>
+                </div>
+            </div>
+
         </div>
 
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">

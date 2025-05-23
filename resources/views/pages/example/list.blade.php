@@ -18,7 +18,7 @@
                 <div class="w-1">Gutenkauf</div>
                 <div>1</div>
                 <div class="flex">
-                    <a class="btn btn-primary" href="/example/edit"><i class="bi bi-pencil"></i></a>
+                    <a class="btn btn-primary" href="/aikqweu/example/edit"><i class="bi bi-pencil"></i></a>
                     <form action="">
                         <button class="btn btn-danger"><i class="bi bi-x-circle"></i></button>
                     </form>
@@ -29,7 +29,7 @@
                 <div class="w-1">ТИС</div>
                 <div >2</div>
                 <div class="flex">
-                    <a class="btn btn-primary" href="/example/edit"><i class="bi bi-pencil"></i></a>
+                    <a class="btn btn-primary" href="/aikqweu/example/edit"><i class="bi bi-pencil"></i></a>
                     <form action="">
                         <button class="btn btn-danger"><i class="bi bi-x-circle"></i></button>
                     </form>
@@ -40,7 +40,7 @@
                 <div class="w-1">ARBORdrev</div>
                 <div>3</div>
                 <div class="flex">
-                    <a class="btn btn-primary" href="/example/edit"><i class="bi bi-pencil"></i></a>
+                    <a class="btn btn-primary" href="/aikqweu/example/edit"><i class="bi bi-pencil"></i></a>
                     <form action="">
                         <button class="btn btn-danger"><i class="bi bi-x-circle"></i></button>
                     </form>
