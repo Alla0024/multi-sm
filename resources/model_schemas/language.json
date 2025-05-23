@@ -1,0 +1,50 @@
+[
+    {
+        "name": "code",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|max:5",
+        "searchable": false,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "path",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|max:5",
+        "searchable": false,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "status",
+        "dbType": "integer",
+        "htmlType": "checkbox",
+        "validations": "required",
+        "searchable": false,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "sort_order",
+        "dbType": "integer",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": false,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    }
+]

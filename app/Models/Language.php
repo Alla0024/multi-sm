@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Language extends Model
+{
+    public $table = 'languages';
+
+    public $fillable = [
+        'code',
+        'path',
+        'status',
+        'sort_order'
+    ];
+
+    protected $casts = [
+        'code' => 'string',
+        'path' => 'string',
+        'status' => 'integer',
+        'sort_order' => 'integer'
+    ];
+
+    public static array $rules = [
+        'code' => 'required|max:5',
+        'path' => 'nullable|max:5',
+        'status' => 'required',
+        'sort_order' => 'required'
+    ];
+
+    
+}
