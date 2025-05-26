@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="404465b5-005e-486e-accf-9c8869173a30" name="Changes" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ForgotPasswordController.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
@@ -30,6 +31,19 @@
       <change beforePath="$PROJECT_DIR$/resources/views/pages/example/item.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/example/item.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/example/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/example/list.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xml-import/app/Http/Controllers/PromoCodeImportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../xml-import/app/Http/Controllers/PromoCodeImportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xml-import/app/Models/PromoCode.php" beforeDir="false" afterPath="$PROJECT_DIR$/../xml-import/app/Models/PromoCode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xml-import/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/../xml-import/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xml-import/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../xml-import/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xml-import/database/migrations/2023_09_26_141611_create_promocode_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/../xml-import/database/migrations/2023_09_26_141611_create_promocode_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xml-import/resources/views/import-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/../xml-import/resources/views/import-form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../xml-import/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/../xml-import/routes/web.php" afterDir="false" />
+>>>>>>> 97569a0b353430bdd06f9bcc4f952e101899628f
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +67,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/vendor/psr/container" />
@@ -168,6 +182,10 @@
       <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+<<<<<<< HEAD
+=======
+      <path value="$PROJECT_DIR$/vendor/crestapps/laravel-code-generator" />
+>>>>>>> 97569a0b353430bdd06f9bcc4f952e101899628f
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -178,6 +196,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -196,10 +215,29 @@
     "DatabaseDriversLRU": [
       "postgresql"
     ]
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/OSPanel/domains/multi-sm&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.watch.executor&quot;: &quot;Debug&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+>>>>>>> 97569a0b353430bdd06f9bcc4f952e101899628f
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\OSPanel\domains\multi-sm" />
+      <recent name="C:\OSPanel\domains\multi-sm\resources" />
+      <recent name="C:\OSPanel\domains\multi-sm\resources\views\pages" />
       <recent name="C:\OSPanel\domains\multi-sm\resources\assets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -262,6 +300,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.18034.69" />
+        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.18034.69" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -276,14 +322,20 @@
       <workItem from="1746535250849" duration="58000" />
       <workItem from="1746605395710" duration="6304000" />
       <workItem from="1746780878333" duration="1756000" />
+<<<<<<< HEAD
       <workItem from="1747032524745" duration="14360000" />
       <workItem from="1747288599844" duration="31790000" />
+=======
+      <workItem from="1747032524745" duration="12762000" />
+      <workItem from="1747980791405" duration="589000" />
+>>>>>>> 97569a0b353430bdd06f9bcc4f952e101899628f
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+<<<<<<< HEAD
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -294,5 +346,17 @@
         </entry>
       </map>
     </option>
+=======
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php</url>
+          <line>28</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+>>>>>>> 97569a0b353430bdd06f9bcc4f952e101899628f
   </component>
 </project>

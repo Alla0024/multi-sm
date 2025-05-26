@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="MessDetectorOptionsConfiguration">
-    <option name="transferred" value="true" />
-  </component>
-  <component name="PHPCSFixerOptionsConfiguration">
-    <option name="transferred" value="true" />
-  </component>
-  <component name="PHPCodeSnifferOptionsConfiguration">
-    <option name="highlightLevel" value="WARNING" />
-    <option name="transferred" value="true" />
-  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
@@ -125,18 +115,14 @@
       <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/vendor/infyomlabs/laravel-generator" />
+      <path value="$PROJECT_DIR$/vendor/infyomlabs/laravel-generator-helpers" />
+      <path value="$PROJECT_DIR$/vendor/infyomlabs/laravel-ui-adminlte" />
+      <path value="$PROJECT_DIR$/vendor/infyomlabs/swagger-generator" />
+      <path value="$PROJECT_DIR$/vendor/infyomlabs/adminlte-templates" />
+      <path value="$PROJECT_DIR$/vendor/laracasts/flash" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/laravelcollective/html" />
     </include_path>
-  </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
-  <component name="PhpStanOptionsConfiguration">
-    <option name="transferred" value="true" />
-  </component>
-  <component name="PhpUnit">
-    <phpunit_settings>
-      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/phpunit.xml" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" use_configuration_file="true" />
-    </phpunit_settings>
-  </component>
-  <component name="PsalmOptionsConfiguration">
-    <option name="transferred" value="true" />
   </component>
 </project>

@@ -1,8 +1,59 @@
+@import './classConstants';
+@import "./variables";
+
 .header{
-    box-shadow: 0 2px 5px rgba(0, 0, 0, .05);
+    background-color: var(--bg);
+    height: 70px;
+    width: 100%;
+    box-shadow: 0 2px 5px #00000061;
     position: relative;
     z-index: 3;
+
+    .wrapper-head{
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    .catalog-butt{
+        margin-right: 20px;
+        cursor: pointer;
+        svg{
+            path{
+                stroke: var(--item-color) !important;
+            }
+        }
+    }
+
+    .custom-control{
+        margin-left: auto;
+        margin-right: 20px;
+        .change-team{
+            svg{
+                fill: var(--item-color);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .user{
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        padding: 0 14px;
+        background-color: var(--light-bg);
+        height: 100%;
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        .name{
+
+        }
+        .description{
+            font-size: 12px;
+        }
+    }
 }
-.butt-menu{
-    margin-right: 10px;
-}
+

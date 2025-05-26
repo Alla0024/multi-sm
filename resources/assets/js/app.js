@@ -35,5 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         })
     }
+
+    Alpine.store('page').changeColor = function (){
+        const doc = document.querySelector('html');
+        if(doc.getAttribute('data-b-theme') === 'dark'){
+            doc.setAttribute('data-b-theme', 'light')
+        } else {
+            doc.setAttribute('data-b-theme', 'dark')
+        }
+    }
 })
 

@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 
+
+
     // Input search
     document.querySelectorAll('.input-list-search').forEach(block => {
         const input = block.querySelector('input');

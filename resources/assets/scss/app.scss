@@ -1,10 +1,18 @@
-@import './classConstants.scss';
+@import './classConstants';
+@import "./fonts";
+@import "./variables";
+
 .cke_notifications_area{
     display: none !important;
 }
 body{
-    background-color: white;
+    background-color: var(--bg) !important;
+    color: var(--item-color) !important;
     margin: 0;
+    font-family: $font_family_roboto_regular;
+    font-size: 14px;
+    letter-spacing: 0.6px;
+
 }
 .hide{
     display: none !important;

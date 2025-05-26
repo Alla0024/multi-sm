@@ -22,7 +22,7 @@
                 </div>
                 <div class="input">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Username" name="input-default" value="test" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" placeholder="Username" name="input-default" value="test" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -34,12 +34,12 @@
                 <div class="input">
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon1">🤢</span>
-                        <input type="text" class="form-control" placeholder="Username" name="input-lang1" aria-label="Username" value="test" aria-describedby="basic-addon1">
+                        <input type="text"  placeholder="Username" name="input-lang1" aria-label="Username" value="test" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"><rect width="22" height="10" fill="#0057B7"/><rect width="22" height="10" y="10" fill="#FFD700"/></svg>
                         </span>
-                        <input type="text" class="form-control" placeholder="Username" name="input-lang5" aria-label="Username" value="test" aria-describedby="basic-addon1">
+                        <input type="text"  placeholder="Username" name="input-lang5" aria-label="Username" value="test" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="input">
                     <div class="input-group">
-                        <input type="number" class="form-control" placeholder="Username" name="input-number" aria-label="Username" value="2" aria-describedby="basic-addon1">
+                        <input type="number"  placeholder="Username" name="input-number" aria-label="Username" value="2" aria-describedby="basic-addon1">
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     <div class="input-group">
                         <input
                             type="date"
-                            class="form-control"
+
                             name="input-date"
                             value="{{ date('Y-m-d') }}"
                             aria-label="Дата"
@@ -81,7 +81,7 @@
                     <div class="input-group">
                         <input
                             type="datetime-local"
-                            class="form-control"
+
                             name="input-datetime"
                             value="{{ date('Y-m-d\TH:i') }}"
                             aria-label="Дата та час"
@@ -97,7 +97,7 @@
                 </div>
                 <div class="input">
                     <div class="input-group">
-                        <textarea class="form-control" placeholder="Username" name="input-textarea" aria-label="Username" aria-describedby="basic-addon1">test</textarea>
+                        <textarea  placeholder="Username" name="input-textarea" aria-label="Username" aria-describedby="basic-addon1">test</textarea>
                     </div>
                 </div>
             </div>
@@ -120,12 +120,12 @@
                 <div class="input">
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon1">🤢</span>
-                        <textarea class="form-control" placeholder="Username" name="input-textarea-lang1" aria-label="Username" aria-describedby="basic-addon1">test</textarea>
+                        <textarea  placeholder="Username" name="input-textarea-lang1" aria-label="Username" aria-describedby="basic-addon1">test</textarea>
                     </div>
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"><rect width="22" height="10" fill="#0057B7"/><rect width="22" height="10" y="10" fill="#FFD700"/></svg>
                         </span>
-                        <textarea class="form-control" placeholder="Username" name="input-textarea-lang5" aria-label="Username" aria-describedby="basic-addon1">test</textarea>
+                        <textarea  placeholder="Username" name="input-textarea-lang5" aria-label="Username" aria-describedby="basic-addon1">test</textarea>
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@
                 <div class="name">Назва</div>
                 <div class="input" style="position: relative;">
                     <input
-                        class="form-control"
+
                         name="input-list-search"
                         placeholder="Type to search..."
                         autocomplete="off"
@@ -197,9 +197,9 @@
                 <div class="input">
                     <select class="tag-select" name="mattress_types[]" multiple>
                         <option value="1">Безпружинний</option>
-                        <option value="2">На залежних пружинах</option>
+                        <option value="2" selected>На залежних пружинах</option>
                         <option value="3">На незалежних пружинах</option>
-                        <option value="4">Скручується в рулон</option>
+                        <option value="4" selected>Скручується в рулон</option>
                     </select>
                 </div>
             </div>

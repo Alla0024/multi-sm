@@ -1,7 +1,9 @@
 <?php
 
+
 use App\Http\Controllers\pages\ExampleController;
 use Illuminate\Support\Facades\Storage;
+
 use App\Http\Controllers\DashboardController;
 
 Route::get('map_data_{lang}.json', function ($lang = '') {
@@ -31,6 +33,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::resource('settings', 'Settings\SettingController');
             Route::resource('pages', 'Settings\PageController');
         });
+        Route::resource('languages', 'App\Http\Controllers\Content\LanguageController');
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('manufacturers', 'Content\ManufacturerController');
         Route::resource('seodata', 'Content\SeoDataController');

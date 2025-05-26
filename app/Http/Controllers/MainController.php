@@ -19,6 +19,7 @@ class MainController extends Controller
 
         $this->vars = [];
 
+
         $this->vars['word'] = Lang::get('dashboard');
     }
 
