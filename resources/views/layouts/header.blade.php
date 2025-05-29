@@ -32,7 +32,7 @@
 <div class="header">
     <div class="wrapper-head">
 
-        <div class="catalog-butt">
+        <div class="catalog-butt" @click="$store.page.sidebar_hide = !$store.page.sidebar_hide">
             <svg width="24px" height="24px" viewBox="0 0 24 24" id="align-left" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line"><path id="primary" d="M3,12H17M3,6H21M3,18H21" style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></path></svg>
         </div>
 
@@ -41,11 +41,13 @@
         </div>
 
         <div class="custom-control">
-            <div class="change-team" @click="$store.page.changeColor()">
+            <div class="change-team" @click="$store.page.changeTheme()">
                 <svg  width="24" height="24" viewBox="-2 -1.5 24 24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin" class="jam jam-sun-f"><path d='M10 15.565a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-15a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1zm0 16a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1zm-9-7h2a1 1 0 1 1 0 2H1a1 1 0 0 1 0-2zm16 0h2a1 1 0 0 1 0 2h-2a1 1 0 0 1 0-2zm.071-6.071a1 1 0 0 1 0 1.414l-1.414 1.414a1 1 0 1 1-1.414-1.414l1.414-1.414a1 1 0 0 1 1.414 0zM5.757 14.808a1 1 0 0 1 0 1.414l-1.414 1.414a1 1 0 1 1-1.414-1.414l1.414-1.414a1 1 0 0 1 1.414 0zM4.343 3.494l1.414 1.414a1 1 0 0 1-1.414 1.414L2.93 4.908a1 1 0 0 1 1.414-1.414zm11.314 11.314l1.414 1.414a1 1 0 0 1-1.414 1.414l-1.414-1.414a1 1 0 1 1 1.414-1.414z' /></svg>
             </div>
         </div>
+        @guest
 
+        @else
         <div class="user">
             <div class="img">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 100 100" fill="none">
@@ -57,13 +59,21 @@
 
             <div class="info">
                 <div class="name">
-                    Dmytro Choban
+                    {{ Auth::user()->name }}
                 </div>
                 <div class="description">
                     Frontend developer
                 </div>
             </div>
         </div>
+            <div class="logout" title="Logout" @click="$store.page.logout">
+                <i class="bi bi-arrow-bar-right fs-80" style="display: flex; height: 26px"></i>
+            </div>
+        @endguest
+
 
     </div>
 </div>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    @csrf
+</form>

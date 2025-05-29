@@ -11,7 +11,6 @@
             <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
         </li>
     </ul>
-
     <form action="" method="POST" class="tab-content" id="form-save" @submit.prevent="$store.page.ajax($event)">
 
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -153,7 +152,7 @@
                 </div>
                 <div class="input">
                     <div class="input-group">
-                        <select class="form-select" name="select" aria-label="Місто" aria-describedby="select-addon">
+                        <select class="" name="select" aria-label="Місто" aria-describedby="select-addon">
                             <option value="" disabled selected>Оберіть зі списку</option>
                             <option value="kyiv">Київ</option>
                             <option value="lviv">Львів</option>

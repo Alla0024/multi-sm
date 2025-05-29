@@ -1,0 +1,163 @@
+@import "./variables";
+
+
+// Table
+.content-header{
+    color: $col_item_head;
+    margin-top: 40px;
+    .container-fluid{
+        padding: 0 16px;
+        .row{
+            display: flex;
+            justify-content: space-between;
+            div{
+                width: auto;
+                display: flex;
+
+                align-items: center;
+            }
+            .btn{
+                background-color: $col_blue_pr;
+                font-size: 14px;
+                border: none;
+                color: white;
+                &:hover{
+                    background-color: $col_blue_pr_hover;
+                }
+            }
+        }
+    }
+}
+
+.content, .container{
+    background-color: $col_bg;
+    .card{
+        border: 1px solid $col_border;
+        background-color: $col_bg;
+        color: $col_item;
+    }
+    .card-body{
+        label{
+            font-weight: 500;
+            color: $col_item_head;
+        }
+        p{
+            display: block;
+            padding-left: 6px;
+            margin-top: 6px;
+        }
+    }
+    form{
+        .card-body{
+            .row{
+                display: flex;
+                flex-direction: column;
+                row-gap: 40px;
+            }
+        }
+        .row{
+            align-items: center;
+            justify-content: center;
+        }
+        .form-group{
+            display: flex;
+            align-items: center;
+            column-gap: 6px;
+            width: 100%;
+        }
+        label{
+            width: 130px;
+        }
+        .form-control{
+            background-color: $col_bg_input;
+            color: $col_item;
+            padding: 0 20px;
+            height: 40px;
+            border-radius: 4px;
+            border: 1px solid $col_border;
+            outline: none;
+            width: 100% !important;
+            max-width: 930px;
+        }
+        .form-check{
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            column-gap: 6px;
+            padding: 0;
+        }
+        .login-check{
+            justify-content: start;
+        }
+        .form-check-input{
+            margin: 0;
+            height: 30px;
+            width: 30px;
+            border: 1px solid $col_border;
+            background-color: $col_bg_input;
+            &:checked{
+                background-color: $col_blue_pr;
+            }
+            &:focus{
+                box-shadow: none;
+            }
+        }
+        .card-footer{
+            display: flex;
+            justify-content: end;
+            column-gap: 10px;
+            font-size: 14px;
+        }
+    }
+    .table-responsive, .table {
+        background-color: $col_bg ;
+        th, td{
+            background-color: $col_bg ;
+            color: $col_item_head ;
+            border-color: $col_border;
+            vertical-align: middle;
+            text-align: center;
+        }
+        td{
+            color: $col_item;
+        }
+        .butt-show{
+            //background-color: $col_blue_light;
+            color: $col_item;
+            line-height: 14px;
+            font-size: 23px;
+            background: none;
+            &:hover{
+                color: white;
+                background-color: $col_blue_light_hover;
+            }
+        }
+        .butt-edit{
+            color: $col_item;
+            line-height: 14px;
+            font-size: 21px;
+            background: none;
+            &:hover{
+                color: white;
+                background-color: $col_blue_pr_hover;
+            }
+        }
+        .btn-danger{
+            color: $col_item;
+            line-height: 14px;
+            font-size: 21px;
+            background: none;
+            border: none;
+            &:hover{
+                color: white;
+                background-color: $col_red_hover;
+            }
+        }
+    }
+    .card-footer{
+        background-color: $col_bg ;
+        border-color: $col_border;
+        color: $col_item;
+    }
+
+}

@@ -1,3 +1,4 @@
+@import './classConstants';
 // Body
 $body-bg: #f8fafc;
 
@@ -9,6 +10,34 @@ $line-height-base: 1.6;
 $font_family_basic: Arial, Helvetica, FreeSans, "Liberation Sans",
 "Nimbus Sans L", sans-serif;
 $font_family_roboto_regular: "RobotoRegular", $font_family_basic;
+$font_family_figtree_regular: "RobotoRegular", $font_family_basic;
+$font_family_overpass_regular: "Overpass", $font_family_basic;
 $font_family_roboto_bold: "RobotoBold", $font_family_basic;
 $font_family_roboto_light: "RobotoLight", $font_family_basic;
 $font_family_roboto_medium: "RobotoMedium", $font_family_basic;
+
+$col_bg: var(--bg);
+$col_bg_main: var(--bg-main);
+$col_bg_input: var(--input-bg);
+$col_bg_light: var(--light-bg);
+$col_border: var(--border);
+$col_border_light: var(--border-light);
+$col_item: var(--item-color);
+$col_item_active: var(--item-color_active);
+$col_item_link: var(--item-color_link);
+$col_item_head: var(--item-color-head);
+$col_item_hover: var(--item-hover-color);
+$col_blue_pr: var(--blue-pr);
+$col_blue_pr_hover: var(--blue-pr-hover);
+$col_red: var(--red);
+$col_red_hover: var(--red-hover);
+$col_blue_light: var(--blue-light);
+$col_blue_light_hover: var(--blue-light-hover);
+$col_gray: var(--blue-gray);
+
+$shadow: var(--shadow);
+$shadow_header: var(--shadow-header);
+
+$col_bg_sidebar: var(--bg-sidebar);
+$col_item_sidebar: var(--color-sidebar);
+$col_item_sidebar_hover: var(--color-sidebar-hover);

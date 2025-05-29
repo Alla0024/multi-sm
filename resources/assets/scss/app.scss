@@ -6,60 +6,170 @@
     display: none !important;
 }
 body{
-    background-color: var(--bg) !important;
-    color: var(--item-color) !important;
+    background-color: $col_bg_main !important;
+    color: $col_item !important;
     margin: 0;
-    font-family: $font_family_roboto_regular;
+    font-family: $font_family_overpass_regular;
     font-size: 14px;
     letter-spacing: 0.6px;
-
+    line-height: normal;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 .hide{
     display: none !important;
+}
+.hide_opacity{
+    opacity: 0 !important;
 }
 .show{
     display: flex !important;
     flex-direction: column;
 }
+.footer{
+    background-color: $col_bg;
+    color: $col_item;
+    border-top: 1px solid $col_border;
+    box-shadow: $shadow_header;
+}
 .main {
     display: flex;
+    flex-direction: column;
     width: 100%;
     min-height: 100vh;
 }
-
-.wrapper{
-    padding: 20px 20px;
-    width: 100%;
+.layout{
+    padding: 0 40px;
+    margin-bottom: 100px;
 }
-
+.wrapper-main{
+    display: flex;
+}
+.wrapper{
+    padding: 20px;
+    background-color: $col_bg;
+    border-radius: 10px;
+    box-shadow: $shadow;
+}
 .title{
     margin: 0 auto 20px;
     text-align: center;
     font-size: 24px;
     font-weight: 500;
 }
-
-.sidebar {
-    width: 240px;
-    background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6;
-    flex-shrink: 0;
-
-    .collapse.show + .nav-link i,
-    .nav-link[aria-expanded="true"] i {
-        transform: rotate(180deg);
-    }
-}
-.breadcrumb{
-    display: flex;
-    row-gap: 10px;
-    font-size: 14px;
-
+img{
+    width: 100%;
 }
 a{
     text-decoration: none;
-    color: #2775bb;
+    color: $col_item ;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    &:hover{
+        color: $col_item_hover ;
+    }
 }
+form{
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    padding: 20px;
+}
+
+.sidebar-customer {
+    position: relative;
+    z-index: 4;
+    width: 240px;
+    background-color: $col_bg_sidebar;
+    border-right: 1px solid $col_border_light;
+    padding: 0 10px 10px 10px;
+    flex-shrink: 0;
+    transition: ease-in-out 300ms;
+    overflow: hidden;
+    box-shadow: $shadow_header;
+    .logo{
+        display: flex;
+        justify-content: center;
+        img{
+            width: 80px;
+        }
+    }
+    .items-link{
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+        margin-top: 20px;
+        transition: ease-in-out 300ms;
+        .item-list{
+            .list{
+                padding-left: 25px;
+                display: flex;
+                flex-direction: column;
+                row-gap: 12px;
+                overflow: hidden;
+                transition: ease-in-out 300ms;
+                height: 100%;
+                max-height: 0;
+            }
+            .list-open{
+                animation: changeColor 300ms forwards;
+                max-height: 600px;
+                margin-top: 14px;
+            }
+        }
+        .item{
+            display: flex;
+            cursor: pointer;
+            color: $col_item_sidebar;
+            &:hover{
+                color: $col_item_sidebar_hover;
+            }
+            .icon{
+                margin-right: 6px;
+            }
+            .arrow{
+                margin-left: auto;
+                margin-right: 5px;
+                transition: ease-in-out 300ms;
+            }
+            .rotate{
+                transform: rotateZ(180deg);
+            }
+        }
+        .active{
+            color: white;
+            &:hover{
+                color: white;
+            }
+        }
+    }
+
+}
+
+.sidebar_hide{
+    width: 32px;
+}
+
+.breadcrumb-custom{
+    display: flex;
+    column-gap: 6px;
+    font-size: 14px;
+    margin: 20px 0;
+    justify-content: end;
+    .breadcrumb-item-custom{
+        width: max-content;
+        color: $col_item;
+        cursor: default;
+    }
+    .breadcrumb-item-custom-link{
+        a{
+            color: $col_blue_pr;
+            &:hover{
+                color: $col_blue_pr_hover;
+            }
+        }
+    }
+
+}
+
 .main-content {
     flex: 1;
     padding: 20px;
@@ -99,7 +209,6 @@ a{
     }
 }
 
-
 .search-block{
     margin: 20px auto;
     padding: 20px;
@@ -112,14 +221,6 @@ a{
     }
 }
 
-
-form{
-    display: flex;
-    flex-direction: column;
-    row-gap: 40px;
-    padding: 20px;
-
-}
 .form-control{
     &:focus{
         overflow-y: scroll !important;

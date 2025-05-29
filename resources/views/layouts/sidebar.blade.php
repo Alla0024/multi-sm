@@ -1,39 +1,87 @@
-<div class="sidebar">
-    <ul class="nav flex-column px-3 pt-4">
+<div class="sidebar-customer" :class="{'sidebar_hide':Alpine.store('page').sidebar_hide}">
 
-        <li class="nav-item mb-2">
-            <a class="nav-link active" href="/">Головна</a>
-        </li>
+    <div class="logo">
+        <img width="40" :class="{'hide_opacity': Alpine.store('page').sidebar_hide}" :src="$store.page.theme == 'dark' ? '/images/common/logo_new_light.png' : '/images/common/logo_new_light.png'" alt="">
+    </div>
 
-        <li class="nav-item mb-2">
-            <a class="nav-link active" href="/manufacturers">Виробники</a>
-        </li>
+    <div class="items-link">
+        <a href="{{asset('/aikqweu')}}" class="item {{ Request::is('aikqweu/dashboard*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
+            <div class="name">Головна</div>
+        </a>
 
-        <li class="nav-item mb-2">
-            <a class="nav-link active" href="/aikqweu/example">Приклади</a>
-        </li>
-
-        <li class="nav-item mb-2">
-            <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#submenu1" role="button" aria-expanded="false" aria-controls="submenu1">
-                Налаштування
-                <i class="bi bi-chevron-down transition" style="transition: transform 0.2s;" data-bs-toggle="collapse" data-bs-target="#submenu1"></i>
-            </a>
-            <div class="collapse" id="submenu1">
-                <ul class="nav flex-column ms-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Загальні</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Безпека</a>
-                    </li>
-                </ul>
+        <div class="item-list" x-data="{open_list: {{ Request::is('aikqweu/example*') ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is('aikqweu/example*') ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
+                <div class="name">Example</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
-        </li>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is('aikqweu/example') ? 'active' : '' }}" href="{{asset('/aikqweu/example')}}">Form</a>
+                <a class="item {{ Request::is('aikqweu/example/edit*') ? 'active' : '' }}" href="{{asset('/aikqweu/example/edit')}}">Inputs</a>
+            </div>
+        </div>
 
+        <a href="{{ route('languages.index') }}" class="item {{ Request::is('aikqweu/languages*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
+            <div class="name">Languages</div>
+        </a>
 
-        <li class="nav-item mb-2">
-            <a class="nav-link" href="#">Звіти</a>
-        </li>
-
-    </ul>
+    </div>
 </div>
+
+
+
+{{--<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">--}}
+{{--    <div class="container">--}}
+{{--        <a class="navbar-brand" href="{{ url('/') }}">--}}
+{{--            {{ config('app.name', 'Laravel') }}--}}
+{{--        </a>--}}
+{{--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">--}}
+{{--            <span class="navbar-toggler-icon"></span>--}}
+{{--        </button>--}}
+
+{{--        <div class="collapse navbar-collapse" id="navbarSupportedContent">--}}
+{{--            <!-- Left Side Of Navbar -->--}}
+{{--            <ul class="navbar-nav me-auto">--}}
+
+{{--            </ul>--}}
+
+{{--            <!-- Right Side Of Navbar -->--}}
+{{--            <ul class="navbar-nav ms-auto">--}}
+{{--                <!-- Authentication Links -->--}}
+{{--                @guest--}}
+{{--                    @if (Route::has('login'))--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>--}}
+{{--                        </li>--}}
+{{--                    @endif--}}
+
+{{--                    @if (Route::has('register'))--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>--}}
+{{--                        </li>--}}
+{{--                    @endif--}}
+{{--                @else--}}
+{{--                    <li class="nav-item dropdown">--}}
+{{--                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>--}}
+{{--                            {{ Auth::user()->name }}--}}
+{{--                        </a>--}}
+
+{{--                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">--}}
+{{--                            <a class="dropdown-item" href="{{ route('logout') }}"--}}
+{{--                               onclick="event.preventDefault();--}}
+{{--                                                     document.getElementById('logout-form').submit();">--}}
+{{--                                {{ __('Logout') }}--}}
+{{--                            </a>--}}
+
+{{--                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">--}}
+{{--                                @csrf--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                @endguest--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</nav>--}}
