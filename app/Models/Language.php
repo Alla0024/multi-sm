@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Language extends Model
 {
     public $table = 'languages';
+    public $timestamps = false;
 
     public $fillable = [
         'code',
@@ -29,5 +30,4 @@ class Language extends Model
         'sort_order' => 'required'
     ];
 
-    
 }
