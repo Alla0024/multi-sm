@@ -30,6 +30,8 @@ class ManufacturerDescription extends Model
         'name' => 'required',
         'tag' => 'required'
     ];
-
-    
+    public function manufacturer()
+    {
+        return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
+    }
 }

@@ -23,5 +23,9 @@ class Manufacturer extends Model
         'sort_order' => 'required'
     ];
 
-    
+    public function descriptions()
+    {
+        return $this->hasMany(ManufacturerDescription::class, 'manufacturer_id');
+    }
+
 }
