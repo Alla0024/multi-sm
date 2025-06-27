@@ -1,0 +1,15 @@
+[
+    {
+        "name": "image",
+        "dbType": "string,255",
+        "htmlType": "file",
+        "validations": "required"
+    },
+    {
+        "name": "sort_order",
+        "dbType": "integer",
+        "htmlType": "number",
+        "validations": "required"
+    }
+]
+
