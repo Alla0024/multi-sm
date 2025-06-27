@@ -26,6 +26,10 @@
             <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
             <div class="name">Languages</div>
         </a>
+        <a href="{{ route('stores.index') }}" class="item {{ Request::is('aikqweu/stores*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
+            <div class="name">Stores</div>
+        </a>
 
     </div>
 </div>
