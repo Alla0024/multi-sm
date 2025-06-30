@@ -9,12 +9,27 @@
         padding: 0 16px;
         .row{
             display: flex;
-            justify-content: space-between;
+            width: 100%;
+            margin: 0;
             div{
                 width: auto;
                 display: flex;
-
                 align-items: center;
+            }
+            .col-sm-2{
+                margin-left: auto;
+            }
+            .view-form{
+                flex-direction: row;
+                align-items: center;
+                column-gap: 10px;
+                padding: 0;
+                label{
+                    flex-shrink: 0;
+                }
+            }
+            .col-sm-6{
+                padding: 0;
             }
             .btn{
                 background-color: $col_blue_pr;
@@ -45,6 +60,20 @@
             display: block;
             padding-left: 6px;
             margin-top: 6px;
+        }
+    }
+    .search-form{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .butt-action{
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            row-gap: 8px;
+            text-align: center;
         }
     }
     form{

@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateManufacturerRequest;
 use App\Repositories\ManufacturerRepository;
 use Flash;
 use Illuminate\Http\Request;
-
+use App\Models\Manufacturer;
 class ManufacturerController extends AppBaseController
 {
     /** @var ManufacturerRepository $manufacturerRepository*/
@@ -26,7 +26,17 @@ class ManufacturerController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $manufacturers = $this->manufacturerRepository->paginate(10);
+        $perPage = $request->input('perPage', 10);
+
+        $query = Manufacturer::query();
+
+        foreach ($request->all() as $key => $value) {
+            if (in_array($key, ['_token', 'page', 'perPage'])) continue;
+            if ($value === '' || $value === null) continue;
+            $query->where($key, $value);
+        }
+
+        $manufacturers = $query->paginate($perPage);
         $vars['manufacturers'] = $manufacturers;
         $this->template = 'manufacturers.index';
         return $this->renderOutput($vars);

@@ -31,6 +31,16 @@
             <div class="name">Stores</div>
         </a>
 
+        <a href="{{ route('manufacturers.index') }}" class="item {{ Request::is('aikqweu/manufacturers*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
+            <div class="name">Manufacturers</div>
+        </a>
+
+{{--        <a href="{{ route('manufacturerDescriptions.index') }}" class="item {{ Request::is('aikqweu/manufacturerDescriptions*') ? 'active' : '' }}">--}}
+{{--            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>--}}
+{{--            <div class="name">Manufacturer Descriptions</div>--}}
+{{--        </a>--}}
+
     </div>
 </div>
 
