@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\MainController;
+use App\Http\Controllers\AppBaseController;
 use Lang;
 use Alias;
 
-class DashboardController extends MainController
+class DashboardController extends AppBaseController
 {
     /**
      * Create a new controller instance.

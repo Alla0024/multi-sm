@@ -7,6 +7,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Http\Response;
 use Lang;
 use Document;
 use Event;
@@ -14,51 +16,34 @@ use Event;
 class AppBaseController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    protected $template;
-    protected $vars = [];
-    protected $time;
+
+    protected array $vars = [];
+    protected string $template = '';
 
     public function __construct()
     {
         $this->middleware('auth');
 
-        $this->vars = [];
-
-
-        $this->vars['word'] = Lang::get('dashboard');
+        $this->vars['word'] = Lang::get('common', []);
     }
 
-    public function renderOutput($vars = [])
+    public function renderOutput($vars = []): Response
     {
+        $this->vars['user'] = Auth::user();
 
-        return response()->view($this->template, $this->vars + $vars);
+        $this->loadLangByTemplate();
+
+        return response()->view($this->template, array_merge($this->vars, $vars));
     }
 
-    private function header()
+    protected function loadLangByTemplate(): void
     {
-        $data['user_info'] = Auth::getUser();
-        $data['word'] = $this->vars['word'];
+        $defaultWord = Lang::has('default') ? Lang::get('default') : [];
 
-        return $data;
-    }
+        $langFile = $this->template ? Str::before($this->template, '.') : null;
 
-    private function leftSidebar()
-    {
-        $data['user_info'] = Auth::getUser()->toArray();
-        $data['word'] = $this->vars['word'];
-
-        return $data;
-    }
-
-    private function rightSidebar()
-    {
-
-    }
-
-    private function footer()
-    {
-        $data['user_info'] = Auth::getUser()->toArray();
-
-        return $data;
+        $this->vars['word'] += ($langFile && Lang::has($langFile))
+            ? Lang::get($langFile)
+            : $defaultWord;
     }
 }

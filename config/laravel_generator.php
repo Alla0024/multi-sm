@@ -29,7 +29,7 @@ return [
 
         'api_request'       => app_path('Http/Requests/API/'),
 
-        'controller'        => app_path('Http/Controllers/'),
+        'controller'        => app_path('Http/Controllers/Content/'),
 
         'api_controller'    => app_path('Http/Controllers/API/'),
 
@@ -51,7 +51,7 @@ return [
 
         'api_test'          => base_path('tests/APIs/'),
 
-        'views'             => resource_path('views/'),
+        'views'             => resource_path('views/pages/'),
 
         'menu_file'         => resource_path('views/layouts/menu.blade.php'),
     ],
@@ -73,7 +73,7 @@ return [
 
         'repository'        => 'App\Repositories',
 
-        'controller'        => 'App\Http\Controllers',
+        'controller'        => 'App\Http\Controllers\Content',
 
         'api_controller'    => 'App\Http\Controllers\API',
 
@@ -134,7 +134,7 @@ return [
 
         'save_schema_file' => true,
 
-        'localized' => false,
+        'localized' => true,
 
         'table_search' => true,
 
@@ -162,11 +162,11 @@ return [
 
     'prefixes' => [
 
-        'route' => '',  // e.g. admin or admin.shipping or admin.shipping.logistics
+        'route' => env('ADMIN_DASHBOARD'),  // e.g. admin or admin.shipping or admin.shipping.logistics
 
         'namespace' => '',  // e.g. Admin or Admin\Shipping or Admin\Shipping\Logistics
 
-        'view' => '',  // e.g. admin or admin/shipping or admin/shipping/logistics
+        'view' => env('ADMIN_DASHBOARD') ,  // e.g. admin or admin/shipping or admin/shipping/logistics
     ],
 
     /*
