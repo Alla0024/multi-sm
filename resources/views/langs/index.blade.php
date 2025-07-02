@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Manufacturers</h1>
+                    <h1>Langs</h1>
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">
@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-primary float-right"
-                       href="{{ route('manufacturers.create') }}">
+                       href="{{ route('langs.create') }}">
                         Add New
                     </a>
                 </div>
@@ -39,7 +39,7 @@
         <div class="clearfix"></div>
 
         <div class="card">
-            @include('manufacturers.table')
+            @include('langs.table')
         </div>
     </div>
 

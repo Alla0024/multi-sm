@@ -31,9 +31,6 @@ class AppBaseController extends BaseController
     public function renderOutput($vars = [])
     {
 
-
-
-
         return response()->view($this->template, $this->vars + $vars);
     }
 

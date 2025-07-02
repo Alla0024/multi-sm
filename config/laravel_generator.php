@@ -136,6 +136,8 @@ return [
 
         'localized' => false,
 
+        'table_search' => true,
+
         'repository_pattern' => true,
 
         'resources' => false,

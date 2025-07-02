@@ -36,6 +36,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('languages', 'App\Http\Controllers\Content\LanguageController');
         Route::resource('stores', 'App\Http\Controllers\Content\StoreController');
         Route::resource('manufacturers', 'App\Http\Controllers\Content\ManufacturerController');
+        Route::resource('langs', App\Http\Controllers\LangController::class);
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('seodata', 'Content\SeoDataController');
         Route::resource('informations', 'Content\InformationController');
@@ -219,3 +220,4 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
     });
 });
+

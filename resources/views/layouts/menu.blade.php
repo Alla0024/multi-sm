@@ -26,3 +26,10 @@
         <p>Manufacturer Descriptions</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('langs.index') }}" class="nav-link {{ Request::is('langs*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Langs</p>
+    </a>
+</li>

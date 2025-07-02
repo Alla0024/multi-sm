@@ -66,6 +66,10 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        column-gap: 10px;
+        label{
+            padding-left: 4px;
+        }
         .butt-action{
             margin-left: auto;
             display: flex;
