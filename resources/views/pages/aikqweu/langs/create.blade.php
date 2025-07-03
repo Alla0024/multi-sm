@@ -24,7 +24,7 @@
             <div class="card-body">
 
                 <div class="row">
-                    @include('langs.fields')
+                    @include('pages.aikqweu.langs.fields')
                 </div>
 
             </div>

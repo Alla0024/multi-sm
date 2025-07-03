@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="uk" data-b-theme="light" x-data :data-b-theme="$store.page.theme">
+{{--<html lang="uk" data-b-theme="light" x-data :data-b-theme="$store.page.theme">--}}
+<html lang="uk" data-b-theme="light" x-data >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">

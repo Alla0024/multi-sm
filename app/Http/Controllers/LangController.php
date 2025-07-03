@@ -18,6 +18,7 @@ class LangController extends AppBaseController
 
     public function __construct(LangRepository $langRepo)
     {
+        parent::__construct();
         $this->langRepository = $langRepo;
     }
 
@@ -41,10 +42,10 @@ class LangController extends AppBaseController
         $langs = $query->paginate($perPage);
 
         // Pass columns to the view
-        return view('langs.index', [
-            'langs' => $langs,
-            'fields' => $columns,
-        ]);
+        $vars['langs'] = $langs;
+        $vars['fields'] = $columns;
+        $this->template = 'pages.aikqweu.langs.index';
+        return $this->renderOutput($vars);
     }
 
     /**
@@ -52,7 +53,7 @@ class LangController extends AppBaseController
      */
     public function create()
     {
-        return view('langs.create');
+        return view('pages.aikqweu.langs.create');
     }
 
     /**
@@ -82,7 +83,7 @@ class LangController extends AppBaseController
             return redirect(route('langs.index'));
         }
 
-        return view('langs.show')->with('lang', $lang);
+        return view('pages.aikqweu.langs.show')->with('lang', $lang);
     }
 
     /**
@@ -98,7 +99,7 @@ class LangController extends AppBaseController
             return redirect(route('langs.index'));
         }
 
-        return view('langs.edit')->with('lang', $lang);
+        return view('pages.aikqweu.langs.edit')->with('lang', $lang);
     }
 
     /**

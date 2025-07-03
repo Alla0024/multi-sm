@@ -23,7 +23,7 @@ Lang Details
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('langs.show_fields')
+                    @include('pages.aikqweu.langs.show_fields')
                 </div>
             </div>
         </div>

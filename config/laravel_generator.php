@@ -51,7 +51,7 @@ return [
 
         'api_test'          => base_path('tests/APIs/'),
 
-        'views'             => resource_path('views/pages/'),
+        'views'             => resource_path('views/'),
 
         'menu_file'         => resource_path('views/layouts/menu.blade.php'),
     ],
@@ -134,7 +134,7 @@ return [
 
         'save_schema_file' => true,
 
-        'localized' => true,
+        'localized' => false,
 
         'table_search' => true,
 
@@ -162,11 +162,11 @@ return [
 
     'prefixes' => [
 
-        'route' => env('ADMIN_DASHBOARD'),  // e.g. admin or admin.shipping or admin.shipping.logistics
+        'route' => '',  // e.g. admin or admin.shipping or admin.shipping.logistics
 
         'namespace' => '',  // e.g. Admin or Admin\Shipping or Admin\Shipping\Logistics
 
-        'view' => env('ADMIN_DASHBOARD') ,  // e.g. admin or admin/shipping or admin/shipping/logistics
+        'view' => 'pages/'.env('ADMIN_DASHBOARD'),  // e.g. admin or admin/shipping or admin/shipping/logistics
     ],
 
     /*

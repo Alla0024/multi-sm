@@ -2,15 +2,15 @@
     <form class="search-form" method="GET" action="">
         @foreach($fields as $field)
             <div class="">
-                <lable for="{{ $field }}">{{ $field }}</lable>
+                <lable for="{{ $field }}">{{ $word['title_'.$field] }}</lable>
                 <input type="text" name="{{ $field }}" placeholder="{{ ucfirst(str_replace('_', ' ', $field)) }}" value="{{ request($field) }}">
             </div>
         @endforeach
 
 
         <div class="butt-action">
-            <button class="btn btn-primary" type="submit">Пошук</button>
-            <a href="http://multi">Скинути</a>
+            <button class="btn btn-primary" type="submit">{{ $word['search'] }}</button>
+            <a href="http://multi">{{ $word['cancel'] }}</a>
         </div>
     </form>
     <div class="table-responsive">
@@ -23,7 +23,7 @@
                 <th>Sort Order</th>
                 <th>Created At</th>
                 <th>Updated At</th>
-                <th colspan="3">Action</th>
+                <th colspan="3">crud.action</th>
             </tr>
             </thead>
             <tbody>
