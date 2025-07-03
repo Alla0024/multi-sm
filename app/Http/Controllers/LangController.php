@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateLangRequest;
 use App\Http\Requests\UpdateLangRequest;
+use Illuminate\Support\Facades\DB;
 use App\Models\Lang;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\AppBaseController;
@@ -27,26 +28,89 @@ class LangController extends AppBaseController
     public function index(Request $request)
     {
         $perPage = $request->input('perPage', 10);
+        $table = (new \App\Models\Lang)->getTable();
+        $schema = 'public';
 
-        $columns = Schema::getColumnListing((new Lang)->getTable());
+        $fields = $this->getTableColumnsFromInformationSchema($table, $schema);
 
-        $query = Lang::query();
+        $query = \App\Models\Lang::query();
 
-        foreach ($columns as $field) {
-            if ($request->filled($field)) {
-                $query->where($field, 'like', '%' . $request->input($field) . '%');
+        foreach ($fields as $field) {
+            $name = $field['name'];
+            if (!empty($field['searchable']) && $request->filled($name)) {
+                $query->where($name, 'like', '%' . $request->input($name) . '%');
             }
         }
 
         $langs = $query->paginate($perPage);
 
-        // Pass columns to the view
         return view('langs.index', [
             'langs' => $langs,
-            'fields' => $columns,
+            'fields' => $fields,
         ]);
     }
 
+    private function getTableColumnsFromInformationSchema(string $table, string $schema): array
+    {
+        $columns = DB::select("
+            SELECT
+                column_name,
+                data_type,
+                character_maximum_length,
+                is_nullable,
+                column_default
+            FROM information_schema.columns
+            WHERE table_name = ? AND table_schema = ?
+        ", [$table, $schema]);
+
+        $fields = [];
+
+        foreach ($columns as $column) {
+            $name = $column->column_name;
+            $type = $column->data_type;
+            $length = $column->character_maximum_length;
+            $nullable = $column->is_nullable === 'YES';
+            $isPrimary = false;
+
+            if ($column->column_default !== null && str_contains(strtolower($column->column_default), 'nextval')) {
+                $isPrimary = true;
+            }
+
+            $rules = [];
+            $rules[] = $nullable ? 'nullable' : 'required';
+
+            if ($length && in_array($type, ['character varying', 'varchar', 'text'])) {
+                $rules[] = 'max:' . $length;
+            }
+
+            $fields[] = [
+                'name' => $name,
+                'dbType' => $type,
+                'htmlType' => $this->inferHtmlType($type),
+                'validations' => implode('|', $rules),
+                'searchable' => !str_ends_with($name, '_id') && !str_contains($name, 'password'),
+                'fillable' => !$isPrimary,
+                'primary' => $isPrimary,
+                'inForm' => !$isPrimary,
+                'inIndex' => true,
+                'inView' => true,
+            ];
+        }
+
+        return $fields;
+    }
+
+    private function inferHtmlType(string $dbType): string
+    {
+        return match ($dbType) {
+            'character varying', 'varchar', 'text' => 'text',
+            'integer', 'bigint', 'smallint' => 'number',
+            'boolean' => 'checkbox',
+            'date' => 'date',
+            'timestamp without time zone', 'timestamp with time zone', 'timestamp' => 'datetime',
+            default => 'text',
+        };
+    }
     /**
      * Show the form for creating a new Lang.
      */
