@@ -1,6 +1,6 @@
 <?php
 return [
-    'Langs' => 'Мови',
+    'Lang' => 'Мови',
     'title_id' => 'ID',
     'title_name' => 'Мови',
     'title_code' => 'Код',

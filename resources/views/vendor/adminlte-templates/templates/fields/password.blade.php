@@ -3,7 +3,7 @@
 @if($config->options->localized)
     @{!! Form::label('{{ $fieldName }}', __('models/{{ $config->modelNames->camelPlural }}.fields.{{ $fieldName }}').':') !!}
 @else
-    @{!! Form::label('{{ $fieldName }}', '{{ $fieldTitle }}:') !!}
+    @{!! Form::label('{{ $fieldName }}', $word['title_{{ $fieldName }}']) !!}
 @endif
     @{!! Form::password('{{ $fieldName }}', ['class' => 'form-control'@php if(isset($options)) { echo htmlspecialchars_decode($options); } @endphp]) !!}
 </div>

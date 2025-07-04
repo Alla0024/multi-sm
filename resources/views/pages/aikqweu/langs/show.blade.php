@@ -6,13 +6,13 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>
-Lang Details
+    {!!  $word['Lang'] !!} {{ $word['details'] }}
                     </h1>
                 </div>
                 <div class="col-sm-6">
                     <a class="btn btn-default float-right"
                        href="{{ route('langs.index') }}">
-                                                    Back
+                                                    {{$word['back']}}
                                             </a>
                 </div>
             </div>

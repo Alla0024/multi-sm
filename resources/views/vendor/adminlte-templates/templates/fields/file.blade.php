@@ -3,7 +3,7 @@
 @if($config->options->localized)
     @{!! Form::label('{{ $fieldName }}', __('models/{{ $config->modelNames->camelPlural }}.fields.{{ $fieldName }}').':') !!}
 @else
-    @{!! Form::label('{{ $fieldName }}', '{{ $fieldTitle }}:') !!}
+    @{!! Form::label('{{ $fieldName }}', $word['title_{{ $fieldName }}']) !!}
 @endif
     <div class="input-group">
         <div class="custom-file">

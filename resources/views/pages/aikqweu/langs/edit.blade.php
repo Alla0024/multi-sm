@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1>
-                        Edit Lang
+                        {{ $word['edit'] }} {!!  $word['Lang'] !!}
                     </h1>
                 </div>
             </div>
@@ -28,8 +28,8 @@
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('langs.index') }}" class="btn btn-default"> Cancel </a>
+                {!! Form::submit($word['save'], ['class' => 'btn btn-primary']) !!}
+                <a href="{{ route('langs.index') }}" class="btn btn-default"> {{ $word['cancel'] }}</a>
             </div>
 
             {!! Form::close() !!}

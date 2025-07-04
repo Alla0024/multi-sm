@@ -9,7 +9,7 @@
 @if($config->options->localized)
                         @@lang('crud.edit') @@lang('models/{!! $config->modelNames->camelPlural !!}.singular')
 @else
-                        Edit {{ $config->modelNames->human }}
+                        @{{ $word['edit'] }} @{!!  $word['{{ $config->modelNames->human }}'] !!}
 @endif
                     </h1>
                 </div>
@@ -32,8 +32,8 @@
             </div>
 
             <div class="card-footer">
-                @{!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.index') }}" class="btn btn-default">@if($config->options->localized) @@lang('crud.cancel') @else Cancel @endif</a>
+                @{!! Form::submit($word['save'], ['class' => 'btn btn-primary']) !!}
+                <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.index') }}" class="btn btn-default"> @{{ $word['cancel'] }}</a>
             </div>
 
             @{!! Form::close() !!}

@@ -1,10 +1,12 @@
 <div class="card-body p-0">
     <form class="search-form" method="GET" action="">
         @foreach($fields as $field)
-            <div class="">
-                <lable for="{{ $field }}">{{ $word['title_'.$field] }}</lable>
-                <input type="text" name="{{ $field }}" placeholder="{{ ucfirst(str_replace('_', ' ', $field)) }}" value="{{ request($field) }}">
-            </div>
+             @if(isset($field['searchable']) && $field['searchable'])
+                <div class="">
+                    <lable for="{{ $field['name'] }}">{{ $word['title_'.$field['name']] }}</lable>
+                    <input type="text" name="{{ $field['name'] }}" placeholder="{{ ucfirst(str_replace('_', ' ', $field['name'])) }}" value="{{ request($field['name']) }}">
+                </div>
+            @endif
         @endforeach
 
 
@@ -17,12 +19,12 @@
         <table class="table" id="langs-table">
             <thead>
             <tr>
-                <th>Code</th>
-                <th>Path</th>
-                <th>Status</th>
-                <th>Sort Order</th>
-                <th>Created At</th>
-                <th>Updated At</th>
+                @foreach($fields as $field)
+                     @if($field['name'] != 'id')
+                        <th>{{ $word['title_'.$field['name']] }}</th>
+                    @endif
+                @endforeach
+
                 <th colspan="3">{{ $word['action'] }}</th>
             </tr>
             </thead>
