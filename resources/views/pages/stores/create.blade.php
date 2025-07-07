@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1>
-                        Edit Language
+                            {{ $word['create'] }} {!!  $word['Store'] !!}
                     </h1>
                 </div>
             </div>
@@ -19,17 +19,19 @@
 
         <div class="card">
 
-            {!! Form::model($language, ['route' => ['languages.update', $language->id], 'method' => 'patch']) !!}
+            {!! Form::open(['route' => 'stores.store']) !!}
 
             <div class="card-body">
+
                 <div class="row">
-                    @include('languages.fields')
+                    @include('pages..stores.fields')
                 </div>
+
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('languages.index') }}" class="btn btn-default"> Cancel </a>
+                {!! Form::submit($word['save'], ['class' => 'btn btn-primary']) !!}
+                <a href="{{ route('stores.index') }}" class="btn btn-default">{{ $word['cancel'] }}</a>
             </div>
 
             {!! Form::close() !!}

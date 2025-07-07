@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{!!  $word['Lang'] !!}</h1>
+                    <h1>{!!  $word['Manufacturer'] !!}</h1>
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">
@@ -22,9 +22,9 @@
                         </select>
                     </form>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <a class="btn btn-primary float-right"
-                       href="{{ route('langs.create') }}">
+                       href="{{ route('manufacturers.create') }}">
                         {{$word['add']}}
                     </a>
                 </div>
@@ -39,7 +39,7 @@
         <div class="clearfix"></div>
 
         <div class="card">
-            @include('pages.aikqweu.langs.table')
+            @include('pages..manufacturers.table')
         </div>
     </div>
 

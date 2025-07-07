@@ -47,7 +47,7 @@ class LangController extends AppBaseController
 
         $vars['langs'] = $langs;
         $vars['fields'] = $fields;
-        $this->template = 'pages.aikqweu.langs.index';
+        $this->template = 'pages.langs.index';
         return $this->renderOutput($vars);
 
     }
@@ -119,7 +119,7 @@ class LangController extends AppBaseController
     public function create()
     {
 
-        $this->template = 'pages.aikqweu.langs.create';
+        $this->template = 'pages.langs.create';
         return $this->renderOutput();
     }
 
@@ -151,7 +151,7 @@ class LangController extends AppBaseController
         }
 
         $vars['lang'] = $lang;
-        $this->template = 'pages.aikqweu.langs.show';
+        $this->template = 'pages.langs.show';
         return $this->renderOutput($vars);
     }
 
@@ -169,7 +169,7 @@ class LangController extends AppBaseController
         }
 
         $vars['lang'] = $lang;
-        $this->template = 'pages.aikqweu.langs.edit';
+        $this->template = 'pages.langs.edit';
         return $this->renderOutput($vars);
     }
 

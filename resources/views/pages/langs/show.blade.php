@@ -6,13 +6,13 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>
-Store Details
+      {{ $word['details'] }} {!!  $word['Lang'] !!}
                     </h1>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <a class="btn btn-default float-right"
-                       href="{{ route('stores.index') }}">
-                                                    Back
+                       href="{{ route('langs.index') }}">
+                                                    {{$word['back']}}
                                             </a>
                 </div>
             </div>
@@ -23,7 +23,7 @@ Store Details
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('stores.show_fields')
+                    @include('pages..langs.show_fields')
                 </div>
             </div>
         </div>

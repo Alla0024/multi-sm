@@ -1,18 +1,37 @@
 <div class="card-body p-0">
+    <form class="search-form" method="GET" action="">
+        @foreach($fields as $field)
+             @if(isset($field['searchable']) && $field['searchable'])
+                <div class="">
+                    <lable for="{{ $field['name'] }}">{{ $word['title_'.$field['name']] }}</lable>
+                    <input type="text" name="{{ $field['name'] }}" placeholder="{{ ucfirst(str_replace('_', ' ', $field['name'])) }}" value="{{ request($field['name']) }}">
+                </div>
+            @endif
+        @endforeach
+
+
+        <div class="butt-action">
+            <button class="btn btn-primary" type="submit">{{ $word['search'] }}</button>
+            <a href="http://multi">{{ $word['cancel'] }}</a>
+        </div>
+    </form>
     <div class="table-responsive">
         <table class="table" id="languages-table">
             <thead>
             <tr>
-                <th>Code</th>
-                <th>Path</th>
-                <th>Status</th>
-                <th>Sort Order</th>
-                <th colspan="3">Action</th>
+                @foreach($fields as $field)
+                     @if($field['name'] != 'id')
+                        <th>{{ $word['title_'.$field['name']] }}</th>
+                    @endif
+                @endforeach
+
+                <th colspan="3">{{ $word['action'] }}</th>
             </tr>
             </thead>
             <tbody>
             @foreach($languages as $language)
                 <tr>
+
                     <td>{{ $language->code }}</td>
                     <td>{{ $language->path }}</td>
                     <td>{{ $language->status }}</td>

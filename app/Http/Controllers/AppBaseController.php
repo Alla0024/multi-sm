@@ -40,7 +40,7 @@ class AppBaseController extends BaseController
     {
         $defaultWord = Lang::has('default') ? Lang::get('default') : [];
         $parts = explode('.', $this->template);
-        $langFile = $this->template ? $parts[2] : null;
+        $langFile = $this->template ? $parts[1] : null;
 
         $this->vars['word'] += ($langFile && Lang::has($langFile))
             ? Lang::get($langFile)

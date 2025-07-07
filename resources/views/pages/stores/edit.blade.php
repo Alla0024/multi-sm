@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1>
-                            {{ $word['create'] }} {!!  $word['Lang'] !!}
+                        {{ $word['edit'] }} {!!  $word['Store'] !!}
                     </h1>
                 </div>
             </div>
@@ -19,19 +19,17 @@
 
         <div class="card">
 
-            {!! Form::open(['route' => 'langs.store']) !!}
+            {!! Form::model($store, ['route' => ['stores.update', $store->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
-
                 <div class="row">
-                    @include('pages.aikqweu.langs.fields')
+                    @include('pages..stores.fields')
                 </div>
-
             </div>
 
             <div class="card-footer">
                 {!! Form::submit($word['save'], ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('langs.index') }}" class="btn btn-default">{{ $word['cancel'] }}</a>
+                <a href="{{ route('stores.index') }}" class="btn btn-default"> {{ $word['cancel'] }}</a>
             </div>
 
             {!! Form::close() !!}

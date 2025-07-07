@@ -26,7 +26,7 @@
                         </select>
                     </form>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <a class="btn btn-primary float-right"
                        href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.create') }}">
                         @{{$word['add']}}

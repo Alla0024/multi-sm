@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1>
-                        Edit Manufacturer
+                            {{ $word['create'] }} {!!  $word['Manufacturer'] !!}
                     </h1>
                 </div>
             </div>
@@ -19,17 +19,19 @@
 
         <div class="card">
 
-            {!! Form::model($manufacturer, ['route' => ['manufacturers.update', $manufacturer->id], 'method' => 'patch']) !!}
+            {!! Form::open(['route' => 'manufacturers.store']) !!}
 
             <div class="card-body">
+
                 <div class="row">
-                    @include('manufacturers.fields')
+                    @include('pages..manufacturers.fields')
                 </div>
+
             </div>
 
             <div class="card-footer">
-                {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                <a href="{{ route('manufacturers.index') }}" class="btn btn-default"> Cancel </a>
+                {!! Form::submit($word['save'], ['class' => 'btn btn-primary']) !!}
+                <a href="{{ route('manufacturers.index') }}" class="btn btn-default">{{ $word['cancel'] }}</a>
             </div>
 
             {!! Form::close() !!}

@@ -13,7 +13,7 @@
 @endif
                     </h1>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <a class="btn btn-default float-right"
                        href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural  !!}.index') }}">
                         @if($config->options->localized)

@@ -6,12 +6,12 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>
-    {!!  $word['Lang'] !!} {{ $word['details'] }}
+      {{ $word['details'] }} {!!  $word['Language'] !!}
                     </h1>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <a class="btn btn-default float-right"
-                       href="{{ route('langs.index') }}">
+                       href="{{ route('languages.index') }}">
                                                     {{$word['back']}}
                                             </a>
                 </div>
@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('pages.aikqweu.langs.show_fields')
+                    @include('pages..languages.show_fields')
                 </div>
             </div>
         </div>

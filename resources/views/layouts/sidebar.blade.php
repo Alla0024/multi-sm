@@ -35,6 +35,10 @@
             <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
             <div class="name">Manufacturers</div>
         </a>
+        <a href="{{ route('langs.index') }}" class="item {{ Request::is('aikqweu/langs*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
+            <div class="name">Langs</div>
+        </a>
 
 {{--        <a href="{{ route('manufacturerDescriptions.index') }}" class="item {{ Request::is('aikqweu/manufacturerDescriptions*') ? 'active' : '' }}">--}}
 {{--            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>--}}
