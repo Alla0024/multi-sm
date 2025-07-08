@@ -1,23 +1,29 @@
 <div class="card-body p-0">
-    <form class="search-form" method="GET" action="">
-        @foreach($fields as $field)
-             @if(isset($field['searchable']) && $field['searchable'])
-                <div class="">
-                    <lable for="{{ $field['name'] }}">{{ $word['title_'.$field['name']] }}</lable>
-                    <input type="text" name="{{ $field['name'] }}" placeholder="{{ ucfirst(str_replace('_', ' ', $field['name'])) }}" value="{{ request($field['name']) }}">
-                </div>
-            @endif
-        @endforeach
 
-
-        <div class="butt-action">
-            <button class="btn btn-primary" type="submit">{{ $word['search'] }}</button>
-            <a href="http://multi">{{ $word['cancel'] }}</a>
-        </div>
-    </form>
     <div class="table-responsive">
         <table class="table" id="langs-table">
             <thead>
+            <tr>
+                <form class="search-form" method="GET" action="">
+
+                    @foreach($fields as $field)
+                        @if($field['name'] != 'id')
+                            <th class="">
+                                @if(isset($field['searchable']) && $field['searchable'])
+                                    <div class="">
+                                        
+                                        <input type="text" name="{{ $field['name'] }}" placeholder="{{ $word['search_'.$field['name']] }}" value="{{ request($field['name']) }}">
+                                    </div>
+                                @endif
+                            </th>
+                        @endif
+                    @endforeach
+                    <th class="butt-action">
+                        <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
+                        <a href="{{ route('langs.index') }}">{{ $word['cancel'] }}</a>
+                    </th>
+                </form>
+            </tr>
             <tr>
                 @foreach($fields as $field)
                      @if($field['name'] != 'id')
