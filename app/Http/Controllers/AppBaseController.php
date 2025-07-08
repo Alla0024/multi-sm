@@ -39,8 +39,8 @@ class AppBaseController extends BaseController
     protected function loadLangByTemplate(): void
     {
         $defaultWord = Lang::has('default') ? Lang::get('default') : [];
-        $parts = explode('.', $this->template);
-        $langFile = $this->template ? $parts[1] : null;
+
+        $langFile = $this->template ? Str::between($this->template, 'pages.', '.index') : null;
 
         $this->vars['word'] += ($langFile && Lang::has($langFile))
             ? Lang::get($langFile)

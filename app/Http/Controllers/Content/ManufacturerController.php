@@ -38,7 +38,7 @@ class ManufacturerController extends AppBaseController
 
         $manufacturers = $query->paginate($perPage);
         $vars['manufacturers'] = $manufacturers;
-        $this->template = 'manufacturers.index';
+        $this->template = 'pages.manufacturers.index';
         return $this->renderOutput($vars);
     }
 
@@ -47,7 +47,7 @@ class ManufacturerController extends AppBaseController
      */
     public function create()
     {
-        return view('manufacturers.create');
+        return view('pages.manufacturers.create');
     }
 
     /**
@@ -61,7 +61,7 @@ class ManufacturerController extends AppBaseController
 
         Flash::success('Manufacturer saved successfully.');
 
-        return redirect(route('manufacturers.index'));
+        return redirect(route('pages.manufacturers.index'));
     }
 
     /**
@@ -77,7 +77,7 @@ class ManufacturerController extends AppBaseController
             return redirect(route('manufacturers.index'));
         }
 
-        return view('manufacturers.show')->with('manufacturer', $manufacturer);
+        return view('pages.manufacturers.show')->with('manufacturer', $manufacturer);
     }
 
     /**
@@ -90,10 +90,10 @@ class ManufacturerController extends AppBaseController
         if (empty($manufacturer)) {
             Flash::error('Manufacturer not found');
 
-            return redirect(route('manufacturers.index'));
+            return redirect(route('pages.manufacturers.index'));
         }
 
-        return view('manufacturers.edit')->with('manufacturer', $manufacturer);
+        return view('pages.manufacturers.edit')->with('manufacturer', $manufacturer);
     }
 
     /**
@@ -106,14 +106,14 @@ class ManufacturerController extends AppBaseController
         if (empty($manufacturer)) {
             Flash::error('Manufacturer not found');
 
-            return redirect(route('manufacturers.index'));
+            return redirect(route('pages.manufacturers.index'));
         }
 
         $manufacturer = $this->manufacturerRepository->update($request->all(), $id);
 
         Flash::success('Manufacturer updated successfully.');
 
-        return redirect(route('manufacturers.index'));
+        return redirect(route('pages.manufacturers.index'));
     }
 
     /**
@@ -128,13 +128,13 @@ class ManufacturerController extends AppBaseController
         if (empty($manufacturer)) {
             Flash::error('Manufacturer not found');
 
-            return redirect(route('manufacturers.index'));
+            return redirect(route('pages.manufacturers.index'));
         }
 
         $this->manufacturerRepository->delete($id);
 
         Flash::success('Manufacturer deleted successfully.');
 
-        return redirect(route('manufacturers.index'));
+        return redirect(route('pages.manufacturers.index'));
     }
 }

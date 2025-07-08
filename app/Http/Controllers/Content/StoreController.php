@@ -28,7 +28,7 @@ class StoreController extends AppBaseController
     {
         $stores = $this->storeRepository->paginate(10);
 
-        return view('stores.index')
+        return view('pages.stores.index')
             ->with('stores', $stores);
     }
 
@@ -37,7 +37,7 @@ class StoreController extends AppBaseController
      */
     public function create()
     {
-        return view('stores.create');
+        return view('pages.stores.create');
     }
 
     /**
@@ -51,7 +51,7 @@ class StoreController extends AppBaseController
 
         Flash::success('Store saved successfully.');
 
-        return redirect(route('stores.index'));
+        return redirect(route('pages.stores.index'));
     }
 
     /**
@@ -64,10 +64,10 @@ class StoreController extends AppBaseController
         if (empty($store)) {
             Flash::error('Store not found');
 
-            return redirect(route('stores.index'));
+            return redirect(route('pages.stores.index'));
         }
 
-        return view('stores.show')->with('store', $store);
+        return view('pages.stores.show')->with('store', $store);
     }
 
     /**
@@ -80,10 +80,10 @@ class StoreController extends AppBaseController
         if (empty($store)) {
             Flash::error('Store not found');
 
-            return redirect(route('stores.index'));
+            return redirect(route('pages.stores.index'));
         }
 
-        return view('stores.edit')->with('store', $store);
+        return view('pages.stores.edit')->with('store', $store);
     }
 
     /**
@@ -96,14 +96,14 @@ class StoreController extends AppBaseController
         if (empty($store)) {
             Flash::error('Store not found');
 
-            return redirect(route('stores.index'));
+            return redirect(route('pages.stores.index'));
         }
 
         $store = $this->storeRepository->update($request->all(), $id);
 
         Flash::success('Store updated successfully.');
 
-        return redirect(route('stores.index'));
+        return redirect(route('pages.stores.index'));
     }
 
     /**
@@ -118,13 +118,13 @@ class StoreController extends AppBaseController
         if (empty($store)) {
             Flash::error('Store not found');
 
-            return redirect(route('stores.index'));
+            return redirect(route('pages.stores.index'));
         }
 
         $this->storeRepository->delete($id);
 
         Flash::success('Store deleted successfully.');
 
-        return redirect(route('stores.index'));
+        return redirect(route('pages.stores.index'));
     }
 }
