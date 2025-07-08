@@ -5,19 +5,20 @@
             <thead>
             <tr>
                 <form class="search-form" method="GET" action="">
-
-                    @foreach($fields as $field)
-                        @if($field['name'] != 'id')
-                            <th class="">
-                                @if(isset($field['searchable']) && $field['searchable'])
-                                    <div class="">
-                                        
-                                        <input type="text" name="{{ $field['name'] }}" placeholder="{{ $word['search_'.$field['name']] }}" value="{{ request($field['name']) }}">
-                                    </div>
-                                @endif
-                            </th>
-                        @endif
-                    @endforeach
+                    @if(isset($fields))
+                        @foreach($fields as $field)
+                            @if($field['name'] != 'id')
+                                <th class="">
+                                    @if(isset($field['searchable']) && $field['searchable'])
+                                        <div class="">
+                                            
+                                            <input type="text" name="{{ $field['name'] }}" placeholder="{{ $word['search_'.$field['name']] }}" value="{{ request($field['name']) }}">
+                                        </div>
+                                    @endif
+                                </th>
+                            @endif
+                        @endforeach
+                    @endif
                     <th class="butt-action">
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
                         <a href="{{ route('langs.index') }}">{{ $word['cancel'] }}</a>
@@ -25,12 +26,13 @@
                 </form>
             </tr>
             <tr>
-                @foreach($fields as $field)
-                     @if($field['name'] != 'id')
-                        <th>{{ $word['title_'.$field['name']] }}</th>
-                    @endif
-                @endforeach
-
+                @if(isset($fields))
+                    @foreach($fields as $field)
+                         @if($field['name'] != 'id')
+                            <th>{{ $word['title_'.$field['name']] }}</th>
+                        @endif
+                    @endforeach
+                @endif
                 <th colspan="3">{{ $word['action'] }}</th>
             </tr>
             </thead>
