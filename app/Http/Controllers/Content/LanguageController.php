@@ -27,7 +27,7 @@ class LanguageController extends AppBaseController
     {
         $languages = $this->languageRepository->paginate(10);
         $vars['languages'] = $languages;
-        $this->template = 'languages.index';
+        $this->template = 'pages.languages.index';
         return $this->renderOutput($vars);
     }
 
@@ -36,7 +36,7 @@ class LanguageController extends AppBaseController
      */
     public function create()
     {
-        return view('languages.create');
+        return view('pages.languages.create');
     }
 
     /**
@@ -50,7 +50,7 @@ class LanguageController extends AppBaseController
 
         Flash::success('Language saved successfully.');
 
-        return redirect(route('languages.index'));
+        return redirect(route('pages.languages.index'));
     }
 
     /**
@@ -63,10 +63,10 @@ class LanguageController extends AppBaseController
         if (empty($language)) {
             Flash::error('Language not found');
 
-            return redirect(route('languages.index'));
+            return redirect(route('pages.languages.index'));
         }
 
-        return view('languages.show')->with('language', $language);
+        return view('pages.languages.show')->with('language', $language);
     }
 
     /**
@@ -79,10 +79,10 @@ class LanguageController extends AppBaseController
         if (empty($language)) {
             Flash::error('Language not found');
 
-            return redirect(route('languages.index'));
+            return redirect(route('pages.languages.index'));
         }
 
-        return view('languages.edit')->with('language', $language);
+        return view('pages.languages.edit')->with('language', $language);
     }
 
     /**
@@ -95,14 +95,14 @@ class LanguageController extends AppBaseController
         if (empty($language)) {
             Flash::error('Language not found');
 
-            return redirect(route('languages.index'));
+            return redirect(route('pages.languages.index'));
         }
 
         $language = $this->languageRepository->update($request->all(), $id);
 
         Flash::success('Language updated successfully.');
 
-        return redirect(route('languages.index'));
+        return redirect(route('pages.languages.index'));
     }
 
     /**
@@ -117,13 +117,13 @@ class LanguageController extends AppBaseController
         if (empty($language)) {
             Flash::error('Language not found');
 
-            return redirect(route('languages.index'));
+            return redirect(route('pages.languages.index'));
         }
 
         $this->languageRepository->delete($id);
 
         Flash::success('Language deleted successfully.');
 
-        return redirect(route('languages.index'));
+        return redirect(route('pages.languages.index'));
     }
 }
