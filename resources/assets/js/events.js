@@ -54,4 +54,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Image upload
+    document.querySelectorAll('.image-upload').forEach(block => {
+        const input = block.querySelector('input[type="file"]');
+        const preview = block.querySelector('img');
+
+        input.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+
 })

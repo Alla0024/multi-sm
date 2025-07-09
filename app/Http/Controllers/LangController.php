@@ -44,6 +44,9 @@ class LangController extends AppBaseController
         }
 
         $langs = $query->paginate($perPage);
+        $fields = [
+
+        ];
 
         $vars['langs'] = $langs;
         $vars['fields'] = $fields;

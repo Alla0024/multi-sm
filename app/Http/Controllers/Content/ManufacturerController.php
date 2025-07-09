@@ -47,7 +47,9 @@ class ManufacturerController extends AppBaseController
      */
     public function create()
     {
-        return view('pages.manufacturers.create');
+
+        $this->template = 'pages.manufacturers.create';
+        return $this->renderOutput();
     }
 
     /**
@@ -61,7 +63,7 @@ class ManufacturerController extends AppBaseController
 
         Flash::success('Manufacturer saved successfully.');
 
-        return redirect(route('pages.manufacturers.index'));
+        return redirect(route('manufacturers.index'));
     }
 
     /**
@@ -77,7 +79,9 @@ class ManufacturerController extends AppBaseController
             return redirect(route('manufacturers.index'));
         }
 
-        return view('pages.manufacturers.show')->with('manufacturer', $manufacturer);
+        $vars['manufacturer'] = $manufacturer;
+        $this->template = 'pages.manufacturers.show';
+        return $this->renderOutput($vars);
     }
 
     /**
@@ -93,7 +97,9 @@ class ManufacturerController extends AppBaseController
             return redirect(route('pages.manufacturers.index'));
         }
 
-        return view('pages.manufacturers.edit')->with('manufacturer', $manufacturer);
+        $vars['manufacturer'] = $manufacturer;
+        $this->template = 'pages.manufacturers.edit';
+        return $this->renderOutput($vars);
     }
 
     /**
