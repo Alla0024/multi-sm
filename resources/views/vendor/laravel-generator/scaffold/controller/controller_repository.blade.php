@@ -38,7 +38,7 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
      */
     public function create()
     {
-        return view('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.create');
+        return $this->renderOutput(['{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.create']);
     }
 
     /**
@@ -64,8 +64,10 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
 
         @include('laravel-generator::scaffold.controller.messages.not_found')
 
-        return view('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.show')->with('{{ $config->modelNames->camel }}', ${{ $config->modelNames->camel }});
-    }
+        $this->template = 'pages.{{ $config->modelNames->snakePlural }}.show';
+
+        return $this->renderOutput(compact('{{ $config->modelNames->camel }}'));
+}
 
     /**
      * Show the form for editing the specified {{ $config->modelNames->name }}.
@@ -76,7 +78,9 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
 
         @include('laravel-generator::scaffold.controller.messages.not_found')
 
-        return view('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.edit')->with('{{ $config->modelNames->camel }}', ${{ $config->modelNames->camel }});
+        $this->template = 'pages.{{ $config->modelNames->snakePlural }}.edit';
+
+        return $this->renderOutput(compact('{{ $config->modelNames->camel }}'));
     }
 
     /**
