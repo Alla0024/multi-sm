@@ -1,7 +1,17 @@
     public function index(Request $request)
     {
-        ${{ $config->modelNames->camelPlural }} = $this->{{ $config->modelNames->camel }}Repository->{!! $renderType !!};
+        $perPage = $request->input('perPage', 10);
 
-        return view('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.index')
-            ->with('{{ $config->modelNames->camelPlural }}', ${{ $config->modelNames->camelPlural }});
+        ${{ $config->modelNames->camelPlural }} = $this->{{ $config->modelNames->camel }}Repository->paginate($perPage);
+
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            {{ $config->modelNames->name }}::class
+        ]);
+
+        $this->template = 'pages.{{ $config->modelNames->snakePlural }}.index';
+
+        return $this->renderOutput([
+            '{{ $config->modelNames->camelPlural }}' => ${{ $config->modelNames->camelPlural }},
+            'fields' => $fields,
+        ]);
     }

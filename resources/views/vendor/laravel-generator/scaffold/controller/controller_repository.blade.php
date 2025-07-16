@@ -11,7 +11,9 @@ use {{ $config->namespaces->request }}\Create{{ $config->modelNames->name }}Requ
 use {{ $config->namespaces->request }}\Update{{ $config->modelNames->name }}Request;
 use {{ $config->namespaces->app }}\Http\Controllers\AppBaseController;
 use {{ $config->namespaces->repository }}\{{ $config->modelNames->name }}Repository;
+use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
+use App\Models\{{ $config->modelNames->name }};
 use Flash;
 
 class {{ $config->modelNames->name }}Controller extends AppBaseController
@@ -21,6 +23,8 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
 
     public function __construct({{ $config->modelNames->name }}Repository ${{ $config->modelNames->camel }}Repo)
     {
+        parent::__construct();
+
         $this->{{ $config->modelNames->camel }}Repository = ${{ $config->modelNames->camel }}Repo;
     }
 

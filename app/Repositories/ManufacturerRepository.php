@@ -3,12 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Manufacturer;
-use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Builder;
 
 class ManufacturerRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        
+        'name',
     ];
 
     public function getFieldsSearchable(): array
@@ -19,5 +19,10 @@ class ManufacturerRepository extends BaseRepository
     public function model(): string
     {
         return Manufacturer::class;
+    }
+
+    public function with($relations): Builder
+    {
+        return $this->model->with($relations);
     }
 }

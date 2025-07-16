@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\ModelSchemaHelper;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateManufacturerRequest;
 use App\Http\Requests\UpdateManufacturerRequest;
+use App\Models\ManufacturerDescription;
 use App\Repositories\ManufacturerRepository;
 use Flash;
 use Illuminate\Http\Request;
@@ -28,18 +30,19 @@ class ManufacturerController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $query = Manufacturer::query();
+        $manufacturers = $this->manufacturerRepository->with(['descriptions'])->paginate($perPage);
 
-        foreach ($request->all() as $key => $value) {
-            if (in_array($key, ['_token', 'page', 'perPage'])) continue;
-            if ($value === '' || $value === null) continue;
-            $query->where($key, $value);
-        }
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Manufacturer::class,
+            ManufacturerDescription::class,
+        ]);
 
-        $manufacturers = $query->paginate($perPage);
-        $vars['manufacturers'] = $manufacturers;
         $this->template = 'pages.manufacturers.index';
-        return $this->renderOutput($vars);
+
+        return $this->renderOutput([
+            'manufacturers' => $manufacturers,
+            'fields' => $fields,
+        ]);
     }
 
     /**

@@ -134,7 +134,7 @@ return [
 
         'save_schema_file' => true,
 
-        'localized' => false,
+        'localized' => true,
 
         'table_search' => true,
 
@@ -166,7 +166,7 @@ return [
 
         'namespace' => '',  // e.g. Admin or Admin\Shipping or Admin\Shipping\Logistics
 
-        'view' => 'pages/',  // e.g. admin or admin/shipping or admin/shipping/logistics
+        'view' => 'pages',  // e.g. admin or admin/shipping or admin/shipping/logistics
     ],
 
     /*
