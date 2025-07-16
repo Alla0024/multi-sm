@@ -38,7 +38,9 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
      */
     public function create()
     {
-        return $this->renderOutput(['{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.create']);
+        $this->template = 'pages.{{ $config->modelNames->snakePlural }}.create';
+
+        return $this->renderOutput();
     }
 
     /**

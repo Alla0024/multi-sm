@@ -50,7 +50,9 @@ class ManufacturerController extends AppBaseController
      */
     public function create()
     {
-        return $this->renderOutput(['pages.manufacturers.create']);
+        $this->template = 'pages.manufacturers.create';
+
+        return $this->renderOutput();
     }
 
     /**
