@@ -66,7 +66,7 @@ class ManufacturerController extends AppBaseController
 
         Flash::success(__('messages.saved', ['model' => __('models/manufacturers.singular')]));
 
-        return redirect(route('pages.manufacturers.index'));
+        return redirect(route('manufacturers.index'));
     }
 
     /**
@@ -97,7 +97,7 @@ class ManufacturerController extends AppBaseController
         if (empty($manufacturer)) {
             Flash::error(__('models/manufacturers.singular') . ' ' . __('messages.not_found'));
 
-            return redirect(route('pages.manufacturers.index'));
+            return redirect(route('manufacturers.index'));
         }
 
         $this->template = 'pages.manufacturers.edit';
@@ -115,14 +115,14 @@ class ManufacturerController extends AppBaseController
         if (empty($manufacturer)) {
             Flash::error(__('models/manufacturers.singular').' '.__('messages.not_found'));
 
-            return redirect(route('pages.manufacturers.index'));
+            return redirect(route('manufacturers.index'));
         }
 
         $manufacturer = $this->manufacturerRepository->update($request->all(), $id);
 
         Flash::success(__('messages.updated', ['model' => __('models/manufacturers.singular')]));
 
-        return redirect(route('pages.manufacturers.index'));
+        return redirect(route('manufacturers.index'));
     }
 
     /**
@@ -137,13 +137,13 @@ class ManufacturerController extends AppBaseController
         if (empty($manufacturer)) {
             Flash::error(__('models/manufacturers.singular').' '.__('messages.not_found'));
 
-            return redirect(route('pages.manufacturers.index'));
+            return redirect(route('manufacturers.index'));
         }
 
         $this->manufacturerRepository->delete($id);
 
         Flash::success(__('messages.deleted', ['model' => __('models/manufacturers.singular')]));
 
-        return redirect(route('pages.manufacturers.index'));
+        return redirect(route('manufacturers.index'));
     }
 }
