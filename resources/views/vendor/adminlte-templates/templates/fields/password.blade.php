@@ -1,5 +1,5 @@
 <!-- {{ $fieldName }} Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-6 tab-pane" data-for-tab="@{!! $fields['{{$fieldName}}']['inTab'] !!}">
 @if($config->options->localized)
     @{!! Form::label('{{ $fieldName }}', __('models/{{ $config->modelNames->camelPlural }}.fields.{{ $fieldName }}').':') !!}
 @else

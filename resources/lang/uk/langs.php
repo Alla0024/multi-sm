@@ -15,4 +15,6 @@ return [
     'search_created_at' => 'Пошук за дотою створення',
     'title_updated_at' => 'Оновлено',
     'search_updated_at' => 'Пошук за дотою оновлення',
+    'tab_main' => 'Головна',
+    'tab_sort' => 'Сортування',
 ];

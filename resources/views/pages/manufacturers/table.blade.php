@@ -11,7 +11,7 @@
                                 <th class="">
                                     @if(isset($field['searchable']) && $field['searchable'])
                                         <div class="">
-                                            
+
                                             <input type="text" name="{{ $field['name'] }}" placeholder="{{ $word['search_'.$field['name']] }}" value="{{ request($field['name']) }}">
                                         </div>
                                     @endif
@@ -37,10 +37,11 @@
             </tr>
             </thead>
             <tbody>
+
             @foreach($manufacturers as $manufacturer)
                 <tr>
-
                     <td>{{ $manufacturer->image }}</td>
+
                     <td>{{ $manufacturer->sort_order }}</td>
                     <td  style="width: 120px">
                         {!! Form::open(['route' => ['manufacturers.destroy', $manufacturer->id], 'method' => 'delete']) !!}

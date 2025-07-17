@@ -20,13 +20,13 @@
                         <select name="perPage" id="perPage" onchange="this.form.submit()">
                             @@foreach([10, 25, 50, 100] as $size)
                                 <option value="@{{ $size }}" @{{ request('perPage', 10) == $size ? 'selected' : '' }}>
-                                @{{ $size }}
+                                    @{{ $size }}
                                 </option>
-                                @@endforeach
+                            @@endforeach
                         </select>
                     </form>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"
                        href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.create') }}">
                         @{{$word['add']}}

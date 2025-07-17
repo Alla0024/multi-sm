@@ -1,5 +1,5 @@
 <!-- {{ $fieldTitle }} Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-6 tab-pane" data-for-tab="@{!! $fields['{{$fieldName}}']['inTab'] !!}">
 @if($config->options->localized)
     @{!! Form::label('{{ $fieldName }}', __('models/{{ $config->modelNames->camelPlural }}.fields.{{ $fieldName }}').':') !!}
 @else
@@ -8,7 +8,8 @@
     <div class="input-group">
         <div class="custom-file">
             @{!! Form::file('{{ $fieldName }}', ['class' => 'custom-file-input']) !!}
-            @{!! Form::label('{{ $fieldName }}', 'Choose file', ['class' => 'custom-file-label']) !!}
+            <label for="{{ $fieldName }}" class="custom-file-label"><i class="bi bi-arrow-down-circle"></i></label>
+{{--            @{!! Form::label('{{ $fieldName }}', 'Choose file', ['class' => 'custom-file-label']) !!}--}}
         </div>
     </div>
 </div>

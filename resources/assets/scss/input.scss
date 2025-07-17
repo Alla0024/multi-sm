@@ -1,5 +1,11 @@
 @import "./variables";
+.tab-pane {
+    display: none !important;
+}
 
+.tab-pane.active {
+    display: flex !important;
+}
 
 .nav{
     background-color: $col_bg;
@@ -57,6 +63,26 @@ input, textarea, select{
     border: 1px solid $col_border;
     outline: none;
     width: 100%;
+}
+.image-upload{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+}
+input[type=file]{
+    display: none;
+}
+.custom-file-label{
+    width: auto !important;
+    color: white !important;
+    position: relative;
+    background-color: #007bff;
+    padding: 8px 10px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    height: max-content;
 }
 textarea{
     height: auto;

@@ -26,8 +26,14 @@
             @{!! Form::open(['route' => '{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.store']) !!}
 
             <div class="card-body">
-
-                <div class="row">
+                <ul class="nav nav-tabs" id="customTabs">
+                    @@foreach($inTabs as $tab)
+                        <li class="nav-item">
+                            <button class="nav-link active" type="button" data-tab="@{{$tab}}">@{{$word["tab_".$tab]}}</button>
+                        </li>
+                        @@endforeach
+                </ul>
+                <div class="row card-items">
                     @@include('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.fields')
                 </div>
 

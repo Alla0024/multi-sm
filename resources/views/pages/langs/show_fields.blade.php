@@ -26,17 +26,3 @@
 </div>
 
 
-<!-- Created At Field -->
-<div class="col-sm-12">
-    {!! Form::label('created_at', $word['title_created_at']) !!}
-    <p>{{ $lang->created_at }}</p>
-</div>
-
-
-<!-- Updated At Field -->
-<div class="col-sm-12">
-    {!! Form::label('updated_at', $word['title_updated_at']) !!}
-    <p>{{ $lang->updated_at }}</p>
-</div>
-
-

@@ -49,6 +49,9 @@
 
 .content, .container{
     background-color: $col_bg;
+    .action-item{
+        width: 100px;
+    }
     .card{
         border: 1px solid $col_border;
         background-color: $col_bg;
@@ -64,6 +67,13 @@
             padding-left: 6px;
             margin-top: 6px;
         }
+    }
+    .card-items{
+        padding: 20px;
+        border: 1px solid $col_border;
+        border-top: none;
+        --bs-gutter-x: 0;
+
     }
     .search-form{
         display: flex;

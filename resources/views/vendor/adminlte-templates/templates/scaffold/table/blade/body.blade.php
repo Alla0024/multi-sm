@@ -6,20 +6,20 @@
             <tr>
                 <form class="search-form" method="GET" action="">
                     @@if(isset($fields))
-                        @@foreach($fields as $field)
-                            @@if($field['name'] != 'id')
+                        @@foreach($fields as $index => $field)
+                            @@if($index != 'id' && $field['inTable'])
                                 <th class="">
                                     @@if(isset($field['searchable']) && $field['searchable'])
                                         <div class="">
                                             {{--                    <lable for="@{{ $field['name'] }}"></lable>--}}
-                                            <input type="text" name="@{{ $field['name'] }}" placeholder="@{{ $word['search_'.$field['name']] }}" value="@{{ request($field['name']) }}">
+                                            <input type="text" name="@{{ $index }}" placeholder="@{{ $word['search_'.$index] }}" value="@{{ request($index) }}">
                                         </div>
                                     @@endif
                                 </th>
                             @@endif
                         @@endforeach
                     @@endif
-                    <th class="butt-action">
+                    <th class="butt-action action-item">
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">@{{ $word['search'] }}</button>
                         <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.index') }}">@{{ $word['cancel'] }}</a>
                     </th>
@@ -27,9 +27,9 @@
             </tr>
             <tr>
                 @@if(isset($fields))
-                    @@foreach($fields as $field)
-                         @@if($field['name'] != 'id')
-                            <th>@{{ $word['title_'.$field['name']] }}</th>
+                    @@foreach($fields as $index => $field)
+                         @@if($index != 'id' && $field['inTable'])
+                            <th>@{{ $word['title_'.$index] }}</th>
                         @@endif
                     @@endforeach
                 @@endif
@@ -44,8 +44,14 @@
             @@foreach(${{ $config->modelNames->camelPlural }} as ${{ $config->modelNames->camel }})
                 <tr>
 
-                    {!! $fieldBody !!}
-                    <td  style="width: 120px">
+{{--                    {!! $fieldBody !!}--}}
+                    @@foreach($fields as $index => $field)
+                         @@if($field['inTable'])
+                            <td>@{{ ${!! $config->modelNames->camel !!}[$index] }}</td>
+                         @@endif
+                    @@endforeach
+
+                    <td  colspan="3">
                         @{!! Form::open(['route' => ['{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.destroy', ${{ $config->modelNames->camel }}->{{ $config->primaryName }}], 'method' => 'delete']) !!}
                         <div class='btn-group'>
                             <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.show', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"

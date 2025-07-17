@@ -4,7 +4,8 @@
     <div class="input-group">
         <div class="custom-file image-upload">
             {!! Form::file('image', ['class' => 'custom-file-input']) !!}
-            {!! Form::label('image', 'Choose file', ['class' => 'custom-file-label']) !!}
+            <label for="image" class="custom-file-label"><i class="bi bi-arrow-down-circle"></i></label>
+{{--            {!! Form::label('image', '', ['class' => 'custom-file-label']) !!}--}}
             <img src="" alt="Прев’ю" style="max-width: 200px; margin-top: 10px; display: none;">
         </div>
     </div>

@@ -1,6 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 
+    // Tab change
+    const buttons = document.querySelectorAll('[data-tab]');
+    const contents = document.querySelectorAll('[data-for-tab]');
+
+    function switchTab(tab) {
+        buttons.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tab);
+        });
+
+        contents.forEach(content => {
+            content.classList.toggle('active', content.dataset.forTab === tab);
+        });
+    }
+    if(buttons){
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                switchTab(button.dataset.tab);
+            });
+        });
+
+        // Ініціалізація
+        const active = document.querySelector('[data-tab].active');
+        if (active) switchTab(active.dataset.tab);
+    }
 
 
     // Input search
@@ -61,13 +86,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         input.addEventListener('change', (event) => {
             const file = event.target.files[0];
-            if (file) {
+
+            if (file && file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
                 };
                 reader.readAsDataURL(file);
+            } else {
+                // Якщо файл не зображення — сховати прев'ю
+                preview.src = '';
+                preview.style.display = 'none';
+                alert('Будь ласка, виберіть зображення (JPEG, PNG, WEBP...)');
             }
         });
     });

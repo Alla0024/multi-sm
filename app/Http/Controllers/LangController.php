@@ -21,6 +21,87 @@ class LangController extends AppBaseController
     {
         parent::__construct();
         $this->langRepository = $langRepo;
+        $this->fields = [
+            'code' => [
+                "dbType"=> "string",
+                "htmlType"=> "text",
+                "validations"=> "required|max:5",
+                "searchable"=> true,
+                "fillable"=> true,
+                "primary"=> false,
+                "inForm"=> true,
+                "inIndex"=> true,
+                "inView"=> true,
+                "inTable" => true,
+                "inTab" => 'main',
+            ],
+            'path' => [
+                "dbType"=> "string",
+                "htmlType"=> "text",
+                "validations"=> "nullable|max:5",
+                "searchable"=> false,
+                "fillable"=> true,
+                "primary"=> false,
+                "inForm"=> true,
+                "inIndex"=> true,
+                "inView"=> true,
+                "inTable" => true,
+                "inTab" => 'main',
+            ],
+            'status' => [
+                "dbType"=> "integer",
+                "htmlType"=> "checkbox",
+                "validations"=> "required",
+                "searchable"=> true,
+                "fillable"=> true,
+                "primary"=> false,
+                "inForm"=> true,
+                "inIndex"=> true,
+                "inView"=> true,
+                "inTable" => true,
+                "inTab" => 'main',
+            ],
+            'sort_order' => [
+                "dbType"=> "integer",
+                "htmlType"=> "number",
+                "validations"=> "required",
+                "searchable"=> true,
+                "fillable"=> true,
+                "primary"=> false,
+                "inForm"=> true,
+                "inIndex"=> true,
+                "inView"=> true,
+                "inTable" => true,
+                "inTab" => 'sort',
+            ],
+            'created_at' => [
+                "dbType"=> "timestamp",
+                "htmlType"=> "hidden",
+                "validations"=> "",
+                "searchable"=> false,
+                "fillable"=> true,
+                "primary"=> false,
+                "inForm"=> true,
+                "inIndex"=> true,
+                "inView"=> true,
+                "inTable" => false,
+                "inTab" => 'main',
+            ],
+            'updated_at' => [
+                "dbType"=> "timestamp",
+                "htmlType"=> "hidden",
+                "validations"=> "",
+                "searchable"=> false,
+                "fillable"=> true,
+                "primary"=> false,
+                "inForm"=> true,
+                "inIndex"=> true,
+                "inView"=> true,
+                "inTable" => false,
+                "inTab" => 'main',
+            ],
+        ];
+        $this->inTabs = array_unique(array_column($this->fields, 'inTab'));
     }
 
     /**
@@ -44,12 +125,98 @@ class LangController extends AppBaseController
         }
 
         $langs = $query->paginate($perPage);
-        $fields = [
 
-        ];
+
+//        $fields = [
+//    [
+//        "name" => "code",
+//        "dbType"=> "string",
+//        "htmlType"=> "text",
+//        "validations"=> "required|max:5",
+//        "searchable"=> true,
+//        "fillable"=> true,
+//        "primary"=> false,
+//        "inForm"=> true,
+//        "inIndex"=> true,
+//        "inView"=> true,
+//        "inTable" => true,
+//        "inTab" => 'main',
+//    ],
+//    [
+//        "name"=> "path",
+//        "dbType"=> "string",
+//        "htmlType"=> "text",
+//        "validations"=> "nullable|max:5",
+//        "searchable"=> false,
+//        "fillable"=> true,
+//        "primary"=> false,
+//        "inForm"=> true,
+//        "inIndex"=> true,
+//        "inView"=> true,
+//        "inTable" => true,
+//        "inTab" => 'main',
+//    ],
+//    [
+//        "name"=> "status",
+//        "dbType"=> "integer",
+//        "htmlType"=> "checkbox",
+//        "validations"=> "required",
+//        "searchable"=> true,
+//        "fillable"=> true,
+//        "primary"=> false,
+//        "inForm"=> true,
+//        "inIndex"=> true,
+//        "inView"=> true,
+//        "inTable" => true,
+//        "inTab" => 'main',
+//    ],
+//    [
+//        "name"=> "sort_order",
+//        "dbType"=> "integer",
+//        "htmlType"=> "number",
+//        "validations"=> "required",
+//        "searchable"=> true,
+//        "fillable"=> true,
+//        "primary"=> false,
+//        "inForm"=> true,
+//        "inIndex"=> true,
+//        "inView"=> true,
+//        "inTable" => true,
+//        "inTab" => 'sort',
+//    ],
+//    [
+//        "name"=> "created_at",
+//        "dbType"=> "timestamp",
+//        "htmlType"=> "hidden",
+//        "validations"=> "",
+//        "searchable"=> false,
+//        "fillable"=> true,
+//        "primary"=> false,
+//        "inForm"=> true,
+//        "inIndex"=> true,
+//        "inView"=> true,
+//        "inTable" => false,
+//        "inTab" => 'main',
+//    ],
+//    [
+//        "name"=> "updated_at",
+//        "dbType"=> "timestamp",
+//        "htmlType"=> "hidden",
+//        "validations"=> "",
+//        "searchable"=> false,
+//        "fillable"=> true,
+//        "primary"=> false,
+//        "inForm"=> true,
+//        "inIndex"=> true,
+//        "inView"=> true,
+//        "inTable" => false,
+//        "inTab" => 'main',
+//    ]
+//];
 
         $vars['langs'] = $langs;
-        $vars['fields'] = $fields;
+        $vars['fields'] = $this->fields;
+        $vars['inTabs'] = $this->inTabs;
         $this->template = 'pages.langs.index';
         return $this->renderOutput($vars);
 
@@ -123,7 +290,9 @@ class LangController extends AppBaseController
     {
 
         $this->template = 'pages.langs.create';
-        return $this->renderOutput();
+        $vars['fields'] = $this->fields;
+        $vars['inTabs'] = $this->inTabs;
+        return $this->renderOutput($vars);
     }
 
     /**
@@ -154,6 +323,8 @@ class LangController extends AppBaseController
         }
 
         $vars['lang'] = $lang;
+        $vars['fields'] = $this->fields;
+        $vars['inTabs'] = $this->inTabs;
         $this->template = 'pages.langs.show';
         return $this->renderOutput($vars);
     }
@@ -172,6 +343,8 @@ class LangController extends AppBaseController
         }
 
         $vars['lang'] = $lang;
+        $vars['fields'] = $this->fields;
+        $vars['inTabs'] = $this->inTabs;
         $this->template = 'pages.langs.edit';
         return $this->renderOutput($vars);
     }

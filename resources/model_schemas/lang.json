@@ -55,9 +55,9 @@
         "searchable": false,
         "fillable": true,
         "primary": false,
-        "inForm": true,
+        "inForm": false,
         "inIndex": true,
-        "inView": true
+        "inView": false
     },
     {
         "name": "updated_at",
@@ -67,8 +67,8 @@
         "searchable": false,
         "fillable": true,
         "primary": false,
-        "inForm": true,
+        "inForm": false,
         "inIndex": true,
-        "inView": true
+        "inView": false
     }
 ]
