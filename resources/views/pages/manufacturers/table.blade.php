@@ -6,20 +6,19 @@
             <tr>
                 <form class="search-form" method="GET" action="">
                     @if(isset($fields))
-                        @foreach($fields as $field)
-                            @if($field['name'] != 'id')
+                        @foreach($fields as $index => $field)
+                            @if($index != 'id' && $field['inTable'])
                                 <th class="">
                                     @if(isset($field['searchable']) && $field['searchable'])
                                         <div class="">
-
-                                            <input type="text" name="{{ $field['name'] }}" placeholder="{{ $word['search_'.$field['name']] }}" value="{{ request($field['name']) }}">
+                                            <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
                                         </div>
                                     @endif
                                 </th>
                             @endif
                         @endforeach
                     @endif
-                    <th class="butt-action">
+                    <th class="butt-action action-item">
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
                         <a href="{{ route('manufacturers.index') }}">{{ $word['cancel'] }}</a>
                     </th>
@@ -27,9 +26,9 @@
             </tr>
             <tr>
                 @if(isset($fields))
-                    @foreach($fields as $field)
-                         @if($field['name'] != 'id')
-                            <th>{{ $word['title_'.$field['name']] }}</th>
+                    @foreach($fields as $index => $field)
+                         @if($index != 'id' && $field['inTable'])
+                            <th>{{ $word['title_'.$index] }}</th>
                         @endif
                     @endforeach
                 @endif
@@ -37,13 +36,17 @@
             </tr>
             </thead>
             <tbody>
-
             @foreach($manufacturers as $manufacturer)
                 <tr>
-                    <td>{{ $manufacturer->image }}</td>
 
-                    <td>{{ $manufacturer->sort_order }}</td>
-                    <td  style="width: 120px">
+
+                    @foreach($fields as $index => $field)
+                         @if($index != 'id' && $field['inTable'])
+                            <td>{{ $manufacturer[$index] }}</td>
+                         @endif
+                    @endforeach
+
+                    <td  >
                         {!! Form::open(['route' => ['manufacturers.destroy', $manufacturer->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
                             <a href="{{ route('manufacturers.show', [$manufacturer->id]) }}"

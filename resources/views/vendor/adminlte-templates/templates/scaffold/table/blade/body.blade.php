@@ -46,7 +46,7 @@
 
 {{--                    {!! $fieldBody !!}--}}
                     @@foreach($fields as $index => $field)
-                         @@if($field['inTable'])
+                         @@if($index != 'id' && $field['inTable'])
                             <td>@{{ ${!! $config->modelNames->camel !!}[$index] }}</td>
                          @@endif
                     @@endforeach

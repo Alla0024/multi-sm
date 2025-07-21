@@ -9,8 +9,7 @@
         "name": "sort_order",
         "dbType": "integer",
         "htmlType": "number",
-        "validations": "required",
-        ''
+        "validations": "required"
     }
 ]
 

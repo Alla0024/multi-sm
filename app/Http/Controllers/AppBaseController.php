@@ -40,10 +40,16 @@ class AppBaseController extends BaseController
     {
         $defaultWord = Lang::has('default') ? Lang::get('default') : [];
 
-        $langFile = $this->template ? Str::between($this->template, 'pages.', '.') : null;
+        if ($this->template && Str::startsWith($this->template, 'pages.')) {
+            $withoutPrefix = Str::after($this->template, 'pages.');
+            $langFile = Str::beforeLast($withoutPrefix, '.');
 
-        $this->vars['word'] += ($langFile && Lang::has($langFile))
-            ? Lang::get($langFile)
-            : $defaultWord;
+            if (Lang::has($langFile)) {
+                $this->vars['word'] += Lang::get($langFile);
+                return;
+            }
+        }
+
+        $this->vars['word'] += $defaultWord;
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Models\Lang;
-use App\Repositories\BaseRepository;
+use App\Models\Manufacturer;
+use Illuminate\Database\Eloquent\Builder;
 
-class LangRepository extends BaseRepository
+class ManufacturerDescriptionRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'code'
+        'name',
     ];
 
     public function getFieldsSearchable(): array
@@ -18,6 +18,6 @@ class LangRepository extends BaseRepository
 
     public function model(): string
     {
-        return Lang::class;
+        return Manufacturer::class;
     }
 }

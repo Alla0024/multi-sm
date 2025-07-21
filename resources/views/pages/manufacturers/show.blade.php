@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('pages..manufacturers.show_fields')
+                    @include('pages.manufacturers.show_fields')
                 </div>
             </div>
         </div>

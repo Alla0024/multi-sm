@@ -22,8 +22,15 @@
             {!! Form::model($manufacturer, ['route' => ['manufacturers.update', $manufacturer->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
-                <div class="row">
-                    @include('pages..manufacturers.fields')
+                <ul class="nav nav-tabs" id="customTabs">
+                    @foreach($inTabs as $tab)
+                        <li class="nav-item">
+                            <button class="nav-link active" type="button" data-tab="{{$tab}}">{{$word["tab_".$tab]}}</button>
+                        </li>
+                    @endforeach
+                </ul>
+                <div class="row card-items">
+                    @include('pages.manufacturers.fields')
                 </div>
             </div>
 

@@ -11,7 +11,9 @@ use {{ $config->namespaces->request }}\Create{{ $config->modelNames->name }}Requ
 use {{ $config->namespaces->request }}\Update{{ $config->modelNames->name }}Request;
 use {{ $config->namespaces->app }}\Http\Controllers\AppBaseController;
 use {{ $config->namespaces->repository }}\{{ $config->modelNames->name }}Repository;
+use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
+use App\Models\{{ $config->modelNames->name }};
 use Flash;
 
 class {{ $config->modelNames->name }}Controller extends AppBaseController
@@ -21,6 +23,8 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
 
     public function __construct({{ $config->modelNames->name }}Repository ${{ $config->modelNames->camel }}Repo)
     {
+        parent::__construct();
+
         $this->{{ $config->modelNames->camel }}Repository = ${{ $config->modelNames->camel }}Repo;
     }
 
@@ -34,7 +38,9 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
      */
     public function create()
     {
-        return view('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.create');
+        $this->template = 'pages.{{ $config->modelNames->snakePlural }}.create';
+
+        return $this->renderOutput();
     }
 
     /**
@@ -60,8 +66,10 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
 
         @include('laravel-generator::scaffold.controller.messages.not_found')
 
-        return view('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.show')->with('{{ $config->modelNames->camel }}', ${{ $config->modelNames->camel }});
-    }
+        $this->template = 'pages.{{ $config->modelNames->snakePlural }}.show';
+
+        return $this->renderOutput(compact('{{ $config->modelNames->camel }}'));
+}
 
     /**
      * Show the form for editing the specified {{ $config->modelNames->name }}.
@@ -72,7 +80,9 @@ class {{ $config->modelNames->name }}Controller extends AppBaseController
 
         @include('laravel-generator::scaffold.controller.messages.not_found')
 
-        return view('{{ $config->prefixes->getViewPrefixForInclude() }}{{ $config->modelNames->snakePlural }}.edit')->with('{{ $config->modelNames->camel }}', ${{ $config->modelNames->camel }});
+        $this->template = 'pages.{{ $config->modelNames->snakePlural }}.edit';
+
+        return $this->renderOutput(compact('{{ $config->modelNames->camel }}'));
     }
 
     /**
