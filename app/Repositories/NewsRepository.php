@@ -2,19 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Models\New;
+use App\Models\News;
 use App\Repositories\BaseRepository;
 
-class NewRepository extends BaseRepository
+class NewsRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'category_id',
-        'author_id',
-        'thumbnail',
-        'sort_order',
         'status',
-        'shared_on_facebook',
-        'shared_on_twitter',
         'reviews_count',
         'reviews_rating'
     ];
@@ -26,6 +20,6 @@ class NewRepository extends BaseRepository
 
     public function model(): string
     {
-        return New::class;
+        return News::class;
     }
 }

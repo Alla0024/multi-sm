@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\New;
+use App\Models\News;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateNewRequest extends FormRequest
+class CreateNewsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,6 @@ class UpdateNewRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = New::$rules;
-        
-        return $rules;
+        return News::$rules;
     }
 }

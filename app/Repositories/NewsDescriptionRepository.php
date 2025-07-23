@@ -8,8 +8,6 @@ use App\Repositories\BaseRepository;
 class NewsDescriptionRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'news_category_id',
-        'language_id',
         'name'
     ];
 

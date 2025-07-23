@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\NewsToProduct;
+use App\Models\News;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateNewsToProductRequest extends FormRequest
+class UpdateNewsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class UpdateNewsToProductRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = NewsToProduct::$rules;
-        
+        $rules = News::$rules;
+
         return $rules;
     }
 }

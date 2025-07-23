@@ -8,8 +8,6 @@ use App\Repositories\BaseRepository;
 class NewsToProductRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'product_id',
-        'sort_order'
     ];
 
     public function getFieldsSearchable(): array

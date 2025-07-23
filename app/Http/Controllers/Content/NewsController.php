@@ -2,38 +2,40 @@
 
 namespace App\Http\Controllers\Content;
 
-use App\Http\Requests\CreateNewRequest;
-use App\Http\Requests\UpdateNewRequest;
+use App\Http\Requests\CreateNewsRequest;
+use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\NewRepository;
+use App\Models\NewsDescription;
+use App\Repositories\NewsRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
-use App\Models\New;
+use App\Models\News;
 use Flash;
 
-class NewController extends AppBaseController
+class NewsController extends AppBaseController
 {
-    /** @var NewRepository $newRepository*/
-    private $newRepository;
+    /** @var NewsRepository $newsRepository*/
+    private $newsRepository;
 
-    public function __construct(NewRepository $newRepo)
+    public function __construct(NewsRepository $newsRepo)
     {
         parent::__construct();
 
-        $this->newRepository = $newRepo;
+        $this->newsRepository = $newsRepo;
     }
 
     /**
-     * Display a listing of the New.
+     * Display a listing of the News.
      */
     public function index(Request $request)
     {
         $perPage = $request->input('perPage', 10);
 
-        $news = $this->newRepository->paginate($perPage);
+        $news = $this->newsRepository->paginate($perPage);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            New::class
+            News::class,
+            NewsDescription::class,
         ]);
 
         $this->template = 'pages.news.index';
@@ -46,7 +48,7 @@ class NewController extends AppBaseController
 
 
     /**
-     * Show the form for creating a new New.
+     * Show the form for creating a new News.
      */
     public function create()
     {
@@ -56,28 +58,28 @@ class NewController extends AppBaseController
     }
 
     /**
-     * Store a newly created New in storage.
+     * Store a newly created News in storage.
      */
-    public function store(CreateNewRequest $request)
+    public function store(CreateNewsRequest $request)
     {
         $input = $request->all();
 
-        $new = $this->newRepository->create($input);
+        $new = $this->newsRepository->create($input);
 
-        Flash::success('New saved successfully.');
+        Flash::success('News saved successfully.');
 
         return redirect(route('news.index'));
     }
 
     /**
-     * Display the specified New.
+     * Display the specified News.
      */
     public function show($id)
     {
-        $new = $this->newRepository->find($id);
+        $new = $this->newsRepository->find($id);
 
         if (empty($new)) {
-            Flash::error('New not found');
+            Flash::error('News not found');
 
             return redirect(route('news.index'));
         }
@@ -88,14 +90,14 @@ class NewController extends AppBaseController
 }
 
     /**
-     * Show the form for editing the specified New.
+     * Show the form for editing the specified News.
      */
     public function edit($id)
     {
-        $new = $this->newRepository->find($id);
+        $new = $this->newsRepository->find($id);
 
         if (empty($new)) {
-            Flash::error('New not found');
+            Flash::error('News not found');
 
             return redirect(route('news.index'));
         }
@@ -106,43 +108,43 @@ class NewController extends AppBaseController
     }
 
     /**
-     * Update the specified New in storage.
+     * Update the specified News in storage.
      */
-    public function update($id, UpdateNewRequest $request)
+    public function update($id, UpdateNewsRequest $request)
     {
-        $new = $this->newRepository->find($id);
+        $new = $this->newsRepository->find($id);
 
         if (empty($new)) {
-            Flash::error('New not found');
+            Flash::error('News not found');
 
             return redirect(route('news.index'));
         }
 
-        $new = $this->newRepository->update($request->all(), $id);
+        $new = $this->newsRepository->update($request->all(), $id);
 
-        Flash::success('New updated successfully.');
+        Flash::success('News updated successfully.');
 
         return redirect(route('news.index'));
     }
 
     /**
-     * Remove the specified New from storage.
+     * Remove the specified News from storage.
      *
      * @throws \Exception
      */
     public function destroy($id)
     {
-        $new = $this->newRepository->find($id);
+        $new = $this->newsRepository->find($id);
 
         if (empty($new)) {
-            Flash::error('New not found');
+            Flash::error('News not found');
 
             return redirect(route('news.index'));
         }
 
-        $this->newRepository->delete($id);
+        $this->newsRepository->delete($id);
 
-        Flash::success('New deleted successfully.');
+        Flash::success('News deleted successfully.');
 
         return redirect(route('news.index'));
     }
