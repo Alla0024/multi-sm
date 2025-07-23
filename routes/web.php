@@ -71,7 +71,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
         Route::resource('questions', 'Content\QuestionController');
         Route::resource('answers', 'Content\AnswerController');
-        Route::resource('news', 'Content\NewsController');
+        // Route::resource('news', 'Content\NewsController');
         Route::resource('article_authors', 'Content\ArticleAuthorController');
         Route::resource('vacancies', 'Content\VacancyController');
         Route::resource('filling', 'Content\FillingController');
