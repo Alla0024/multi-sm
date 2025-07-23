@@ -43,18 +43,19 @@ class ModelSchemaHelper
         $primaryKey = $model->getKeyName();
 
         return collect($columns)->mapWithKeys(function ($column) use ($searchable, $fillable, $primaryKey) {
+            $isSearchable = in_array($column, $searchable);
             return [
                 $column => [
                     'dbType' => self::dbTypeFromName($column),
                     'htmlType' => self::htmlTypeFromName($column),
                     'validations' => self::validation($column),
-                    'searchable' => in_array($column, $searchable),
+                    'searchable' => $isSearchable,
                     'fillable' => in_array($column, $fillable),
                     'primary' => $column === $primaryKey,
                     'inForm' => true,
                     'inIndex' => true,
                     'inView' => true,
-                    "inTable" => true,
+                    "inTable" => $isSearchable,
                     "inTab" => 'main',
                 ],
             ];
@@ -77,6 +78,7 @@ class ModelSchemaHelper
             Str::contains($name, 'email') => 'email',
             Str::contains($name, 'status') => 'checkbox',
             Str::contains($name, 'order') => 'number',
+            Str::contains($name, 'descriptions') => 'text',
             Str::contains($name, 'date'), Str::contains($name, 'at') => 'hidden',
             default => 'text',
         };
