@@ -39,33 +39,33 @@ class News extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function author()
     {
-        return $this->belongsTo(\App\Models\ArticleAuthor::class, 'author_id');
+        return $this->belongsTo(ArticleAuthor::class, 'author_id');
     }
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function category()
     {
-        return $this->belongsTo(\App\Models\Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function newsCategories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function newsCategories()
     {
-        return $this->belongsToMany(\App\Models\NewsCategory::class, 'news_to_news_categories');
+        return $this->belongsToMany(NewsCategory::class, 'news_to_news_categories');
     }
 
-    public function languages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function languages()
     {
-        return $this->belongsToMany(\App\Models\Language::class, 'news_descriptions');
+        return $this->belongsToMany(Language::class, 'news_descriptions');
     }
 
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function products()
     {
-        return $this->belongsToMany(\App\Models\Product::class, 'new_to_products');
+        return $this->belongsToMany(Product::class, 'new_to_products');
     }
 
-    public function category1s(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function category1s()
     {
-        return $this->belongsToMany(\App\Models\Category::class, 'new_to_categories');
+        return $this->belongsToMany(Category::class, 'new_to_categories');
     }
 }

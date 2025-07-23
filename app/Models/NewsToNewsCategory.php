@@ -22,13 +22,13 @@ class NewsToNewsCategory extends Model
         'news_category_id' => 'required'
     ];
 
-//    public function newsCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-//    {
-//        return $this->belongsTo(\App\Models\NewsCategory::class, 'news_category_id');
-//    }
-
-    public function news(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function newsCategory()
     {
-        return $this->belongsTo(\App\Models\News::class, 'news_id');
+        return $this->belongsTo(NewsCategory::class, 'news_category_id');
+    }
+
+    public function news()
+    {
+        return $this->belongsTo(News::class, 'news_id');
     }
 }
