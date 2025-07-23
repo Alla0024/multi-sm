@@ -40,3 +40,24 @@
         <p>News</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('newsDescriptions.index') }}" class="nav-link {{ Request::is('newsDescriptions*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>News Descriptions</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('newsToNewsCategories.index') }}" class="nav-link {{ Request::is('newsToNewsCategories*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>News To News Categories</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('newsToProducts.index') }}" class="nav-link {{ Request::is('newsToProducts*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>News To Products</p>
+    </a>
+</li>

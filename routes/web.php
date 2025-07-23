@@ -223,3 +223,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
 
 Route::resource('news', App\Http\Controllers\Content\NewController::class);
+Route::resource('news-descriptions', App\Http\Controllers\Content\NewsDescriptionController::class);
+Route::resource('news-to-news-categories', App\Http\Controllers\Content\NewsToNewsCategoryController::class);
+Route::resource('news-to-products', App\Http\Controllers\Content\NewsToProductController::class);
