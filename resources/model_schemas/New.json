@@ -1,0 +1,170 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigInteger,true",
+        "htmlType": "number",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "category_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "author_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "thumbnail",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:255|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "sort_order",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "status",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "shared_on_facebook",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "shared_on_twitter",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "reviews_count",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "reviews_rating",
+        "dbType": "float",
+        "htmlType": "number",
+        "validations": "required|numeric|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "created_at",
+        "dbType": "dateTimeTz",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "dateTimeTz",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,ArticleAuthor,author_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Category,category_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,NewsCategory,news_to_news_categories"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Language,news_descriptions"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Product,new_to_products"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Category,new_to_categories"
+    }
+]

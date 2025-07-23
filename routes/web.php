@@ -221,3 +221,5 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
     });
 });
 
+
+Route::resource('news', App\Http\Controllers\Content\NewController::class);
