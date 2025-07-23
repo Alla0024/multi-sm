@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateNewRequest;
 use App\Http\Requests\UpdateNewRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\News;
 use App\Repositories\NewRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
-use App\Models\New;
 use Flash;
 
-class NewController extends AppBaseController
+class NewsController extends AppBaseController
 {
     /** @var NewRepository $newRepository*/
     private $newRepository;
@@ -33,7 +33,7 @@ class NewController extends AppBaseController
         $news = $this->newRepository->paginate($perPage);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            New::class
+            News::class
         ]);
 
         $this->template = 'pages.news.index';

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\New;
+use App\Models\News;
 use App\Repositories\BaseRepository;
 
 class NewRepository extends BaseRepository
@@ -26,6 +26,6 @@ class NewRepository extends BaseRepository
 
     public function model(): string
     {
-        return New::class;
+        return News::class;
     }
 }

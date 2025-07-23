@@ -36,6 +36,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('languages', 'App\Http\Controllers\Content\LanguageController');
         Route::resource('stores', 'App\Http\Controllers\Content\StoreController');
         Route::resource('manufacturers', 'App\Http\Controllers\Content\ManufacturerController');
+        Route::resource('news', 'App\Http\Controllers\Content\NewsController');
         Route::resource('langs', App\Http\Controllers\LangController::class);
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('seodata', 'Content\SeoDataController');
@@ -68,7 +69,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
         Route::resource('questions', 'Content\QuestionController');
         Route::resource('answers', 'Content\AnswerController');
-        Route::resource('news', 'Content\NewsController');
         Route::resource('article_authors', 'Content\ArticleAuthorController');
         Route::resource('vacancies', 'Content\VacancyController');
         Route::resource('filling', 'Content\FillingController');
@@ -222,7 +222,3 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 });
 
 
-Route::resource('news', App\Http\Controllers\Content\NewController::class);
-Route::resource('news-descriptions', App\Http\Controllers\Content\NewsDescriptionController::class);
-Route::resource('news-to-news-categories', App\Http\Controllers\Content\NewsToNewsCategoryController::class);
-Route::resource('news-to-products', App\Http\Controllers\Content\NewsToProductController::class);
