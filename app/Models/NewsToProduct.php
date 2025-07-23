@@ -22,13 +22,13 @@ class NewsToProduct extends Model
         'sort_order' => 'required'
     ];
 
-    public function news(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function news()
     {
-        return $this->belongsTo(\App\Models\News::class, 'news_id');
+        return $this->belongsTo(News::class, 'news_id');
     }
 
-//    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-//    {
-//        return $this->belongsTo(\App\Models\Product::class, 'product_id');
-//    }
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

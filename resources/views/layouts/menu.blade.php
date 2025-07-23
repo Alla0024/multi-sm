@@ -61,3 +61,31 @@
         <p>News To Products</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('information.index') }}" class="nav-link {{ Request::is('information*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Information</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('informationDescriptions.index') }}" class="nav-link {{ Request::is('informationDescriptions*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Information Descriptions</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('newsCategories.index') }}" class="nav-link {{ Request::is('newsCategories*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>News Categories</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('newsCategoryDescriptions.index') }}" class="nav-link {{ Request::is('newsCategoryDescriptions*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>News Category Descriptions</p>
+    </a>
+</li>
