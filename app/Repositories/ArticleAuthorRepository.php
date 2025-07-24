@@ -8,7 +8,6 @@ use App\Repositories\BaseRepository;
 class ArticleAuthorRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'avatar',
         'date_of_birth',
         'facebook',
         'instagram'

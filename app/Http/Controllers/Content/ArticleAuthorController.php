@@ -52,7 +52,13 @@ class ArticleAuthorController extends AppBaseController
     {
         $this->template = 'pages.article_authors.create';
 
-        return $this->renderOutput();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            ArticleAuthor::class,
+        ]);
+        return $this->renderOutput([
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**
@@ -102,7 +108,14 @@ class ArticleAuthorController extends AppBaseController
 
         $this->template = 'pages.article_authors.edit';
 
-        return $this->renderOutput(compact('articleAuthor'));
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            ArticleAuthor::class,
+        ]);
+        return $this->renderOutput([
+            'articleAuthor' => $articleAuthor,
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**
