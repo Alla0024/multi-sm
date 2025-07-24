@@ -1,7 +1,7 @@
 <div class="card-body p-0">
 
     <div class="table-responsive">
-        <table class="table" id="news-categories-table">
+        <table class="table" id="news_categories-table">
             <thead>
             <tr>
                 <form class="search-form" method="GET" action="">
@@ -20,6 +20,8 @@
                         @endforeach
                     @endif
                     <th class="butt-action action-item">
+                        <span class="hide"></span>
+                        <span class="hide">newsCategories</span>
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
                         <a href="{{ route('newsCategories.index') }}">{{ $word['cancel'] }}</a>
                     </th>

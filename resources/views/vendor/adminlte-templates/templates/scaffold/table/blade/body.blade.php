@@ -20,6 +20,9 @@
                         @@endforeach
                     @@endif
                     <th class="butt-action action-item">
+                        <span class="hide">{!! $config->prefixes->getRoutePrefixWith('.') !!}</span>
+                        <span class="hide">{!! $config->modelNames->camelPlural !!}</span>
+                        <span class="hide">{!! $config->modelNames->dashedPlural !!}</span>
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">@{{ $word['search'] }}</button>
                         <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.index') }}">@{{ $word['cancel'] }}</a>
                     </th>

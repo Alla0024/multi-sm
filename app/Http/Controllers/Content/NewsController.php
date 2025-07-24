@@ -53,8 +53,14 @@ class NewsController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.news.create';
-
-        return $this->renderOutput();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            News::class,
+            NewsDescription::class,
+        ]);
+        return $this->renderOutput([
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**
@@ -101,10 +107,17 @@ class NewsController extends AppBaseController
 
             return redirect(route('news.index'));
         }
-
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            News::class,
+            NewsDescription::class,
+        ]);
         $this->template = 'pages.news.edit';
 
-        return $this->renderOutput(compact('new'));
+        return $this->renderOutput([
+            'new' => $new,
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**

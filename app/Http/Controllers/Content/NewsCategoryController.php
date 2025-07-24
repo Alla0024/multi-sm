@@ -53,8 +53,14 @@ class NewsCategoryController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.news_categories.create';
-
-        return $this->renderOutput();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            NewsCategory::class,
+            NewsCategoryDescription::class
+        ]);
+        return $this->renderOutput([
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**
@@ -101,10 +107,17 @@ class NewsCategoryController extends AppBaseController
 
             return redirect(route('newsCategories.index'));
         }
-
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            NewsCategory::class,
+            NewsCategoryDescription::class
+        ]);
         $this->template = 'pages.news_categories.edit';
 
-        return $this->renderOutput(compact('newsCategory'));
+        return $this->renderOutput([
+            'newsCategory' => $newsCategory,
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**

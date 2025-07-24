@@ -1,3 +1,5 @@
 <div class="row">
-    {!! $records->appends(request()->all())->links() !!}
+    @if(method_exists($records, 'appends'))
+        {!! $records->appends(request()->all())->links() !!}
+    @endif
 </div>

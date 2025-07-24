@@ -1,4 +1,5 @@
-<div class="sidebar-customer" :class="{'sidebar_hide':Alpine.store('page').sidebar_hide}">
+@isset($word)
+    <div class="sidebar-customer" :class="{'sidebar_hide':Alpine.store('page').sidebar_hide}">
 
     <div class="logo">
         <img width="40" :class="{'hide_opacity': Alpine.store('page').sidebar_hide}" :src="$store.page.theme == 'dark' ? '/images/common/logo_new_light.png' : '/images/common/logo_new_light.png'" alt="">
@@ -10,39 +11,45 @@
             <div class="name">Головна</div>
         </a>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is('aikqweu/example*') ? 'true' : 'false' }}}">
-            <div class="item {{ Request::is('aikqweu/example*') ? 'active' : '' }}" @click="open_list = !open_list">
-                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
-                <div class="name">Example</div>
-                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
-            </div>
-            <div class="list" :class="{'list-open': open_list}">
-                <a class="item {{ Request::is('aikqweu/example') ? 'active' : '' }}" href="{{asset('/aikqweu/example')}}">Form</a>
-                <a class="item {{ Request::is('aikqweu/example/edit*') ? 'active' : '' }}" href="{{asset('/aikqweu/example/edit')}}">Inputs</a>
-            </div>
-        </div>
+{{--        <div class="item-list" x-data="{open_list: {{ Request::is('aikqweu/example*') ? 'true' : 'false' }}}">--}}
+{{--            <div class="item {{ Request::is('aikqweu/example*') ? 'active' : '' }}" @click="open_list = !open_list">--}}
+{{--                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>--}}
+{{--                <div class="name">Example</div>--}}
+{{--                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>--}}
+{{--            </div>--}}
+{{--            <div class="list" :class="{'list-open': open_list}">--}}
+{{--                <a class="item {{ Request::is('aikqweu/example') ? 'active' : '' }}" href="{{asset('/aikqweu/example')}}">Form</a>--}}
+{{--                <a class="item {{ Request::is('aikqweu/example/edit*') ? 'active' : '' }}" href="{{asset('/aikqweu/example/edit')}}">Inputs</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
-        <a href="{{ route('languages.index') }}" class="item {{ Request::is('aikqweu/languages*') ? 'active' : '' }}">
-            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
-            <div class="name">Languages</div>
-        </a>
-        <a href="{{ route('stores.index') }}" class="item {{ Request::is('aikqweu/stores*') ? 'active' : '' }}">
-            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
-            <div class="name">Stores</div>
-        </a>
+{{--        <a href="{{ route('languages.index') }}" class="item {{ Request::is('aikqweu/languages*') ? 'active' : '' }}">--}}
+{{--            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>--}}
+{{--            <div class="name">Languages</div>--}}
+{{--        </a>--}}
+{{--        <a href="{{ route('stores.index') }}" class="item {{ Request::is('aikqweu/stores*') ? 'active' : '' }}">--}}
+{{--            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>--}}
+{{--            <div class="name">Stores</div>--}}
+{{--        </a>--}}
+
 
         <a href="{{ route('manufacturers.index') }}" class="item {{ Request::is('aikqweu/manufacturers*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
-            <div class="name">Manufacturers</div>
+            <div class="name">{{$word['menu_manufacturers']}}</div>
         </a>
-        <a href="{{ route('langs.index') }}" class="item {{ Request::is('aikqweu/langs*') ? 'active' : '' }}">
-            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
-            <div class="name">Langs</div>
-        </a>
-        <a href="{{ route('news.index') }}" class="item {{ Request::is('aikqweu/news*') ? 'active' : '' }}">
-            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
-            <div class="name">News</div>
-        </a>
+
+        <div class="item-list" x-data="{open_list: {{ Request::is(['aikqweu/news*', 'aikqweu/information*']) ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is(['aikqweu/news*', 'aikqweu/information*']) ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
+                <div class="name">{{$word['menu_new']}}</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is('aikqweu/information') ? 'active' : '' }}" href="{{ route('information.index') }}">{{$word['menu_informations']}}</a>
+                <a class="item {{ Request::is('aikqweu/news') ? 'active' : '' }}" href="{{ route('news.index') }}">{{$word['menu_news']}}</a>
+                <a class="item {{ Request::is('aikqweu/newsCategories*') ? 'active' : '' }}" href="{{ route('newsCategories.index') }}">News category</a>
+            </div>
+        </div>
 
 {{--        <a href="{{ route('manufacturerDescriptions.index') }}" class="item {{ Request::is('aikqweu/manufacturerDescriptions*') ? 'active' : '' }}">--}}
 {{--            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>--}}
@@ -51,6 +58,7 @@
 
     </div>
 </div>
+@endisset
 
 
 

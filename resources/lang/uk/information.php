@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'Information' => 'Інформація',
+    'title_id' => 'ID',
+    'search_id' => 'Пошук за ID',
+    'title_sort_order' => 'Порядок сортування',
+    'search_sort_order' => 'Пошук за порядком сортування',
+    'title_status' => 'Статус',
+    'search_status' => 'Пошук за статусом',
+    'title_show_blocks' => 'Показати блоки',
+    'search_show_blocks' => 'Пошук за блоками',
+    'title_created_at' => 'Дата створення',
+    'search_created_at' => 'Пошук за датою створення',
+    'title_updated_at' => 'Дата оновлення',
+    'search_updated_at' => 'Пошук за датою оновлення',
+    'title_information_id' => 'ID інформації',
+    'search_information_id' => 'Пошук за ID інформації',
+    'title_language_id' => 'ID мови',
+    'search_language_id' => 'Пошук за ID мови',
+    'title_name' => 'Назва',
+    'search_name' => 'Пошук за назвою',
+    'title_description' => 'Опис',
+    'search_description' => 'Пошук за описом',
+    'tab_main' => 'Основна вкладка',
+    'tab_sort' => 'Сортування',
+];

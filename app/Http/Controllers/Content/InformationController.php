@@ -53,8 +53,14 @@ class InformationController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.information.create';
-
-        return $this->renderOutput();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Information::class,
+            InformationDescription::class,
+        ]);
+        return $this->renderOutput([
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**
@@ -101,10 +107,17 @@ class InformationController extends AppBaseController
 
             return redirect(route('information.index'));
         }
-
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Information::class,
+            InformationDescription::class,
+        ]);
         $this->template = 'pages.information.edit';
 
-        return $this->renderOutput(compact('information'));
+        return $this->renderOutput([
+            'information' => $information,
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**

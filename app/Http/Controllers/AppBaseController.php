@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ModelSchemaHelper;
+use App\Models\Information;
+use App\Models\InformationDescription;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsCategoryDescription;
@@ -67,8 +69,8 @@ class AppBaseController extends BaseController
     {
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            News::class,
-            NewsCategoryDescription::class
+            Information::class,
+            InformationDescription::class,
         ]);
 
         $lang = [
