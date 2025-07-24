@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ModelSchemaHelper;
+use App\Models\ArticleAuthor;
 use App\Models\Information;
 use App\Models\InformationDescription;
 use App\Models\News;
@@ -54,7 +55,7 @@ class AppBaseController extends BaseController
                 $this->vars['word'] += Lang::get($langFile);
                 return;
             } else {
-//                $this->generateLangFileFromFields($langFile);
+                $this->generateLangFileFromFields($langFile);
 
                 if (Lang::has($langFile)) {
                     $this->vars['word'] += Lang::get($langFile);
@@ -69,8 +70,7 @@ class AppBaseController extends BaseController
     {
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            Information::class,
-            InformationDescription::class,
+            ArticleAuthor::class,
         ]);
 
         $lang = [

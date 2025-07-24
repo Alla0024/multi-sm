@@ -89,3 +89,10 @@
         <p>News Category Descriptions</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('articleAuthors.index') }}" class="nav-link {{ Request::is('articleAuthors*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Article Authors</p>
+    </a>
+</li>
