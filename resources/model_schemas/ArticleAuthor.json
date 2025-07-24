@@ -1,0 +1,70 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigInteger,true",
+        "htmlType": "number",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "avatar",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255|nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "date_of_birth",
+        "dbType": "date",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "facebook",
+        "dbType": "text",
+        "htmlType": "textarea",
+        "validations": "required|string|string",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "instagram",
+        "dbType": "text",
+        "htmlType": "textarea",
+        "validations": "required|string|string",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Language,article_author_descriptions"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,News,author_id"
+    }
+]
