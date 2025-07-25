@@ -38,7 +38,7 @@
     {
         "name": "facebook",
         "dbType": "text",
-        "htmlType": "textarea",
+        "htmlType": "text",
         "validations": "required|string|string",
         "searchable": true,
         "fillable": true,
@@ -50,7 +50,7 @@
     {
         "name": "instagram",
         "dbType": "text",
-        "htmlType": "textarea",
+        "htmlType": "text",
         "validations": "required|string|string",
         "searchable": true,
         "fillable": true,

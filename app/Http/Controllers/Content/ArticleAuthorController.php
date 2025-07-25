@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateArticleAuthorRequest;
 use App\Http\Requests\UpdateArticleAuthorRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\FirstPathQuery;
 use App\Repositories\ArticleAuthorRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -54,6 +55,7 @@ class ArticleAuthorController extends AppBaseController
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ArticleAuthor::class,
+            FirstPathQuery::class
         ]);
         return $this->renderOutput([
             'fields' => $fields,
@@ -80,13 +82,16 @@ class ArticleAuthorController extends AppBaseController
      */
     public function show($id)
     {
-        $articleAuthor = $this->articleAuthorRepository->find($id);
+        $articleAuthor = $this->articleAuthorRepository->find($id)->first();
 
         if (empty($articleAuthor)) {
             Flash::error('Article Author not found');
 
             return redirect(route('articleAuthors.index'));
         }
+
+        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'authors')->value('path');;
+        $articleAuthor->setAttribute('path', $seoUrl);
 
         $this->template = 'pages.article_authors.show';
 
@@ -106,10 +111,14 @@ class ArticleAuthorController extends AppBaseController
             return redirect(route('articleAuthors.index'));
         }
 
+        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'authors')->value('path');;
+        $articleAuthor->setAttribute('path', $seoUrl);
+
         $this->template = 'pages.article_authors.edit';
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ArticleAuthor::class,
+            FirstPathQuery::class
         ]);
         return $this->renderOutput([
             'articleAuthor' => $articleAuthor,

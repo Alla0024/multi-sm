@@ -11,6 +11,7 @@ return [
     'title_facebook' => 'Facebook',
     'search_facebook' => 'Пошук за Facebook',
     'title_instagram' => 'Instagram',
+    'title_path' => 'Seo-url',
     'search_instagram' => 'Пошук за Instagram',
     'tab_main' => 'Основна вкладка',
     'tab_sort' => 'Сортування',

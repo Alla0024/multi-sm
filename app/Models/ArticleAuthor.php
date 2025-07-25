@@ -25,8 +25,8 @@ class ArticleAuthor extends Model
     public static array $rules = [
         'avatar' => 'nullable|string|max:255',
         'date_of_birth' => 'nullable',
-        'facebook' => 'required|string',
-        'instagram' => 'required|string'
+        'facebook' => 'required|url',
+        'instagram' => 'required|url'
     ];
 
     public function languages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
