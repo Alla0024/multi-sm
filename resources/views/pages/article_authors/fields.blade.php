@@ -17,16 +17,21 @@
     </script>
 @endpush
 
+<!-- SEO url -->
+<div class="form-group col-sm-12 col-lg-12 tab-pane" data-for-tab="{!! $fields['path']['inTab'] !!}">
+    {!! Form::label('path', $word['title_path']) !!}
+    {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
+</div>
 
 <!-- Facebook Field -->
 <div class="form-group col-sm-12 col-lg-12 tab-pane" data-for-tab="{!! $fields['facebook']['inTab'] !!}">
     {!! Form::label('facebook', $word['title_facebook']) !!}
-    {!! Form::textarea('facebook', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::text('facebook', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
 
 <!-- Instagram Field -->
 <div class="form-group col-sm-12 col-lg-12 tab-pane" data-for-tab="{!! $fields['instagram']['inTab'] !!}">
     {!! Form::label('instagram', $word['title_instagram']) !!}
-    {!! Form::textarea('instagram', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::text('instagram', null, ['class' => 'form-control', 'required']) !!}
 </div>
