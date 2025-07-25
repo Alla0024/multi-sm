@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\FirstPathQuery;
 use App\Models\News;
 use App\Models\NewsDescription;
 use App\Repositories\BaseRepository;
@@ -32,7 +33,8 @@ class NewsRepository extends BaseRepository
     public function create(array $input)
     {
         $descriptions = $input['descriptions'] ?? [];
-        unset($input['descriptions']);
+        $seoPath = $input['path'];
+        unset($input['descriptions'], $input['path']);
 
         $information = $this->model->create($input);
 
@@ -42,6 +44,12 @@ class NewsRepository extends BaseRepository
             NewsDescription::create($descData);
         }
 
+        $firstPathQuery = FirstPathQuery::create([
+            'type' => 'news',
+            'type_id' => $information->id,
+            'path' => $seoPath,
+        ]);
+
         return $information;
     }
 
@@ -49,6 +57,9 @@ class NewsRepository extends BaseRepository
     {
         $descriptions = $input['descriptions'] ?? [];
         unset($input['descriptions']);
+
+        $seoPath = $input['path'];
+        unset($input['path']);
 
         $news_category_id = $this->find($id);
         $news_category_id->update($input);
@@ -63,6 +74,37 @@ class NewsRepository extends BaseRepository
             );
         }
 
+        $firstPathQueryData = [
+            'type' => 'news',
+            'type_id' => $id,
+        ];
+
+        $firstPathQuery = FirstPathQuery::where($firstPathQueryData)->first();
+
+        if (!$firstPathQuery) {
+            FirstPathQuery::create([
+                ...$firstPathQueryData,
+                'path' => $seoPath,
+            ]);
+        } else {
+            $firstPathQuery->update([
+                'path' => $seoPath,
+            ]);
+        }
+
         return $news_category_id;
+    }
+
+    public function delete($id) {
+        $news = $this->find($id);
+
+        $firstPathQuery = FirstPathQuery::where(['type' => 'news', 'type_id' => $id ])->first();
+
+        if (!$firstPathQuery) {
+            throw new \Error('First path query not found.');
+        }
+
+        $firstPathQuery->delete();
+        $news->delete();
     }
 }

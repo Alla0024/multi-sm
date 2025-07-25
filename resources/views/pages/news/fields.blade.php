@@ -32,6 +32,11 @@
     {!! Form::number('status', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
+<!-- SEO Url Field -->
+<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['path']['inTab'] !!}">
+    {!! Form::label('path', $word['title_path']) !!}
+    {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
+</div>
 
 <!-- Shared On Facebook Field -->
 <div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['shared_on_facebook']['inTab'] !!}">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\FirstPathQuery;
 use App\Models\NewsDescription;
 use App\Repositories\NewsRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -55,6 +56,7 @@ class NewsController extends AppBaseController
         $this->template = 'pages.news.create';
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             News::class,
+            FirstPathQuery::class,
             NewsDescription::class,
         ]);
         return $this->renderOutput([
@@ -107,10 +109,16 @@ class NewsController extends AppBaseController
 
             return redirect(route('news.index'));
         }
+
+        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'news')->value('path');
+        $new->setAttribute('path', $seoUrl);
+
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             News::class,
+            FirstPathQuery::class,
             NewsDescription::class,
         ]);
+
         $this->template = 'pages.news.edit';
 
         return $this->renderOutput([

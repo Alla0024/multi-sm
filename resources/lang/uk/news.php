@@ -31,6 +31,7 @@ return [
     'title_language_id' => 'ID мови',
     'search_language_id' => 'Пошук за ID мови',
     'title_name' => 'Назва',
+    'title_path' => 'Seo Url',
     'search_name' => 'Пошук за назвою',
     'tab_main' => 'Основна вкладка',
     'tab_sort' => 'Сортування',
