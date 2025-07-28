@@ -78,7 +78,7 @@ class ModelSchemaHelper
             Str::contains($name, 'email') => 'email',
             Str::contains($name, 'status') => 'checkbox',
             Str::contains($name, 'order') => 'number',
-            Str::contains($name, 'descriptions') => 'text',
+            Str::contains($name, 'descriptions') => 'textarea',
             Str::contains($name, 'date'), Str::contains($name, 'at') => 'hidden',
             default => 'text',
         };

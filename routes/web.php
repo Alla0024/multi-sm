@@ -226,3 +226,4 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 });
 
 Route::resource('first-path-queries', App\Http\Controllers\Content\FirstPathQueryController::class);
+Route::resource('news-descriptions', App\Http\Controllers\Content\NewsDescriptionController::class);

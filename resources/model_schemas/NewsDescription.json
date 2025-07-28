@@ -1,15 +1,15 @@
 [
     {
-        "name": "news_category_id",
+        "name": "news_id",
         "dbType": "bigInteger,false",
         "htmlType": "number",
-        "validations": "required",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
     },
     {
         "name": "language_id",
@@ -24,7 +24,7 @@
         "inView": true
     },
     {
-        "name": "name",
+        "name": "title",
         "dbType": "string",
         "htmlType": "text",
         "validations": "required|string|max:255|string|max:255",
@@ -36,28 +36,76 @@
         "inView": true
     },
     {
-        "name": "created_at",
-        "dbType": "dateTimeTz",
-        "htmlType": "date",
-        "validations": "nullable|nullable",
-        "searchable": false,
-        "fillable": false,
+        "name": "description",
+        "dbType": "text",
+        "htmlType": "textarea",
+        "validations": "required|string|string",
+        "searchable": true,
+        "fillable": true,
         "primary": false,
-        "inForm": false,
-        "inIndex": false,
-        "inView": false
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
     },
     {
-        "name": "updated_at",
-        "dbType": "dateTimeTz",
-        "htmlType": "date",
-        "validations": "nullable|nullable",
-        "searchable": false,
-        "fillable": false,
+        "name": "meta_title",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255|nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
         "primary": false,
-        "inForm": false,
-        "inIndex": false,
-        "inView": false
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "meta_h1",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255|nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "meta_description",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255|nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "meta_keyword",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255|nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "products_title",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255|nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
     },
     {
         "type": "relation",
@@ -65,6 +113,6 @@
     },
     {
         "type": "relation",
-        "relation": "mt1,NewsCategory,news_category_id"
+        "relation": "mt1,News,news_id"
     }
 ]

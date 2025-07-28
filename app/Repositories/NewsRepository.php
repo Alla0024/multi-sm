@@ -10,9 +10,8 @@ use App\Repositories\BaseRepository;
 class NewsRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'status',
-        'reviews_count',
-        'reviews_rating'
+        'sort_order',
+        'status'
     ];
 
     public function getFieldsSearchable(): array
@@ -23,6 +22,26 @@ class NewsRepository extends BaseRepository
     public function model(): string
     {
         return News::class;
+    }
+
+    public function paginateIndexPage($perPage, $language_id, $columns = ['*'])
+    {
+        $news = $this->model
+            ->with(['descriptions' => function ($query) use ($language_id) {
+                return $query
+                    ->select('news_id', 'language_id', 'title')
+                    ->where('language_id', $language_id);
+            }])
+            ->paginate($perPage, $columns);
+
+        foreach ($news as $item) {
+            $title = $item->descriptions->first()->title;
+            unset($item->descriptions);
+
+            $item->setAttribute('title', $title);
+        }
+
+        return $news;
     }
 
     public function with($relations)

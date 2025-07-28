@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\FirstPathQuery;
 use App\Models\NewsDescription;
+use App\Repositories\LanguageRepository;
 use App\Repositories\NewsRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -15,14 +16,19 @@ use Flash;
 
 class NewsController extends AppBaseController
 {
-    /** @var NewsRepository $newsRepository*/
+    /**
+     * @var NewsRepository $newsRepository
+     * @var LanguageRepository $languageRepository
+     */
     private $newsRepository;
+    private $languageRepository;
 
-    public function __construct(NewsRepository $newsRepo)
+    public function __construct(NewsRepository $newsRepo, LanguageRepository $languageRepository)
     {
         parent::__construct();
 
         $this->newsRepository = $newsRepo;
+        $this->languageRepository = $languageRepository;
     }
 
     /**
@@ -32,17 +38,19 @@ class NewsController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $news = $this->newsRepository->paginate($perPage);
+        $languages = $this->languageRepository->all();
+        $news = $this->newsRepository->paginateIndexPage($perPage, 5);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            News::class,
             NewsDescription::class,
+            News::class,
         ]);
 
         $this->template = 'pages.news.index';
 
         return $this->renderOutput([
             'news' => $news,
+            'languages' => $languages,
             'fields' => $fields,
         ]);
     }
