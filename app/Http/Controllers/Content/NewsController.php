@@ -95,7 +95,7 @@ class NewsController extends AppBaseController
         $this->template = 'pages.news.show';
 
         return $this->renderOutput(compact('new'));
-}
+    }
 
     /**
      * Show the form for editing the specified News.
