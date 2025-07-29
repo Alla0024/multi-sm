@@ -24,6 +24,26 @@ class NewsRepository extends BaseRepository
         return News::class;
     }
 
+    public function find($id, $columns = ['*'])
+    {
+        $news = $this->model->with(['descriptions' => function ($query) {
+            return $query->with('language');
+        }])->find($id, $columns);
+
+        $preshaped_descriptions = [];
+
+        foreach ($news->descriptions as $description) {
+            $preshaped_descriptions[$description->language->id] = [
+                'title' => $description->title,
+                'description' => $description->description,
+            ];
+        }
+        unset($news->descriptions);
+        $news->setAttribute('descriptions', $preshaped_descriptions);
+
+        return $news;
+    }
+
     public function paginateIndexPage($perPage, $language_id, $columns = ['*'])
     {
         $news = $this->model
@@ -55,21 +75,24 @@ class NewsRepository extends BaseRepository
         $seoPath = $input['path'];
         unset($input['descriptions'], $input['path']);
 
-        $information = $this->model->create($input);
+        $news = $this->model->create($input);
 
         foreach ($descriptions as $languageId => $descData) {
-            $descData['language_id'] = $languageId;
-            $descData['news_id'] = $information->id;
-            NewsDescription::create($descData);
+            NewsDescription::updateOrCreate(
+                [
+                    'news_id' => $news->id,
+                    'language_id' => $languageId
+                ],
+                $descData
+            );
         }
-
         $firstPathQuery = FirstPathQuery::create([
             'type' => 'news',
-            'type_id' => $information->id,
+            'type_id' => $news->id,
             'path' => $seoPath,
         ]);
 
-        return $information;
+        return $news;
     }
 
     public function update(array $input, $id)
@@ -80,13 +103,13 @@ class NewsRepository extends BaseRepository
         $seoPath = $input['path'];
         unset($input['path']);
 
-        $news_category_id = $this->find($id);
-        $news_category_id->update($input);
+        $news = $this->model->find($id);
+        $news->update($input);
 
         foreach ($descriptions as $languageId => $descData) {
             NewsDescription::updateOrCreate(
                 [
-                    'news_id' => $news_category_id->id,
+                    'news_id' => $id,
                     'language_id' => $languageId
                 ],
                 $descData
@@ -111,12 +134,11 @@ class NewsRepository extends BaseRepository
             ]);
         }
 
-        return $news_category_id;
+        return $news;
     }
 
     public function delete($id) {
         $news = $this->find($id);
-
         $firstPathQuery = FirstPathQuery::where(['type' => 'news', 'type_id' => $id ])->first();
 
         if (!$firstPathQuery) {

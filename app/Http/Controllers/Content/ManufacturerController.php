@@ -7,6 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateManufacturerRequest;
 use App\Http\Requests\UpdateManufacturerRequest;
 use App\Models\ManufacturerDescription;
+use App\Repositories\LanguageRepository;
 use App\Repositories\ManufacturerRepository;
 use Flash;
 use Illuminate\Http\Request;
@@ -14,11 +15,17 @@ use App\Models\Manufacturer;
 class ManufacturerController extends AppBaseController
 {
     /** @var ManufacturerRepository $manufacturerRepository*/
-    private $manufacturerRepository;
+    private ManufacturerRepository $manufacturerRepository;
 
-    public function __construct(ManufacturerRepository $manufacturerRepo)
+    /** @var LanguageRepository $languageRepository */
+    private LanguageRepository $languageRepository;
+
+    public function __construct(
+        ManufacturerRepository $manufacturerRepo,
+        LanguageRepository     $languageRepo)
     {
         $this->manufacturerRepository = $manufacturerRepo;
+        $this->languageRepository = $languageRepo;
 
         parent::__construct();
     }
@@ -31,6 +38,7 @@ class ManufacturerController extends AppBaseController
         $perPage = $request->input('perPage', 10);
 
         $manufacturers = $this->manufacturerRepository->with(['descriptions'])->paginate($perPage);
+        $languages = $this->languageRepository;
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Manufacturer::class,
@@ -41,6 +49,7 @@ class ManufacturerController extends AppBaseController
 
         return $this->renderOutput([
             'manufacturers' => $manufacturers,
+            'languages' => $languages,
             'fields' => $fields,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
@@ -95,6 +104,13 @@ class ManufacturerController extends AppBaseController
     {
         $manufacturer = $this->manufacturerRepository->find($id);
 
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Manufacturer::class,
+            ManufacturerDescription::class,
+        ]);
+
+        $inTabs = array_unique(array_column($fields, 'inTab'));
+
         if (empty($manufacturer)) {
             Flash::error(__('models/manufacturers.singular') . ' ' . __('messages.not_found'));
 
@@ -103,15 +119,8 @@ class ManufacturerController extends AppBaseController
 
         $this->template = 'pages.manufacturers.edit';
 
-        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            Manufacturer::class,
-            ManufacturerDescription::class,
-        ]);
-        return $this->renderOutput([
-            'manufacturer' => $manufacturer,
-            'fields' => $fields,
-            'inTabs' => array_unique(array_column($fields, 'inTab')),
-        ]);
+
+        return $this->renderOutput(compact('manufacturer', 'fields', 'inTabs'));
     }
 
     /**

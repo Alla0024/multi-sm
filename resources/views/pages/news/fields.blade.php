@@ -1,9 +1,22 @@
+<!-- Title Fields -->
+<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['title']['inTab'] !!}">
+    {!! Form::label('descriptions_title', $word['title_descriptions_title']) !!}
+
+    <div class="flex-row">
+        @foreach($languages as $language)
+            <div class="form-group mt-3">
+                {!! Form::label("descriptions[$language->id][title]", $language->id, ['class' => 'form-label']) !!}
+                {!! Form::textarea("descriptions[$language->id][title]", null, ['class' => 'form-control', 'rows' => 2]) !!}
+            </div>
+        @endforeach
+    </div>
+</div>
+
 <!-- Category Id Field -->
 <div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['category_id']['inTab'] !!}">
     {!! Form::label('category_id', $word['title_category_id']) !!}
     {!! Form::number('category_id', null, ['class' => 'form-control']) !!}
 </div>
-
 
 <!-- Author Id Field -->
 <div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['author_id']['inTab'] !!}">
@@ -36,6 +49,20 @@
 <div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['path']['inTab'] !!}">
     {!! Form::label('path', $word['title_path']) !!}
     {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
+</div>
+
+<!-- Description Fields -->
+<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['title']['inTab'] !!}">
+    {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
+
+    <div class="flex-row">
+        @foreach($languages as $language)
+            <div class="form-group mt-3">
+                {!! Form::label("descriptions[$language->id][description]", $language->id, ['class' => 'form-label']) !!}
+                {!! Form::textarea("descriptions[$language->id][description]", null, ['class' => 'form-control', 'rows' => 2]) !!}
+            </div>
+        @endforeach
+    </div>
 </div>
 
 <!-- Shared On Facebook Field -->
