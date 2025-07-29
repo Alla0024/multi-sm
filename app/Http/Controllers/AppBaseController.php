@@ -91,7 +91,7 @@ class AppBaseController extends BaseController
         }
         $content .= "];\n";
 
-        $path = resource_path("lang\uk\\".$filename.".php");
+        $path = resource_path("lang/uk/".$filename.".php");
 
         if (!file_exists(dirname($path))) {
             mkdir(dirname($path), 0755, true);

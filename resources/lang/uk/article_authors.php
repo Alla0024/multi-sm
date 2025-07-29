@@ -1,17 +1,20 @@
 <?php
 
 return [
-    'Article_author' => 'article_authors',
-    'title_id' => 'title_id',
-    'search_id' => 'search_id',
-    'title_avatar' => 'title_avatar',
-    'search_avatar' => 'search_avatar',
-    'title_date_of_birth' => 'title_date_of_birth',
-    'search_date_of_birth' => 'search_date_of_birth',
-    'title_facebook' => 'title_facebook',
-    'search_facebook' => 'search_facebook',
-    'title_instagram' => 'title_instagram',
-    'search_instagram' => 'search_instagram',
-    'tab_main' => 'tab_main',
-    'tab_sort' => 'tab_sort',
+    'Article_author' => 'Автори статей',
+    'title_id' => 'ID',
+    'search_id' => 'Пошук за ID',
+    'title_avatar' => 'Аватар',
+    'search_avatar' => 'Пошук за аватаром',
+    'title_date_of_birth' => 'Дата народження',
+    'search_date_of_birth' => 'Пошук за датою народження',
+    'title_facebook' => 'Facebook',
+    'search_facebook' => 'Пошук за Facebook',
+    'title_instagram' => 'Instagram',
+    'search_instagram' => 'Пошук за Instagram',
+    'title_path' => 'Шлях',
+    'search_path' => 'Пошук за шляхом',
+    'tab_main' => 'Основна вкладка',
+    'tab_sort' => 'Сортування',
+
 ];

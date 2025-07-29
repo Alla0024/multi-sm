@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    @include('pages..languages.show_fields')
+                    @include('pages.languages.show_fields')
                 </div>
             </div>
         </div>
