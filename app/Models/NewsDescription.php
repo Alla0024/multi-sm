@@ -4,12 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Thiagoprz\CompositeKey\HasCompositeKey;
 
 class NewsDescription extends Model
 {
+    use HasCompositeKey;
     public $table = 'news_descriptions';
+    public $timestamps = false;
+    protected $primaryKey = ['news_id', 'language_id'];
 
     public $fillable = [
+        'news_id',
         'language_id',
         'title',
         'description',
@@ -21,6 +26,7 @@ class NewsDescription extends Model
     ];
 
     public $searchable = [
+        'news_id',
         'language_id',
         'title',
         'description',
@@ -42,6 +48,7 @@ class NewsDescription extends Model
     ];
 
     public static array $rules = [
+        'news_id' => 'required',
         'language_id' => 'required',
         'title' => 'required|string|max:255',
         'description' => 'required|string',

@@ -19,13 +19,14 @@
 
         <div class="card">
 
-            {!! Form::model($new, ['route' => ['news.update', $new->id], 'method' => 'patch']) !!}
+            {!! Form::model($news, ['route' => ['news.update', $news->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
                     @foreach($inTabs as $tab)
                         <li class="nav-item">
-                            <button class="nav-link active" type="button" data-tab="{{$tab}}">{{$word["tab_".$tab]}}</button>
+                            <button class="nav-link active" type="button"
+                                    data-tab="{{$tab}}">{{$word["tab_".$tab]}}</button>
                         </li>
                     @endforeach
                 </ul>

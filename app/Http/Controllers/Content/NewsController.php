@@ -62,13 +62,15 @@ class NewsController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.news.create';
+        $languages = $this->languageRepository->all();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            News::class,
-            FirstPathQuery::class,
             NewsDescription::class,
+            News::class,
+            FirstPathQuery::class
         ]);
         return $this->renderOutput([
             'fields' => $fields,
+            'languages' => $languages,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
@@ -92,7 +94,7 @@ class NewsController extends AppBaseController
      */
     public function show($id)
     {
-        $new = $this->newsRepository->find($id);
+        $new = $this->newsRepository->show($id);
 
         if (empty($new)) {
             Flash::error('News not found');
@@ -110,16 +112,17 @@ class NewsController extends AppBaseController
      */
     public function edit($id)
     {
-        $new = $this->newsRepository->find($id);
+        $languages = $this->languageRepository->all();
+        $news = $this->newsRepository->find($id);
 
-        if (empty($new)) {
+        if (empty($news)) {
             Flash::error('News not found');
 
             return redirect(route('news.index'));
         }
 
         $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'news')->value('path');
-        $new->setAttribute('path', $seoUrl);
+        $news->setAttribute('path', $seoUrl);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             News::class,
@@ -130,8 +133,9 @@ class NewsController extends AppBaseController
         $this->template = 'pages.news.edit';
 
         return $this->renderOutput([
-            'new' => $new,
+            'news' => $news,
             'fields' => $fields,
+            'languages' => $languages,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
@@ -141,15 +145,15 @@ class NewsController extends AppBaseController
      */
     public function update($id, UpdateNewsRequest $request)
     {
-        $new = $this->newsRepository->find($id);
+        $news = $this->newsRepository->find($id);
 
-        if (empty($new)) {
+        if (empty($news)) {
             Flash::error('News not found');
 
             return redirect(route('news.index'));
         }
 
-        $new = $this->newsRepository->update($request->all(), $id);
+        $news = $this->newsRepository->update($request->all(), $id);
 
         Flash::success('News updated successfully.');
 

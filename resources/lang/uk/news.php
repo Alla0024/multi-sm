@@ -33,7 +33,8 @@ return [
     'title_title' => 'Назва',
     'search_title' => 'Пошук за назвою',
     'title_path' => 'Seo Url',
+    'title_descriptions_title' => 'Назва',
+    'title_descriptions_description' => 'Опис',
     'tab_main' => 'Основна вкладка',
     'tab_sort' => 'Сортування',
-
 ];
