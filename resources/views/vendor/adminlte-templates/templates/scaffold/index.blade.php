@@ -8,7 +8,7 @@
 @if($config->options->localized)
                     <h1>@@lang('models/{{ $config->modelNames->camelPlural }}.plural')</h1>
 @else
-                    <h1>@{!!  $word['{{ $config->modelNames->human }}'] !!}</h1>
+                    <h1>@{!!  $word['{{ $config->modelNames->camelPlural }}'] !!}</h1>
 @endif
                 </div>
                 <div class="col-sm-2">

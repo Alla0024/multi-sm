@@ -11,6 +11,7 @@
                                 <th class="">
                                     @if(isset($field['searchable']) && $field['searchable'])
                                         <div class="">
+                                            
                                             <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
                                         </div>
                                     @endif
@@ -19,6 +20,7 @@
                         @endforeach
                     @endif
                     <th class="butt-action action-item">
+                        <span class="hide">manufacturers</span>
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
                         <a href="{{ route('manufacturers.index') }}">{{ $word['cancel'] }}</a>
                     </th>
@@ -46,7 +48,7 @@
                          @endif
                     @endforeach
 
-                    <td  >
+                    <td  colspan="3">
                         {!! Form::open(['route' => ['manufacturers.destroy', $manufacturer->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
                             <a href="{{ route('manufacturers.show', [$manufacturer->id]) }}"

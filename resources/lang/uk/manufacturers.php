@@ -1,6 +1,7 @@
 <?php
 return [
-    'Manufacturer' => 'Виробник',
+    'Manufacturer' => 'Виробника',
+    'manufacturers' => 'Виробники',
     'title_id' => 'ID',
     'title_name' => 'Виробник',
     'title_image' => 'Зоображення',

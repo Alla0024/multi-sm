@@ -61,8 +61,13 @@ class ManufacturerController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.manufacturers.create';
-
-        return $this->renderOutput();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Manufacturer::class,
+            ManufacturerDescription::class,
+        ]);
+        return $this->renderOutput([
+            'fields' => $fields,
+        ]);
     }
 
     /**
