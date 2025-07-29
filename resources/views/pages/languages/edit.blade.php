@@ -22,8 +22,21 @@
             {!! Form::model($language, ['route' => ['languages.update', $language->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
-                <div class="row">
-                    @include('pages..languages.fields')
+                <ul class="nav nav-tabs" id="customTabs">
+                    @isset($inTabs)
+                        @foreach($inTabs as $tab)
+                            <li class="nav-item">
+                                <button class="nav-link active" type="button" data-tab="{{$tab}}">{{$word["tab_".$tab]}}</button>
+                            </li>
+                        @endforeach
+                    @else
+                        <li class="nav-item">
+                            <button class="nav-link active" type="button" data-tab="main">{{$word["tab_main"]}}</button>
+                        </li>
+                    @endisset
+                </ul>
+                <div class="row card-items">
+                    @include('pages.languages.fields')
                 </div>
             </div>
 

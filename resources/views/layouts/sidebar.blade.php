@@ -38,7 +38,7 @@
             <div class="name">{{$word['menu_manufacturers']}}</div>
         </a>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is(['aikqweu/news*', 'aikqweu/information*']) ? 'true' : 'false' }}}">
+        <div class="item-list" x-data="{open_list: {{ Request::is(['aikqweu/news*', 'aikqweu/information*', 'aikqweu/articleAuthors']) ? 'true' : 'false' }}}">
             <div class="item {{ Request::is(['aikqweu/news*', 'aikqweu/information*']) ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
                 <div class="name">{{$word['menu_new']}}</div>
@@ -47,6 +47,7 @@
             <div class="list" :class="{'list-open': open_list}">
                 <a class="item {{ Request::is('aikqweu/information') ? 'active' : '' }}" href="{{ route('information.index') }}">{{$word['menu_informations']}}</a>
                 <a class="item {{ Request::is('aikqweu/news') ? 'active' : '' }}" href="{{ route('news.index') }}">{{$word['menu_news']}}</a>
+                <a class="item {{ Request::is('aikqweu/articleAuthors') ? 'active' : '' }}" href="{{ route('articleAuthors.index') }}">{{$word['menu_article_authors']}}</a>
                 <a class="item {{ Request::is('aikqweu/newsCategories*') ? 'active' : '' }}" href="{{ route('newsCategories.index') }}">News category</a>
             </div>
         </div>

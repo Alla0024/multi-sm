@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{!!  $word['Language'] !!}</h1>
+                    <h1>{!!  $word['languages'] !!}</h1>
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">
@@ -16,13 +16,13 @@
                         <select name="perPage" id="perPage" onchange="this.form.submit()">
                             @foreach([10, 25, 50, 100] as $size)
                                 <option value="{{ $size }}" {{ request('perPage', 10) == $size ? 'selected' : '' }}>
-                                {{ $size }}
+                                    {{ $size }}
                                 </option>
-                                @endforeach
+                            @endforeach
                         </select>
                     </form>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"
                        href="{{ route('languages.create') }}">
                         {{$word['add']}}
@@ -39,7 +39,7 @@
         <div class="clearfix"></div>
 
         <div class="card">
-            @include('pages..languages.table')
+            @include('pages.languages.table')
         </div>
     </div>
 
