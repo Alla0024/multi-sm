@@ -12,4 +12,5 @@ return [
     'title_language_id' => 'ID мови',
     'title_description' => 'Опис',
     'title_tag' => 'Тег',
+    'tab_main' => 'Загальне',
 ];
