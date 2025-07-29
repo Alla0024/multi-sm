@@ -3,36 +3,62 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NewsDescription extends Model
 {
-    public $table = 'news_category_descriptions';
+    public $table = 'news_descriptions';
 
     public $fillable = [
-        'news_category_id',
         'language_id',
-        'name'
+        'title',
+        'description',
+        'meta_title',
+        'meta_h1',
+        'meta_description',
+        'meta_keyword',
+        'products_title'
+    ];
+
+    public $searchable = [
+        'language_id',
+        'title',
+        'description',
+        'meta_title',
+        'meta_h1',
+        'meta_description',
+        'meta_keyword',
+        'products_title'
     ];
 
     protected $casts = [
-        'name' => 'string'
+        'title' => 'string',
+        'description' => 'string',
+        'meta_title' => 'string',
+        'meta_h1' => 'string',
+        'meta_description' => 'string',
+        'meta_keyword' => 'string',
+        'products_title' => 'string'
     ];
 
     public static array $rules = [
-        'news_category_id' => 'required',
         'language_id' => 'required',
-        'name' => 'required|string|max:255',
-        'created_at' => 'nullable',
-        'updated_at' => 'nullable'
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'meta_title' => 'nullable|string|max:255',
+        'meta_h1' => 'nullable|string|max:255',
+        'meta_description' => 'nullable|string|max:255',
+        'meta_keyword' => 'nullable|string|max:255',
+        'products_title' => 'nullable|string|max:255'
     ];
 
-    public function language()
+    public function language(): BelongsTo
     {
         return $this->belongsTo(Language::class, 'language_id');
     }
 
-    public function newsCategory()
+    public function news(): BelongsTo
     {
-        return $this->belongsTo(NewsCategory::class, 'news_category_id');
+        return $this->belongsTo(News::class, 'news_id');
     }
 }

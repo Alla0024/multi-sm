@@ -6,6 +6,8 @@ use App\Models\ArticleAuthor;
 use App\Models\FirstPathQuery;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
+use Laracasts\Flash\Flash;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticleAuthorRepository extends BaseRepository
 {
@@ -76,4 +78,17 @@ class ArticleAuthorRepository extends BaseRepository
         return $articleAuthor;
     }
 
+
+    public function delete($id) {
+        $articleAuthor = $this->find($id);
+
+        $firstPathQuery = FirstPathQuery::where(['type' => 'authors', 'type_id' => $id ])->first();
+
+        if (!$firstPathQuery) {
+            throw new \Error('First path query not found.');
+        }
+
+        $firstPathQuery->delete();
+        $articleAuthor->delete();
+    }
 }

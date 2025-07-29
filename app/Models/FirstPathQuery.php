@@ -24,6 +24,4 @@ class FirstPathQuery extends Model
         'type_id' => 'required',
         'path' => 'required|string|max:255'
     ];
-
-    
 }

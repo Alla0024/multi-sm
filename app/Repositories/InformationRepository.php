@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\FirstPathQuery;
 use App\Models\Information;
 use App\Models\InformationDescription;
 use App\Repositories\BaseRepository;
@@ -31,7 +32,8 @@ class InformationRepository extends BaseRepository
     public function create(array $input)
     {
         $descriptions = $input['descriptions'] ?? [];
-        unset($input['descriptions']);
+        $seoPath = $input['path'];
+        unset($input['descriptions'], $input['path']);
 
         $information = $this->model->create($input);
 
@@ -41,13 +43,20 @@ class InformationRepository extends BaseRepository
             InformationDescription::create($descData);
         }
 
+        $firstPathQuery = FirstPathQuery::create([
+            'type' => 'information',
+            'type_id' => $information->id,
+            'path' => $seoPath,
+        ]);
+
         return $information;
     }
 
     public function update(array $input, $id)
     {
         $descriptions = $input['descriptions'] ?? [];
-        unset($input['descriptions']);
+        $seoPath = $input['path'];
+        unset($input['descriptions'], $input['path']);
 
         $information = $this->find($id);
         $information->update($input);
@@ -62,6 +71,37 @@ class InformationRepository extends BaseRepository
             );
         }
 
+        $firstPathQueryData = [
+            'type' => 'information',
+            'type_id' => $id,
+        ];
+
+        $firstPathQuery = FirstPathQuery::where($firstPathQueryData)->first();
+
+        if (!$firstPathQuery) {
+            FirstPathQuery::create([
+                ...$firstPathQueryData,
+                'path' => $seoPath,
+            ]);
+        } else {
+            $firstPathQuery->update([
+                'path' => $seoPath,
+            ]);
+        }
+
         return $information;
+    }
+
+    public function delete($id) {
+        $information = $this->find($id);
+
+        $firstPathQuery = FirstPathQuery::where(['type' => 'information', 'type_id' => $id ])->first();
+
+        if (!$firstPathQuery) {
+            throw new \Error('First path query not found.');
+        }
+
+        $firstPathQuery->delete();
+        $information->delete();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateInformationRequest;
 use App\Http\Requests\UpdateInformationRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\FirstPathQuery;
 use App\Models\InformationDescription;
 use App\Repositories\InformationRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -35,7 +36,7 @@ class InformationController extends AppBaseController
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,
-            InformationDescription::class,
+            InformationDescription::class
         ]);
 
         $this->template = 'pages.information.index';
@@ -56,6 +57,7 @@ class InformationController extends AppBaseController
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,
             InformationDescription::class,
+            FirstPathQuery::class
         ]);
         return $this->renderOutput([
             'fields' => $fields,
@@ -107,9 +109,14 @@ class InformationController extends AppBaseController
 
             return redirect(route('information.index'));
         }
+
+        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'information')->value('path');
+        $information->setAttribute('path', $seoUrl);
+
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,
             InformationDescription::class,
+            FirstPathQuery::class
         ]);
         $this->template = 'pages.information.edit';
 

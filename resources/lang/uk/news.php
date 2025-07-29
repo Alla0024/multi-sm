@@ -30,8 +30,9 @@ return [
     'search_news_category_id' => 'Пошук за ID категорії новин',
     'title_language_id' => 'ID мови',
     'search_language_id' => 'Пошук за ID мови',
-    'title_name' => 'Назва',
-    'search_name' => 'Пошук за назвою',
+    'title_title' => 'Назва',
+    'search_title' => 'Пошук за назвою',
+    'title_path' => 'Seo Url',
     'tab_main' => 'Основна вкладка',
     'tab_sort' => 'Сортування',
 

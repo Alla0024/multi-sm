@@ -8,7 +8,7 @@ use App\Repositories\BaseRepository;
 class NewsDescriptionRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'name'
+        'title'
     ];
 
     public function getFieldsSearchable(): array

@@ -59,6 +59,11 @@ class News extends Model
         return $this->belongsToMany(Language::class, 'news_descriptions');
     }
 
+    public function descriptions()
+    {
+        return $this->hasMany(NewsDescription::class, 'news_id');
+    }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'new_to_products');

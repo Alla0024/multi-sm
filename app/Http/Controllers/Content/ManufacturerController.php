@@ -103,7 +103,15 @@ class ManufacturerController extends AppBaseController
 
         $this->template = 'pages.manufacturers.edit';
 
-        return $this->renderOutput(compact('manufacturer'));
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Manufacturer::class,
+            ManufacturerDescription::class,
+        ]);
+        return $this->renderOutput([
+            'manufacturer' => $manufacturer,
+            'fields' => $fields,
+            'inTabs' => array_unique(array_column($fields, 'inTab')),
+        ]);
     }
 
     /**

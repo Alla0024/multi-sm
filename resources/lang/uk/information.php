@@ -22,6 +22,7 @@ return [
     'search_name' => 'Пошук за назвою',
     'title_description' => 'Опис',
     'search_description' => 'Пошук за описом',
+    'title_path' => 'SEO Url',
     'tab_main' => 'Основна вкладка',
     'tab_sort' => 'Сортування',
 ];
