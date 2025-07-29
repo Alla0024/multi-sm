@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SearchableBySimilarity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Thiagoprz\CompositeKey\HasCompositeKey;
 
 class NewsDescription extends Model
 {
-    use HasCompositeKey;
+    use HasCompositeKey, SearchableBySimilarity;
     public $table = 'news_descriptions';
     public $timestamps = false;
     protected $primaryKey = ['news_id', 'language_id'];

@@ -39,7 +39,7 @@ class NewsController extends AppBaseController
         $perPage = $request->input('perPage', 10);
 
         $languages = $this->languageRepository->all();
-        $news = $this->newsRepository->paginateIndexPage($perPage, 5);
+        $news = $this->newsRepository->paginateIndexPage($perPage, 5, $request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
@@ -94,9 +94,9 @@ class NewsController extends AppBaseController
      */
     public function show($id)
     {
-        $new = $this->newsRepository->show($id);
+        $news = $this->newsRepository->find($id);
 
-        if (empty($new)) {
+        if (empty($news)) {
             Flash::error('News not found');
 
             return redirect(route('news.index'));
@@ -104,7 +104,7 @@ class NewsController extends AppBaseController
 
         $this->template = 'pages.news.show';
 
-        return $this->renderOutput(compact('new'));
+        return $this->renderOutput(compact('news'));
     }
 
     /**

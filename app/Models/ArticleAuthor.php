@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ArticleAuthor extends Model
 {
     public $table = 'article_authors';
+    public $timestamps = false;
 
     public $fillable = [
         'avatar',

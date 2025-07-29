@@ -44,15 +44,21 @@ class NewsRepository extends BaseRepository
         return $news;
     }
 
-    public function paginateIndexPage($perPage, $language_id, $columns = ['*'])
+    public function paginateIndexPage($perPage, $language_id, $params)
     {
         $news = $this->model
             ->with(['descriptions' => function ($query) use ($language_id) {
-                return $query
-                    ->select('news_id', 'language_id', 'title')
+                $query->select('news_id', 'language_id', 'title')
                     ->where('language_id', $language_id);
             }])
-            ->paginate($perPage, $columns);
+            ->when(isset($params['title']), function ($q) use ($params) {
+                return $q->whereHas('descriptions', function ($q) use ($params) {
+                    return $q->searchSimilarity(['title'], $params['title']);
+                });
+            })
+            ->paginate($perPage);
+
+
 
         foreach ($news as $item) {
             $title = $item->descriptions->first()->title;
