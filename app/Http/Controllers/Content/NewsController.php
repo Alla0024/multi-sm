@@ -145,6 +145,7 @@ class NewsController extends AppBaseController
      */
     public function update($id, UpdateNewsRequest $request)
     {
+        $dto = $request->all();
         $news = $this->newsRepository->find($id);
 
         if (empty($news)) {
@@ -153,7 +154,7 @@ class NewsController extends AppBaseController
             return redirect(route('news.index'));
         }
 
-        $news = $this->newsRepository->update($request->all(), $id);
+        $news = $this->newsRepository->update($dto, $id);
 
         Flash::success('News updated successfully.');
 
