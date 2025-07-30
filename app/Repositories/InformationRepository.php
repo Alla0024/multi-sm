@@ -29,6 +29,61 @@ class InformationRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
+    public function find($id, $columns = ['*'])
+    {
+        $information = $this->model
+            ->with([
+                'descriptions' =>
+                    function ($query) {
+                        return $query->with('language');
+                    },
+                'firstPathQuery' => function ($query) {
+                    return $query->select(['type_id', 'path']);
+                },
+            ])
+            ->find($id, $columns);
+
+        $preshaped_descriptions = [];
+
+        foreach ($information->descriptions as $description) {
+            $preshaped_descriptions[$description->language->id] = [
+                'name' => $description->name,
+                'description' => $description->description,
+            ];
+        }
+
+        $seoPath = $information->firstPathQuery->path;
+        unset($information->descriptions, $information->firstPathQuery);
+        $information->setAttribute('descriptions', $preshaped_descriptions);
+        $information->setAttribute('path', $seoPath);
+
+        return $information;
+    }
+
+    public function paginateIndexPage($perPage, $language_id, $params)
+    {
+        $informations = $this->model
+            ->with(['descriptions' => function ($query) use ($language_id) {
+                $query->select('information_id', 'language_id', 'name')
+                    ->where('language_id', $language_id);
+            }])
+            ->when(isset($params['name']), function ($q) use ($params) {
+                return $q->whereHas('descriptions', function ($q) use ($params) {
+                    return $q->searchSimilarity(['name'], $params['name']);
+                });
+            })
+            ->paginate($perPage);
+
+        foreach ($informations as $information) {
+            $name = $information->descriptions->first()->name ?? '';
+            unset($information->descriptions);
+
+            $information->setAttribute('name', $name);
+        }
+
+        return $informations;
+    }
+
     public function create(array $input)
     {
         $descriptions = $input['descriptions'] ?? [];
@@ -58,7 +113,7 @@ class InformationRepository extends BaseRepository
         $seoPath = $input['path'];
         unset($input['descriptions'], $input['path']);
 
-        $information = $this->find($id);
+        $information = $this->model->find($id);
         $information->update($input);
 
         foreach ($descriptions as $languageId => $descData) {

@@ -9,20 +9,26 @@ use App\Models\FirstPathQuery;
 use App\Models\InformationDescription;
 use App\Repositories\InformationRepository;
 use App\Helpers\ModelSchemaHelper;
+use App\Repositories\LanguageRepository;
 use Illuminate\Http\Request;
 use App\Models\Information;
 use Flash;
 
 class InformationController extends AppBaseController
 {
-    /** @var InformationRepository $informationRepository*/
+    /**
+     * @var InformationRepository $informationRepository
+     * @var LanguageRepository $languageRepository
+     * */
     private $informationRepository;
+    private $languageRepository;
 
-    public function __construct(InformationRepository $informationRepo)
+    public function __construct(InformationRepository $informationRepo, LanguageRepository $languageRepository)
     {
         parent::__construct();
 
         $this->informationRepository = $informationRepo;
+        $this->languageRepository = $languageRepository;
     }
 
     /**
@@ -32,11 +38,11 @@ class InformationController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $information = $this->informationRepository->paginate($perPage);
+        $information = $this->informationRepository->paginateIndexPage($perPage, 5, request()->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            InformationDescription::class,
             Information::class,
-            InformationDescription::class
         ]);
 
         $this->template = 'pages.information.index';
@@ -53,6 +59,8 @@ class InformationController extends AppBaseController
      */
     public function create()
     {
+        $languages = $this->languageRepository->all();
+
         $this->template = 'pages.information.create';
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,
@@ -61,6 +69,7 @@ class InformationController extends AppBaseController
         ]);
         return $this->renderOutput([
             'fields' => $fields,
+            'languages' => $languages,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
@@ -85,6 +94,7 @@ class InformationController extends AppBaseController
     public function show($id)
     {
         $information = $this->informationRepository->find($id);
+        $languages = $this->languageRepository->all();
 
         if (empty($information)) {
             Flash::error('Information not found');
@@ -94,7 +104,7 @@ class InformationController extends AppBaseController
 
         $this->template = 'pages.information.show';
 
-        return $this->renderOutput(compact('information'));
+        return $this->renderOutput(compact('information', 'languages'));
 }
 
     /**
@@ -103,6 +113,7 @@ class InformationController extends AppBaseController
     public function edit($id)
     {
         $information = $this->informationRepository->find($id);
+        $languages = $this->languageRepository->all();
 
         if (empty($information)) {
             Flash::error('Information not found');
@@ -122,6 +133,7 @@ class InformationController extends AppBaseController
 
         return $this->renderOutput([
             'information' => $information,
+            'languages' => $languages,
             'fields' => $fields,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
@@ -133,6 +145,7 @@ class InformationController extends AppBaseController
     public function update($id, UpdateInformationRequest $request)
     {
         $information = $this->informationRepository->find($id);
+        $dto = $request->all();
 
         if (empty($information)) {
             Flash::error('Information not found');
@@ -140,7 +153,7 @@ class InformationController extends AppBaseController
             return redirect(route('information.index'));
         }
 
-        $information = $this->informationRepository->update($request->all(), $id);
+        $information = $this->informationRepository->update($dto, $id);
 
         Flash::success('Information updated successfully.');
 
