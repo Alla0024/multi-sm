@@ -5,23 +5,31 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateArticleAuthorRequest;
 use App\Http\Requests\UpdateArticleAuthorRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\ArticleAuthorDescription;
 use App\Models\FirstPathQuery;
+use App\Models\Language;
 use App\Repositories\ArticleAuthorRepository;
 use App\Helpers\ModelSchemaHelper;
+use App\Repositories\LanguageRepository;
 use Illuminate\Http\Request;
 use App\Models\ArticleAuthor;
 use Flash;
 
 class ArticleAuthorController extends AppBaseController
 {
-    /** @var ArticleAuthorRepository $articleAuthorRepository*/
+    /**
+     * @var ArticleAuthorRepository $articleAuthorRepository
+     * @var LanguageRepository $languageRepository
+     */
     private $articleAuthorRepository;
+    private $languageRepository;
 
-    public function __construct(ArticleAuthorRepository $articleAuthorRepo)
+    public function __construct(ArticleAuthorRepository $articleAuthorRepo, LanguageRepository $languageRepository)
     {
         parent::__construct();
 
         $this->articleAuthorRepository = $articleAuthorRepo;
+        $this->languageRepository = $languageRepository;
     }
 
     /**
@@ -31,9 +39,11 @@ class ArticleAuthorController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $articleAuthors = $this->articleAuthorRepository->paginate($perPage);
+        $articleAuthors = $this->articleAuthorRepository->paginateIndexPage($perPage, 5, $request->all());
+        $languages = $articleAuthors;
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            ArticleAuthorDescription::class,
             ArticleAuthor::class
         ]);
 
@@ -51,14 +61,18 @@ class ArticleAuthorController extends AppBaseController
      */
     public function create()
     {
+        $languages = $this->languageRepository->all();
+
         $this->template = 'pages.article_authors.create';
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ArticleAuthor::class,
+            ArticleAuthorDescription::class,
             FirstPathQuery::class
         ]);
         return $this->renderOutput([
             'fields' => $fields,
+            'languages' => $languages,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
@@ -82,7 +96,8 @@ class ArticleAuthorController extends AppBaseController
      */
     public function show($id)
     {
-        $articleAuthor = $this->articleAuthorRepository->find($id)->first();
+        $articleAuthor = $this->articleAuthorRepository->find($id);
+        $languages = $this->languageRepository->all();
 
         if (empty($articleAuthor)) {
             Flash::error('Article Author not found');
@@ -95,8 +110,8 @@ class ArticleAuthorController extends AppBaseController
 
         $this->template = 'pages.article_authors.show';
 
-        return $this->renderOutput(compact('articleAuthor'));
-}
+        return $this->renderOutput(compact('articleAuthor', 'languages'));
+    }
 
     /**
      * Show the form for editing the specified ArticleAuthor.
@@ -104,6 +119,7 @@ class ArticleAuthorController extends AppBaseController
     public function edit($id)
     {
         $articleAuthor = $this->articleAuthorRepository->find($id);
+        $languages = $this->languageRepository->all();
 
         if (empty($articleAuthor)) {
             Flash::error('Article Author not found');
@@ -118,10 +134,12 @@ class ArticleAuthorController extends AppBaseController
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ArticleAuthor::class,
+            ArticleAuthorDescription::class,
             FirstPathQuery::class
         ]);
         return $this->renderOutput([
             'articleAuthor' => $articleAuthor,
+            'languages' => $languages,
             'fields' => $fields,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
@@ -140,7 +158,7 @@ class ArticleAuthorController extends AppBaseController
             return redirect(route('articleAuthors.index'));
         }
 
-        $articleAuthor = $this->articleAuthorRepository->update($request->all(), $id);
+        $this->articleAuthorRepository->update($request->all(), $id);
 
         Flash::success('Article Author updated successfully.');
 
