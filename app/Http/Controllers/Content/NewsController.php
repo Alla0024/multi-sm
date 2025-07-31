@@ -95,6 +95,7 @@ class NewsController extends AppBaseController
     public function show($id)
     {
         $news = $this->newsRepository->find($id);
+        $languages = $this->languageRepository->all();
 
         if (empty($news)) {
             Flash::error('News not found');
@@ -104,7 +105,7 @@ class NewsController extends AppBaseController
 
         $this->template = 'pages.news.show';
 
-        return $this->renderOutput(compact('news'));
+        return $this->renderOutput(compact('news', 'languages'));
     }
 
     /**

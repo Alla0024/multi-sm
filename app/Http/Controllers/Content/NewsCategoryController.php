@@ -6,6 +6,7 @@ use App\Http\Requests\CreateNewsCategoryRequest;
 use App\Http\Requests\UpdateNewsCategoryRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\NewsCategoryDescription;
+use App\Repositories\LanguageRepository;
 use App\Repositories\NewsCategoryRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -14,14 +15,19 @@ use Flash;
 
 class NewsCategoryController extends AppBaseController
 {
-    /** @var NewsCategoryRepository $newsCategoryRepository*/
+    /**
+     * @var NewsCategoryRepository $newsCategoryRepository
+     * @var LanguageRepository $languageRepository
+     * */
     private $newsCategoryRepository;
+    private $languageRepository;
 
-    public function __construct(NewsCategoryRepository $newsCategoryRepo)
+    public function __construct(NewsCategoryRepository $newsCategoryRepo, LanguageRepository $languageRepo)
     {
         parent::__construct();
 
         $this->newsCategoryRepository = $newsCategoryRepo;
+        $this->languageRepository = $languageRepo;
     }
 
     /**
@@ -83,6 +89,7 @@ class NewsCategoryController extends AppBaseController
     public function show($id)
     {
         $newsCategory = $this->newsCategoryRepository->find($id);
+        $languages = $this->languageRepository->all();
 
         if (empty($newsCategory)) {
             Flash::error('News Category not found');
@@ -92,7 +99,7 @@ class NewsCategoryController extends AppBaseController
 
         $this->template = 'pages.news_categories.show';
 
-        return $this->renderOutput(compact('newsCategory'));
+        return $this->renderOutput(compact('newsCategory', 'languages'));
 }
 
     /**

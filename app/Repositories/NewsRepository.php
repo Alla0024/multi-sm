@@ -26,9 +26,15 @@ class NewsRepository extends BaseRepository
 
     public function find($id, $columns = ['*'])
     {
-        $news = $this->model->with(['descriptions' => function ($query) {
-            return $query->with('language');
-        }])->find($id, $columns);
+        $news = $this->model
+            ->with([
+                'seoPath',
+                'descriptions' =>
+                    function ($query) {
+                        return $query->with('language');
+                    }
+                ]
+            )->find($id, $columns);
 
         $preshaped_descriptions = [];
 
@@ -40,6 +46,7 @@ class NewsRepository extends BaseRepository
         }
         unset($news->descriptions);
         $news->setAttribute('descriptions', $preshaped_descriptions);
+        $news->setAttribute('path', $news->seoPath->path);
 
         return $news;
     }

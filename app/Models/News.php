@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class News extends Model
 {
@@ -62,6 +63,11 @@ class News extends Model
     public function descriptions()
     {
         return $this->hasMany(NewsDescription::class, 'news_id');
+    }
+
+    public function seoPath(): HasOne
+    {
+        return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'news');
     }
 
     public function products()
