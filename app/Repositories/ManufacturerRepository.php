@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 class ManufacturerRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-         //
+         'sort_order',
     ];
 
     public function getFieldsSearchable(): array
