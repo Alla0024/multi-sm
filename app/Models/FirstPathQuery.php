@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class FirstPathQuery extends Model
 {
     public $table = 'first_path_queries';
+    public $timestamps = false;
 
     public $fillable = [
         'type',

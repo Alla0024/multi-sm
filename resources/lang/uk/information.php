@@ -23,6 +23,9 @@ return [
     'title_description' => 'Опис',
     'search_description' => 'Пошук за описом',
     'title_path' => 'SEO Url',
+    'search_title' => 'Пошук за назвою',
+    'title_descriptions_name' => 'Назва',
+    'title_descriptions_description' => 'Опис',
     'tab_main' => 'Основна вкладка',
     'tab_sort' => 'Сортування',
 ];

@@ -107,7 +107,7 @@ class ManufacturerController extends AppBaseController
      */
     public function edit($id)
     {
-        $manufacturer = $this->manufacturerRepository->find($id);
+        $manufacturer = $this->manufacturerRepository->with(['descriptions'])->find($id);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Manufacturer::class,

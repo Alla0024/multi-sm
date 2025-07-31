@@ -103,3 +103,10 @@
         <p>First Path Queries</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('articleAuthorDescriptions.index') }}" class="nav-link {{ Request::is('articleAuthorDescriptions*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Article Author Descriptions</p>
+    </a>
+</li>

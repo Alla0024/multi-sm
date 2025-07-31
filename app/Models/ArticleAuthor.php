@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ArticleAuthor extends Model
 {
     public $table = 'article_authors';
+    public $timestamps = false;
 
     public $fillable = [
         'avatar',
@@ -29,12 +32,17 @@ class ArticleAuthor extends Model
         'instagram' => 'required|url'
     ];
 
-    public function languages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function languages(): BelongsToMany
     {
-        return $this->belongsToMany(\App\Models\Language::class, 'article_author_descriptions');
+        return $this->belongsToMany(Language::class, 'article_author_descriptions');
     }
 
-    public function news(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function descriptions(): HasMany
+    {
+        return $this->hasMany(ArticleAuthorDescription::class, 'author_id');
+    }
+
+    public function news(): HasMany
     {
         return $this->hasMany(\App\Models\News::class, 'author_id');
     }

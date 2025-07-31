@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Information;
+use App\Repositories\FirstPathQueryRepository;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateInformationRequest extends FormRequest
@@ -25,5 +26,18 @@ class CreateInformationRequest extends FormRequest
     public function rules()
     {
         return Information::$rules;
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $path = $this->input('path');
+
+            $exists = app(FirstPathQueryRepository::class)->isThisPathExists($path, null);
+
+            if ($exists) {
+                $validator->errors()->add('path', 'This path is already taken.');
+            }
+        });
     }
 }

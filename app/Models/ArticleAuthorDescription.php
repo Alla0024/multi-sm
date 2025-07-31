@@ -7,36 +7,40 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Thiagoprz\CompositeKey\HasCompositeKey;
 
-class InformationDescription extends Model
+class ArticleAuthorDescription extends Model
 {
-    use SearchableBySimilarity, HasCompositeKey;
+    use HasCompositeKey, SearchableBySimilarity;
 
-    public $table = 'information_descriptions';
+    public $table = 'article_author_descriptions';
     public $timestamps = false;
-    protected $primaryKey = ['information_id', 'language_id'];
+    protected $primaryKey = ['author_id', 'language_id'];
 
     public $fillable = [
-        'information_id',
+        'author_id',
         'language_id',
         'name',
+        'title',
         'description'
     ];
 
     protected $casts = [
+        'author_id' => 'string',
         'name' => 'string',
+        'title' => 'string',
         'description' => 'string'
     ];
 
     public static array $rules = [
-        'information_id' => 'required',
+        'author_id' => 'required',
         'language_id' => 'required',
         'name' => 'required|string|max:255',
+        'title' => 'required|string|max:255',
         'description' => 'required|string'
     ];
 
-    public function information(): BelongsTo
+    public function author(): BelongsTo
     {
-        return $this->belongsTo(Information::class, 'information_id');
+        return $this->belongsTo(ArticleAuthor::class, 'author_id');
     }
 
     public function language(): BelongsTo

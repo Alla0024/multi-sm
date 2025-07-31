@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Information extends Model
 {
@@ -26,8 +28,13 @@ class Information extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function informationDescription()
+    public function firstPathQuery()
     {
-        return $this->hasOne(InformationDescription::class);
+        return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'information');
+    }
+
+    public function descriptions(): HasMany
+    {
+        return $this->hasMany(InformationDescription::class, 'information_id');
     }
 }

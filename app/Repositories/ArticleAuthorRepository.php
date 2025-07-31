@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ArticleAuthor;
+use App\Models\ArticleAuthorDescription;
 use App\Models\FirstPathQuery;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,9 +13,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ArticleAuthorRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'date_of_birth',
-        'facebook',
-        'instagram'
     ];
 
     public function getFieldsSearchable(): array
@@ -32,17 +30,73 @@ class ArticleAuthorRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
+    public function find($id, $columns = ['*'])
+    {
+        $authors = $this->model->with(['descriptions' => function ($query) {
+            return $query->with('language');
+        }])->find($id, $columns);
+
+        $preshaped_descriptions = [];
+
+        foreach ($authors->descriptions as $description) {
+            $preshaped_descriptions[$description->language->id] = [
+                'title' => $description->title,
+                'name' => $description->description,
+                'description' => $description->description,
+            ];
+        }
+        unset($authors->descriptions);
+        $authors->setAttribute('descriptions', $preshaped_descriptions);
+
+        return $authors;
+    }
+
+    public function paginateIndexPage($perPage, $language_id, $params)
+    {
+        $authors = $this->model
+            ->with(['descriptions' => function ($query) use ($language_id) {
+                $query->select('author_id', 'language_id', 'name')
+                    ->where('language_id', $language_id);
+            }])
+            ->when(isset($params['name']), function ($q) use ($params) {
+                return $q->whereHas('descriptions', function ($q) use ($params) {
+                    return $q->searchSimilarity(['name'], $params['name']);
+                });
+            })
+            ->paginate($perPage);
+
+        foreach ($authors as $author) {
+            $name = $author->descriptions->first()->name;
+            unset($author->descriptions);
+
+            $author->setAttribute('name', $name);
+        }
+
+        return $authors;
+    }
+
     public function create(array $input)
     {
-        $seoUrl = $input['path'];
-        unset($input['path']);
+        $descriptions = $input['descriptions'] ?? [];
+        $seoPath = $input['path'];
+        unset($input['descriptions'], $input['path']);
 
         $articleAuthor = $this->model->create($input);
+
+        foreach ($descriptions as $languageId => $descData) {
+            ArticleAuthorDescription::updateOrCreate(
+                [
+                    'author_id' => $articleAuthor->id,
+                    'language_id' => $languageId
+                ],
+                $descData
+            );
+        }
 
         FirstPathQuery::create([
             'type' => 'authors',
             'type_id' => $articleAuthor->id,
-            'path' => $seoUrl,
+            'path' => $seoPath,
         ]);
 
         return $articleAuthor;
@@ -50,10 +104,21 @@ class ArticleAuthorRepository extends BaseRepository
 
     public function update(array $input, $id)
     {
-        $seoUrl = $input['path'];
-        unset($input['path']);
+        $descriptions = $input['descriptions'] ?? [];
+        $seoPath = $input['path'];
+        unset($input['descriptions'], $input['path']);
 
-        $articleAuthor = $this->find($id);
+        $author = $this->model->findOrFail($id);
+
+        foreach ($descriptions as $languageId => $descData) {
+            ArticleAuthorDescription::updateOrCreate(
+                [
+                    'author_id' => $id,
+                    'language_id' => $languageId
+                ],
+                $descData
+            );
+        }
 
         $firstPathQueryData = [
             'type' => 'authors',
@@ -65,17 +130,16 @@ class ArticleAuthorRepository extends BaseRepository
         if (!$firstPathQuery) {
             FirstPathQuery::create([
                 ...$firstPathQueryData,
-                'path' => $seoUrl,
+                'path' => $seoPath,
             ]);
         } else {
             $firstPathQuery->update([
-                'path' => $seoUrl,
+                'path' => $seoPath,
             ]);
         }
 
-        $articleAuthor->update($input);
-
-        return $articleAuthor;
+        $author->update($input);
+        return $author;
     }
 
 
