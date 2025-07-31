@@ -110,3 +110,10 @@
         <p>Article Author Descriptions</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('newsToCategories.index') }}" class="nav-link {{ Request::is('newsToCategories*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>News To Categories</p>
+    </a>
+</li>

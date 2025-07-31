@@ -34,7 +34,7 @@ class ArticleAuthor extends Model
 
     public function languages(): BelongsToMany
     {
-        return $this->belongsToMany(Language::class, 'article_author_descriptions');
+        return $this->belongsToMany(Language::class, ArticleAuthorDescription::class);
     }
 
     public function descriptions(): HasMany
@@ -44,6 +44,6 @@ class ArticleAuthor extends Model
 
     public function news(): HasMany
     {
-        return $this->hasMany(\App\Models\News::class, 'author_id');
+        return $this->hasMany(News::class, 'author_id');
     }
 }

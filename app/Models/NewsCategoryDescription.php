@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NewsCategoryDescription extends Model
 {
@@ -26,13 +27,13 @@ class NewsCategoryDescription extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function language(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function language(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Language::class, 'language_id');
+        return $this->belongsTo(Language::class, 'language_id');
     }
 
-    public function newsCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function newsCategory(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\NewsCategory::class, 'news_category_id');
+        return $this->belongsTo(NewsCategory::class, 'news_category_id');
     }
 }
