@@ -6,6 +6,7 @@ return [
     'title_name' => 'Виробник',
     'title_image' => 'Зоображення',
     'title_sort_order' => 'Сортування',
+    'search_sort_order' => 'Пошук за сортуванням',
     'search_name' => 'Пошук за назвою',
     'title_created_at' => 'Створено',
     'title_updated_at' => 'Оновлено',
