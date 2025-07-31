@@ -4,10 +4,12 @@ namespace App\Http\Requests;
 
 use App\Models\Information;
 use App\Repositories\FirstPathQueryRepository;
+use App\Traits\PathQueryRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateInformationRequest extends FormRequest
 {
+    use PathQueryRules;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,19 +27,13 @@ class CreateInformationRequest extends FormRequest
      */
     public function rules()
     {
-        return Information::$rules;
+        return array_merge(
+            $this->getFirstPathQueryRules(),
+            Information::$rules
+        );
     }
 
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $path = $this->input('path');
-
-            $exists = app(FirstPathQueryRepository::class)->isThisPathExists($path, null);
-
-            if ($exists) {
-                $validator->errors()->add('path', 'This path is already taken.');
-            }
-        });
+    public function withValidator($validator) {
+        $this->applyFirstPathQueryValidator($validator, $this->input('path'));
     }
 }

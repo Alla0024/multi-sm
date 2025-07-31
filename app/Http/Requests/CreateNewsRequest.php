@@ -3,17 +3,19 @@
 namespace App\Http\Requests;
 
 use App\Models\News;
-use App\Repositories\FirstPathQueryRepository;
+use App\Traits\PathQueryRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateNewsRequest extends FormRequest
 {
+    use PathQueryRules;
+
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,21 +25,15 @@ class CreateNewsRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
-        return News::$rules;
+        return array_merge(
+            $this->getFirstPathQueryRules(),
+            News::$rules,
+        );
     }
 
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $path = $this->input('path');
-
-            $exists = app(FirstPathQueryRepository::class)->isThisPathExists($path, null);
-
-            if ($exists) {
-                $validator->errors()->add('path', 'This path is already taken.');
-            }
-        });
+    public function withValidator($validator) {
+        $this->applyFirstPathQueryValidator($validator, $this->input('path'));
     }
 }

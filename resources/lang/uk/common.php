@@ -81,6 +81,6 @@ return [
     'menu_combinations' => 'Питання-Відповідь',
     'menu_generate' => 'Підбір товарів',
 
-
-
+    // Errors
+    'error_path_already_taken' => 'Цей шлях уже використовується'
 ];
