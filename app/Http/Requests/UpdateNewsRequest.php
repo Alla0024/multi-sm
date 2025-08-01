@@ -4,12 +4,12 @@ namespace App\Http\Requests;
 
 use App\Models\News;
 use App\Repositories\FirstPathQueryRepository;
-use App\Traits\PathQueryRules;
+use App\Traits\AdditionalRequestRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateNewsRequest extends FormRequest
 {
-    use PathQueryRules;
+    use AdditionalRequestRules;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -36,7 +36,6 @@ class UpdateNewsRequest extends FormRequest
     }
 
     public function withValidator($validator) {
-        $this->applyFirstPathQueryValidator($validator, $this->input('path'));
+        $this->applyFirstPathQueryValidator($validator, $this->input('path'), $this->input('id'), 'news');
     }
-
 }
