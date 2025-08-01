@@ -21,10 +21,9 @@ class FirstPathQueryRepository extends BaseRepository
         return FirstPathQuery::class;
     }
 
-    public function isThisPathExists(string $path, $exclude_id): bool
+    public function isThisPathExists(string $path): bool
     {
         return $this->model->where([
-            ['type_id' , '<>' , $exclude_id],
             ['path' , '=' , $path]
         ])->exists();
     }

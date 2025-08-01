@@ -1,3 +1,17 @@
+<!-- Title Fields -->
+<div class="col-sm-12">
+    {!! Form::label('descriptions_title', $word['title_descriptions_title']) !!}
+
+    <div class="flex-row">
+        @foreach($languages as $language)
+            <div class="form-group mt-3">
+                {!! Form::label("descriptions[$language->id][title]", $language->id) !!}
+                {!! $news->descriptions[$language->id]['title'] !!}
+            </div>
+        @endforeach
+    </div>
+</div>
+
 <!-- Category Id Field -->
 <div class="col-sm-12">
     {!! Form::label('category_id', $word['title_category_id']) !!}
@@ -30,6 +44,26 @@
 <div class="col-sm-12">
     {!! Form::label('status', $word['title_status']) !!}
     <p>{{ $news->status }}</p>
+</div>
+
+<!-- SEO Url Field -->
+<div class="col-sm-12">
+    {!! Form::label('path', $word['title_path']) !!}
+    <p>{{ $news->path }}</p>
+</div>
+
+<!-- Description Fields -->
+<div class="col-sm-12">
+    {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
+
+    <div class="flex-row">
+        @foreach($languages as $language)
+            <div class="form-group mt-3">
+                {!! Form::label("descriptions[$language->id][description]", $language->id) !!}
+                {!! $news->descriptions[$language->id]['description'] !!}
+            </div>
+        @endforeach
+    </div>
 </div>
 
 

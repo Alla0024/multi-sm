@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\pages\ExampleController;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\DashboardController;
@@ -227,3 +228,4 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 Route::resource('first-path-queries', App\Http\Controllers\Content\FirstPathQueryController::class);
 Route::resource('news-descriptions', App\Http\Controllers\Content\NewsDescriptionController::class);
 Route::resource('article-author-descriptions', App\Http\Controllers\Content\ArticleAuthorDescriptionController::class);
+Route::resource('news-to-categories', App\Http\Controllers\Content\NewsToCategoryController::class);

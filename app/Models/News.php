@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class News extends Model
 {
@@ -51,12 +52,12 @@ class News extends Model
 
     public function newsCategories()
     {
-        return $this->belongsToMany(NewsCategory::class, 'news_to_news_categories');
+        return $this->belongsToMany(NewsCategory::class, NewsToNewsCategory::class);
     }
 
     public function languages()
     {
-        return $this->belongsToMany(Language::class, 'news_descriptions');
+        return $this->belongsToMany(Language::class, NewsDescription::class);
     }
 
     public function descriptions()
@@ -64,13 +65,18 @@ class News extends Model
         return $this->hasMany(NewsDescription::class, 'news_id');
     }
 
-    public function products()
+    public function seoPath(): HasOne
     {
-        return $this->belongsToMany(Product::class, 'new_to_products');
+        return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'news');
     }
 
-    public function category1s()
+    public function products()
     {
-        return $this->belongsToMany(Category::class, 'new_to_categories');
+        return $this->belongsToMany(Product::class, NewsToProduct::class);
+    }
+
+    public function category1c()
+    {
+        return $this->belongsToMany(Category::class, NewsToCategory::class);
     }
 }
