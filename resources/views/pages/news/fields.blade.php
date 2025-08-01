@@ -1,11 +1,10 @@
 <!-- Title Fields -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['title']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['title']['inTab'] !!}">
     {!! Form::label('descriptions_title', $word['title_descriptions_title']) !!}
-
-    <div class="flex-row">
+    <div class="flex-row input">
         @foreach($languages as $language)
-            <div class="form-group mt-3">
-                {!! Form::label("descriptions[$language->id][title]", $language->id, ['class' => 'form-label']) !!}
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
                 {!! Form::textarea("descriptions[$language->id][title]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
@@ -13,15 +12,23 @@
 </div>
 
 <!-- Category Id Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['category_id']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['category_id']['inTab'] !!}">
     {!! Form::label('category_id', $word['title_category_id']) !!}
-    {!! Form::number('category_id', null, ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::number('category_id', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 <!-- Author Id Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['author_id']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['author_id']['inTab'] !!}">
     {!! Form::label('author_id', $word['title_author_id']) !!}
-    {!! Form::number('author_id', null, ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::number('author_id', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 

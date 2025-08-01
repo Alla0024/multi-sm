@@ -13,6 +13,8 @@ return [
     'show_by' => 'Показувати по',
 
     // Menu
+    '1' => '🤢',
+    '5' => '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"><rect width="22" height="10" fill="#0057B7"/><rect width="22" height="10" y="10" fill="#FFD700"/></svg>',
     'menu_manufacturers' => 'Виробники',
     'menu_categories' => 'Категорії',
     'menu_filters' => 'Фільтра',

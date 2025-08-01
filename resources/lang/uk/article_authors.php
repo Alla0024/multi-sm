@@ -2,6 +2,7 @@
 
 return [
     'Article_author' => 'Автори статей',
+    'author' => 'автора',
     'title_id' => 'ID',
     'search_id' => 'Пошук за ID',
     'title_avatar' => 'Аватар',

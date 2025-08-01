@@ -11,17 +11,17 @@
             <div class="name">Головна</div>
         </a>
 
-{{--        <div class="item-list" x-data="{open_list: {{ Request::is('aikqweu/example*') ? 'true' : 'false' }}}">--}}
-{{--            <div class="item {{ Request::is('aikqweu/example*') ? 'active' : '' }}" @click="open_list = !open_list">--}}
-{{--                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>--}}
-{{--                <div class="name">Example</div>--}}
-{{--                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>--}}
-{{--            </div>--}}
-{{--            <div class="list" :class="{'list-open': open_list}">--}}
-{{--                <a class="item {{ Request::is('aikqweu/example') ? 'active' : '' }}" href="{{asset('/aikqweu/example')}}">Form</a>--}}
-{{--                <a class="item {{ Request::is('aikqweu/example/edit*') ? 'active' : '' }}" href="{{asset('/aikqweu/example/edit')}}">Inputs</a>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        <div class="item-list" x-data="{open_list: {{ Request::is('aikqweu/example*') ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is('aikqweu/example*') ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
+                <div class="name">Example</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is('aikqweu/example') ? 'active' : '' }}" href="{{asset('/aikqweu/example')}}">Form</a>
+                <a class="item {{ Request::is('aikqweu/example/edit*') ? 'active' : '' }}" href="{{asset('/aikqweu/example/edit')}}">Inputs</a>
+            </div>
+        </div>
 
 {{--        <a href="{{ route('languages.index') }}" class="item {{ Request::is('aikqweu/languages*') ? 'active' : '' }}">--}}
 {{--            <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>--}}

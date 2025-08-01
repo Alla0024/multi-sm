@@ -1,7 +1,6 @@
 <?php
 
 
-use App\Http\Controllers\pages\ExampleController;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\DashboardController;
@@ -19,8 +18,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('example', [ExampleController::class, 'index']);
-        Route::get('example/edit', [ExampleController::class, 'edit']);
+
 
         Route::group(['prefix' => 'settings'], function () {
             Route::resource('languages', 'Settings\LanguageController');
@@ -33,6 +31,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::resource('settings', 'Settings\SettingController');
             Route::resource('pages', 'Settings\PageController');
         });
+        Route::resource('example','App\Http\Controllers\Content\ExampleController');
         Route::resource('languages', 'App\Http\Controllers\Content\LanguageController');
         Route::resource('stores', 'App\Http\Controllers\Content\StoreController');
         Route::resource('manufacturers', 'App\Http\Controllers\Content\ManufacturerController');

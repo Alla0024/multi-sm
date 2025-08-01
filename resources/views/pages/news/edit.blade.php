@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1>
-                        {{ $word['edit'] }} {!!  $word['New'] !!}
+                        {{ $word['edit'] }} {!!  $word['new'] !!}
                     </h1>
                 </div>
             </div>

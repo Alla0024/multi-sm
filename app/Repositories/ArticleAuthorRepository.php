@@ -41,7 +41,7 @@ class ArticleAuthorRepository extends BaseRepository
         foreach ($authors->descriptions as $description) {
             $preshaped_descriptions[$description->language->id] = [
                 'title' => $description->title,
-                'name' => $description->description,
+                'name' => $description->name,
                 'description' => $description->description,
             ];
         }

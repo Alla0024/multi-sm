@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'Information' => 'Інформація',
+    'Information' => 'Статті у футері',
+    'information' => 'статтю',
     'title_id' => 'ID',
     'search_id' => 'Пошук за ID',
     'title_sort_order' => 'Порядок сортування',

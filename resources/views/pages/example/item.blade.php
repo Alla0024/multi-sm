@@ -168,7 +168,6 @@
                 <div class="name">Назва</div>
                 <div class="input" style="position: relative;">
                     <input
-
                         name="input-list-search"
                         placeholder="Type to search..."
                         autocomplete="off"
