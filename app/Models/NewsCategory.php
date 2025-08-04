@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class NewsCategory extends Model
 {
@@ -39,5 +40,10 @@ class NewsCategory extends Model
     public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class, NewsCategoryDescription::class);
+    }
+
+    public function descriptions(): HasMany
+    {
+        return $this->hasMany(NewsCategoryDescription::class, 'news_category_id');
     }
 }
