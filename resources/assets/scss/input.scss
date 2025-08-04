@@ -63,6 +63,9 @@ input, textarea, select{
     border: 1px solid $col_border;
     outline: none;
     width: 100%;
+    &:focus{
+        box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, .25) !important;
+    }
 }
 .image-upload{
     display: flex;
@@ -86,6 +89,7 @@ input[type=file]{
 }
 textarea{
     height: auto;
+    min-height: 150px;
     padding: 10px 20px;
 }
 select{

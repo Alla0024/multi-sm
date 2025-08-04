@@ -75,6 +75,9 @@ class AppBaseController extends BaseController
 
         $lang = [
             ucfirst(substr($filename, 0, -1)) => $filename,
+            'error_news_not_found' => 'Статтю не знайдено',
+            'success_news_deleted' => 'Видалено успішно',
+            'success_news_saved' => 'Збережено успішно',
         ];
 
         foreach ($fields as $name => $config) {
