@@ -141,7 +141,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('/api/order_confirm_url', 'ApiController@orderConfirmUrl')->name('order_confirm_url');
         Route::get('/api/check_status_liqpay', 'ApiController@checkStatusLiqpay')->name('check_status_liqpay');
         Route::get('/api/product_status_update', 'ApiController@productStatusUpdate')->name('product_status_update');
-        Route::post('api/get_products', 'ApiController@getProducts')->name('get_products');
         Route::post('api/get_segment_products', 'ApiController@getSegmentProducts')->name('get_segment_products');
         Route::post('api/get_sales', 'ApiController@getSales')->name('get_sales');
         Route::post('api/get_bonus_programs', 'ApiController@getBonusPrograms')->name('get_bonus_programs');
@@ -159,7 +158,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('api/get_words', 'ApiController@getWords')->name('get_words');
         Route::get('api/get_attribute_words', 'ApiController@getAttributeWords')->name('get_attribute_words');
         Route::get('api/get_languages', 'ApiController@getLanguage')->name('get_languages');
-        Route::get('api/get_product', 'ApiController@getProduct')->name('get_product');
         Route::get('api/get_filling', 'ApiController@getFilling')->name('get_filling');
         Route::get('api/get_combinations', 'ApiController@getCombination')->name('get_combinations');
         Route::get('api/get_orders', 'ApiController@getOrders')->name('get_orders');
@@ -189,6 +187,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::get('getCategories', 'App\Http\Controllers\Content\ApiController@getCategories')->name('getCategories');
             Route::get('getNewsCategories', 'App\Http\Controllers\Content\ApiController@getNewsCategories')->name('getNewsCategories');
             Route::get('getAuthors', 'App\Http\Controllers\Content\ApiController@getAuthors')->name('getAuthors');
+            Route::get('getProducts', 'App\Http\Controllers\Content\ApiController@getProducts')->name('getProducts');
             Route::get('getAttributes', 'Content\AttributeController@getAttributes')->name('getAttributes');
             Route::get('getFilters', 'Content\FilterController@getFilters')->name('getFilters');
             Route::get('getOptionValues', 'Content\OptionValueController@getOptionValues')->name('getOptionValues');

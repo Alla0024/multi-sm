@@ -1,0 +1,874 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigInteger,true",
+        "htmlType": "number",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "article",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:50",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "hash",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "sku",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "kit",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "currency_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "manufacturer_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "category_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "kit_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "stock_status_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "sort_order",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "status",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "rozetka_status",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "google_remarketing_status",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "rating",
+        "dbType": "float",
+        "htmlType": "number",
+        "validations": "required|numeric",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "reviews",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "location_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "name_in_1c",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "copy",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "image",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "image_path",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "nullable|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "viewers_number_from",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "viewers_number_to",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "show_in_stock",
+        "dbType": "boolean",
+        "htmlType": "checkbox",
+        "validations": "required|boolean",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "show_count_viewers",
+        "dbType": "boolean",
+        "htmlType": "checkbox",
+        "validations": "required|boolean",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "mini_images",
+        "dbType": "text",
+        "htmlType": "textarea",
+        "validations": "nullable|string",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "created_at",
+        "dbType": "dateTimeTz",
+        "htmlType": "date",
+        "validations": "nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "dateTimeTz",
+        "htmlType": "date",
+        "validations": "nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "mark",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "nullable",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "cashback",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Category,category_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Currency,currency_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,StockStatus,stock_status_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Kit,kit_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Location,location_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mt1,Manufacturer,manufacturer_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,82ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,63ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,92ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,92ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,92ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,88ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,88ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,88ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,86ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,86ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,82ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,60ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,86ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,160ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,85ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,160ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,63ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,59ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,85ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,85ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,84ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,84ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,160ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,84ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,83ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,83ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,83ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,158ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,158ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,158ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,156ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,156ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,156ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,155ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,155ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,155ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,63ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,59ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,145ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,145ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,145ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,177ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,142ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,142ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,142ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,129ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,129ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,129ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,128ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,128ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,75ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,61ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,75ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Category,top_sales"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,177ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,ShippingMethod,shipping_method_to_products"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,177ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Segment,segment_to_products"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,SaleToProduct"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,60ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,75ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,176ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,80ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,176ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,80ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,176ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,PromoCodeGroup,promo_code_group_to_products"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,PromoCodeGroup,promo_code_group_to_exception_products"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,175ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,61ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductToYoutube,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,ProductSimilar"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductSimilar,similar_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductReview,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,ProductRelated"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductRelated,related_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,60ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductOversize,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Option,product_options"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,ProductOptionValueToOptionValueGroup"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,ProductOptionValueGroup"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,ProductOptionDescription"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,175ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductKit,kit_product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductKit,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductImage,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,ProductHash"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,ProductFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductDescription,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductCertificate,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,80ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,175ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,ProductAttributeIcon"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductAttribute,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,172ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Order,order_products"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,OrderOptionProduct,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,172ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,172ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,News,new_to_products"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,171ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,81ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,171ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,LoggingCheckoutActionToProduct,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,81ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,171ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Kit,kit_products"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,164ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,164ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,61ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,CompanionProduct,companion_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,CompanionProduct,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,Cart,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,59ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,128ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,81ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,164ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,82ProductPriceToFilter"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,161ProductPriceToOption"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,161ProductPrice,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,BankProgramToProduct,product_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,161ProductPriceToFilter"
+    }
+]

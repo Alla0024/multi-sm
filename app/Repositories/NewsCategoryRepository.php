@@ -66,7 +66,7 @@ class NewsCategoryRepository extends BaseRepository
         return $news_category_id;
     }
 
-    public function getIdNameMap($language_id): array
+    public function getDropdownItems($language_id): array
     {
         $items = $this->model
             ->with([
@@ -79,7 +79,7 @@ class NewsCategoryRepository extends BaseRepository
         foreach ($items as $item) {
             $result[] = [
                 "id" => $item->id,
-                "text" => $item->descriptions[0]->name,
+                "text" => $item->descriptions->first()->name,
             ];
         }
 

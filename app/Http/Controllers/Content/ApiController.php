@@ -6,6 +6,8 @@ use App\Http\Controllers\AppBaseController;
 use App\Repositories\ArticleAuthorRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\NewsCategoryRepository;
+use App\Repositories\ProductRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ApiController extends AppBaseController
@@ -14,17 +16,20 @@ class ApiController extends AppBaseController
      * @var CategoryRepository $categoryRepository;
      * @var NewsCategoryRepository $newsCategoryRepository;
      * @var ArticleAuthorRepository $articleAuthorRepository;
+     * @var ProductRepository $productRepository
      * @var String $DEFAULT_LANGUAGE_ID;
      */
     private $categoryRepository;
     private $newsCategoryRepository;
     private $articleAuthorRepository;
-    private $DEFAULT_LANGUAGE_ID;
+    private $productRepository;
+    private $defaultLanguageId;
 
     public function __construct(
         CategoryRepository $categoryRepo,
         NewsCategoryRepository $newsCategoryRepo,
         ArticleAuthorRepository $articleAuthorRepo,
+        ProductRepository $productRepo,
     )
     {
         parent::__construct();
@@ -32,14 +37,15 @@ class ApiController extends AppBaseController
         $this->categoryRepository = $categoryRepo;
         $this->newsCategoryRepository = $newsCategoryRepo;
         $this->articleAuthorRepository = $articleAuthorRepo;
+        $this->productRepository = $productRepo;
 
-        $this->DEFAULT_LANGUAGE_ID = config('settings.locale.default_language_id');
+        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
-    public function getCategories(Request $request)
+    public function getCategories(Request $request): JsonResponse
     {
         if ($request->ajax()) {
-            $data = $this->categoryRepository->getIdNameMap($this->DEFAULT_LANGUAGE_ID);
+            $data = $this->categoryRepository->getDropdownItems($this->defaultLanguageId);
 
             return response()->json(['items' => $data ?? []]);
         } else {
@@ -47,10 +53,10 @@ class ApiController extends AppBaseController
         }
     }
 
-    public function getNewsCategories(Request $request)
+    public function getNewsCategories(Request $request): JsonResponse
     {
         if ($request->ajax()) {
-            $data = $this->newsCategoryRepository->getIdNameMap($this->DEFAULT_LANGUAGE_ID);
+            $data = $this->newsCategoryRepository->getDropdownItems($this->defaultLanguageId);
 
             return response()->json(['items' => $data ?? []]);
         } else {
@@ -58,12 +64,30 @@ class ApiController extends AppBaseController
         }
     }
 
-    public function getAuthors(Request $request)
+    public function getAuthors(Request $request): JsonResponse
     {
         if ($request->ajax()) {
-            $data = $this->articleAuthorRepository->getIdNameMap($this->DEFAULT_LANGUAGE_ID);
+            $data = $this->articleAuthorRepository->getDropdownItems($this->defaultLanguageId);
 
             return response()->json(['items' => $data ?? []]);
+        } else {
+            return abort(404);
+        }
+    }
+
+    /**
+     * Available params:
+     * search
+     * manufacturer_id
+     * category_id
+     * products_id
+     */
+    public function getProducts(Request $request): JsonResponse
+    {
+        if ($request->ajax()) {
+            $data = $this->productRepository->getDropdownItems($this->defaultLanguageId, request()->all());
+
+            return response()->json(['items' => $data]);
         } else {
             return abort(404);
         }

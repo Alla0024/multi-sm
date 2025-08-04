@@ -28,4 +28,8 @@ class Manufacturer extends Model
         return $this->hasMany(ManufacturerDescription::class, 'manufacturer_id');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'manufacturer_id');
+    }
 }

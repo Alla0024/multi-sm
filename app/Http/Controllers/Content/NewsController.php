@@ -26,7 +26,7 @@ class NewsController extends AppBaseController
     private $newsRepository;
     private $languageRepository;
     private $articleAuthorRepository;
-    private $DEFAULT_LANGUAGE_ID;
+    private $defaultLanguageId;
 
     public function __construct(
         NewsRepository $newsRepo,
@@ -39,7 +39,7 @@ class NewsController extends AppBaseController
         $this->newsRepository = $newsRepo;
         $this->languageRepository = $languageRepository;
         $this->articleAuthorRepository = $articleAuthorRepository;
-        $this->DEFAULT_LANGUAGE_ID = config('settings.locale.default_language_id');
+        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -50,7 +50,7 @@ class NewsController extends AppBaseController
         $perPage = $request->input('perPage', 10);
 
         $languages = $this->languageRepository->all();
-        $news = $this->newsRepository->paginateIndexPage($perPage, $this->DEFAULT_LANGUAGE_ID, $request->all());
+        $news = $this->newsRepository->paginateIndexPage($perPage, $this->defaultLanguageId, $request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
@@ -126,7 +126,7 @@ class NewsController extends AppBaseController
     {
         $languages = $this->languageRepository->all();
         $news = $this->newsRepository->find($id);
-        $authors = $this->articleAuthorRepository->getAuthorIdNameMap($this->DEFAULT_LANGUAGE_ID);
+        $authors = $this->articleAuthorRepository->getAuthorIdNameMap($this->defaultLanguageId);
 
         if (empty($news)) {
             Flash::error(__('news.error_news_not_found'));

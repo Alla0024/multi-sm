@@ -33,7 +33,7 @@ class CategoryRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
-    public function getIdNameMap($language_id): array
+    public function getDropdownItems($language_id): array
     {
         $items = $this->model
             ->with([
@@ -46,7 +46,7 @@ class CategoryRepository extends BaseRepository
         foreach ($items as $item) {
             $result[] = [
                 "id" => $item->id,
-                "text" => $item->descriptions[0]->name,
+                "text" => $item->descriptions->first()->name,
             ];
         }
 
