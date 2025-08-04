@@ -40,8 +40,8 @@ class NewsCategoryController extends AppBaseController
         $newsCategories = $this->newsCategoryRepository->paginate($perPage);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            NewsCategoryDescription::class,
             NewsCategory::class,
-            NewsCategoryDescription::class
         ]);
 
         $this->template = 'pages.news_categories.index';

@@ -47,4 +47,5 @@ return [
     'title_descriptions_meta_h1' => 'HTML-тег H1',
     'title_descriptions_meta_description' => 'Мета-тег Description:',
     'title_descriptions_meta_keyword' => 'Мета-тег Keywords:',
+    'title_descriptions_products_title' => 'Заголовок для товарів',
 ];

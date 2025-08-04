@@ -10,8 +10,6 @@ class NewsCategoryDescription extends Model
     public $table = 'news_category_descriptions';
 
     public $fillable = [
-        'news_category_id',
-        'language_id',
         'name'
     ];
 
