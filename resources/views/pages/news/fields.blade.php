@@ -11,7 +11,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][title]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][title]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -28,33 +28,53 @@
 </div>
 
 <!-- Sort Order Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
-    {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 <!-- Reviews Count Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['reviews_count']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['reviews_count']['inTab'] !!}">
     {!! Form::label('reviews_count', $word['title_reviews_count']) !!}
-    {!! Form::number('reviews_count', null, ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::number('reviews_count', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 <!-- Reviews Rating Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['reviews_rating']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['reviews_rating']['inTab'] !!}">
     {!! Form::label('reviews_rating', $word['title_reviews_rating']) !!}
-    {!! Form::number('reviews_rating', null, ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::number('reviews_rating', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 <!-- Status Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['status']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['status']['inTab'] !!}">
     {!! Form::label('status', $word['title_status']) !!}
-    {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 <!-- SEO Url Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['path']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['path']['inTab'] !!}">
     {!! Form::label('path', $word['title_path']) !!}
-    {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 <!-- Category Id Field -->
@@ -78,16 +98,24 @@
 </div>
 
 <!-- Shared On Facebook Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['shared_on_facebook']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['shared_on_facebook']['inTab'] !!}">
     {!! Form::label('shared_on_facebook', $word['title_shared_on_facebook']) !!}
-    {!! Form::number('shared_on_facebook', null, ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::number('shared_on_facebook', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 
 <!-- Shared On Twitter Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['shared_on_twitter']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['shared_on_twitter']['inTab'] !!}">
     {!! Form::label('shared_on_twitter', $word['title_shared_on_twitter']) !!}
-    {!! Form::number('shared_on_twitter', null, ['class' => 'form-control', 'required']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::number('shared_on_twitter', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
 </div>
 
 <!-- Meta Title Fields -->
@@ -97,7 +125,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][meta_title]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][meta_title]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -110,7 +138,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][meta_h1]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][meta_h1]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -123,7 +151,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][meta_description]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][meta_description]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -136,21 +164,25 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][meta_keyword]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][meta_keyword]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
 </div>
 
 <!-- Description Fields -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['title']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['title']['inTab'] !!}">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
-
-    <div class="flex-row">
+    <div class="flex-row input">
         @foreach($languages as $language)
-            <div class="form-group mt-3">
-                {!! Form::label("descriptions[$language->id][description]", $language->id, ['class' => 'form-label']) !!}
-                {!! Form::textarea("descriptions[$language->id][description]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
+{{--                {!! Form::textarea("descriptions[$language->id][description]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}--}}
+                @if(isset($news))
+                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1">{!! $news['descriptions'][$language->id]['description'] !!}</textarea>
+                @else
+                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1"></textarea>
+                @endif
             </div>
         @endforeach
     </div>

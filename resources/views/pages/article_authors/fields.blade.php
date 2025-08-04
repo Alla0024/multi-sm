@@ -5,9 +5,9 @@
     <div class="flex-row input">
         <div class="input-group">
             <div class="custom-file image-upload">
-                {!! Form::file('avatar', ['class' => 'custom-file-input']) !!}
+                {!! Form::file('avatar', null, ['class' => 'custom-file-input']) !!}
                 @if(isset($articleAuthor))
-                <img src="https://i.svit-matrasiv.com.ua/storage/images/{{$articleAuthor['avatar']}}" alt="Прев’ю" title="{{$articleAuthor['avatar']}}" style="max-width: 200px; margin-top: 10px; @if(isset($articleAuthor['avatar']) && $articleAuthor['avatar']) display: block; @else display: none; @endif">
+                    <img src="https://i.svit-matrasiv.com.ua/storage/images/{{$articleAuthor['avatar']}}" alt="{{$articleAuthor['avatar']}}" title="{{$articleAuthor['avatar']}}" style="max-width: 200px; margin-top: 10px; @if(isset($articleAuthor['avatar']) && $articleAuthor['avatar']) display: block; @else display: none; @endif">
                 @else
                     <img src="" alt="Прев’ю" title="" style="max-width: 200px; margin-top: 10px;  display: none;">
                 @endif
