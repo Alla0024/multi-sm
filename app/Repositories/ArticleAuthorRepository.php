@@ -172,4 +172,24 @@ class ArticleAuthorRepository extends BaseRepository
         $firstPathQuery->delete();
         $articleAuthor->delete();
     }
+
+    public function getIdNameMap($language_id): array
+    {
+        $items = $this->model
+            ->with([
+                'descriptions' => function ($query) use ($language_id) {
+                    $query->where('language_id', $language_id)->select(["author_id", "language_id", "name"]);
+                }
+            ])
+            ->get(['id']);
+
+        foreach ($items as $item) {
+            $result[] = [
+                "id" => $item->id,
+                "text" => $item->descriptions[0]->name,
+            ];
+        }
+
+        return $result ?? [];
+    }
 }

@@ -163,7 +163,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('api/get_filling', 'ApiController@getFilling')->name('get_filling');
         Route::get('api/get_combinations', 'ApiController@getCombination')->name('get_combinations');
         Route::get('api/get_orders', 'ApiController@getOrders')->name('get_orders');
-        Route::get('api/get_authors', 'ApiController@getAuthors')->name('get_authors');
         Route::post('copy_product', 'Content\ProductController@copyProduct')->name('copy_product');
         Route::post('copy_promo_code_group', 'Content\PromoCodeGroupsController@copyPromoCodeGroup')->name('copy_promo_code_group');
         Route::post('copy_promo_code', 'Content\PromoCodesController@copyPromoCode')->name('copy_promo_code');
@@ -189,6 +188,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::get('getKits', 'Content\KitController@getKits')->name('getKits');
             Route::get('getCategories', 'App\Http\Controllers\Content\ApiController@getCategories')->name('getCategories');
             Route::get('getNewsCategories', 'App\Http\Controllers\Content\ApiController@getNewsCategories')->name('getNewsCategories');
+            Route::get('getAuthors', 'App\Http\Controllers\Content\ApiController@getAuthors')->name('getAuthors');
             Route::get('getAttributes', 'Content\AttributeController@getAttributes')->name('getAttributes');
             Route::get('getFilters', 'Content\FilterController@getFilters')->name('getFilters');
             Route::get('getOptionValues', 'Content\OptionValueController@getOptionValues')->name('getOptionValues');
