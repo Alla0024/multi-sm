@@ -187,3 +187,15 @@
         @endforeach
     </div>
 </div>
+
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="product">
+    {!! Form::label('descriptions_meta_keyword', $word['title_descriptions_meta_keyword']) !!}
+    <div class="flex-row input">
+        @foreach($languages as $language)
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
+                {!! Form::textarea("descriptions[$language->id][meta_keyword]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+            </div>
+        @endforeach
+    </div>
+</div>

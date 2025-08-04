@@ -37,7 +37,7 @@ return [
     'title_descriptions_title' => 'Заголовок',
     'title_descriptions_description' => 'Опис',
     'tab_main' => 'Основна вкладка',
-    'tab_sort' => 'Сортування',
+    'tab_products' => 'Продукти',
     'status_active' => 'Активний',
     'status_inactive' => 'Неактивний',
     'error_news_not_found' => 'Статтю не знайдено',
