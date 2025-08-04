@@ -23,7 +23,7 @@ class ApiController extends AppBaseController
 
     public function getCategories(Request $request)
     {
-        if (!$request->ajax()) {
+        if ($request->ajax()) {
             $data = $this->categoryRepository->getIdNameMap($this->DEFAULT_LANGUAGE_ID);
 
             return response()->json(['items' => $data ?? []]);
