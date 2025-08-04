@@ -163,8 +163,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('api/get_filling', 'ApiController@getFilling')->name('get_filling');
         Route::get('api/get_combinations', 'ApiController@getCombination')->name('get_combinations');
         Route::get('api/get_orders', 'ApiController@getOrders')->name('get_orders');
-        Route::get('api/get_categories', 'ApiController@getCategories')->name('get_categories');
-        Route::get('api/get_news_categories', 'ApiController@getNewsCategories')->name('get_news_categories');
         Route::get('api/get_authors', 'ApiController@getAuthors')->name('get_authors');
         Route::post('copy_product', 'Content\ProductController@copyProduct')->name('copy_product');
         Route::post('copy_promo_code_group', 'Content\PromoCodeGroupsController@copyPromoCodeGroup')->name('copy_promo_code_group');
@@ -189,7 +187,8 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::group(['prefix' => 'api'], function () {
             Route::get('getManufacturers', 'Content\ManufacturerController@getManufacturers')->name('getManufacturers');
             Route::get('getKits', 'Content\KitController@getKits')->name('getKits');
-            Route::get('getCategories', 'Content\CategoryController@getCategories')->name('getCategories');
+            Route::get('getCategories', 'App\Http\Controllers\Content\ApiController@getCategories')->name('getCategories');
+            Route::get('getNewsCategories', 'App\Http\Controllers\Content\ApiController@getNewsCategories')->name('getNewsCategories');
             Route::get('getAttributes', 'Content\AttributeController@getAttributes')->name('getAttributes');
             Route::get('getFilters', 'Content\FilterController@getFilters')->name('getFilters');
             Route::get('getOptionValues', 'Content\OptionValueController@getOptionValues')->name('getOptionValues');
@@ -224,8 +223,3 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
     });
 });
-
-Route::resource('first-path-queries', App\Http\Controllers\Content\FirstPathQueryController::class);
-Route::resource('news-descriptions', App\Http\Controllers\Content\NewsDescriptionController::class);
-Route::resource('article-author-descriptions', App\Http\Controllers\Content\ArticleAuthorDescriptionController::class);
-Route::resource('news-to-categories', App\Http\Controllers\Content\NewsToCategoryController::class);
