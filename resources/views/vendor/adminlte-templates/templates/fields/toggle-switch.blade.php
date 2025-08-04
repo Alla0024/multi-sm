@@ -1,5 +1,5 @@
 <!-- 'bootstrap / Toggle Switch {{ $fieldTitle }} Field' -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="@{!! $fields['{{$fieldName}}']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="@{!! $fields['{{$fieldName}}']['inTab'] !!}">
     <div class="custom-control custom-switch">
         @{!! Form::checkbox('{{ $fieldName }}', 1, null,  ['class' => 'custom-control-input']) !!}
 @if($config->options->localized)
