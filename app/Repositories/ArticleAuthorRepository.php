@@ -30,6 +30,23 @@ class ArticleAuthorRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
+    public function getAuthorIdNameMap($language_id) {
+        $authors = $this->model
+            ->select('id')
+            ->with(['descriptions' => function($query) {
+                return $query->select('author_id', 'language_id', 'name');
+            }])
+            ->get();
+
+        $result = [];
+
+        foreach ($authors as $author) {
+            $result[$author->id] = $author->descriptions->where('language_id', $language_id)->first()->name;
+        }
+
+        return $result;
+    }
+
     public function find($id, $columns = ['*'])
     {
         $authors = $this->model->with(['descriptions' => function ($query) {

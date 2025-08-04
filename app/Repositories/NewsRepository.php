@@ -42,6 +42,11 @@ class NewsRepository extends BaseRepository
             $preshaped_descriptions[$description->language->id] = [
                 'title' => $description->title,
                 'description' => $description->description,
+                'meta_h1' => $description->meta_h1,
+                'meta_title' => $description->meta_title,
+                'meta_description' => $description->meta_description,
+                'meta_keyword' => $description->meta_keyword,
+                'products_title' => $description->products_title,
             ];
         }
         unset($news->descriptions);

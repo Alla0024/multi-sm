@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\ArticleAuthor;
 use App\Models\FirstPathQuery;
 use App\Models\NewsDescription;
+use App\Repositories\ArticleAuthorRepository;
 use App\Repositories\LanguageRepository;
 use App\Repositories\NewsRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -19,16 +21,25 @@ class NewsController extends AppBaseController
     /**
      * @var NewsRepository $newsRepository
      * @var LanguageRepository $languageRepository
+     * @var ArticleAuthorRepository $articleAuthorRepository
      */
     private $newsRepository;
     private $languageRepository;
+    private $articleAuthorRepository;
+    private $DEFAULT_LANGUAGE_ID;
 
-    public function __construct(NewsRepository $newsRepo, LanguageRepository $languageRepository)
+    public function __construct(
+        NewsRepository $newsRepo,
+        LanguageRepository $languageRepository,
+        ArticleAuthorRepository $articleAuthorRepository
+    )
     {
         parent::__construct();
 
         $this->newsRepository = $newsRepo;
         $this->languageRepository = $languageRepository;
+        $this->articleAuthorRepository = $articleAuthorRepository;
+        $this->DEFAULT_LANGUAGE_ID = config('settings.locale.default_language_id');
     }
 
     /**
@@ -39,7 +50,7 @@ class NewsController extends AppBaseController
         $perPage = $request->input('perPage', 10);
 
         $languages = $this->languageRepository->all();
-        $news = $this->newsRepository->paginateIndexPage($perPage, 5, $request->all());
+        $news = $this->newsRepository->paginateIndexPage($perPage, $this->DEFAULT_LANGUAGE_ID, $request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
@@ -84,7 +95,7 @@ class NewsController extends AppBaseController
 
         $new = $this->newsRepository->create($input);
 
-        Flash::success('News saved successfully.');
+        Flash::success(__('news.success_news_saved'));
 
         return redirect(route('news.index'));
     }
@@ -98,7 +109,7 @@ class NewsController extends AppBaseController
         $languages = $this->languageRepository->all();
 
         if (empty($news)) {
-            Flash::error('News not found');
+            Flash::error(__('news.error_news_not_found'));
 
             return redirect(route('news.index'));
         }
@@ -115,9 +126,10 @@ class NewsController extends AppBaseController
     {
         $languages = $this->languageRepository->all();
         $news = $this->newsRepository->find($id);
+        $authors = $this->articleAuthorRepository->getAuthorIdNameMap($this->DEFAULT_LANGUAGE_ID);
 
         if (empty($news)) {
-            Flash::error('News not found');
+            Flash::error(__('news.error_news_not_found'));
 
             return redirect(route('news.index'));
         }
@@ -137,6 +149,7 @@ class NewsController extends AppBaseController
             'news' => $news,
             'fields' => $fields,
             'languages' => $languages,
+            'authors' => $authors,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
@@ -150,7 +163,7 @@ class NewsController extends AppBaseController
         $news = $this->newsRepository->find($id);
 
         if (empty($news)) {
-            Flash::error('News not found');
+            Flash::error(__('news.error_news_not_found'));
 
             return redirect(route('news.index'));
         }
@@ -172,14 +185,14 @@ class NewsController extends AppBaseController
         $new = $this->newsRepository->find($id);
 
         if (empty($new)) {
-            Flash::error('News not found');
+            Flash::error(__('news.error_news_not_found'));
 
             return redirect(route('news.index'));
         }
 
         $this->newsRepository->delete($id);
 
-        Flash::success('News deleted successfully.');
+        Flash::success(__('news.success_news_deleted'));
 
         return redirect(route('news.index'));
     }

@@ -3,12 +3,12 @@
 namespace App\Http\Requests;
 
 use App\Models\News;
-use App\Traits\PathQueryRules;
+use App\Traits\AdditionalRequestRules;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateNewsRequest extends FormRequest
 {
-    use PathQueryRules;
+    use AdditionalRequestRules;
 
     /**
      * Determine if the user is authorized to make this request.
