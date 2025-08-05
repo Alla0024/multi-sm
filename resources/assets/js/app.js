@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Save data form
+    // Save ajax data form
     Alpine.store('page').ajax = (e) => {
         e.preventDefault();
         let form = e.target;
@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#logout-form').submit()
     };
 
+    // Cookie
     Alpine.store('page').getCookie = function (name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
         if (match) return match[2];
         return null;
     }
-
     Alpine.store('page').theme = Alpine.store('page').getCookie('theme') || 'light';
 
     // Change theme

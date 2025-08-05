@@ -81,8 +81,21 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['category_id']['inTab'] !!}">
     {!! Form::label('category_id', $word['title_category_id']) !!}
     <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::number('category_id', null, ['class' => 'form-control', 'required']) !!}
+        <div class="input-group input-list-search" style="position: relative;">
+{{--            {!! Form::number('category_id', null, ['class' => 'form-control', 'required']) !!}--}}
+            <input
+                class=""
+                name="category_id"
+                placeholder="Type to search..."
+                autocomplete="off"
+                value=""
+                data-url="{{route('getCategories')}}"
+            >
+            <ul class="custom-list hide">
+                @foreach(['San Francisco', 'New York', 'Seattle', 'Los Angeles', 'Chicago'] as $city)
+                    <li>{{ $city }}</li>
+                @endforeach
+            </ul>
         </div>
     </div>
 </div>

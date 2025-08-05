@@ -1,5 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Ignore inputs value
+    document.querySelectorAll('form').forEach(function(form) {
+        form.addEventListener('submit', function() {
+            form.querySelectorAll('.ignore_form').forEach(function(el) {
+                el.disabled = true;
+            });
+        });
+    });
+
 
     // Tab change
     const buttons = document.querySelectorAll('[data-tab]');
@@ -15,14 +24,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     if(buttons){
-
         buttons.forEach(button => {
             button.addEventListener('click', () => {
                 switchTab(button.dataset.tab);
             });
         });
 
-        // Ініціалізація
         const active = document.querySelector('[data-tab].active');
         if (active) switchTab(active.dataset.tab);
     }
@@ -32,19 +39,46 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.input-list-search').forEach(block => {
         const input = block.querySelector('input');
         const list = block.querySelector('.custom-list');
+        const url = input.dataset.url;
+        const renderList = (items) => {
+            list.innerHTML = '';
+            if (Array.isArray(items)) {
+                items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item.text;
+                    li.addEventListener('click', () => {
+                        input.value = item.id;
+                        list.classList.add('hide');
+                    });
+                    list.appendChild(li);
+                });
+            }
+        };
 
         const updateList = () => {
             const value = input.value.trim().toLowerCase();
             let hasMatch = false;
 
-            list.querySelectorAll('li').forEach(li => {
-                const match = li.textContent.toLowerCase().includes(value);
-                li.style.display = match ? 'block' : 'none';
-                if (match) hasMatch = true;
-            });
+            if (url) {
+                if (value.length < 1) return;
+                axios.get(url, { params: { q: value } })
+                    .then(response => {
+                        renderList(response.data.items);
+                        list.classList.remove('hide');
+                    })
+                    .catch(error => {
+                        console.error('AJAX error:', error);
+                    });
+            } else {
+                list.querySelectorAll('li').forEach(li => {
+                    const match = li.textContent.toLowerCase().includes(value);
+                    li.style.display = match ? 'block' : 'none';
+                    if (match) hasMatch = true;
+                });
 
-            if (value && hasMatch) {
-                list.classList.remove('hide');
+                if (value && hasMatch) {
+                    list.classList.remove('hide');
+                }
             }
         };
 
