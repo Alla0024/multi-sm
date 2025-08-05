@@ -68,7 +68,7 @@ class ArticleAuthorRepository extends BaseRepository
         return $authors;
     }
 
-    public function paginateIndexPage($perPage, $language_id, $params)
+    public function filterIndexPage($perPage, $language_id, $params)
     {
         $authors = $this->model
             ->with(['descriptions' => function ($query) use ($language_id) {
@@ -173,7 +173,7 @@ class ArticleAuthorRepository extends BaseRepository
         $articleAuthor->delete();
     }
 
-    public function getDropdownItems($language_id): array
+    public function getDropdownItems($language_id, $args): array
     {
         $items = $this->model
             ->with([
@@ -181,16 +181,26 @@ class ArticleAuthorRepository extends BaseRepository
                     $query->where('language_id', $language_id)->select(["author_id", "language_id", "name"]);
                 }
             ])
+            ->when(isset($args['q']) && $args['q'] !== null, function ($query) use ($args, $language_id) {
+                $q = mb_strtolower($args['q']); // для підтримки юнікоду
+                $query->whereHas('descriptions', function ($query) use ($q, $language_id) {
+                    $query
+                        ->where('language_id', $language_id)
+                        ->whereRaw('LOWER(name) LIKE ?', ['%' . $q . '%']);
+                });
+            })
             ->get(['id']);
+
+        $result = [];
 
         foreach ($items as $item) {
             $result[] = [
                 "id" => $item->id,
-                "text" => $item->descriptions->first()->name,
+                "text" => optional($item->descriptions->first())->name ?? '',
             ];
         }
 
-        dd($result[0]);
+        dd($result);
 
         return $result ?? [];
     }

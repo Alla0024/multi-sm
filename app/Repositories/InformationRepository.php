@@ -60,7 +60,7 @@ class InformationRepository extends BaseRepository
         return $information;
     }
 
-    public function paginateIndexPage($perPage, $language_id, $params)
+    public function filterIndexPage($perPage, $language_id, $params)
     {
         $informations = $this->model
             ->with(['descriptions' => function ($query) use ($language_id) {

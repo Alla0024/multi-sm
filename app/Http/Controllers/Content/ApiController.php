@@ -45,7 +45,7 @@ class ApiController extends AppBaseController
     public function getCategories(Request $request): JsonResponse
     {
         if ($request->ajax()) {
-            $data = $this->categoryRepository->getDropdownItems($this->defaultLanguageId);
+            $data = $this->categoryRepository->getDropdownItems($this->defaultLanguageId, request()->all());
 
             return response()->json(['items' => $data ?? []]);
         } else {
@@ -56,7 +56,7 @@ class ApiController extends AppBaseController
     public function getNewsCategories(Request $request): JsonResponse
     {
         if ($request->ajax()) {
-            $data = $this->newsCategoryRepository->getDropdownItems($this->defaultLanguageId);
+            $data = $this->newsCategoryRepository->getDropdownItems($this->defaultLanguageId, $request->all());
 
             return response()->json(['items' => $data ?? []]);
         } else {
@@ -67,7 +67,7 @@ class ApiController extends AppBaseController
     public function getAuthors(Request $request): JsonResponse
     {
         if ($request->ajax()) {
-            $data = $this->articleAuthorRepository->getDropdownItems($this->defaultLanguageId);
+            $data = $this->articleAuthorRepository->getDropdownItems($this->defaultLanguageId, $request->all());
 
             return response()->json(['items' => $data ?? []]);
         } else {
@@ -77,7 +77,7 @@ class ApiController extends AppBaseController
 
     /**
      * Available params:
-     * search
+     * q
      * manufacturer_id
      * category_id
      * products_id

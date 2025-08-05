@@ -38,7 +38,7 @@ class InformationController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $information = $this->informationRepository->paginateIndexPage($perPage, 5, request()->all());
+        $information = $this->informationRepository->filterIndexPage($perPage, 5, request()->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             InformationDescription::class,

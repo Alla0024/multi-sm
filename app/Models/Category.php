@@ -78,11 +78,6 @@ class Category extends Model
         return $this->hasMany(News::class, 'category_id');
     }
 
-    public function news3s(): BelongsToMany
-    {
-        return $this->belongsToMany(News::class, 'new_to_categories');
-    }
-
     public function filterToCategories(): HasMany
     {
         return $this->hasMany(FilterToCategory::class, 'category_id');

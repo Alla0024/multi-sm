@@ -50,7 +50,7 @@ class NewsController extends AppBaseController
         $perPage = $request->input('perPage', 10);
 
         $languages = $this->languageRepository->all();
-        $news = $this->newsRepository->paginateIndexPage($perPage, $this->defaultLanguageId, $request->all());
+        $news = $this->newsRepository->filterIndexPage($perPage, $this->defaultLanguageId, $request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
@@ -125,7 +125,7 @@ class NewsController extends AppBaseController
     public function edit($id)
     {
         $languages = $this->languageRepository->all();
-        $news = $this->newsRepository->find($id);
+        $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
         $authors = $this->articleAuthorRepository->getAuthorIdNameMap($this->defaultLanguageId);
 
         if (empty($news)) {

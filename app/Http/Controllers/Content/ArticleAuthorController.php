@@ -39,7 +39,7 @@ class ArticleAuthorController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $articleAuthors = $this->articleAuthorRepository->paginateIndexPage($perPage, 5, $request->all());
+        $articleAuthors = $this->articleAuthorRepository->filterIndexPage($perPage, 5, $request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ArticleAuthorDescription::class,

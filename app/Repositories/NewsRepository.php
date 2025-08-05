@@ -6,6 +6,7 @@ use App\Models\FirstPathQuery;
 use App\Models\News;
 use App\Models\NewsDescription;
 use App\Repositories\BaseRepository;
+use function Laravel\Prompts\select;
 
 class NewsRepository extends BaseRepository
 {
@@ -24,19 +25,23 @@ class NewsRepository extends BaseRepository
         return News::class;
     }
 
-    public function find($id, $columns = ['*'])
+    public function getDetails($id, $language_id)
     {
-        $news = $this->model
-            ->with([
-                'seoPath',
-                'descriptions' =>
-                    function ($query) {
-                        return $query->with('language');
-                    }
-                ]
-            )->find($id, $columns);
+        $news = $this->model->with([
+            'descriptions',
+            'seoPath' => function($query) {
+                $query->select('type', 'type_id', 'path');
+            },
+            'newsCategories.descriptions' => function($query) use ($language_id) {
+                $query->where('language_id', $language_id);
+            },
+        ])->find($id);
+
+//        dd($news->toArray());
 
         $preshaped_descriptions = [];
+        $preshaped_news_categories = [];
+        $seo_path = $news->seoPath?->path;
 
         foreach ($news->descriptions as $description) {
             $preshaped_descriptions[$description->language->id] = [
@@ -49,20 +54,37 @@ class NewsRepository extends BaseRepository
                 'products_title' => $description->products_title,
             ];
         }
-        unset($news->descriptions);
+
+        foreach ($news->newsCategories as $news_category) {
+            $preshaped_news_categories[] = [
+                'id' => $news_category->id,
+                'text' => $news_category->descriptions->first()->name
+            ];
+        }
+
+        unset($news->descriptions, $news->newsCategories, $news->seoPath);
+        $news->setAttribute('news_categories', $preshaped_news_categories);
         $news->setAttribute('descriptions', $preshaped_descriptions);
-        $news->setAttribute('path', $news->seoPath->path);
+        $news->setAttribute('path', $seo_path);
+
+        dd($news->toArray());
 
         return $news;
     }
 
-    public function paginateIndexPage($perPage, $language_id, $params)
+    public function filterIndexPage($perPage, $language_id, $params)
     {
         $news = $this->model
             ->with(['descriptions' => function ($query) use ($language_id) {
                 $query->select('news_id', 'language_id', 'title')
                     ->where('language_id', $language_id);
             }])
+            ->when(isset($params['sort_order']), function ($query) use ($params) {
+                $query->where('sort_order', '=', $params['sort_order']);
+            })
+            ->when(isset($params['status']), function ($query) use ($params) {
+                $query->where('status', '=', $params['status']);
+            })
             ->when(isset($params['title']), function ($q) use ($params) {
                 return $q->whereHas('descriptions', function ($q) use ($params) {
                     return $q->searchSimilarity(['title'], $params['title']);
@@ -70,10 +92,8 @@ class NewsRepository extends BaseRepository
             })
             ->paginate($perPage);
 
-
-
         foreach ($news as $item) {
-            $title = $item->descriptions->first()->title;
+            $title = $item->descriptions->first()?->title ?? '';
             unset($item->descriptions);
 
             $item->setAttribute('title', $title);
@@ -159,11 +179,7 @@ class NewsRepository extends BaseRepository
         $news = $this->find($id);
         $firstPathQuery = FirstPathQuery::where(['type' => 'news', 'type_id' => $id ])->first();
 
-        if (!$firstPathQuery) {
-            throw new \Error('First path query not found.');
-        }
-
-        $firstPathQuery->delete();
+        $firstPathQuery?->delete();
         $news->delete();
     }
 }
