@@ -43,11 +43,11 @@ class CategoryRepository extends BaseRepository
                         ->select(['category_id', 'language_id', 'name']);
                 }
             ])
-            ->when(isset($args['q']) && $args['q'] !== null, function ($query) use ($args, $language_id) {
+            ->when(isset($args['q']), function ($query) use ($args, $language_id) {
                 $query->whereHas('descriptions', function ($query) use ($args, $language_id) {
                     $query
                         ->where('language_id', $language_id)
-                        ->whereRaw('UPPER(name) LIKE ?', ['%' . mb_strtoupper($args['q']) . '%']);
+                        ->searchSimilarity(['name'], $args['q']);
                 });
             })
             ->get(['id']);

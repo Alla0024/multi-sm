@@ -37,8 +37,6 @@ class NewsRepository extends BaseRepository
             },
         ])->find($id);
 
-//        dd($news->toArray());
-
         $preshaped_descriptions = [];
         $preshaped_news_categories = [];
         $seo_path = $news->seoPath?->path;
@@ -66,8 +64,6 @@ class NewsRepository extends BaseRepository
         $news->setAttribute('news_categories', $preshaped_news_categories);
         $news->setAttribute('descriptions', $preshaped_descriptions);
         $news->setAttribute('path', $seo_path);
-
-        dd($news->toArray());
 
         return $news;
     }

@@ -67,13 +67,12 @@ class ProductRepository extends BaseRepository
             $products = $products->limit(10);
         }
 
-        if (isset($args['q']) && $args['q'] !== null) {
+        if (isset($args['q'])) {
             $products
                 ->whereHas('descriptions', function ($query) use ($args, $language_id) {
                     $query->where('language_id', $language_id)
-                        ->where('name', 'like', '%' . $args['q'] . '%');
-                })
-                ->orWhere('article', 'like', $args['q'] . '%');
+                        ->searchSimilarity(['name'], $args['q']);
+                });
         }
 
         if (isset($args['manufacturer_id']) && is_numeric($args['manufacturer_id'])) {
