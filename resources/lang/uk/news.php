@@ -5,7 +5,7 @@ return [
     'new' => 'статтю',
     'title_id' => 'ID',
     'search_id' => 'Пошук за ID',
-    'title_category_id' => 'Категорія новин',
+    'title_category_id' => 'Топ продаж з категорії',
     'search_category_id' => 'Пошук за ID категорії',
     'title_author_id' => 'Автор',
     'search_author_id' => 'Пошук за ID автора',

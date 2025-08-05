@@ -29,6 +29,23 @@ class NewsCategoryRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
+    public function find($id, $columns = ['*'])
+    {
+        $news = $this->model->with(['descriptions'])->find($id, $columns);
+
+        $preshaped_descriptions = [];
+
+        foreach ($news->descriptions as $description) {
+            $preshaped_descriptions[$description->language->id] = [
+                'name' => $description->name,
+            ];
+        }
+        unset($news->descriptions);
+        $news->setAttribute('descriptions', $preshaped_descriptions);
+
+        return $news;
+    }
+
     public function create(array $input)
     {
         $descriptions = $input['descriptions'] ?? [];
@@ -66,7 +83,7 @@ class NewsCategoryRepository extends BaseRepository
         return $news_category_id;
     }
 
-    public function getDropdownItems($language_id): array
+    public function getDropdownItems($language_id, $args): array
     {
         $items = $this->model
             ->with([
@@ -74,6 +91,13 @@ class NewsCategoryRepository extends BaseRepository
                     $query->where('language_id', $language_id)->select(["news_category_id", "language_id", "name"]);
                 }
             ])
+            ->when(isset($args['q']) && $args['q'] !== null, function ($query) use ($args, $language_id) {
+                $query->whereHas('descriptions', function ($query) use ($args, $language_id) {
+                    $query
+                        ->where('language_id', $language_id)
+                        ->whereRaw('UPPER(name) LIKE ?', ['%' . mb_strtoupper($args['q']) . '%']);
+                });
+            })
             ->get(['id']);
 
         foreach ($items as $item) {
@@ -82,6 +106,8 @@ class NewsCategoryRepository extends BaseRepository
                 "text" => $item->descriptions->first()->name,
             ];
         }
+
+        dd($result);
 
         return $result ?? [];
     }

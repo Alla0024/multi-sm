@@ -102,7 +102,7 @@
     {!! Form::label('shared_on_facebook', $word['title_shared_on_facebook']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('shared_on_facebook', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('shared_on_facebook', null, ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>
@@ -113,7 +113,7 @@
     {!! Form::label('shared_on_twitter', $word['title_shared_on_twitter']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('shared_on_twitter', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('shared_on_twitter', null, ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>
