@@ -37,69 +37,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Input search
     document.querySelectorAll('.input-list-search').forEach(block => {
-        const input = block.querySelector('input');
+        const input = block.querySelector('[data-url]');
+        const hidden = block.querySelector('input[type="hidden"]');
         const list = block.querySelector('.custom-list');
         const url = input.dataset.url;
+
+        let debounceTimeout;
         const renderList = (items) => {
             list.innerHTML = '';
-            if (Array.isArray(items)) {
+            if (Array.isArray(items) && items.length > 0) {
                 items.forEach(item => {
                     const li = document.createElement('li');
                     li.textContent = item.text;
                     li.addEventListener('click', () => {
-                        input.value = item.id;
+                        input.value = item.text;
+                        hidden.value = item.id;
                         list.classList.add('hide');
                     });
                     list.appendChild(li);
                 });
+            } else {
+                list.innerHTML = '<li style="color:#999;cursor:default;">Нічого не знайдено</li>';
             }
         };
 
         const updateList = () => {
-            const value = input.value.trim().toLowerCase();
-            let hasMatch = false;
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => {
+                const value = input.value.trim().toLowerCase();
+                let hasMatch = false;
 
-            if (url) {
-                if (value.length < 1) return;
-                axios.get(url, { params: { q: value } })
-                    .then(response => {
-                        renderList(response.data.items);
-                        list.classList.remove('hide');
-                    })
-                    .catch(error => {
-                        console.error('AJAX error:', error);
+                if (url) {
+                    axios.get(url, { params: { q: value } })
+                        .then(response => {
+                            renderList(response.data.items  || []);
+                            list.classList.remove('hide');
+                        })
+                        .catch(error => {
+                            console.error('AJAX error:', error);
+                        });
+                } else {
+                    let hasMatch = false;
+                    list.querySelectorAll('li').forEach(li => {
+                        const match = li.textContent.toLowerCase().includes(value);
+                        li.style.display = match ? 'block' : 'none';
+                        if (match) hasMatch = true;
                     });
-            } else {
-                list.querySelectorAll('li').forEach(li => {
-                    const match = li.textContent.toLowerCase().includes(value);
-                    li.style.display = match ? 'block' : 'none';
-                    if (match) hasMatch = true;
-                });
-
-                if (value && hasMatch) {
-                    list.classList.remove('hide');
+                    if (hasMatch) {
+                        list.classList.remove('hide');
+                    } else {
+                        list.classList.add('hide');
+                    }
                 }
-            }
+            }, 300)
+
         };
 
-        input.addEventListener('focus', () => {
-            list.classList.remove('hide');
-            updateList(); // одразу відфільтрувати
-        });
+        input.addEventListener('focus', updateList);
 
         input.addEventListener('input', updateList);
-
-        list.querySelectorAll('li').forEach(li => {
-            li.addEventListener('click', () => {
-                input.value = li.textContent;
-                list.classList.add('hide');
-            });
-        });
 
         document.addEventListener('click', (e) => {
             if (!block.contains(e.target)) {
                 list.classList.add('hide');
             }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') list.classList.add('hide');
         });
     });
 

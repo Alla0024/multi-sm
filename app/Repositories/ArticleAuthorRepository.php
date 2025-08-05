@@ -200,7 +200,7 @@ class ArticleAuthorRepository extends BaseRepository
             ];
         }
 
-        dd($result);
+
 
         return $result ?? [];
     }

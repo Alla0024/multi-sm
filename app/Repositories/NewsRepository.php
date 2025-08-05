@@ -67,7 +67,6 @@ class NewsRepository extends BaseRepository
         $news->setAttribute('descriptions', $preshaped_descriptions);
         $news->setAttribute('path', $seo_path);
 
-        dd($news->toArray());
 
         return $news;
     }

@@ -16,13 +16,12 @@
         @endforeach
     </div>
 </div>
-
 <!-- Updated At Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['updated_at']['inTab'] !!}">
     {!! Form::label('updated_at', $word['title_updated_at']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::date('updated_at', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::datetime('updated_at', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -78,27 +77,7 @@
 </div>
 
 <!-- Category Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['category_id']['inTab'] !!}">
-    {!! Form::label('category_id', $word['title_category_id']) !!}
-    <div class="flex-row input">
-        <div class="input-group input-list-search" style="position: relative;">
-{{--            {!! Form::number('category_id', null, ['class' => 'form-control', 'required']) !!}--}}
-            <input
-                class=""
-                name="category_id"
-                placeholder="Type to search..."
-                autocomplete="off"
-                value=""
-                data-url="{{route('getCategories')}}"
-            >
-            <ul class="custom-list hide">
-                @foreach(['San Francisco', 'New York', 'Seattle', 'Los Angeles', 'Chicago'] as $city)
-                    <li>{{ $city }}</li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-</div>
+@include('components.inputs.input_search', ['fields' => $fields, 'name' => 'category_id', 'value' => $news ?? ''])
 
 <!-- Author Id Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['author_id']['inTab'] !!}">
