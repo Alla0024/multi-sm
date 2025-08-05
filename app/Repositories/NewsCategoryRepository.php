@@ -29,9 +29,22 @@ class NewsCategoryRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
-    public function find($id, $columns = ['*'])
+    public function filterIndexPage($id, $params)
     {
-        $news = $this->model->with(['descriptions'])->find($id, $columns);
+        $news = $this->model
+            ->with(['descriptions'])
+            ->when(isset($params['sort_order']), function ($query) use ($params) {
+                $query->where('sort_order', '=', $params['sort_order']);
+            })
+            ->when(isset($params['status']), function ($query) use ($params) {
+                $query->where('status', '=', $params['status']);
+            })
+            ->when(isset($params['name']), function ($q) use ($params) {
+                return $q->whereHas('descriptions', function ($q) use ($params) {
+                    return $q->searchSimilarity(['name'], $params['name']);
+                });
+            })
+            ->find($id);
 
         $preshaped_descriptions = [];
 
@@ -95,7 +108,7 @@ class NewsCategoryRepository extends BaseRepository
                 $query->whereHas('descriptions', function ($query) use ($args, $language_id) {
                     $query
                         ->where('language_id', $language_id)
-                        ->whereRaw('UPPER(name) LIKE ?', ['%' . mb_strtoupper($args['q']) . '%']);
+                        ->searchSimilarity(['name'], $args['q']);;
                 });
             })
             ->get(['id']);

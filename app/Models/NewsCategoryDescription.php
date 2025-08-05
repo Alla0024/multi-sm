@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\SearchableBySimilarity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NewsCategoryDescription extends Model
 {
+    use SearchableBySimilarity;
+
     public $table = 'news_category_descriptions';
 
     public $fillable = [

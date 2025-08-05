@@ -47,7 +47,7 @@ class CategoryRepository extends BaseRepository
                 $query->whereHas('descriptions', function ($query) use ($args, $language_id) {
                     $query
                         ->where('language_id', $language_id)
-                        ->whereRaw('UPPER(name) LIKE ?', ['%' . mb_strtoupper($args['q']) . '%']);
+                        ->searchSimilarity(['name'], $args['q']);
                 });
             })
             ->get(['id']);

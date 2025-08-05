@@ -37,7 +37,7 @@ class NewsCategoryController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $newsCategories = $this->newsCategoryRepository->paginate($perPage);
+        $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsCategoryDescription::class,

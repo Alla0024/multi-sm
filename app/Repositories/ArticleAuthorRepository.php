@@ -181,12 +181,11 @@ class ArticleAuthorRepository extends BaseRepository
                     $query->where('language_id', $language_id)->select(["author_id", "language_id", "name"]);
                 }
             ])
-            ->when(isset($args['q']) && $args['q'] !== null, function ($query) use ($args, $language_id) {
-                $q = mb_strtolower($args['q']); // для підтримки юнікоду
-                $query->whereHas('descriptions', function ($query) use ($q, $language_id) {
+            ->when(isset($args['q']), function ($query) use ($args, $language_id) {
+                $query->whereHas('descriptions', function ($query) use ($args, $language_id) {
                     $query
                         ->where('language_id', $language_id)
-                        ->whereRaw('LOWER(name) LIKE ?', ['%' . $q . '%']);
+                        ->searchSimilarity(['name'], $args['q']);
                 });
             })
             ->get(['id']);
@@ -199,8 +198,6 @@ class ArticleAuthorRepository extends BaseRepository
                 "text" => optional($item->descriptions->first())->name ?? '',
             ];
         }
-
-
 
         return $result ?? [];
     }
