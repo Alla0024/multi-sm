@@ -13,7 +13,7 @@
                 placeholder="Type to search..."
                 autocomplete="off"
                 value="{{$value[$name] ?? ''}}"
-                data-url="{{route('getCategories')}}"
+                data-url="{{route($url)}}"
             >
             <ul class="custom-list hide">
             </ul>

@@ -77,7 +77,7 @@
 </div>
 
 <!-- Category Id Field -->
-@include('components.inputs.input_search', ['fields' => $fields, 'name' => 'category_id', 'value' => $news ?? ''])
+@include('components.inputs.input_search', ['fields' => $fields, 'name' => 'category_id', 'value' => $news ?? '', 'url' => 'getCategories'])
 
 <!-- Author Id Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['author_id']['inTab'] !!}">
