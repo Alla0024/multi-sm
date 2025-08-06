@@ -7,19 +7,42 @@
                 <div class="col-sm-6">
                     <h1>{!!  $word['New'] !!}</h1>
                 </div>
-                <div class="col-sm-2">
-                    <form class="view-form" method="GET" action="">
-                        @foreach(request()->except('perPage', 'page') as $key => $value)
+                <div class="col-sm-4">
+                    <form class="view-form d-flex gap-2" method="GET" action="">
+                        @foreach(request()->except(['perPage', 'page', 'sortBy']) as $key => $value)
                             <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-                            @endforeach
-                        <label for="perPage">{{$word['show_by']}}</label>
-                        <select name="perPage" id="perPage" onchange="this.form.submit()">
-                            @foreach([10, 25, 50, 100] as $size)
-                                <option value="{{ $size }}" {{ request('perPage', 10) == $size ? 'selected' : '' }}>
-                                    {{ $size }}
-                                </option>
-                            @endforeach
-                        </select>
+                        @endforeach
+
+                        <div>
+                            <label for="perPage">{{ $word['show_by'] }}</label>
+                            <select name="perPage" id="perPage" onchange="this.form.submit()">
+                                @foreach([10, 25, 50, 100] as $size)
+                                    <option value="{{ $size }}" {{ request('perPage', 10) == $size ? 'selected' : '' }}>
+                                        {{ $size }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="sortBy">{{ $word['sort_by'] }}</label>
+                            <select name="sortBy" id="sortBy" onchange="this.form.submit()">
+                                @php
+                                    $sortFields = array(
+                                        'default' => $word['sort_default'],
+                                        'name_asc' => $word['sort_name_asc'],
+                                        'name_desc' => $word['sort_name_desc'],
+                                        'created_at_asc' => $word['sort_created_at_asc'],
+                                        'created_at_desc' => $word['sort_created_at_desc']
+                                    );
+                                @endphp
+                                @foreach($sortFields as $field => $label)
+                                    <option value="{{ $field }}" {{ request('sortBy') == $field ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </form>
                 </div>
                 <div class="col-sm-2 action-item">

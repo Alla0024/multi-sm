@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\ArticleAuthor;
 use App\Models\FirstPathQuery;
+use App\Models\NewsCategory;
+use App\Models\NewsCategoryDescription;
 use App\Models\NewsDescription;
 use App\Repositories\ArticleAuthorRepository;
 use App\Repositories\LanguageRepository;
@@ -142,6 +144,11 @@ class NewsController extends AppBaseController
             FirstPathQuery::class,
             NewsDescription::class,
         ]);
+
+        $newsCategoryFields = ModelSchemaHelper::buildSchema(NewsCategoryDescription::class, []);
+
+        $fields = array_merge($fields, ['news_categories' => $newsCategoryFields['name']]);
+
 
         $this->template = 'pages.news.edit';
 
