@@ -77,10 +77,8 @@ class NewsRepository extends BaseRepository
     public function filterIndexPage($perPage, $language_id, $params)
     {
         $news = $this->model
-            ->with(['descriptions' => function ($query) use ($language_id) {
-                $query->select('news_id', 'language_id', 'title')
-                    ->where('language_id', $language_id);
-            }])
+            ->leftJoin((new NewsDescription())->getTable() . " as nd", 'nd.news_id', '=', 'news.id')
+            ->where('nd.language_id', $language_id)
             ->when(isset($params['sort_order']), function ($query) use ($params) {
                 $query->where('sort_order', '=', $params['sort_order']);
             })
@@ -88,18 +86,29 @@ class NewsRepository extends BaseRepository
                 $query->where('status', '=', $params['status']);
             })
             ->when(isset($params['title']), function ($q) use ($params) {
-                return $q->whereHas('descriptions', function ($q) use ($params) {
-                    return $q->searchSimilarity(['title'], $params['title']);
-                });
+                return $q->searchSimilarity(['nd.title'], $params['title']);
             })
-            ->paginate($perPage);
+            ->when(isset($params['sortBy']), function ($query) use ($params) {
+                switch ($params['sortBy']) {
+                    case 'name_asc':
+                        $query->orderBy('nd.title', 'asc');
+                        break;
+                    case 'name_desc':
+                        $query->orderBy('nd.title', 'desc');
+                        break;
+                    case 'created_at':
+                        $query->orderBy('created_at', 'asc');
+                        break;
+                    case 'created_at_desc':
+                        $query->orderBy('created_at', 'desc');
+                        break;
+                    default:
+                        break;
+                }
 
-        foreach ($news as $item) {
-            $title = $item->descriptions->first()?->title ?? '';
-            unset($item->descriptions);
-
-            $item->setAttribute('title', $title);
-        }
+                return $query;
+            })
+            ->paginate($perPage, ['nd.title', 'sort_order', 'status', 'id', 'created_at', 'updated_at']);
 
         return $news;
     }
