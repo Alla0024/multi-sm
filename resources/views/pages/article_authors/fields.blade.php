@@ -17,32 +17,6 @@
     </div>
 </div>
 
-<!-- Date Of Birth Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['date_of_birth']['inTab'] !!}">
-    {!! Form::label('date_of_birth', $word['title_date_of_birth']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            @if(isset($articleAuthor))
-            <input
-                type="date"
-                name="date_of_birth"
-                value="{{ substr($articleAuthor['date_of_birth'], 0, 10) }}"
-                aria-label="Дата"
-                aria-describedby="datetime-addon"
-            >
-            @else
-                <input
-                    type="date"
-                    name="date_of_birth"
-                    value="{{ date('Y-m-d') }}"
-                    aria-label="Дата"
-                    aria-describedby="datetime-addon"
-                >
-            @endif
-        </div>
-    </div>
-</div>
-
 @push('page_scripts')
     <script type="text/javascript">
         $('#date_of_birth').datepicker()
@@ -77,19 +51,6 @@
         <div class="input-group">
             {!! Form::text('instagram', null, ['class' => 'form-control', 'required']) !!}
         </div>
-    </div>
-</div>
-
-<!-- Title Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['title']['inTab'] !!}">
-    {!! Form::label('descriptions_title', $word['title_descriptions_title']) !!}
-    <div class="flex-row input">
-        @foreach($languages as $language)
-            <div class="input-group mt-3">
-                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::text("descriptions[$language->id][title]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}
-            </div>
-        @endforeach
     </div>
 </div>
 

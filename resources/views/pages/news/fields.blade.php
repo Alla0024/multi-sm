@@ -75,7 +75,6 @@
         </div>
     </div>
 </div>
-@dd($fields)
 <!-- Category Id Field -->
 @include('components.inputs.input_search', ['name' => 'category_id', 'value' => $news ?? [], 'url' => 'getCategories'])
 
@@ -91,27 +90,6 @@
             @isset($authors)
                 {!! Form::select('author_id', $authors, ['class' => 'form-control', 'required']) !!}
             @endisset
-        </div>
-    </div>
-</div>
-
-<!-- Shared On Facebook Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['shared_on_facebook']['inTab'] !!}">
-    {!! Form::label('shared_on_facebook', $word['title_shared_on_facebook']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::number('shared_on_facebook', null, ['class' => 'form-control']) !!}
-        </div>
-    </div>
-</div>
-
-
-<!-- Shared On Twitter Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['shared_on_twitter']['inTab'] !!}">
-    {!! Form::label('shared_on_twitter', $word['title_shared_on_twitter']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::number('shared_on_twitter', null, ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>
