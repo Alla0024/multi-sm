@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         };
 
-        // input.addEventListener('focus', updateList);
+        input.addEventListener('focus', updateList);
 
         input.addEventListener('input', updateList);
 
@@ -108,14 +108,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Choices ///////////////////////////////////////////////////////////////////////////
+    // Choices Multi-select ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('.tag-select').forEach(select => {
-        new Choices(select, {
+        const choices = new Choices(select, {
             removeItemButton: true,
             placeholderValue: 'Виберіть або введіть...',
             searchPlaceholderValue: 'Пошук...',
             duplicateItemsAllowed: false,
+            shouldSort: false,
+            searchEnabled: !select.dataset.noSearch,
         });
+
+        let searchTimeout;
+        const url = select.dataset.url;
+        if (!url) {
+            return;
+        }
+
+        const searchInput = select.parentElement.querySelector('input[type="search"]')
+        function handler(event) {
+            const searchValue = event.target.value;
+
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                axios.get(url, { params: { q: searchValue } })
+                    .then(response => {
+                        const items = response.data.items || [];
+
+                        const existingValues = Array.from(select.options).filter(opt => opt.selected).map(opt => opt.value);
+
+                        const newOptions = items.filter(item => !existingValues.includes(item.id.toString()));
+
+                        if (newOptions.length) {
+                            choices.setChoices(
+                                newOptions.map(item => ({
+                                    value: item.id,
+                                    label: item.text,
+                                    selected: false,
+                                    disabled: false,
+                                })),
+                                'value',
+                                'label',
+                                false
+                            );
+                        }
+                    })
+                    .catch(err => {
+                        console.error('AJAX error:', err);
+                    });
+            }, 300);
+        }
+        searchInput.addEventListener('input', handler);
+        searchInput.addEventListener('click', handler);
     });
 
     // Image upload ///////////////////////////////////////////////////////////////////////////

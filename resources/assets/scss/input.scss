@@ -127,7 +127,7 @@ select{
 
     .input{
         width: 100% !important;
-        max-width: 930px;
+        //max-width: 930px;
     }
     .name, label{
         width: 130px;
@@ -137,7 +137,14 @@ select{
         width: 3em;
         height: 2em;
     }
-
+    .input-list-search{
+        position: relative;
+        .svg{
+            position: absolute;
+            right: 11px;
+            top: 11px;
+        }
+    }
 
 
     // Input search

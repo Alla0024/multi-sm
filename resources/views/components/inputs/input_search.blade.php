@@ -2,21 +2,24 @@
     {!! Form::label($name, $word['title_'.$name]) !!}
     <div class="flex-row input">
         <div class="input-group input-list-search" style="position: relative;">
-            @isset($value)
-                <input type="hidden" name="category_id" value="{{$value[$name]}}">
+            @isset($value[$name])
+                <input type="hidden" name="category_id" value="{{$value[$name]['id']}}">
             @else
-                <input type="hidden" name="category_id" value="{{$value[$name]}}">
+                <input type="hidden" name="category_id" value="">
             @endisset
             <input
                 class="ignore_form"
                 name="category_id"
                 placeholder="Type to search..."
                 autocomplete="off"
-                value="{{$value[$name] ?? ''}}"
+                value="{{$value[$name]['text'] ?? ''}}"
                 data-url="{{route($url)}}"
             >
             <ul class="custom-list hide">
             </ul>
+            <div class="svg">
+                <img src="/images/common/arrow_select.png" alt="">
+            </div>
         </div>
     </div>
 </div>
