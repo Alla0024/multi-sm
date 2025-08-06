@@ -32,6 +32,9 @@ class NewsRepository extends BaseRepository
             'seoPath' => function($query) {
                 $query->select('type', 'type_id', 'path');
             },
+            'author.descriptions' => function($query) use ($language_id) {
+                $query->where('language_id', $language_id);
+            },
             'category.descriptions' => function($query) use ($language_id) {
                 $query->where('language_id', $language_id);
             },
@@ -44,7 +47,9 @@ class NewsRepository extends BaseRepository
         $preshaped_news_categories = [];
         $seo_path = $news->seoPath?->path;
         $category = $news->category->descriptions->first();
+        $author = $news->author->descriptions->first();
         $preshaped_category = [ 'id' => $category->category_id, 'text' => $category->name ];
+        $preshaped_author = [ 'id' => $author->author_id, 'name' => $author->name ];
 
         foreach ($news->descriptions as $description) {
             $preshaped_descriptions[$description->language->id] = [
@@ -65,9 +70,14 @@ class NewsRepository extends BaseRepository
             ];
         }
 
-        unset($news->descriptions, $news->newsCategories, $news->seoPath, $news->category_id);
+        unset(
+            $news->seoPath,
+            $news->category,
+            $news->author,
+        );
         $news->setAttribute('news_categories', $preshaped_news_categories);
         $news->setAttribute('category_id', $preshaped_category);
+        $news->setAttribute('author_id', $preshaped_author);
         $news->setAttribute('descriptions', $preshaped_descriptions);
         $news->setAttribute('path', $seo_path);
 
