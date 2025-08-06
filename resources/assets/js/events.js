@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Ignore inputs value
+    // Ignore inputs value ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('form').forEach(function(form) {
         form.addEventListener('submit', function() {
             form.querySelectorAll('.ignore_form').forEach(function(el) {
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // Tab change
+    // Tab change ///////////////////////////////////////////////////////////////////////////
     const buttons = document.querySelectorAll('[data-tab]');
     const contents = document.querySelectorAll('[data-for-tab]');
 
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Input search
+    // Input search ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('.input-list-search').forEach(block => {
         const input = block.querySelector('[data-url]');
         const hidden = block.querySelector('input[type="hidden"]');
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         };
 
-        input.addEventListener('focus', updateList);
+        // input.addEventListener('focus', updateList);
 
         input.addEventListener('input', updateList);
 
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Choices
+    // Choices ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('.tag-select').forEach(select => {
         new Choices(select, {
             removeItemButton: true,
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Image upload
+    // Image upload ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('.image-upload').forEach(block => {
         const input = block.querySelector('input[type="file"]');
         const preview = block.querySelector('img');

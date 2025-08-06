@@ -75,9 +75,23 @@
         </div>
     </div>
 </div>
-
+{{--@dd($news)--}}
 <!-- Category Id Field -->
-@include('components.inputs.input_search', ['fields' => $fields, 'name' => 'category_id', 'value' => $news ?? '', 'url' => 'getCategories'])
+@include('components.inputs.input_search', ['name' => 'category_id', 'value' => $news ?? '', 'url' => 'getCategories'])
+
+<!-- Category News Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['author_id']['inTab'] !!}">
+    {!! Form::label('author_id', $word['title_author_id']) !!}
+    <div class="flex-row input">
+        <div class="input-group input-tags">
+            <select class="tag-select" name="news_categories[]" multiple>
+                @foreach($news['news_categories'] as $item)
+                    <option value="{{$item['id']}}" selected>{{$item['text']}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
 
 <!-- Author Id Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['author_id']['inTab'] !!}">

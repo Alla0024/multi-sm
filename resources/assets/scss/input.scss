@@ -162,9 +162,14 @@ select{
     .custom-list li:hover {
         background-color: $col_bg_light;
     }
-
+    .choices{
+        width: 100%;
+    }
     .choices__input, .choices__inner{
         background-color: $col_bg_input;
+        input{
+            box-shadow: none !important;
+        }
     }
     .choices__inner{
         border: 1px solid $col_border;

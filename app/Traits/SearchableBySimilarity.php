@@ -17,23 +17,29 @@ trait SearchableBySimilarity
     public function scopeSearchSimilarity(Builder $query, $fields, string $term): Builder
     {
         $fields = is_array($fields) ? $fields : [$fields];
-        $upperTerm = mb_strtoupper($term, 'UTF8');
+        $driver = $query->getModel()->getConnection()->getDriverName();
+        $lowerTerm = mb_strtolower($term, 'UTF-8');
 
-        $query->where(function ($q) use ($fields, $upperTerm) {
+        $query->where(function (Builder $q) use ($fields, $driver, $term, $lowerTerm) {
             foreach ($fields as $field) {
-                $q->orWhereRaw("UPPER($field) LIKE ?", ["%{$upperTerm}%"]);
+                if ($driver === 'pgsql') {
+                    $q->orWhere($field, 'ILIKE', "%{$term}%");
+                } else {
+                    $q->orWhereRaw("LOWER({$field}) LIKE ?", ["%{$lowerTerm}%"]);
+                }
             }
         });
 
         $positionExpr = [];
         $bindings = [];
+
         foreach ($fields as $field) {
-            $positionExpr[] = "COALESCE(NULLIF(POSITION(? IN UPPER($field)), 0), 999999)";
-            $bindings[] = $upperTerm;
+            $positionExpr[] = "COALESCE(NULLIF(POSITION(? IN LOWER({$field})), 0), 999999)";
+            $bindings[] = $lowerTerm;
         }
 
-        $least = implode(', ', $positionExpr);
-        $query->orderByRaw("LEAST($least)", $bindings);
+        $rawOrder = 'LEAST(' . implode(', ', $positionExpr) . ')';
+        $query->orderByRaw($rawOrder, $bindings);
 
         return $query;
     }
