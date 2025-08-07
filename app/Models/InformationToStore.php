@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InformationToStore extends Model
 {
@@ -13,20 +14,20 @@ class InformationToStore extends Model
     ];
 
     protected $casts = [
-        
+
     ];
 
     public static array $rules = [
         'store_id' => 'required'
     ];
 
-    public function information(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function information(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Information::class, 'information_id');
+        return $this->belongsTo(Information::class, 'information_id');
     }
 
-    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function store(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Store::class, 'store_id');
+        return $this->belongsTo(Store::class, 'store_id');
     }
 }

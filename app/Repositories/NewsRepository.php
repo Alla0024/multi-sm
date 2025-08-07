@@ -90,6 +90,9 @@ class NewsRepository extends BaseRepository
         $news = $this->model
             ->leftJoin((new NewsDescription())->getTable() . " as nd", 'nd.news_id', '=', 'news.id')
             ->where('nd.language_id', $language_id)
+            ->with(['seoPath' => function($query) {
+                $query->select('type', 'type_id', 'path');
+            }])
             ->when(isset($params['sort_order']), function ($query) use ($params) {
                 $query->where('sort_order', '=', $params['sort_order']);
             })
@@ -120,6 +123,15 @@ class NewsRepository extends BaseRepository
                 return $query;
             })
             ->paginate($perPage, ['nd.title', 'sort_order', 'status', 'id', 'created_at', 'updated_at']);
+
+        $news->each(function ($item) {
+            if ($item->seoPath) {
+                $baseUrl = config('app.client_url');
+                $path = $item->seoPath->path;
+
+                $item->setAttribute('client_url', rtrim($baseUrl, '/') . '/' . ltrim($path, '/'));
+            }
+        });
 
         return $news;
     }
