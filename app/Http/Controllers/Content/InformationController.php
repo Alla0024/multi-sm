@@ -41,9 +41,12 @@ class InformationController extends AppBaseController
         $information = $this->informationRepository->filterIndexPage($perPage, 5, request()->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            InformationDescription::class,
             Information::class,
+            InformationDescription::class,
+            FirstPathQuery::class
         ]);
+
+        $fields = array_merge($fields, [ 'stores' => $fields['description'] ]);
 
         $this->template = 'pages.information.index';
 
@@ -67,6 +70,9 @@ class InformationController extends AppBaseController
             InformationDescription::class,
             FirstPathQuery::class
         ]);
+
+        $fields = array_merge($fields, [ 'stores' => $fields['description'] ]);
+
         return $this->renderOutput([
             'fields' => $fields,
             'languages' => $languages,

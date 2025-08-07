@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\SearchableBySimilarity;
 use Illuminate\Database\Eloquent\Model;
- use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Store extends Model
 {
-    use HasFactory;
+    use HasFactory, SearchableBySimilarity;
 
     public $table = 'stores';
 

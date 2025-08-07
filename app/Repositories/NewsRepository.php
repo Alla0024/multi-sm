@@ -145,7 +145,8 @@ class NewsRepository extends BaseRepository
     {
         $descriptions = $input['descriptions'] ?? [];
         $seoPath = $input['path'];
-        unset($input['descriptions'], $input['path']);
+        $newsCategories = $input['news_categories'] ?? [];
+        unset($input['descriptions'], $input['path'], $input['news_categories']);
 
         $news = $this->model->create($input);
 
@@ -158,6 +159,14 @@ class NewsRepository extends BaseRepository
                 $descData
             );
         }
+
+        foreach ($newsCategories as $newsCategory) {
+            NewsToNewsCategory::updateOrCreate([
+                'news_id' => $news->id,
+                'news_category_id' => $newsCategory,
+            ]);
+        }
+
         $firstPathQuery = FirstPathQuery::create([
             'type' => 'news',
             'type_id' => $news->id,
