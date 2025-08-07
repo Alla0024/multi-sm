@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\FirstPathQuery;
 use App\Models\Information;
 use App\Models\InformationDescription;
+use App\Models\Store;
 use App\Repositories\BaseRepository;
 
 class InformationRepository extends BaseRepository
@@ -33,6 +34,7 @@ class InformationRepository extends BaseRepository
     {
         $information = $this->model
             ->with([
+                'stores',
                 'descriptions' =>
                     function ($query) {
                         return $query->with('language');
@@ -44,6 +46,7 @@ class InformationRepository extends BaseRepository
             ->find($id, $columns);
 
         $preshaped_descriptions = [];
+        $preshaped_stores = [];
 
         foreach ($information->descriptions as $description) {
             $preshaped_descriptions[$description->language->id] = [
@@ -52,9 +55,17 @@ class InformationRepository extends BaseRepository
             ];
         }
 
+        foreach ($information->stores as $store) {
+            $preshaped_stores[] = [
+                'id' => $store->id,
+                'text' => $store->name,
+            ];
+        }
+
         $seoPath = $information->firstPathQuery->path;
-        unset($information->descriptions, $information->firstPathQuery);
+        unset($information->descriptions, $information->firstPathQuery, $information->stores);
         $information->setAttribute('descriptions', $preshaped_descriptions);
+        $information->setAttribute('stores', $preshaped_stores);
         $information->setAttribute('path', $seoPath);
 
         return $information;
@@ -94,7 +105,8 @@ class InformationRepository extends BaseRepository
     {
         $descriptions = $input['descriptions'] ?? [];
         $seoPath = $input['path'];
-        unset($input['descriptions'], $input['path']);
+        $stores = $input['stores'] ?? [];
+        unset($input['descriptions'], $input['path'], $input['stores']);
 
         $information = $this->model->create($input);
 
@@ -103,6 +115,8 @@ class InformationRepository extends BaseRepository
             $descData['information_id'] = $information->id;
             InformationDescription::create($descData);
         }
+
+        $information->stores()->sync($stores);
 
         $firstPathQuery = FirstPathQuery::create([
             'type' => 'information',
@@ -117,7 +131,8 @@ class InformationRepository extends BaseRepository
     {
         $descriptions = $input['descriptions'] ?? [];
         $seoPath = $input['path'];
-        unset($input['descriptions'], $input['path']);
+        $stores = $input['stores'] ?? [];
+        unset($input['descriptions'], $input['path'], $input['stores']);
 
         $information = $this->model->find($id);
         $information->update($input);
@@ -131,6 +146,8 @@ class InformationRepository extends BaseRepository
                 $descData
             );
         }
+
+        $information->stores()->sync($stores);
 
         $firstPathQueryData = [
             'type' => 'information',

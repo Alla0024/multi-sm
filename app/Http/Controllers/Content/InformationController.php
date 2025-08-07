@@ -45,6 +45,8 @@ class InformationController extends AppBaseController
             Information::class,
         ]);
 
+        $fields = array_merge($fields, [ 'stores' => $fields['description'] ]);
+
         $this->template = 'pages.information.index';
 
         return $this->renderOutput([
@@ -67,6 +69,9 @@ class InformationController extends AppBaseController
             InformationDescription::class,
             FirstPathQuery::class
         ]);
+
+        $fields = array_merge($fields, [ 'stores' => $fields['description'] ]);
+
         return $this->renderOutput([
             'fields' => $fields,
             'languages' => $languages,

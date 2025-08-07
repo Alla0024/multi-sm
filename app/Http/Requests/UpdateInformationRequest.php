@@ -36,6 +36,6 @@ class UpdateInformationRequest extends FormRequest
     }
 
     public function withValidator($validator) {
-        $this->applyFirstPathQueryValidator($validator, $this->input('path'));
+        $this->applyFirstPathQueryValidator($validator, $this->input('path'), $this->input('id'));
     }
 }

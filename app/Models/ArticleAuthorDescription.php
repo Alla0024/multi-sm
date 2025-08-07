@@ -19,14 +19,12 @@ class ArticleAuthorDescription extends Model
         'author_id',
         'language_id',
         'name',
-        'title',
         'description'
     ];
 
     protected $casts = [
         'author_id' => 'string',
         'name' => 'string',
-        'title' => 'string',
         'description' => 'string'
     ];
 
@@ -34,7 +32,6 @@ class ArticleAuthorDescription extends Model
         'author_id' => 'required',
         'language_id' => 'required',
         'name' => 'required|string|max:255',
-        'title' => 'required|string|max:255',
         'description' => 'required|string'
     ];
 

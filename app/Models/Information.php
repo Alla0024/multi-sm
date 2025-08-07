@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -11,7 +12,6 @@ class Information extends Model
     public $table = 'informations';
 
     public $fillable = [
-        'sort_order',
         'status',
         'show_blocks'
     ];
@@ -21,7 +21,6 @@ class Information extends Model
     ];
 
     public static array $rules = [
-        'sort_order' => 'required',
         'status' => 'required',
         'show_blocks' => 'required|boolean',
         'created_at' => 'nullable',
@@ -36,5 +35,10 @@ class Information extends Model
     public function descriptions(): HasMany
     {
         return $this->hasMany(InformationDescription::class, 'information_id');
+    }
+
+    public function stores(): BelongsToMany
+    {
+        return $this->belongsToMany(Store::class, InformationToStore::class);
     }
 }

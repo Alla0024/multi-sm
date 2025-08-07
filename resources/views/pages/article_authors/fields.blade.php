@@ -55,7 +55,7 @@
 </div>
 
 <!-- Name Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['title']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['name']['inTab'] !!}">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)
@@ -68,7 +68,7 @@
 </div>
 
 <!-- Description Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['title']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['description']['inTab'] !!}">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)

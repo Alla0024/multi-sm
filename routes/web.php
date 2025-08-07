@@ -188,6 +188,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::get('getNewsCategories', 'App\Http\Controllers\Content\ApiController@getNewsCategories')->name('getNewsCategories');
             Route::get('getAuthors', 'App\Http\Controllers\Content\ApiController@getAuthors')->name('getAuthors');
             Route::get('getProducts', 'App\Http\Controllers\Content\ApiController@getProducts')->name('getProducts');
+            Route::get('getStores', 'App\Http\Controllers\Content\ApiController@getStores')->name('getStores');
             Route::get('getAttributes', 'Content\AttributeController@getAttributes')->name('getAttributes');
             Route::get('getFilters', 'Content\FilterController@getFilters')->name('getFilters');
             Route::get('getOptionValues', 'Content\OptionValueController@getOptionValues')->name('getOptionValues');

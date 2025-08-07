@@ -24,18 +24,6 @@
         "inView": true
     },
     {
-        "name": "date_of_birth",
-        "dbType": "date",
-        "htmlType": "date",
-        "validations": "nullable|nullable",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true,
-        "inView": true
-    },
-    {
         "name": "facebook",
         "dbType": "text",
         "htmlType": "text",
