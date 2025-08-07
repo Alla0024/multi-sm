@@ -12,7 +12,6 @@ class Information extends Model
     public $table = 'informations';
 
     public $fillable = [
-        'sort_order',
         'status',
         'show_blocks'
     ];
@@ -22,7 +21,6 @@ class Information extends Model
     ];
 
     public static array $rules = [
-        'sort_order' => 'required',
         'status' => 'required',
         'show_blocks' => 'required|boolean',
         'created_at' => 'nullable',

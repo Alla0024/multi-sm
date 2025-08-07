@@ -41,9 +41,8 @@ class InformationController extends AppBaseController
         $information = $this->informationRepository->filterIndexPage($perPage, 5, request()->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            Information::class,
             InformationDescription::class,
-            FirstPathQuery::class
+            Information::class,
         ]);
 
         $fields = array_merge($fields, [ 'stores' => $fields['description'] ]);
