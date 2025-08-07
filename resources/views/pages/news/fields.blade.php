@@ -75,7 +75,7 @@
         </div>
     </div>
 </div>
-@dd($fields)
+{{--@dd($news)--}}
 <!-- Category Id Field -->
 @include('components.inputs.input_search', ['name' => 'category_id', 'value' => $news ?? [], 'url' => 'getCategories'])
 
@@ -83,17 +83,7 @@
 @include('components.inputs.multi_select', ['name' => 'news_categories', 'value' => $news ?? [], 'url' => 'getNewsCategories'])
 
 <!-- Author Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['author_id']['inTab'] !!}">
-{{--    @include('components.inputs.input_search', ['name' => 'author_id', 'value' => $news ?? [], 'url' => 'getAuthors'])--}}
-    {!! Form::label('author_id', $word['title_author_id']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            @isset($authors)
-                {!! Form::select('author_id', $authors, ['class' => 'form-control', 'required']) !!}
-            @endisset
-        </div>
-    </div>
-</div>
+@include('components.inputs.input_search', ['name' => 'author_id', 'value' => $news ?? [], 'url' => 'getAuthors'])
 
 <!-- Shared On Facebook Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['shared_on_facebook']['inTab'] !!}">
