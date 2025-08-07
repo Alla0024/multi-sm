@@ -161,7 +161,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][products_title]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+                {!! Form::text("descriptions[$language->id][products_title]", null, ['class' => '', 'required']) !!}
             </div>
         @endforeach
     </div>
