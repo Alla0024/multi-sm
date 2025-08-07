@@ -11,7 +11,7 @@
                                 <th class="">
                                     @if(isset($field['searchable']) && $field['searchable'])
                                         <div class="">
-                                            
+
                                             <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
                                         </div>
                                     @endif
@@ -41,8 +41,6 @@
             <tbody>
             @foreach($newsCategories as $newsCategory)
                 <tr>
-
-
                     @foreach($fields as $index => $field)
                          @if($index != 'id' && $field['inTable'])
                             <td>{{ $newsCategory[$index] }}</td>

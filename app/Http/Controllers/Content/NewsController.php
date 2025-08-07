@@ -107,7 +107,7 @@ class NewsController extends AppBaseController
      */
     public function show($id)
     {
-        $news = $this->newsRepository->find($id);
+        $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
         $languages = $this->languageRepository->all();
 
         if (empty($news)) {

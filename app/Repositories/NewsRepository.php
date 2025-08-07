@@ -50,7 +50,7 @@ class NewsRepository extends BaseRepository
         $category = $news->category->descriptions->first();
         $author = $news->author->descriptions->first();
         $preshaped_category = [ 'id' => $category->category_id, 'text' => $category->name ];
-        $preshaped_author = [ 'id' => $author->author_id, 'name' => $author->name ];
+        $preshaped_author = [ 'id' => $author->author_id, 'text' => $author->name ];
 
         foreach ($news->descriptions as $description) {
             $preshaped_descriptions[$description->language->id] = [
