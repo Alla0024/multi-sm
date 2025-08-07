@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\FirstPathQuery;
 use App\Models\News;
 use App\Models\NewsDescription;
+use App\Models\NewsToNewsCategory;
 use App\Repositories\BaseRepository;
 use function Laravel\Prompts\select;
 
@@ -157,10 +158,9 @@ class NewsRepository extends BaseRepository
     public function update(array $input, $id)
     {
         $descriptions = $input['descriptions'] ?? [];
-        unset($input['descriptions']);
-
         $seoPath = $input['path'];
-        unset($input['path']);
+        $newsCategories = $input['news_categories'] ?? [];
+        unset($input['descriptions'], $input['path'], $input['news_categories']);
 
         $news = $this->model->find($id);
         $news->update($input);
@@ -173,6 +173,15 @@ class NewsRepository extends BaseRepository
                 ],
                 $descData
             );
+        }
+
+        NewsToNewsCategory::where('news_id', $id)->delete();
+
+        foreach ($newsCategories as $newsCategory) {
+            NewsToNewsCategory::updateOrCreate([
+                'news_id' => $id,
+                'news_category_id' => $newsCategory,
+            ]);
         }
 
         $firstPathQueryData = [

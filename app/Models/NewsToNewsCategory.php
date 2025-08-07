@@ -3,10 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Thiagoprz\CompositeKey\HasCompositeKey;
 
 class NewsToNewsCategory extends Model
 {
+    use HasCompositeKey;
+
     public $table = 'news_to_news_categories';
+    public $timestamps = false;
+    protected $primaryKey = [
+        'news_id',
+        'news_category_id'
+    ];
 
     public $fillable = [
         'news_id',

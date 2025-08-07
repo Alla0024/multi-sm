@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Controllers\AppBaseController;
-use App\Models\ArticleAuthor;
 use App\Models\FirstPathQuery;
-use App\Models\NewsCategory;
 use App\Models\NewsCategoryDescription;
 use App\Models\NewsDescription;
 use App\Repositories\ArticleAuthorRepository;
@@ -107,7 +105,7 @@ class NewsController extends AppBaseController
      */
     public function show($id)
     {
-        $news = $this->newsRepository->find($id);
+        $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
         $languages = $this->languageRepository->all();
 
         if (empty($news)) {
