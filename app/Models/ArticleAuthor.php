@@ -13,21 +13,18 @@ class ArticleAuthor extends Model
 
     public $fillable = [
         'avatar',
-        'date_of_birth',
         'facebook',
         'instagram'
     ];
 
     protected $casts = [
         'avatar' => 'string',
-        'date_of_birth' => 'date',
         'facebook' => 'string',
         'instagram' => 'string'
     ];
 
     public static array $rules = [
         'avatar' => 'nullable|string|max:255',
-        'date_of_birth' => 'nullable',
         'facebook' => 'required|url',
         'instagram' => 'required|url'
     ];
