@@ -11,7 +11,7 @@
                                 <th class="">
                                     @if(isset($field['searchable']) && $field['searchable'])
                                         <div class="">
-                                            
+
                                             <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
                                         </div>
                                     @endif
@@ -39,8 +39,6 @@
             <tbody>
             @foreach($news as $new)
                 <tr>
-
-
                     @foreach($fields as $index => $field)
                          @if($index != 'id' && $field['inTable'])
                             <td>{{ $new[$index] }}</td>
@@ -50,8 +48,11 @@
                     <td  colspan="3">
                         {!! Form::open(['route' => ['news.destroy', $new->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{{ route('news.show', [$new->id]) }}"
-                               class='btn btn-default butt-show btn-xs'>
+                            <a
+                               href="{{ $new->client_url }}"
+                               target="_blank"
+                               class='btn btn-default butt-show btn-xs'
+                            >
                                 <i class="bi bi-eye-fill fs-40"></i>
                             </a>
                             <a href="{{ route('news.edit', [$new->id]) }}"
