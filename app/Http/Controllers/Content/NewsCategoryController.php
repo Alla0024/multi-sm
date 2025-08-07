@@ -18,9 +18,11 @@ class NewsCategoryController extends AppBaseController
     /**
      * @var NewsCategoryRepository $newsCategoryRepository
      * @var LanguageRepository $languageRepository
+     * @var String $defaultLanguageId;
      * */
     private $newsCategoryRepository;
     private $languageRepository;
+    private $defaultLanguageId;
 
     public function __construct(NewsCategoryRepository $newsCategoryRepo, LanguageRepository $languageRepo)
     {
@@ -28,6 +30,7 @@ class NewsCategoryController extends AppBaseController
 
         $this->newsCategoryRepository = $newsCategoryRepo;
         $this->languageRepository = $languageRepo;
+        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -37,7 +40,7 @@ class NewsCategoryController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all());
+        $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all(), $this->defaultLanguageId);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsCategoryDescription::class,

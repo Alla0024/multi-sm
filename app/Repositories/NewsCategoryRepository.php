@@ -10,7 +10,6 @@ class NewsCategoryRepository extends BaseRepository
 {
     protected $fieldSearchable = [
         'status',
-        'seo_url',
         'sort_order'
     ];
 
@@ -29,10 +28,12 @@ class NewsCategoryRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
-    public function filterIndexPage($id, $params)
+    public function filterIndexPage($perPage, $params, $language_id)
     {
         $news = $this->model
-            ->with(['descriptions'])
+            ->with(['descriptions' => function ($query) use ($language_id) {
+                $query->where('language_id', $language_id);
+            }])
             ->when(isset($params['sort_order']), function ($query) use ($params) {
                 $query->where('sort_order', '=', $params['sort_order']);
             })
@@ -44,17 +45,14 @@ class NewsCategoryRepository extends BaseRepository
                     return $q->searchSimilarity(['name'], $params['name']);
                 });
             })
-            ->find($id);
+            ->paginate($perPage);
 
-        $preshaped_descriptions = [];
+        foreach ($news as $item) {
+            $name = $item->descriptions->first()->name;
+            unset($item->descriptions);
 
-        foreach ($news->descriptions as $description) {
-            $preshaped_descriptions[$description->language->id] = [
-                'name' => $description->name,
-            ];
+            $item->setAttribute('name', $name);
         }
-        unset($news->descriptions);
-        $news->setAttribute('descriptions', $preshaped_descriptions);
 
         return $news;
     }

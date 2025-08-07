@@ -4,13 +4,11 @@
     <p>{{ $newsCategory->status }}</p>
 </div>
 
-
 <!-- Seo Url Field -->
 <div class="col-sm-12">
     {!! Form::label('seo_url', $word['title_seo_url']) !!}
     <p>{{ $newsCategory->seo_url }}</p>
 </div>
-
 
 <!-- Color Field -->
 <div class="col-sm-12">
