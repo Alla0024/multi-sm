@@ -24,13 +24,6 @@
     <p>{{ $information->path }}</p>
 </div>
 
-
-<!-- Show Blocks Field -->
-<div class="col-sm-12">
-    {!! Form::label('show_blocks', $word['title_show_blocks']) !!}
-    <p>{{ $information->show_blocks }}</p>
-</div>
-
 <!-- Description Fields -->
 <div class="col-sm-12">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}

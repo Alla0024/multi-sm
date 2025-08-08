@@ -24,15 +24,6 @@
     {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
 </div>
 
-<!-- Show Blocks Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['show_blocks']['inTab'] !!}">
-    <div class="form-check">
-        {!! Form::hidden('show_blocks', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('show_blocks', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('show_blocks', $word['title_show_blocks'], ['class' => 'form-check-label']) !!}
-    </div>
-</div>
-
 <!-- Description Fields -->
 <div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['description']['inTab'] !!}">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
