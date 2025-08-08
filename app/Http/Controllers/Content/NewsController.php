@@ -147,7 +147,6 @@ class NewsController extends AppBaseController
 
         $fields = array_merge($fields, ['news_categories' => $newsCategoryFields['name']]);
 
-
         $this->template = 'pages.news.edit';
 
         return $this->renderOutput([
