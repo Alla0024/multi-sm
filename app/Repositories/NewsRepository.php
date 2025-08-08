@@ -7,14 +7,26 @@ use App\Models\News;
 use App\Models\NewsDescription;
 use App\Models\NewsToNewsCategory;
 use App\Repositories\BaseRepository;
+use Illuminate\Container\Container as Application;
 use function Laravel\Prompts\select;
 
 class NewsRepository extends BaseRepository
 {
+    /**
+     * @var NewsToProductRepository $newsToProductRepository;
+     */
+    private $newsToProductRepository;
+
     protected $fieldSearchable = [
         'sort_order',
         'status'
     ];
+
+    public function __construct(Application $app, NewsToProductRepository $newsToProductRepo) {
+        parent::__construct($app);
+
+        $this->newsToProductRepository = $newsToProductRepo;
+    }
 
     public function getFieldsSearchable(): array
     {
@@ -43,6 +55,8 @@ class NewsRepository extends BaseRepository
                 $query->where('language_id', $language_id);
             },
         ])->find($id);
+
+        $products = $this->newsToProductRepository->getProductsDropdownByNewsId($id, $language_id);
 
         $preshaped_descriptions = [];
         $preshaped_news_categories = [];
@@ -76,11 +90,13 @@ class NewsRepository extends BaseRepository
             $news->category,
             $news->author,
         );
+
         $news->setAttribute('news_categories', $preshaped_news_categories);
         $news->setAttribute('category_id', $preshaped_category);
         $news->setAttribute('author_id', $preshaped_author);
         $news->setAttribute('descriptions', $preshaped_descriptions);
         $news->setAttribute('path', $seo_path);
+        $news->setAttribute('products', $products);
 
         return $news;
     }
