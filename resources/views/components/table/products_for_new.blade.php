@@ -72,9 +72,6 @@
                     sort_order: 0,
                     text: "",
                 })
-                setTimeout(()=>{
-                    Alpine.store('page').searchSelect()
-                },200)
             }
         }))
     })
