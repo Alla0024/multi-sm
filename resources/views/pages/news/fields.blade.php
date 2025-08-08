@@ -21,7 +21,7 @@
     {!! Form::label('updated_at', $word['title_updated_at']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::datetime('updated_at', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::date('updated_at', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
