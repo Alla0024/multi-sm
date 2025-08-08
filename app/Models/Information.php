@@ -27,7 +27,7 @@ class Information extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function firstPathQuery()
+    public function seoPath()
     {
         return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'information');
     }

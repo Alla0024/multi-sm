@@ -6,6 +6,7 @@ use App\Models\Information;
 use App\Repositories\FirstPathQueryRepository;
 use App\Traits\AdditionalRequestRules;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class UpdateInformationRequest extends FormRequest
 {
@@ -35,7 +36,8 @@ class UpdateInformationRequest extends FormRequest
         return $rules;
     }
 
-    public function withValidator($validator) {
-        $this->applyFirstPathQueryValidator($validator, $this->input('path'), $this->input('id'));
+    public function withValidator(Validator $validator) {
+        $id = $this->route()->parameter('information');
+        $this->applyFirstPathQueryValidator($validator, $this->input('path'), $id, 'information');
     }
 }

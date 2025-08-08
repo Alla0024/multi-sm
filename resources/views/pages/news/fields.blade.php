@@ -154,7 +154,7 @@
         @endforeach
     </div>
 </div>
-{{--@dd($news)--}}
+
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="product">
     {!! Form::label('descriptions_products_title', $word['title_descriptions_products_title']) !!}
     <div class="flex-row input">
