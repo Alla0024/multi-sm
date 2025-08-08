@@ -55,10 +55,10 @@
                     <td  colspan="3">
                         @{!! Form::open(['route' => ['{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.destroy', ${{ $config->modelNames->camel }}->{{ $config->primaryName }}], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.show', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"
-                               class='btn btn-default butt-show btn-xs'>
-                                <i class="bi bi-eye-fill fs-40"></i>
-                            </a>
+{{--                            <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.show', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"--}}
+{{--                               class='btn btn-default butt-show btn-xs'>--}}
+{{--                                <i class="bi bi-eye-fill fs-40"></i>--}}
+{{--                            </a>--}}
                             <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.edit', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>

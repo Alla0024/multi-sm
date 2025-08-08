@@ -51,10 +51,10 @@
                     <td  colspan="3">
                         {!! Form::open(['route' => ['articleAuthors.destroy', $articleAuthor->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{{ route('articleAuthors.show', [$articleAuthor->id]) }}"
-                               class='btn btn-default butt-show btn-xs'>
-                                <i class="bi bi-eye-fill fs-40"></i>
-                            </a>
+{{--                            <a href="{{ route('articleAuthors.show', [$articleAuthor->id]) }}"--}}
+{{--                               class='btn btn-default butt-show btn-xs'>--}}
+{{--                                <i class="bi bi-eye-fill fs-40"></i>--}}
+{{--                            </a>--}}
                             <a href="{{ route('articleAuthors.edit', [$articleAuthor->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>

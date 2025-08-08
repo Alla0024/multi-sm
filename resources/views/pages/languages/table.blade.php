@@ -11,7 +11,7 @@
                                 <th class="">
                                     @if(isset($field['searchable']) && $field['searchable'])
                                         <div class="">
-                                            
+
                                             <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
                                         </div>
                                     @endif
@@ -51,10 +51,10 @@
                     <td  colspan="3">
                         {!! Form::open(['route' => ['languages.destroy', $language->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{{ route('languages.show', [$language->id]) }}"
-                               class='btn btn-default butt-show btn-xs'>
-                                <i class="bi bi-eye-fill fs-40"></i>
-                            </a>
+{{--                            <a href="{{ route('languages.show', [$language->id]) }}"--}}
+{{--                               class='btn btn-default butt-show btn-xs'>--}}
+{{--                                <i class="bi bi-eye-fill fs-40"></i>--}}
+{{--                            </a>--}}
                             <a href="{{ route('languages.edit', [$language->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>

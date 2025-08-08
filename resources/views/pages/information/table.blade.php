@@ -50,11 +50,11 @@
                     <td  colspan="3">
                         {!! Form::open(['route' => ['information.destroy', $information->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{{ $information['client_url'] }}"
-                               target="_blank"
-                               class='btn btn-default butt-show btn-xs'>
-                                <i class="bi bi-eye-fill fs-40"></i>
-                            </a>
+{{--                            <a href="{{ $information['client_url'] }}"--}}
+{{--                               target="_blank"--}}
+{{--                               class='btn btn-default butt-show btn-xs'>--}}
+{{--                                <i class="bi bi-eye-fill fs-40"></i>--}}
+{{--                            </a>--}}
                             <a href="{{ route('information.edit', [$information->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>
