@@ -93,7 +93,7 @@ class NewsController extends AppBaseController
     {
         $input = $request->all();
 
-        $new = $this->newsRepository->create($input);
+        $new = $this->newsRepository->upsert($input);
 
         Flash::success(__('news.success_news_saved'));
 
@@ -172,7 +172,7 @@ class NewsController extends AppBaseController
             return redirect(route('news.index'));
         }
 
-        $news = $this->newsRepository->update($dto, $id);
+        $news = $this->newsRepository->upsert($dto, $id);
 
         Flash::success('News updated successfully.');
 

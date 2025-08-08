@@ -20,4 +20,16 @@ class NewsDescriptionRepository extends BaseRepository
     {
         return NewsDescription::class;
     }
+
+    public function upsert($news_id, $descriptions): void {
+        foreach ($descriptions as $languageId => $descData) {
+            $this->model->updateOrCreate(
+                [
+                    'news_id' => $news_id,
+                    'language_id' => $languageId
+                ],
+                $descData
+            );
+        }
+    }
 }

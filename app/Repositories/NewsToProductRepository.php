@@ -20,7 +20,8 @@ class NewsToProductRepository extends BaseRepository
         return NewsToProduct::class;
     }
 
-    public function getProductsDropdownByNewsId($news_id, $language_id, $fields = ['*']) {
+    public function getProductsDropdownByNewsId($news_id, $language_id, $fields = ['*']): array
+    {
         $news_to_product = $this->model
             ->where('news_id', '=', $news_id)
             ->select($fields)
@@ -43,5 +44,18 @@ class NewsToProductRepository extends BaseRepository
         }
 
         return $preshaped_products;
+    }
+
+    public function sync($news_id, array $products): void
+    {
+        $this->model->where('news_id', $news_id)->delete();
+
+        foreach ($products as $product) {
+            $this->model->create([
+                'news_id' => $news_id,
+                'product_id' => $product['id'],
+                'sort_order' => $product['sort_order'],
+            ]);
+        }
     }
 }

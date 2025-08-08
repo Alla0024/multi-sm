@@ -19,4 +19,16 @@ class NewsToNewsCategoryRepository extends BaseRepository
     {
         return NewsToNewsCategory::class;
     }
+
+    public function sync($news_id, array $news_category_ids): void
+    {
+        $this->model->where('news_id', $news_id)->delete();
+
+        foreach ($news_category_ids as $category_id) {
+            $this->model->create([
+                'news_id' => $news_id,
+                'news_category_id' => $category_id,
+            ]);
+        }
+    }
 }

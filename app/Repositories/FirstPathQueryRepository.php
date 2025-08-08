@@ -4,12 +4,23 @@ namespace App\Repositories;
 
 use App\Models\FirstPathQuery;
 use App\Repositories\BaseRepository;
+use Exception;
 
 class FirstPathQueryRepository extends BaseRepository
 {
     protected $fieldSearchable = [
         'path'
     ];
+
+    /**
+     * @throws Exception
+     */
+    private function validateType($type): string {
+        return match ($type) {
+            'category', 'bonus_program', 'news', 'authors', 'manufacturer', 'product', 'information', 'sale' => $type,
+            default => throw new Exception("Type $type not exists"),
+        };
+    }
 
     public function getFieldsSearchable(): array
     {
@@ -34,5 +45,21 @@ class FirstPathQueryRepository extends BaseRepository
         }
 
         return $query->exists();
+    }
+
+    public function upsert($id, $type, $path)
+    {
+        $type = $this->validateType($type);
+
+        $fist_path_query = $this->model->updateOrCreate(
+            ['type' => $type, 'type_id' => $id],
+            ['type' => $type, 'type_id' => $id, 'path' => $path]
+        );
+
+        return $fist_path_query;
+    }
+
+    public function destroy($id, $type) {
+        return $this->model->where('type', $type)->where('type_id', $id)->delete();
     }
 }
