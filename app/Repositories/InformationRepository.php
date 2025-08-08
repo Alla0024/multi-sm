@@ -39,7 +39,7 @@ class InformationRepository extends BaseRepository
                     function ($query) {
                         return $query->with('language');
                     },
-                'firstPathQuery' => function ($query) {
+                'seoPath' => function ($query) {
                     return $query->select(['type_id', 'path']);
                 },
             ])
@@ -62,8 +62,8 @@ class InformationRepository extends BaseRepository
             ];
         }
 
-        $seoPath = $information->firstPathQuery->path;
-        unset($information->descriptions, $information->firstPathQuery, $information->stores);
+        $seoPath = $information->seoPath->path;
+        unset($information->descriptions, $information->seoPath, $information->stores);
         $information->setAttribute('descriptions', $preshaped_descriptions);
         $information->setAttribute('stores', $preshaped_stores);
         $information->setAttribute('path', $seoPath);
@@ -77,7 +77,9 @@ class InformationRepository extends BaseRepository
             ->with(['descriptions' => function ($query) use ($language_id) {
                 $query->select('information_id', 'language_id', 'name')
                     ->where('language_id', $language_id);
-            }])
+                },
+                'seoPath'
+            ])
             ->when(isset($params['sort_order']), function ($query) use ($params) {
                 $query->where('sort_order', '=', $params['sort_order']);
             })

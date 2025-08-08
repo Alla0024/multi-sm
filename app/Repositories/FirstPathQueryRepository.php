@@ -36,11 +36,12 @@ class FirstPathQueryRepository extends BaseRepository
     {
         $query = $this->model->where('path', $path);
 
-        if (isset($item_type)) {
-            $query->where('type', '<>', $item_type);
-        }
-
-        if (isset($exclude_id)) {
+        if (isset($item_type) && isset($exclude_id)) {
+            $query->whereNot([
+                ['type', '=', $item_type],
+                ['type_id', '=', $exclude_id]
+            ]);
+        } else if (isset($exclude_id)) {
             $query->where('type_id', '<>', $exclude_id);
         }
 

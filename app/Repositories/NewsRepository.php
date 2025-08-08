@@ -73,13 +73,16 @@ class NewsRepository extends BaseRepository
 
         $products = $this->newsToProductRepository->getProductsDropdownByNewsId($id, $language_id);
 
-        $preshaped_descriptions = [];
-        $preshaped_news_categories = [];
         $seo_path = $news->seoPath?->path;
         $category = $news->category->descriptions->first();
         $author = $news->author->descriptions->first();
+
+        $preshaped_descriptions = [];
+        $preshaped_news_categories = [];
         $preshaped_category = [ 'id' => $category->category_id, 'text' => $category->name ];
         $preshaped_author = [ 'id' => $author->author_id, 'text' => $author->name ];
+        $preshaped_created_at = $news->created_at->toDateString();
+        $preshaped_updated_at = $news->updated_at->toDateString();
 
         foreach ($news->descriptions as $description) {
             $preshaped_descriptions[$description->language->id] = [
@@ -104,6 +107,8 @@ class NewsRepository extends BaseRepository
             $news->seoPath,
             $news->category,
             $news->author,
+            $news->updated_at,
+            $news->created_at
         );
 
         $news->setAttribute('news_categories', $preshaped_news_categories);
@@ -112,6 +117,8 @@ class NewsRepository extends BaseRepository
         $news->setAttribute('descriptions', $preshaped_descriptions);
         $news->setAttribute('path', $seo_path);
         $news->setAttribute('products', $products);
+        $news->setAttribute('created_at', $preshaped_created_at);
+        $news->setAttribute('updated_at', $preshaped_updated_at);
 
         return $news;
     }
