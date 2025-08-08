@@ -25,7 +25,7 @@
                 <ul class="nav nav-tabs" id="customTabs">
                     @foreach($inTabs as $tab)
                         <li class="nav-item">
-                            <button class="nav-link active" type="button"
+                            <button class="nav-link " type="button"
                                     data-tab="{{$tab}}">{{$word["tab_".$tab]}}</button>
                         </li>
                     @endforeach

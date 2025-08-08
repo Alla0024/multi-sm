@@ -3,14 +3,14 @@
     <div class="flex-row input">
         <div class="input-group input-list-search" style="position: relative;">
             @isset($value[$name])
-                <input type="hidden" name="category_id" value="{{$value[$name]['id']}}">
+                <input type="hidden" name="{{$name}}" value="{{$value[$name]['id']}}">
             @else
-                <input type="hidden" name="category_id" value="">
+                <input type="hidden" name="{{$name}}" value="">
             @endisset
             <input
                 class="ignore_form"
-                name="category_id"
-                placeholder="Type to search..."
+                name="{{$name}}"
+                placeholder="Пошук..."
                 autocomplete="off"
                 value="{{$value[$name]['text'] ?? ''}}"
                 data-url="{{route($url)}}"
