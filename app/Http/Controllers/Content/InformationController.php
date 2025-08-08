@@ -40,6 +40,15 @@ class InformationController extends AppBaseController
 
         $information = $this->informationRepository->filterIndexPage($perPage, 5, request()->all());
 
+        $information->each(function ($item) {
+            if ($item->seoPath) {
+                $baseUrl = config('app.client_url');
+                $path = $item->seoPath->path;
+
+                $item->setAttribute('client_url', rtrim($baseUrl, '/') . '/' . ltrim($path, '/'));
+            }
+        });
+
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             InformationDescription::class,
             Information::class,

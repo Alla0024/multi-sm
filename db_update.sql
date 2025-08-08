@@ -13,3 +13,5 @@ DROP COLUMN title;
 -- Informations
 ALTER TABLE informations
 DROP COLUMN sort_order;
+ALTER TABLE informations
+DROP COLUMN show_blocks;

@@ -9,8 +9,6 @@ return [
     'search_sort_order' => 'Пошук за порядком сортування',
     'title_status' => 'Статус',
     'search_status' => 'Пошук за статусом',
-    'title_show_blocks' => 'Показати блоки',
-    'search_show_blocks' => 'Пошук за блоками',
     'title_created_at' => 'Дата створення',
     'search_created_at' => 'Пошук за датою створення',
     'title_updated_at' => 'Дата оновлення',

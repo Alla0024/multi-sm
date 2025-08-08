@@ -175,11 +175,7 @@ class InformationRepository extends BaseRepository
 
         $firstPathQuery = FirstPathQuery::where(['type' => 'information', 'type_id' => $id ])->first();
 
-        if (!$firstPathQuery) {
-            throw new \Error('First path query not found.');
-        }
-
-        $firstPathQuery->delete();
+        $firstPathQuery?->delete();
         $information->delete();
     }
 }
