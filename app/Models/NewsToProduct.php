@@ -4,11 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Thiagoprz\CompositeKey\HasCompositeKey;
 
 class NewsToProduct extends Model
 {
+    use HasCompositeKey;
+
     public $table = 'new_to_products';
     public $timestamps = false;
+    protected $primaryKey = [
+        'news_id',
+        'product_id',
+    ];
 
     public $fillable = [
         'news_id',
