@@ -28,6 +28,10 @@
                             <button class="nav-link active" type="button" data-tab="{{$tab}}">{{$word["tab_".$tab]}}</button>
                         </li>
                         @endforeach
+                        <li class="nav-item">
+                            <button class="nav-link " type="button"
+                                    data-tab="product">{{$word["tab_products"]}}</button>
+                        </li>
                 </ul>
                 <div class="row card-items">
                     @include('pages.news.fields')

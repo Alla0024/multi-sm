@@ -61,7 +61,7 @@
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.data('table_products', () => ({
-            products: JSON.parse('@json($news["products"])'),
+            products: JSON.parse('@json($news["products"] ?? [])'),
 
             deletedItem(key){
                 this.products.splice(key, 1);
