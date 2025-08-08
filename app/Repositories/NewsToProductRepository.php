@@ -48,9 +48,9 @@ class NewsToProductRepository extends BaseRepository
 
     public function sync($news_id, array $products): void
     {
-        $this->model->where('news_id', $news_id)->delete();
+        $this->model->where('news_id', '=', $news_id)->delete();
 
-        foreach ($products as $product) {
+        foreach ($products as $product)  {
             $this->model->create([
                 'news_id' => $news_id,
                 'product_id' => $product['id'],
