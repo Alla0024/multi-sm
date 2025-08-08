@@ -68,11 +68,21 @@ class ProductRepository extends BaseRepository
         }
 
         if (isset($args['q'])) {
-            $products
-                ->whereHas('descriptions', function ($query) use ($args, $language_id) {
-                    $query->where('language_id', $language_id)
-                        ->searchSimilarity(['name'], $args['q']);
-                });
+            if (is_numeric($args['q']) || preg_match('/^\s*[^,]+(\s*,\s*[^,]+)+\s*$/', $args['q'])) {
+                if (is_array($args['q'])) {
+                    $ids = $args['q'];
+                } else {
+                    $ids = explode(',', $args['q']);
+                }
+
+                $products->whereIn('id', $ids);
+            } else {
+                $products
+                    ->whereHas('descriptions', function ($query) use ($args, $language_id) {
+                        $query->where('language_id', $language_id)
+                            ->searchSimilarity(['name'], $args['q']);
+                    });
+            }
         }
 
         if (isset($args['manufacturer_id']) && is_numeric($args['manufacturer_id'])) {
@@ -81,16 +91,6 @@ class ProductRepository extends BaseRepository
 
         if (isset($args['category_id']) && is_numeric($args['category_id']) && $args['category_id'] !== 'all') {
             $products->where('category_id', $args['category_id']);
-        }
-
-        if (isset($args['products_id'])) {
-            if (is_array($args['products_id'])) {
-                $ids = $args['products_id'];
-            } else {
-                $ids = explode(',', $args['products_id']);
-            }
-
-            $products->whereIn('id', $ids);
         }
 
         $products = $products

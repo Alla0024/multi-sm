@@ -14,18 +14,33 @@ class NewsRepository extends BaseRepository
 {
     /**
      * @var NewsToProductRepository $newsToProductRepository;
+     * @var NewsToNewsCategoryRepository $newsToNewsCategoryRepository;
+     * @var NewsDescriptionRepository $newsDescriptionRepository;
+     * @var FirstPathQueryRepository $firstPathQueryRepository
      */
     private $newsToProductRepository;
+    private $newsToNewsCategoryRepository;
+    private $newsDescriptionRepository;
+    private $firstPathQueryRepository;
 
     protected $fieldSearchable = [
         'sort_order',
         'status'
     ];
 
-    public function __construct(Application $app, NewsToProductRepository $newsToProductRepo) {
+    public function __construct(
+        Application $app,
+        NewsToProductRepository $newsToProductRepo,
+        NewsToNewsCategoryRepository $newsToNewsCategoryRepo,
+        NewsDescriptionRepository $newsDescriptionRepo,
+        FirstPathQueryRepository $firstPathQueryRepo
+    ) {
         parent::__construct($app);
 
         $this->newsToProductRepository = $newsToProductRepo;
+        $this->newsToNewsCategoryRepository = $newsToNewsCategoryRepo;
+        $this->newsDescriptionRepository = $newsDescriptionRepo;
+        $this->firstPathQueryRepository = $firstPathQueryRepo;
     }
 
     public function getFieldsSearchable(): array
@@ -157,96 +172,35 @@ class NewsRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
-    public function create(array $input)
+    public function upsert(array $input, $id = null)
     {
         $descriptions = $input['descriptions'] ?? [];
         $seoPath = $input['path'];
         $newsCategories = $input['news_categories'] ?? [];
+        $products = $input['products'] ?? [];
         unset($input['descriptions'], $input['path'], $input['news_categories']);
 
-        $news = $this->model->create($input);
+        $news = isset($id) ? $this->model->find($id) : null;
 
-        foreach ($descriptions as $languageId => $descData) {
-            NewsDescription::updateOrCreate(
-                [
-                    'news_id' => $news->id,
-                    'language_id' => $languageId
-                ],
-                $descData
-            );
+        if (!$news) {
+            $news = new $this->model();
         }
 
-        foreach ($newsCategories as $newsCategory) {
-            NewsToNewsCategory::updateOrCreate([
-                'news_id' => $news->id,
-                'news_category_id' => $newsCategory,
-            ]);
-        }
+        $news->fill($input);
+        $news->save();
 
-        $firstPathQuery = FirstPathQuery::create([
-            'type' => 'news',
-            'type_id' => $news->id,
-            'path' => $seoPath,
-        ]);
-
-        return $news;
-    }
-
-    public function update(array $input, $id)
-    {
-        $descriptions = $input['descriptions'] ?? [];
-        $seoPath = $input['path'];
-        $newsCategories = $input['news_categories'] ?? [];
-        unset($input['descriptions'], $input['path'], $input['news_categories']);
-
-        $news = $this->model->find($id);
-        $news->update($input);
-
-        foreach ($descriptions as $languageId => $descData) {
-            NewsDescription::updateOrCreate(
-                [
-                    'news_id' => $id,
-                    'language_id' => $languageId
-                ],
-                $descData
-            );
-        }
-
-        NewsToNewsCategory::where('news_id', $id)->delete();
-
-        foreach ($newsCategories as $newsCategory) {
-            NewsToNewsCategory::updateOrCreate([
-                'news_id' => $id,
-                'news_category_id' => $newsCategory,
-            ]);
-        }
-
-        $firstPathQueryData = [
-            'type' => 'news',
-            'type_id' => $id,
-        ];
-
-        $firstPathQuery = FirstPathQuery::where($firstPathQueryData)->first();
-
-        if (!$firstPathQuery) {
-            FirstPathQuery::create([
-                ...$firstPathQueryData,
-                'path' => $seoPath,
-            ]);
-        } else {
-            $firstPathQuery->update([
-                'path' => $seoPath,
-            ]);
-        }
+        $this->newsDescriptionRepository->upsert($news->id, $descriptions);
+        $this->firstPathQueryRepository->upsert($news->id, 'news', $seoPath);
+        $this->newsToNewsCategoryRepository->sync($news->id, $newsCategories);
+        $this->newsToProductRepository->sync($news->id, $products);
 
         return $news;
     }
 
     public function delete($id) {
         $news = $this->find($id);
-        $firstPathQuery = FirstPathQuery::where(['type' => 'news', 'type_id' => $id ])->first();
 
-        $firstPathQuery?->delete();
+        $this->firstPathQueryRepository->destroy($news->id, 'news');
         $news->delete();
     }
 }
