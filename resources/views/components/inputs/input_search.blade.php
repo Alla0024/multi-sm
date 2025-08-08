@@ -14,6 +14,8 @@
                 autocomplete="off"
                 value="{{$value[$name]['text'] ?? ''}}"
                 data-url="{{route($url)}}"
+                @input="$store.page.searchSelect($event.target)"
+                @focus="$store.page.searchSelect($event.target)"
             >
             <ul class="custom-list hide">
             </ul>

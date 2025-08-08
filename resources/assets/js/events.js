@@ -34,14 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (active) switchTab(active.dataset.tab);
     }
 
-
     // Input search ///////////////////////////////////////////////////////////////////////////
-    document.querySelectorAll('.input-list-search').forEach(block => {
+    Alpine.store('page').searchSelect = function (el){
+        const block = el.parentElement;
+
         const input = block.querySelector('[data-url]');
         const hidden = block.querySelector('input[type="hidden"]');
         const list = block.querySelector('.custom-list');
         const url = input.dataset.url;
-
         let debounceTimeout;
         const renderList = (items) => {
             list.innerHTML = '';
@@ -49,24 +49,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 items.forEach(item => {
                     const li = document.createElement('li');
                     li.textContent = item.text;
-                    li.addEventListener('click', () => {
+                    function setItem(){
                         input.value = item.text;
                         hidden.value = item.id;
                         list.classList.add('hide');
-                    });
+                    }
+                    li.removeEventListener('click', setItem);
+                    li.addEventListener('click', setItem);
                     list.appendChild(li);
                 });
             } else {
                 list.innerHTML = '<li style="color:#999;cursor:default;">Нічого не знайдено</li>';
             }
         };
-
         const updateList = () => {
             clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(() => {
                 const value = input.value.trim().toLowerCase();
                 let hasMatch = false;
-
                 if (url) {
                     axios.get(url, { params: { q: value } })
                         .then(response => {
@@ -88,25 +88,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         list.classList.add('hide');
                     }
-                }
-            }, 300)
-
+                }}, 300)
         };
-
-        input.addEventListener('focus', updateList);
-
-        input.addEventListener('input', updateList);
-
+        // input.addEventListener('focus', updateList);
+        // input.addEventListener('input', updateList);
+        updateList()
         document.addEventListener('click', (e) => {
             if (!block.contains(e.target)) {
                 list.classList.add('hide');
             }
         });
 
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') list.classList.add('hide');
-        });
-    });
+    }
 
     // Choices Multi-select ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('.tag-select').forEach(select => {

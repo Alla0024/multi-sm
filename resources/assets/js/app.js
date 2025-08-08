@@ -61,5 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.cookie = `theme=${next}; path=/; max-age=31536000`;
     }
+
+
 })
 
