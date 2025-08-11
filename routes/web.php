@@ -40,6 +40,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('newsCategories', 'App\Http\Controllers\Content\NewsCategoryController');
         Route::resource('information', 'App\Http\Controllers\Content\InformationController');
         Route::resource('articleAuthors', 'App\Http\Controllers\Content\ArticleAuthorController');
+        Route::resource('options', 'App\Http\Controllers\Content\OptionController');
         Route::resource('langs', App\Http\Controllers\LangController::class);
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('seodata', 'Content\SeoDataController');
@@ -50,7 +51,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('attribute_groups', 'Content\AttributeGroupController');
         Route::resource('attribute_words', 'Content\AttributeWordController');
         Route::resource('attribute_icons', 'Content\AttributeIconController');
-        Route::resource('options', 'Content\OptionController');
         Route::get('fiscalization', 'Content\FiscalizationController@index')->name('fiscalization');
         Route::resource('option_values', 'Content\OptionValueController');
         Route::resource('categories', 'Content\CategoryController');

@@ -23,9 +23,9 @@ class NewsController extends AppBaseController
      * @var LanguageRepository $languageRepository
      * @var ArticleAuthorRepository $articleAuthorRepository
      */
-    private $newsRepository;
-    private $languageRepository;
-    private $articleAuthorRepository;
+    private NewsRepository $newsRepository;
+    private LanguageRepository $languageRepository;
+    private ArticleAuthorRepository $articleAuthorRepository;
     private $defaultLanguageId;
 
     public function __construct(
