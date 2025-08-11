@@ -22,7 +22,6 @@ class Information extends Model
 
     public static array $rules = [
         'status' => 'required',
-        'show_blocks' => 'required|boolean',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'
     ];

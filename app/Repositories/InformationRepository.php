@@ -7,9 +7,25 @@ use App\Models\Information;
 use App\Models\InformationDescription;
 use App\Models\Store;
 use App\Repositories\BaseRepository;
+use Illuminate\Container\Container as Application;
 
 class InformationRepository extends BaseRepository
 {
+    /**
+     * @var FirstPathQueryRepository $firstPathQueryRepository;
+     */
+    private FirstPathQueryRepository $firstPathQueryRepository;
+
+    public function __construct(
+        Application $app,
+        FirstPathQueryRepository $firstPathQueryRepo
+    )
+    {
+        $this->firstPathQueryRepository = $firstPathQueryRepo;
+
+        parent::__construct($app);
+    }
+
     protected $fieldSearchable = [
         'sort_order',
         'status'
@@ -68,7 +84,7 @@ class InformationRepository extends BaseRepository
             ];
         }
 
-        $seoPath = $information->seoPath->path;
+        $seoPath = $information->seoPath->path ?? '';
         unset($information->descriptions, $information->seoPath);
         $information->setAttribute('descriptions', $preshaped_descriptions);
         $information->setAttribute('path', $seoPath);
@@ -136,23 +152,7 @@ class InformationRepository extends BaseRepository
 
         $information->stores()->sync($stores);
 
-        $firstPathQueryData = [
-            'type' => 'information',
-            'type_id' => $id,
-        ];
-
-        $firstPathQuery = FirstPathQuery::where($firstPathQueryData)->first();
-
-        if (!$firstPathQuery) {
-            FirstPathQuery::create([
-                ...$firstPathQueryData,
-                'path' => $seoPath,
-            ]);
-        } else {
-            $firstPathQuery->update([
-                'path' => $seoPath,
-            ]);
-        }
+        $this->firstPathQueryRepository->upsert($information->id, 'information', $seoPath);
 
         return $information;
     }

@@ -139,9 +139,6 @@ class InformationController extends AppBaseController
             return redirect(route('information.index'));
         }
 
-        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'information')->value('path');
-        $information->setAttribute('path', $seoUrl);
-
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,
             InformationDescription::class,
