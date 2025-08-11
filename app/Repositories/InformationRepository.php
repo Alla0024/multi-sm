@@ -15,9 +15,20 @@ class InformationRepository extends BaseRepository
         'status'
     ];
 
+    protected $additionalFields = [
+        'stores' => [
+            'validations' => 'nullable|array',
+        ]
+    ];
+
     public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
+    }
+
+    public function getAdditionalFields(): array
+    {
+        return $this->additionalFields;
     }
 
     public function model(): string

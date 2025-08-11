@@ -67,21 +67,30 @@ class ModelSchemaHelper
 
         $additionalFields = [];
 
-        foreach ($additional as $field) {
+        foreach ($additional as $key => $value) {
+            $rules = [];
+
+            if (is_int($key)) {
+                $field = $value;
+            } else {
+                $field = $key;
+                $rules = $value;
+            }
+
             $isSearchable = in_array($field, $searchable);
 
             $additionalFields[$field] = [
-                'dbType' => self::dbTypeFromName($field),
-                'htmlType' => self::htmlTypeFromName($field),
-                'validations' => self::validation($field),
-                'searchable' => $isSearchable,
-                'fillable' => in_array($field, $fillable),
-                'primary' => $field === $primaryKey,
-                'inForm' => true,
-                'inIndex' => true,
-                'inView' => true,
-                "inTable" => $isSearchable,
-                "inTab" => 'main',
+                'dbType' => $rules['dbType'] ?? self::dbTypeFromName($field),
+                'htmlType' => $rules['htmlType'] ?? self::htmlTypeFromName($field),
+                'validations' => $rules['validations'] ?? self::validation($field),
+                'searchable' => $rules['searchable'] ?? $isSearchable,
+                'fillable' => $rules['fillable'] ?? in_array($field, $fillable),
+                'primary' => $rules['primary'] ?? $field === $primaryKey,
+                'inForm' => $rules['inForm'] ?? true,
+                'inIndex' => $rules['inIndex'] ?? true,
+                'inView' => $rules['inView'] ?? true,
+                "inTable" => $rules['inTable'] ?? $isSearchable,
+                "inTab" => $rules['inTab'] ?? 'main',
             ];
         }
 
