@@ -28,6 +28,10 @@ class NewsRepository extends BaseRepository
         'status'
     ];
 
+    protected $additionalFields = [
+        'news_categories'
+    ];
+
     public function __construct(
         Application $app,
         NewsToProductRepository $newsToProductRepo,
@@ -46,6 +50,11 @@ class NewsRepository extends BaseRepository
     public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
+    }
+
+    public function getAdditionalFields(): array
+    {
+        return $this->additionalFields;
     }
 
     public function model(): string

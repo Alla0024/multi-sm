@@ -143,10 +143,6 @@ class NewsController extends AppBaseController
             NewsDescription::class,
         ]);
 
-        $newsCategoryFields = ModelSchemaHelper::buildSchema(NewsCategoryDescription::class, []);
-
-        $fields = array_merge($fields, ['news_categories' => $newsCategoryFields['name']]);
-
         $this->template = 'pages.news.edit';
 
         return $this->renderOutput([

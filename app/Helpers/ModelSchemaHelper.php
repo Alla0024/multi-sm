@@ -26,7 +26,11 @@ class ModelSchemaHelper
 
             $searchable = $repo->getFieldsSearchable();
 
-            $fields = self::buildSchema($modelClass, $searchable);
+            $additional = method_exists($repo, 'getAdditionalFields')
+                ? $repo->getAdditionalFields()
+                : [];
+
+            $fields = self::buildSchema($modelClass, $searchable, $additional);
 
             $allFields = array_merge($allFields, $fields);
         }
@@ -34,7 +38,7 @@ class ModelSchemaHelper
         return $allFields;
     }
 
-    public static function buildSchema(string $modelClass, array $searchable = []): array
+    public static function buildSchema(string $modelClass, array $searchable = [], array $additional = []): array
     {
         $model = new $modelClass;
         $table = $model->getTable();
@@ -42,7 +46,7 @@ class ModelSchemaHelper
         $fillable = $model->getFillable();
         $primaryKey = $model->getKeyName();
 
-        return collect($columns)->mapWithKeys(function ($column) use ($searchable, $fillable, $primaryKey) {
+        $primaryFields = collect($columns)->mapWithKeys(function ($column) use ($searchable, $fillable, $primaryKey) {
             $isSearchable = in_array($column, $searchable);
             return [
                 $column => [
@@ -60,13 +64,35 @@ class ModelSchemaHelper
                 ],
             ];
         })->toArray();
+
+        $additionalFields = [];
+
+        foreach ($additional as $field) {
+            $isSearchable = in_array($field, $searchable);
+
+            $additionalFields[$field] = [
+                'dbType' => self::dbTypeFromName($field),
+                'htmlType' => self::htmlTypeFromName($field),
+                'validations' => self::validation($field),
+                'searchable' => $isSearchable,
+                'fillable' => in_array($field, $fillable),
+                'primary' => $field === $primaryKey,
+                'inForm' => true,
+                'inIndex' => true,
+                'inView' => true,
+                "inTable" => $isSearchable,
+                "inTab" => 'main',
+            ];
+        }
+
+        return array_merge($primaryFields, $additionalFields);
     }
 
     private static function dbTypeFromName(string $name): string
     {
         return match (true) {
             Str::endsWith($name, '_id'), Str::contains($name, 'status') => 'integer',
-            Str::contains($name, 'date'), Str::contains($name, 'at') => 'timestamp',
+            Str::contains($name, 'date'), Str::contains($name, '_at') => 'timestamp',
             default => 'string',
         };
     }
