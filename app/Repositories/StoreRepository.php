@@ -11,9 +11,17 @@ class StoreRepository extends BaseRepository
 
     ];
 
+    protected $additionalFields = [
+    ];
+
     public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
+    }
+
+    public function getAdditionalFields(): array
+    {
+        return $this->additionalFields;
     }
 
     public function model(): string
@@ -21,7 +29,7 @@ class StoreRepository extends BaseRepository
         return Store::class;
     }
 
-    public function getDropdownItems($language_id, $args): array
+    public function getDropdownItems($language_id, $args = []): array
     {
         $items = $this->model
             ->when(isset($args['q']), function ($query) use ($args, $language_id) {

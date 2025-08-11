@@ -12,9 +12,17 @@ class NewsToCategoryRepository extends BaseRepository
         'sort_order'
     ];
 
+    protected $additionalFields = [
+    ];
+
     public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
+    }
+
+    public function getAdditionalFields(): array
+    {
+        return $this->additionalFields;
     }
 
     public function model(): string

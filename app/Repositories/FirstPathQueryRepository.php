@@ -12,6 +12,8 @@ class FirstPathQueryRepository extends BaseRepository
         'path'
     ];
 
+    protected $additionalFields = [];
+
     /**
      * @throws Exception
      */
@@ -25,6 +27,11 @@ class FirstPathQueryRepository extends BaseRepository
     public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
+    }
+
+    public function getAdditionalFields(): array
+    {
+        return $this->additionalFields;
     }
 
     public function model(): string
