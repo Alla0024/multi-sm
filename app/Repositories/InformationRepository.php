@@ -45,7 +45,10 @@ class InformationRepository extends BaseRepository
     {
         $information = $this->model
             ->with([
-                'stores',
+                'stores' =>
+                    function ($query) {
+                        return $query->select(['id']);
+                    },
                 'descriptions' =>
                     function ($query) {
                         return $query->with('language');
@@ -57,7 +60,6 @@ class InformationRepository extends BaseRepository
             ->find($id, $columns);
 
         $preshaped_descriptions = [];
-        $preshaped_stores = [];
 
         foreach ($information->descriptions as $description) {
             $preshaped_descriptions[$description->language->id] = [
@@ -66,17 +68,9 @@ class InformationRepository extends BaseRepository
             ];
         }
 
-        foreach ($information->stores as $store) {
-            $preshaped_stores[] = [
-                'id' => $store->id,
-                'text' => $store->name,
-            ];
-        }
-
         $seoPath = $information->seoPath->path;
-        unset($information->descriptions, $information->seoPath, $information->stores);
+        unset($information->descriptions, $information->seoPath);
         $information->setAttribute('descriptions', $preshaped_descriptions);
-        $information->setAttribute('stores', $preshaped_stores);
         $information->setAttribute('path', $seoPath);
 
         return $information;
@@ -114,41 +108,21 @@ class InformationRepository extends BaseRepository
         return $informations;
     }
 
-    public function create(array $input)
+    public function upsert(array $input, int|null $id = null)
     {
         $descriptions = $input['descriptions'] ?? [];
         $seoPath = $input['path'];
         $stores = $input['stores'] ?? [];
         unset($input['descriptions'], $input['path'], $input['stores']);
 
-        $information = $this->model->create($input);
+        $information = isset($id) ? $this->model->find($id) : null;
 
-        foreach ($descriptions as $languageId => $descData) {
-            $descData['language_id'] = $languageId;
-            $descData['information_id'] = $information->id;
-            InformationDescription::create($descData);
+        if (!$information) {
+            $information = new $this->model();
         }
 
-        $information->stores()->sync($stores);
-
-        $firstPathQuery = FirstPathQuery::create([
-            'type' => 'information',
-            'type_id' => $information->id,
-            'path' => $seoPath,
-        ]);
-
-        return $information;
-    }
-
-    public function update(array $input, $id)
-    {
-        $descriptions = $input['descriptions'] ?? [];
-        $seoPath = $input['path'];
-        $stores = $input['stores'] ?? [];
-        unset($input['descriptions'], $input['path'], $input['stores']);
-
-        $information = $this->model->find($id);
-        $information->update($input);
+        $information->fill($input);
+        $information->save();
 
         foreach ($descriptions as $languageId => $descData) {
             InformationDescription::updateOrCreate(

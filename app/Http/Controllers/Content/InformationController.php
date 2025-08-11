@@ -10,6 +10,7 @@ use App\Models\InformationDescription;
 use App\Repositories\InformationRepository;
 use App\Helpers\ModelSchemaHelper;
 use App\Repositories\LanguageRepository;
+use App\Repositories\StoreRepository;
 use Illuminate\Http\Request;
 use App\Models\Information;
 use Flash;
@@ -19,16 +20,23 @@ class InformationController extends AppBaseController
     /**
      * @var InformationRepository $informationRepository
      * @var LanguageRepository $languageRepository
+     * @var int $defaultLanguageId;
      * */
-    private $informationRepository;
-    private $languageRepository;
+    private InformationRepository $informationRepository;
+    private LanguageRepository $languageRepository;
+    private int $defaultLanguageId;
 
-    public function __construct(InformationRepository $informationRepo, LanguageRepository $languageRepository)
+    public function __construct(
+        InformationRepository $informationRepo,
+        LanguageRepository    $languageRepo,
+        StoreRepository       $storeRepo,
+    )
     {
         parent::__construct();
 
         $this->informationRepository = $informationRepo;
-        $this->languageRepository = $languageRepository;
+        $this->languageRepository = $languageRepo;
+        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -91,7 +99,7 @@ class InformationController extends AppBaseController
     {
         $input = $request->all();
 
-        $information = $this->informationRepository->create($input);
+        $information = $this->informationRepository->upsert($input);
 
         Flash::success('Information saved successfully.');
 
@@ -163,7 +171,7 @@ class InformationController extends AppBaseController
             return redirect(route('information.index'));
         }
 
-        $information = $this->informationRepository->update($dto, $id);
+        $information = $this->informationRepository->upsert($dto, $id);
 
         Flash::success('Information updated successfully.');
 

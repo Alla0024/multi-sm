@@ -29,7 +29,7 @@ class StoreRepository extends BaseRepository
         return Store::class;
     }
 
-    public function getDropdownItems($language_id, $args): array
+    public function getDropdownItems($language_id, $args = []): array
     {
         $items = $this->model
             ->when(isset($args['q']), function ($query) use ($args, $language_id) {
