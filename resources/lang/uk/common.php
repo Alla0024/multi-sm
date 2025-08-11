@@ -18,6 +18,7 @@ return [
     // Menu
     '1' => '🤢',
     '5' => '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"><rect width="22" height="10" fill="#0057B7"/><rect width="22" height="10" y="10" fill="#FFD700"/></svg>',
+    '6' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="#aa151f"/><rect width="1200" height="400" y="200" fill="#f1c40f"/><rect width="1200" height="800" y="600" fill="#aa151f"/><g transform="translate(600,400)"><path d="M -200,0 L 200,0 A 200,200 0 0 1 -200,0 Z" fill="#aa151f"/><path d="M -200,0 L 200,0 A 200,200 0 0 0 -200,0 Z" fill="#aa151f"/><circle cx="0" cy="0" r="100" fill="#f1c40f"/><path d="M -100,0 L 100,0 A 100,100 0 0 1 -100,0 Z" fill="#aa151f"/><path d="M -100,0 L 100,0 A 100,100 0 0 0 -100,0 Z" fill="#aa151f"/><path d="M -100,0 L 100,0 A 100,100 0 0 1 -100,0 Z" fill="#f1c40f"/><path d="M -100,0 L 100,0 A 100,100 0 0 0 -100,0 Z" fill="#f1c40f"/><path d="M -100,0 L 100,0 A 100,100 0 0 1 -100,0 Z" fill="#aa151f"/><path d="M -100,0 L 100,0 A 100,100 0 0 0 -100,0 Z" fill="#aa151f"/></g></svg>',
     'menu_manufacturers' => 'Виробники',
     'menu_categories' => 'Категорії',
     'menu_filters' => 'Фільтра',

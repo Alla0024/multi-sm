@@ -153,7 +153,7 @@
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
 {{--                {!! Form::textarea("descriptions[$language->id][description]", null, ['class' => 'form-control', 'rows' => 2, 'required']) !!}--}}
                 @if(isset($news))
-                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1">{!! $news['descriptions'][$language->id]['description'] !!}</textarea>
+                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1">{!! $news['descriptions'][$language->id]['description'] ?? '' !!}</textarea>
                 @else
                     <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1"></textarea>
                 @endif
