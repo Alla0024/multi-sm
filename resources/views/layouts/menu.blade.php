@@ -131,3 +131,17 @@
         <p>Options</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('optionValues.index') }}" class="nav-link {{ Request::is('optionValues*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Option Values</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('optionValueGroups.index') }}" class="nav-link {{ Request::is('optionValueGroups*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Option Value Groups</p>
+    </a>
+</li>

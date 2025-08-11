@@ -41,6 +41,8 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('information', 'App\Http\Controllers\Content\InformationController');
         Route::resource('articleAuthors', 'App\Http\Controllers\Content\ArticleAuthorController');
         Route::resource('options', 'App\Http\Controllers\Content\OptionController');
+        Route::resource('optionValues', 'App\Http\Controllers\Content\OptionValueController');
+        Route::resource('optionValueGroups', 'App\Http\Controllers\Content\OptionValueGroupController');
         Route::resource('langs', App\Http\Controllers\LangController::class);
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('seodata', 'Content\SeoDataController');

@@ -1,0 +1,238 @@
+[
+    {
+        "name": "id",
+        "dbType": "bigInteger,true",
+        "htmlType": "number",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": true,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "option_id",
+        "dbType": "bigInteger,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "css_code",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:55|string|max:55",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "image",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:255|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "path",
+        "dbType": "string",
+        "htmlType": "text",
+        "validations": "required|string|max:255|string|max:255",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "sort_order",
+        "dbType": "integer,false",
+        "htmlType": "number",
+        "validations": "required",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true,
+        "inView": true
+    },
+    {
+        "name": "created_at",
+        "dbType": "dateTimeTz",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "name": "updated_at",
+        "dbType": "dateTimeTz",
+        "htmlType": "date",
+        "validations": "nullable|nullable",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false,
+        "inView": false
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,82ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,142ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,176ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,129ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,80ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,128ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,161ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,83ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,92ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,175ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,63ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,88ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,177ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductOptionValueToOptionValueGroup,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,84ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,ProductOptionValueGroup,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,160ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,158ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,OrderOptionProduct,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1t1,OptionValueGroupDescription"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,61ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,75ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,ShippingMethod,shipping_method_to_option_value_groups"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,164ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,172ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,81ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,86ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,60ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,156ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,85ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,171ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "mtm,Filter,filter_to_option_value_groups"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,155ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,59ProductPriceToOption,option_value_group_id"
+    },
+    {
+        "type": "relation",
+        "relation": "1tm,145ProductPriceToOption,option_value_group_id"
+    }
+]

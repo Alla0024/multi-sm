@@ -1,7 +1,7 @@
 <div class="card-body p-0">
 
     <div class="table-responsive">
-        <table class="table" id="options-table">
+        <table class="table" id="option-value-groups-table">
             <thead>
             <tr>
                 <form class="search-form" method="GET" action="">
@@ -26,11 +26,10 @@
                             @endif
                         @endforeach
                     @endif
-                    <th class=""></th>
                     <th class="butt-action action-item">
-                        <span class="hide">options</span>
+                        <span class="hide">option-value-groups</span>
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
-                        <a href="{{ route('options.index') }}">{{ $word['cancel'] }}</a>
+                        <a href="{{ route('optionValueGroups.index') }}">{{ $word['cancel'] }}</a>
                     </th>
                 </form>
             </tr>
@@ -42,35 +41,36 @@
                         @endif
                     @endforeach
                 @endif
-                <th colspan="3">{{ $word['option_values_count'] }}</th>
                 <th colspan="3">{{ $word['action'] }}</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($options as $option)
+            @foreach($optionValueGroups as $optionValueGroup)
                 <tr>
 
 
                     @foreach($fields as $index => $field)
                         @if($index == 'status')
-                            @if($option[$index] == 1)
+                            @if($optionValueGroup[$index] == 1)
                                 <td><div class="status_active">{{ $word['status_0'] }}</div></td>
                             @else
                                 <td><div class="status_enable">{{ $word['status_1'] }}</div></td>
                             @endif
                         @else
                          @if($index != 'id' && $field['inTable'])
-                            <td>{{ $option[$index] }}</td>
+                            <td>{{ $optionValueGroup[$index] }}</td>
                          @endif
                         @endif
                     @endforeach
-                    <td>
-                        <div>{{ $option['option_values_count'] }}</div>
-                    </td>
-                    <td  >
-                        {!! Form::open(['route' => ['options.destroy', $option->id], 'method' => 'delete']) !!}
+
+                    <td  colspan="3">
+                        {!! Form::open(['route' => ['optionValueGroups.destroy', $optionValueGroup->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{{ route('options.edit', [$option->id]) }}"
+
+
+
+
+                            <a href="{{ route('optionValueGroups.edit', [$optionValueGroup->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>
                             </a>
@@ -86,7 +86,7 @@
 
     <div class="card-footer clearfix">
         <div class="float-right">
-            @include('adminlte-templates::common.paginate', ['records' => $options])
+            @include('adminlte-templates::common.paginate', ['records' => $optionValueGroups])
         </div>
     </div>
 </div>

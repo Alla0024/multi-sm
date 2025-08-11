@@ -9,6 +9,12 @@ return [
     'search_id' => 'search_id',
     'title_avatar' => 'title_avatar',
     'search_avatar' => 'search_avatar',
+    'title_type' => 'title_type',
+    'search_type' => 'search_type',
+    'title_sort_order' => 'title_sort_order',
+    'search_sort_order' => 'search_sort_order',
+    'title_path' => 'title_path',
+    'search_path' => 'search_path',
     'title_facebook' => 'title_facebook',
     'search_facebook' => 'search_facebook',
     'title_instagram' => 'title_instagram',
@@ -19,4 +25,5 @@ return [
     'search_updated_at' => 'search_updated_at',
     'tab_main' => 'tab_main',
     'tab_sort' => 'tab_sort',
+    'option_values_count' => 'К-сть значень опцій'
 ];

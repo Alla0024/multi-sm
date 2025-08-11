@@ -83,11 +83,11 @@ class OptionController extends AppBaseController
 
             return redirect(route('options.index'));
         }
-
+//        option_values_count
         $this->template = 'pages.options.show';
 
         return $this->renderOutput(compact('option'));
-}
+    }
 
     /**
      * Show the form for editing the specified Option.

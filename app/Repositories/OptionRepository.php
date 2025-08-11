@@ -30,4 +30,22 @@ class OptionRepository extends BaseRepository
     {
         return Option::class;
     }
+
+    public function find($id, $columns = ['*'])
+    {
+        $option = $this->model->find($id, $columns);
+
+        return $option;
+    }
+
+    public function paginate($perPage = 15, $columns = ['*'])
+    {
+        $options = $this->model
+            ->withCount('optionValueGroups')
+            ->paginate($perPage, $columns);
+
+        dd($options->toArray());
+
+        return $options;
+    }
 }
