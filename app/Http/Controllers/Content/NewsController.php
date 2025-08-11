@@ -49,9 +49,15 @@ class NewsController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-
         $languages = $this->languageRepository->all();
         $news = $this->newsRepository->filterIndexPage($perPage, $this->defaultLanguageId, $request->all());
+        $sortFields = [
+            'default',
+            'name_asc',
+            'name_desc',
+            'created_at_asc',
+            'created_at_desc',
+        ];
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
@@ -62,6 +68,7 @@ class NewsController extends AppBaseController
 
         return $this->renderOutput([
             'news' => $news,
+            'sortFields' => $sortFields,
             'languages' => $languages,
             'fields' => $fields,
         ]);

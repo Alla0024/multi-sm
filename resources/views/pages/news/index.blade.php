@@ -27,18 +27,9 @@
                         <div style="display: flex; column-gap: 10px">
                             <label for="sortBy">{{ $word['sort_by'] }}</label>
                             <select name="sortBy" id="sortBy" onchange="this.form.submit()">
-                                @php
-                                    $sortFields = array(
-                                        'default' => $word['sort_default'],
-                                        'name_asc' => $word['sort_name_asc'],
-                                        'name_desc' => $word['sort_name_desc'],
-                                        'created_at_asc' => $word['sort_created_at_asc'],
-                                        'created_at_desc' => $word['sort_created_at_desc']
-                                    );
-                                @endphp
-                                @foreach($sortFields as $field => $label)
+                                @foreach($sortFields as $field)
                                     <option value="{{ $field }}" {{ request('sortBy') == $field ? 'selected' : '' }}>
-                                        {{ $label }}
+                                        {{ $word['sort_'.$field] }}
                                     </option>
                                 @endforeach
                             </select>
