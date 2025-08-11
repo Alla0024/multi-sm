@@ -64,6 +64,7 @@
                          @@if($index != 'id' && $field['inTable'])
                             <td>@{{ ${!! $config->modelNames->camel !!}[$index] }}</td>
                          @@endif
+                        @@endif
                     @@endforeach
 
                     <td  colspan="3">

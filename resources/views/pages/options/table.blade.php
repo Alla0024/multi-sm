@@ -60,6 +60,7 @@
                          @if($index != 'id' && $field['inTable'])
                             <td>{{ $option[$index] }}</td>
                          @endif
+                        @endif
                     @endforeach
 
                     <td  colspan="3">
