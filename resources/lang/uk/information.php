@@ -21,6 +21,7 @@ return [
     'search_name' => 'Пошук за назвою',
     'title_description' => 'Опис',
     'search_description' => 'Пошук за описом',
+    'title_stores' => 'Магазини',
     'title_path' => 'SEO Url',
     'search_title' => 'Пошук за назвою',
     'title_descriptions_name' => 'Назва',
