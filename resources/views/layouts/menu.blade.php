@@ -124,3 +124,10 @@
         <p>Categories</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('options.index') }}" class="nav-link {{ Request::is('options*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Options</p>
+    </a>
+</li>
