@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Input search ///////////////////////////////////////////////////////////////////////////
     Alpine.store('page').searchSelect = function (el){
         const block = el.parentElement;
-
         const input = block.querySelector('[data-url]');
         const hidden = block.querySelector('input[type="hidden"]');
         const list = block.querySelector('.custom-list');
@@ -49,14 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 items.forEach(item => {
                     const li = document.createElement('li');
                     li.textContent = item.text;
-                    li.setAttribute('x-on:click', `setItem($event.target, key, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
-                    // function setItem(){
-                    //     input.value = item.text;
-                    //     hidden.value = item.id;
-                    //     list.classList.add('hide');
-                    // }
-                    // li.removeEventListener('click', setItem);
-                    // li.addEventListener('click', setItem);
+                    if(input.getAttribute('custom')){
+                        function setItem(){
+                            input.value = item.text;
+                            hidden.value = item.id;
+                            list.classList.add('hide');
+                        }
+                        li.removeEventListener('click', setItem);
+                        li.addEventListener('click', setItem);
+                    } else {
+                        li.setAttribute('x-on:click', `setItem($event.target, key, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
+                    }
+
                     list.appendChild(li);
                 });
             } else {

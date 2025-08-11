@@ -23,17 +23,18 @@
                                 @endforeach
                             </select>
                         </div>
-
-                        <div style="display: flex; column-gap: 10px">
-                            <label for="sortBy">{{ $word['sort_by'] }}</label>
-                            <select name="sortBy" id="sortBy" onchange="this.form.submit()">
-                                @foreach($sortFields as $field)
-                                    <option value="{{ $field }}" {{ request('sortBy') == $field ? 'selected' : '' }}>
-                                        {{ $word['sort_'.$field] }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @isset($sortFields)
+                            <div style="display: flex; column-gap: 10px">
+                                <label for="sortBy">{{ $word['sort_by'] }}</label>
+                                <select name="sortBy" id="sortBy" onchange="this.form.submit()">
+                                    @foreach($sortFields as $field)
+                                        <option value="{{ $field }}" {{ request('sortBy') == $field ? 'selected' : '' }}>
+                                            {{ $word['sort_'.$field] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endisset
                     </form>
                 </div>
                 <div class="col-sm-2 action-item">

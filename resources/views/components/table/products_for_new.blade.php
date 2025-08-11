@@ -1,5 +1,5 @@
 <div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products" data-for-tab="{{$tab}}">
-    <div class="table-items" x-init="console.log(products)">
+    <div class="table-items">
         <div class="table-item item-head">
             <div class="item" style="width: 30%">Виберіть товар</div>
             <div class="item" style="width: 60%">Сортування</div>
@@ -23,6 +23,7 @@
                                 data-url="{{route('getProducts')}}"
                                 @input="$store.page.searchSelect($event.target)"
                                 @focus="$store.page.searchSelect($event.target)"
+                                custom="false"
                             >
                             <ul class="custom-list hide">
                             </ul>
@@ -65,9 +66,7 @@
             products: JSON.parse('@json($news["products"] ?? [])'),
 
             deletedItem(key){
-                console.log(this.products)
                 this.products.splice(key, 1);
-                console.log(this.products)
             },
             addItem(){
                 this.products.push({
@@ -81,9 +80,6 @@
                 this.products[key].id = id;
                 this.products[key].text = text;
                 e.parentElement.classList.add('hide');
-                console.log(this.products[key])
-                console.log(id)
-                console.log(text)
             }
         }))
     })
