@@ -49,13 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 items.forEach(item => {
                     const li = document.createElement('li');
                     li.textContent = item.text;
-                    function setItem(){
-                        input.value = item.text;
-                        hidden.value = item.id;
-                        list.classList.add('hide');
-                    }
-                    li.removeEventListener('click', setItem);
-                    li.addEventListener('click', setItem);
+                    li.setAttribute('x-on:click', `setItem($event.target, key, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
+                    // function setItem(){
+                    //     input.value = item.text;
+                    //     hidden.value = item.id;
+                    //     list.classList.add('hide');
+                    // }
+                    // li.removeEventListener('click', setItem);
+                    // li.addEventListener('click', setItem);
                     list.appendChild(li);
                 });
             } else {

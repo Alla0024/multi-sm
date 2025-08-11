@@ -12,13 +12,14 @@
                 <div class="item" style="width: 30%">
                     <div class="flex-row input">
                         <div class="input-group input-list-search" style="position: relative;">
-                            <input type="hidden" :name="'products['+ key +'][id]'" :value="product.id">
+                            <input type="hidden" :name="'products['+ key +'][id]'" x-model="product.id" :value="product.id">
                             <input
                                 class="ignore_form"
                                 :name="'products['+ key +'][id]'"
                                 placeholder="Пошук..."
                                 autocomplete="off"
                                 :value="product.text"
+                                x-model="product.text"
                                 data-url="{{route('getProducts')}}"
                                 @input="$store.page.searchSelect($event.target)"
                                 @focus="$store.page.searchSelect($event.target)"
@@ -34,7 +35,7 @@
                 <div class="item" style="width: 60%">
                     <div class="input">
                         <div class="input-group">
-                            <input type="number"  placeholder="" :name="'products['+ key +'][sort_order]'" aria-label="Username" :value="product.sort_order" aria-describedby="basic-addon1">
+                            <input type="number"  placeholder="" :name="'products['+ key +'][sort_order]'" x-model="product.sort_order"  aria-label="Username" :value="product.sort_order" aria-describedby="basic-addon1">
                         </div>
                     </div>
                 </div>
@@ -64,7 +65,9 @@
             products: JSON.parse('@json($news["products"] ?? [])'),
 
             deletedItem(key){
+                console.log(this.products)
                 this.products.splice(key, 1);
+                console.log(this.products)
             },
             addItem(){
                 this.products.push({
@@ -72,6 +75,15 @@
                     sort_order: 0,
                     text: "",
                 })
+                console.log(this.products)
+            },
+            setItem(e, key, id, text){
+                this.products[key].id = id;
+                this.products[key].text = text;
+                e.parentElement.classList.add('hide');
+                console.log(this.products[key])
+                console.log(id)
+                console.log(text)
             }
         }))
     })
