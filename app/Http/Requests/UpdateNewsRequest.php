@@ -36,6 +36,7 @@ class UpdateNewsRequest extends FormRequest
     }
 
     public function withValidator($validator) {
-        $this->applyFirstPathQueryValidator($validator, $this->input('path'), $this->input('id'), 'news');
+        $id = $this->route()->parameter('news');
+        $this->applyFirstPathQueryValidator($validator, $this->input('path'), $id, 'news');
     }
 }
