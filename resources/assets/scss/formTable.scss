@@ -168,6 +168,17 @@
         td{
             color: $col_item;
         }
+        .status_active, .status_enable{
+            background: #27ff68;
+            display: flex;
+            width: min-content;
+            margin: 0 auto;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .status_enable{
+            background: #ff5b5b;
+        }
         .butt-show{
             //background-color: $col_blue_light;
             color: $col_item;

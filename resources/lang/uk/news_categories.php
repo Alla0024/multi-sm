@@ -2,6 +2,7 @@
 
 return [
     'News_Category' => 'Категорії новин',
+    'New_Category' => 'категорію',
     'title_id' => 'ID',
     'search_id' => 'Пошук за ID',
     'title_status' => 'Статус',

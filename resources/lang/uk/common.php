@@ -12,6 +12,9 @@ return [
     'search' => 'Пошук',
     'show_by' => 'Показувати по',
 
+    'status_0' => 'Вимкнено',
+    'status_1' => 'Увікнено',
+
     // Menu
     '1' => '🤢',
     '5' => '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"><rect width="22" height="10" fill="#0057B7"/><rect width="22" height="10" y="10" fill="#FFD700"/></svg>',
@@ -45,10 +48,10 @@ return [
     'menu_vacancies' => 'Вакансії',
 
     'menu_new' => 'Статті',
-        'menu_informations' => 'Статті у футері',
-        'menu_news' => 'Блог',
-        'menu_seodata' => 'SEO DATA',
-        'menu_article_authors' => 'Автори статтей',
+    'menu_informations' => 'Статті у футері',
+    'menu_news' => 'Блог',
+    'menu_seodata' => 'SEO DATA',
+    'menu_article_authors' => 'Автори статтей',
 
 
     'menu_selling' => 'Продажі',

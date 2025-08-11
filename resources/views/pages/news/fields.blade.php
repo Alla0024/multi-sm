@@ -21,10 +21,17 @@
     {!! Form::label('updated_at', $word['title_updated_at']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::date('updated_at', null, ['class' => 'form-control', 'required']) !!}
+            <input
+                type="date"
+                name="updated_at"
+                value="@isset($news['updated_at']){{$news['updated_at']->format('Y-m-d')}}@else{{date('Y-m-d')}}@endisset"
+                aria-label="Дата"
+                aria-describedby="date-addon"
+            >
         </div>
     </div>
 </div>
+{{--@dd($news)--}}
 
 <!-- Sort Order Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
@@ -155,6 +162,7 @@
     </div>
 </div>
 
+<!-- Product title Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="product">
     {!! Form::label('descriptions_products_title', $word['title_descriptions_products_title']) !!}
     <div class="flex-row input">
@@ -168,4 +176,5 @@
     </div>
 </div>
 
+<!-- Products Fields -->
 @include('components.table.products_for_new', ['tab' => 'product'])
