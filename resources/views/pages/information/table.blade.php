@@ -44,33 +44,33 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($information as $information)
+            @foreach($information as $info)
                 <tr>
 
 
                     @foreach($fields as $index => $field)
                         @if($index == 'status')
-                            @if($information[$index] == 1)
+                            @if($info[$index] == 1)
                                 <td><div class="status_active">{{ $word['status_1'] }}</div></td>
                             @else
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
                         @else
                          @if($index != 'id' && $field['inTable'])
-                            <td>{{ $information[$index] }}</td>
+                            <td>{{ $info[$index] }}</td>
                          @endif
                         @endif
                     @endforeach
 
                     <td  colspan="3">
-                        {!! Form::open(['route' => ['information.destroy', $information->id], 'method' => 'delete']) !!}
+                        {!! Form::open(['route' => ['information.destroy', $info->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
 {{--                            <a href="{{ $information['client_url'] }}"--}}
 {{--                               target="_blank"--}}
 {{--                               class='btn btn-default butt-show btn-xs'>--}}
 {{--                                <i class="bi bi-eye-fill fs-40"></i>--}}
 {{--                            </a>--}}
-                            <a href="{{ route('information.edit', [$information->id]) }}"
+                            <a href="{{ route('information.edit', [$info->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>
                             </a>
