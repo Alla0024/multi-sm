@@ -10,10 +10,17 @@
                             @if($index != 'id' && $field['inTable'])
                                 <th class="">
                                     @if(isset($field['searchable']) && $field['searchable'])
-                                        <div class="">
-
-                                            <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
-                                        </div>
+                                        @if($index == 'status')
+                                            <select class="" name="{{ $index }}" aria-label="{{ $word['search_'.$index] }}" aria-describedby="select-addon">
+                                                <option value=""  selected hidden>{{ $word['search_'.$index] }}</option>
+                                                <option value="1" @if(request($index) == '1') selected @endif>{{$word['status_1']}}</option>
+                                                <option value="0" @if(request($index) == '0') selected @endif>{{$word['status_0']}}</option>
+                                            </select>
+                                        @else
+                                            <div class="">
+                                                <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
+                                            </div>
+                                        @endif
                                     @endif
                                 </th>
                             @endif
@@ -42,19 +49,27 @@
 
 
                     @foreach($fields as $index => $field)
+                        @if($index == 'status')
+                            @if($information[$index] == 1)
+                                <td><div class="status_active">{{ $word['status_1'] }}</div></td>
+                            @else
+                                <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
+                            @endif
+                        @else
                          @if($index != 'id' && $field['inTable'])
                             <td>{{ $information[$index] }}</td>
                          @endif
+                        @endif
                     @endforeach
 
                     <td  colspan="3">
                         {!! Form::open(['route' => ['information.destroy', $information->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{{ $information['client_url'] }}"
-                               target="_blank"
-                               class='btn btn-default butt-show btn-xs'>
-                                <i class="bi bi-eye-fill fs-40"></i>
-                            </a>
+{{--                            <a href="{{ $information['client_url'] }}"--}}
+{{--                               target="_blank"--}}
+{{--                               class='btn btn-default butt-show btn-xs'>--}}
+{{--                                <i class="bi bi-eye-fill fs-40"></i>--}}
+{{--                            </a>--}}
                             <a href="{{ route('information.edit', [$information->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>

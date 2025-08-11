@@ -10,10 +10,17 @@
                             @@if($index != 'id' && $field['inTable'])
                                 <th class="">
                                     @@if(isset($field['searchable']) && $field['searchable'])
-                                        <div class="">
-                                            {{--                    <lable for="@{{ $field['name'] }}"></lable>--}}
-                                            <input type="text" name="@{{ $index }}" placeholder="@{{ $word['search_'.$index] }}" value="@{{ request($index) }}">
-                                        </div>
+                                        @@if($index == 'status')
+                                            <select class="" name="@{{ $index }}" aria-label="@{{ $word['search_'.$index] }}" aria-describedby="select-addon">
+                                                <option value=""  selected hidden>@{{ $word['search_'.$index] }}</option>
+                                                <option value="1" @@if(request($index) == '1') selected @@endif>@{{$word['status_1']}}</option>
+                                                <option value="0" @@if(request($index) == '0') selected @@endif>@{{$word['status_0']}}</option>
+                                            </select>
+                                            @@else
+                                            <div class="">
+                                                <input type="text" name="@{{ $index }}" placeholder="@{{ $word['search_'.$index] }}" value="@{{ request($index) }}">
+                                            </div>
+                                            @@endif
                                     @@endif
                                 </th>
                             @@endif
@@ -47,6 +54,13 @@
 
 {{--                    {!! $fieldBody !!}--}}
                     @@foreach($fields as $index => $field)
+                        @@if($index == 'status')
+                            @@if(${!! $config->modelNames->camel !!}[$index] == 1)
+                                <td><div class="status_active">@{{ $word['status_0'] }}</div></td>
+                            @@else
+                                <td><div class="status_enable">@{{ $word['status_1'] }}</div></td>
+                            @@endif
+                        @@else
                          @@if($index != 'id' && $field['inTable'])
                             <td>@{{ ${!! $config->modelNames->camel !!}[$index] }}</td>
                          @@endif
@@ -55,10 +69,10 @@
                     <td  colspan="3">
                         @{!! Form::open(['route' => ['{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.destroy', ${{ $config->modelNames->camel }}->{{ $config->primaryName }}], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.show', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"
-                               class='btn btn-default butt-show btn-xs'>
-                                <i class="bi bi-eye-fill fs-40"></i>
-                            </a>
+{{--                            <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.show', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"--}}
+{{--                               class='btn btn-default butt-show btn-xs'>--}}
+{{--                                <i class="bi bi-eye-fill fs-40"></i>--}}
+{{--                            </a>--}}
                             <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.edit', [${!! $config->modelNames->camel !!}->{!! $config->primaryName !!}]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>

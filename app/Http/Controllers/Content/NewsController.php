@@ -49,6 +49,7 @@ class NewsController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+
         $languages = $this->languageRepository->all();
         $news = $this->newsRepository->filterIndexPage($perPage, $this->defaultLanguageId, $request->all());
 

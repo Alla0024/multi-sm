@@ -13,7 +13,7 @@
                             <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                         @endforeach
 
-                        <div>
+                        <div style="display: flex; column-gap: 10px; margin-right: 20px">
                             <label for="perPage">{{ $word['show_by'] }}</label>
                             <select name="perPage" id="perPage" onchange="this.form.submit()">
                                 @foreach([10, 25, 50, 100] as $size)
@@ -24,7 +24,7 @@
                             </select>
                         </div>
 
-                        <div>
+                        <div style="display: flex; column-gap: 10px">
                             <label for="sortBy">{{ $word['sort_by'] }}</label>
                             <select name="sortBy" id="sortBy" onchange="this.form.submit()">
                                 @php
