@@ -47,7 +47,7 @@ class InformationRepository extends BaseRepository
             ->with([
                 'stores' =>
                     function ($query) {
-                        return $query->select(['id']);
+                        return $query->select(['id', 'name']);
                     },
                 'descriptions' =>
                     function ($query) {
