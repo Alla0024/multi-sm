@@ -3,12 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Thiagoprz\CompositeKey\HasCompositeKey;
 
 class OptionDescription extends Model
 {
+    use HasCompositeKey;
+
     public $table = 'option_descriptions';
+    public $timestamps = false;
+    protected $primaryKey = ['option_id', 'language_id'];
+
 
     public $fillable = [
+        'option_id',
         'language_id',
         'name',
         'comment'
@@ -25,8 +33,8 @@ class OptionDescription extends Model
         'comment' => 'nullable|string|max:255'
     ];
 
-    public function option(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function option(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Option::class, 'option_id');
+        return $this->belongsTo(Option::class, 'option_id');
     }
 }

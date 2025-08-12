@@ -82,7 +82,7 @@ class OptionController extends AppBaseController
     {
         $input = $request->all();
 
-        $option = $this->optionRepository->create($input);
+        $option = $this->optionRepository->upsert($input);
 
         Flash::success('Option saved successfully.');
 
@@ -143,7 +143,7 @@ class OptionController extends AppBaseController
             return redirect(route('options.index'));
         }
 
-        $option = $this->optionRepository->update($request->all(), $id);
+        $option = $this->optionRepository->upsert($request->all(), $id);
 
         Flash::success('Option updated successfully.');
 

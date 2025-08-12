@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Option;
 use App\Models\OptionDescription;
 use App\Repositories\BaseRepository;
+use function Symfony\Component\String\s;
 
 class OptionRepository extends BaseRepository
 {
@@ -69,6 +70,38 @@ class OptionRepository extends BaseRepository
         unset($option->descriptions);
 
         $option->setAttribute('descriptions', $preshaped_descriptions);
+
+        return $option;
+    }
+
+    public function upsert($input, $id = null)
+    {
+        $descriptions = $input['descriptions'] ?? [];
+
+        unset($input['descriptions']);
+
+        $option = $this->find($id);
+
+        $option->update($input);
+
+        $option = isset($id) ? $this->model->find($id) : null;
+
+        if (!$option) {
+            $option = new $this->model();
+        }
+
+        $option->fill($input);
+        $option->save();
+
+        foreach ($descriptions as $languageId => $descData) {
+            OptionDescription::updateOrCreate(
+                [
+                    'option_id' => $option->id,
+                    'language_id' => $languageId
+                ],
+                $descData
+            );
+        }
 
         return $option;
     }
