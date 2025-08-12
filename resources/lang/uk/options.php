@@ -27,6 +27,10 @@ return [
     'search_name' => 'search_name',
     'title_value_groups_count' => 'К-сть значень опцій',
     'search_value_groups_count' => 'search_value_groups_count',
+    'title_descriptions_name' => 'title_descriptions_name',
+    'search_descriptions_name' => 'search_descriptions_name',
+    'title_descriptions_comment' => 'title_descriptions_comment',
+    'search_descriptions_comment' => 'search_descriptions_comment',
     'tab_main' => 'tab_main',
     'tab_sort' => 'tab_sort'
 ];

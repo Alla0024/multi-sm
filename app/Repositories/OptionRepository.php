@@ -55,4 +55,21 @@ class OptionRepository extends BaseRepository
 
         return $options;
     }
+
+    public function getDetails($id)
+    {
+        $option = $this->model
+            ->with('descriptions')
+            ->find($id);
+
+        $preshaped_descriptions = $option->descriptions
+            ->keyBy('language_id')
+            ->toArray();
+
+        unset($option->descriptions);
+
+        $option->setAttribute('descriptions', $preshaped_descriptions);
+
+        return $option;
+    }
 }

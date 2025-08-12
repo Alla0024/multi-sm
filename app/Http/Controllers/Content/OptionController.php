@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\OptionDescription;
+use App\Repositories\LanguageRepository;
 use App\Repositories\OptionRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -15,15 +17,21 @@ class OptionController extends AppBaseController
 {
     /**
      * @var OptionRepository $optionRepository
+     * @var LanguageRepository $languageRepository
      */
     private OptionRepository $optionRepository;
+    private LanguageRepository $languageRepository;
     private int $defaultLanguageId;
 
-    public function __construct(OptionRepository $optionRepo)
+    public function __construct(
+        OptionRepository $optionRepo,
+        LanguageRepository $languageRepo
+    )
     {
         parent::__construct();
 
         $this->optionRepository = $optionRepo;
+        $this->languageRepository = $languageRepo;
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
@@ -58,9 +66,13 @@ class OptionController extends AppBaseController
      */
     public function create()
     {
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Option::class
+        ]);
+
         $this->template = 'pages.options.create';
 
-        return $this->renderOutput();
+        return $this->renderOutput('fields');
     }
 
     /**
@@ -100,7 +112,12 @@ class OptionController extends AppBaseController
      */
     public function edit($id)
     {
-        $option = $this->optionRepository->find($id);
+        $option = $this->optionRepository->getDetails($id);
+        $languages = $this->languageRepository->getAvailableLanguages();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            OptionDescription::class,
+            Option::class
+        ]);
 
         if (empty($option)) {
             Flash::error('Option not found');
@@ -110,7 +127,7 @@ class OptionController extends AppBaseController
 
         $this->template = 'pages.options.edit';
 
-        return $this->renderOutput(compact('option'));
+        return $this->renderOutput(compact('option', 'fields', 'languages'));
     }
 
     /**
