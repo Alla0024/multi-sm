@@ -23,7 +23,10 @@ return [
     'search_created_at' => 'search_created_at',
     'title_updated_at' => 'title_updated_at',
     'search_updated_at' => 'search_updated_at',
+    'title_name' => 'title_name',
+    'search_name' => 'search_name',
+    'title_value_groups_count' => 'К-сть значень опцій',
+    'search_value_groups_count' => 'search_value_groups_count',
     'tab_main' => 'tab_main',
-    'tab_sort' => 'tab_sort',
-    'option_values_count' => 'К-сть значень опцій'
+    'tab_sort' => 'tab_sort'
 ];

@@ -17,12 +17,14 @@ class OptionController extends AppBaseController
      * @var OptionRepository $optionRepository
      */
     private OptionRepository $optionRepository;
+    private int $defaultLanguageId;
 
     public function __construct(OptionRepository $optionRepo)
     {
         parent::__construct();
 
         $this->optionRepository = $optionRepo;
+        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -32,10 +34,14 @@ class OptionController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $options = $this->optionRepository->paginate($perPage);
+        $options = $this->optionRepository->filterIndexPage($perPage, $this->defaultLanguageId, request()->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Option::class
+        ], [
+            'name',
+            'sort_order',
+            'value_groups_count',
         ]);
 
         $this->template = 'pages.options.index';

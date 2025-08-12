@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class ModelSchemaHelper
 {
-    public static function buildSchemaFromModelNames(array $modelClasses): array
+    public static function buildSchemaFromModelNames(array $modelClasses, array|null $order = null): array
     {
         $allFields = [];
 
@@ -35,6 +35,17 @@ class ModelSchemaHelper
             $allFields = array_merge($allFields, $fields);
         }
 
+        if (is_array($order)) {
+            $sorted = [];
+            foreach ($order as $key) {
+                if (array_key_exists($key, $allFields)) {
+                    $sorted[$key] = $allFields[$key];
+                }
+            }
+
+            $allFields = $sorted;
+        }
+
         return $allFields;
     }
 
@@ -46,7 +57,7 @@ class ModelSchemaHelper
         $fillable = $model->getFillable();
         $primaryKey = $model->getKeyName();
 
-        $primaryFields = collect($columns)->mapWithKeys(function ($column) use ($searchable, $fillable, $primaryKey) {
+        $primaryFields = collect($columns)->mapWithKeys(function ($column, $index) use ($searchable, $fillable, $primaryKey) {
             $isSearchable = in_array($column, $searchable);
             return [
                 $column => [

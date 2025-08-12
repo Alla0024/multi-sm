@@ -9,11 +9,11 @@ use {{ $config->namespaces->app }}\Repositories\BaseRepository;
 
 class {{ $config->modelNames->name }}Repository extends BaseRepository
 {
-    protected $fieldSearchable = [
+    protected array $fieldSearchable = [
         {!! $fieldSearchable !!}
     ];
 
-    protected $additionalFields = [
+    protected array $additionalFields = [
     ];
 
     public function getFieldsSearchable(): array

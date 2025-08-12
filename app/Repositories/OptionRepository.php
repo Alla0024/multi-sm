@@ -3,17 +3,20 @@
 namespace App\Repositories;
 
 use App\Models\Option;
+use App\Models\OptionDescription;
 use App\Repositories\BaseRepository;
 
 class OptionRepository extends BaseRepository
 {
-    protected $fieldSearchable = [
-        'type',
+    protected array $fieldSearchable = [
+        'name',
+        'value_groups_count',
         'sort_order',
-        'path'
     ];
 
-    protected $additionalFields = [
+    protected array $additionalFields = [
+        'name',
+        'value_groups_count',
     ];
 
     public function getFieldsSearchable(): array
@@ -38,13 +41,17 @@ class OptionRepository extends BaseRepository
         return $option;
     }
 
-    public function paginate($perPage = 15, $columns = ['*'])
+    public function filterIndexPage($perPage, $language_id, array $params)
     {
         $options = $this->model
-            ->withCount('optionValueGroups')
-            ->paginate($perPage, $columns);
-
-        dd($options->toArray());
+            ->leftJoin((new OptionDescription())->getTable() . " as od", 'od.option_id', '=', 'options.id')
+            ->select('options.*', 'od.*')
+            ->where('od.language_id', $language_id)
+            ->withCount('optionValueGroups as value_groups_count')
+            ->when(isset($params['name']), function ($q) use ($params) {
+                return $q->searchSimilarity(['od.name'], $params['name']);
+            })
+            ->paginate($perPage);
 
         return $options;
     }

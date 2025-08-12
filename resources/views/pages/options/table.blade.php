@@ -26,7 +26,6 @@
                             @endif
                         @endforeach
                     @endif
-                    <th class=""></th>
                     <th class="butt-action action-item">
                         <span class="hide">options</span>
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
@@ -42,7 +41,6 @@
                         @endif
                     @endforeach
                 @endif
-                <th colspan="3">{{ $word['option_values_count'] }}</th>
                 <th colspan="3">{{ $word['action'] }}</th>
             </tr>
             </thead>

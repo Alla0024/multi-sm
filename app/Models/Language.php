@@ -21,7 +21,7 @@ class Language extends Model
         'code' => 'string',
         'path' => 'string',
         'title' => 'string',
-        'status' => 'integer',
+        'status' => 'boolean',
         'sort_order' => 'integer'
     ];
 
@@ -33,4 +33,7 @@ class Language extends Model
         'sort_order' => 'required'
     ];
 
+    public static function getAvailable() {
+        return Language::where('status', true)->get();
+    }
 }
