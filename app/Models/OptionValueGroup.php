@@ -61,4 +61,8 @@ class OptionValueGroup extends Model
     public function optionValues(): HasMany {
         return $this->hasMany(OptionValue::class, 'parent_id');
     }
+
+    public function descriptions(): HasMany {
+        return $this->hasMany(OptionValueGroupDescription::class, 'option_value_group_id');
+    }
 }

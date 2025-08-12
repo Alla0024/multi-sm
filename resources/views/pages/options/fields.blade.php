@@ -53,3 +53,13 @@
         </div>
     </div>
 </div>
+
+<!-- Option Value Groups Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['option_value_groups']['inTab'] !!}">
+    {!! Form::label('option_value_groups', $word['title_option_value_groups']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::number('option_value_groups', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
+</div>

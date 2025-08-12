@@ -31,6 +31,8 @@ return [
     'search_descriptions_name' => 'search_descriptions_name',
     'title_descriptions_comment' => 'title_descriptions_comment',
     'search_descriptions_comment' => 'search_descriptions_comment',
+    'title_option_value_groups' => 'title_option_value_groups',
+    'search_option_value_groups' => 'search_option_value_groups',
     'tab_main' => 'tab_main',
     'tab_sort' => 'tab_sort'
 ];

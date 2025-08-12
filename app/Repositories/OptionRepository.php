@@ -18,6 +18,7 @@ class OptionRepository extends BaseRepository
     protected array $additionalFields = [
         'name',
         'value_groups_count',
+        'option_value_groups'
     ];
 
     public function getFieldsSearchable(): array
@@ -60,7 +61,12 @@ class OptionRepository extends BaseRepository
     public function getDetails($id)
     {
         $option = $this->model
-            ->with('descriptions')
+            ->with([
+                'descriptions',
+                'optionValueGroups' => function ($q) {
+                    $q->with('descriptions');
+                }
+            ])
             ->find($id);
 
         $preshaped_descriptions = $option->descriptions
@@ -71,14 +77,24 @@ class OptionRepository extends BaseRepository
 
         $option->setAttribute('descriptions', $preshaped_descriptions);
 
+        foreach ($option->optionValueGroups as $option_value_group) {
+            $desc = $option_value_group->descriptions
+                ->keyBy('language_id')
+                ->toArray();
+
+            unset($option_value_group->descriptions);
+            $option_value_group->setAttribute('descriptions', $desc);
+        }
+
         return $option;
     }
 
     public function upsert($input, $id = null)
     {
         $descriptions = $input['descriptions'] ?? [];
+        $optionValueGroups = $input['option_value_groups'] ?? [];
 
-        unset($input['descriptions']);
+        unset($input['descriptions'], $input['option_value_groups']);
 
         $option = $this->find($id);
 
