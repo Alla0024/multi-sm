@@ -44,7 +44,7 @@ class OptionRepository extends BaseRepository
             ->withCount('optionValueGroups')
             ->paginate($perPage, $columns);
 
-        dd($options->toArray());
+
 
         return $options;
     }

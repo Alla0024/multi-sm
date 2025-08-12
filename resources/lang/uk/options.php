@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'options' => 'options',
+    'Option' => 'options',
     'error_news_not_found' => 'Статтю не знайдено',
     'success_news_deleted' => 'Видалено успішно',
     'success_news_saved' => 'Збережено успішно',
