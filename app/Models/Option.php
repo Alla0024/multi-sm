@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\SearchableBySimilarity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Option extends Model
 {
+    use SearchableBySimilarity;
+
     public $table = 'options';
 
     public $fillable = [
@@ -66,5 +69,10 @@ class Option extends Model
 
     public function optionValueGroups(): HasMany {
         return $this->hasMany(OptionValueGroup::class);
+    }
+
+    public function descriptions(): HasMany
+    {
+        return $this->hasMany(OptionDescription::class, 'option_id');
     }
 }

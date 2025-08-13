@@ -29,7 +29,6 @@ class InformationController extends AppBaseController
     public function __construct(
         InformationRepository $informationRepo,
         LanguageRepository    $languageRepo,
-        StoreRepository       $storeRepo,
     )
     {
         parent::__construct();

@@ -26,7 +26,6 @@
                             @endif
                         @endforeach
                     @endif
-                    <th class=""></th>
                     <th class="butt-action action-item">
                         <span class="hide">options</span>
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
@@ -42,15 +41,12 @@
                         @endif
                     @endforeach
                 @endif
-                <th colspan="3">{{ $word['option_values_count'] }}</th>
                 <th colspan="3">{{ $word['action'] }}</th>
             </tr>
             </thead>
             <tbody>
             @foreach($options as $option)
                 <tr>
-
-
                     @foreach($fields as $index => $field)
                         @if($index == 'status')
                             @if($option[$index] == 1)
@@ -64,9 +60,7 @@
                          @endif
                         @endif
                     @endforeach
-                    <td>
-                        <div>{{ $option['option_values_count'] }}</div>
-                    </td>
+
                     <td  >
                         {!! Form::open(['route' => ['options.destroy', $option->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>

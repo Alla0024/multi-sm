@@ -46,8 +46,6 @@
             <tbody>
             @foreach($information as $info)
                 <tr>
-
-
                     @foreach($fields as $index => $field)
                         @if($index == 'status')
                             @if($info[$index] == 1)
