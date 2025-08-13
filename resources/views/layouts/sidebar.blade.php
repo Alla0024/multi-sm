@@ -1,3 +1,7 @@
+@php
+    $adminPath = env('ADMIN_DASHBOARD', 'aikqweu')
+@endphp
+
 @isset($word)
     <div class="sidebar-customer" :class="{'sidebar_hide':Alpine.store('page').sidebar_hide}">
 
@@ -7,39 +11,51 @@
 
     <div class="items-link">
 
-        <a href="{{asset('/aikqweu')}}" class="item {{ Request::is('aikqweu/dashboard*') ? 'active' : '' }}">
+        <a href="{{asset('/'.$adminPath)}}" class="item {{ Request::is($adminPath.'/dashboard*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-houses-fill fs-20"></i></div>
             <div class="name">Головна</div>
         </a>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is('aikqweu/example*') ? 'true' : 'false' }}}">
-            <div class="item {{ Request::is('aikqweu/example*') ? 'active' : '' }}" @click="open_list = !open_list">
+        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/example*') ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is($adminPath.'/example*') ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
                 <div class="name">Example</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
-                <a class="item {{ Request::is('aikqweu/example') ? 'active' : '' }}" href="{{asset('/aikqweu/example')}}">Form</a>
-                <a class="item {{ Request::is('aikqweu/example/edit*') ? 'active' : '' }}" href="{{asset('/aikqweu/example/edit')}}">Inputs</a>
+                <a class="item {{ Request::is($adminPath.'/example') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/example')}}">Form</a>
+                <a class="item {{ Request::is($adminPath.'/example/edit*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/example/edit')}}">Inputs</a>
             </div>
         </div>
 
-        <a href="{{ route('manufacturers.index') }}" class="item {{ Request::is('aikqweu/manufacturers*') ? 'active' : '' }}">
+        <a href="{{ route('manufacturers.index') }}" class="item {{ Request::is($adminPath.'/manufacturers*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-bootstrap fs-20"></i></div>
             <div class="name">{{$word['menu_manufacturers']}}</div>
         </a>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is(['aikqweu/news*', 'aikqweu/information*', 'aikqweu/articleAuthors*']) ? 'true' : 'false' }}}">
-            <div class="item {{ Request::is(['aikqweu/news*', 'aikqweu/information*', 'aikqweu/articleAuthors*']) ? 'active' : '' }}" @click="open_list = !open_list">
+        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/option*') ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is($adminPath.'/option*') ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
+                <div class="name">{{$word['menu_option']}}</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is($adminPath.'/options*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/options')}}">{{$word['menu_options']}}</a>
+                <a class="item {{ Request::is($adminPath.'/optionValueGroups*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/optionValueGroups')}}">{{$word['menu_option_values']}}</a>
+            </div>
+        </div>
+
+        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/news*', $adminPath.'/information*', $adminPath.'/articleAuthors*']) ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is([$adminPath.'/news*', $adminPath.'/information*', $adminPath.'/articleAuthors*']) ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-stickies fs-20"></i></div>
                 <div class="name">{{$word['menu_new']}}</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
-                <a class="item {{ Request::is('aikqweu/information*') ? 'active' : '' }}" href="{{ route('information.index') }}">{{$word['menu_informations']}}</a>
-                <a class="item {{ Request::is(['aikqweu/news', 'aikqweu/news/*']) ? 'active' : '' }}" href="{{ route('news.index') }}">{{$word['menu_news']}}</a>
-                <a class="item {{ Request::is('aikqweu/articleAuthors*') ? 'active' : '' }}" href="{{ route('articleAuthors.index') }}">{{$word['menu_article_authors']}}</a>
-                <a class="item {{ Request::is('aikqweu/newsCategories*') ? 'active' : '' }}" href="{{ route('newsCategories.index') }}">News category</a>
+                <a class="item {{ Request::is($adminPath.'/information*') ? 'active' : '' }}" href="{{ route('information.index') }}">{{$word['menu_informations']}}</a>
+                <a class="item {{ Request::is([$adminPath.'/news', $adminPath.'/news/*']) ? 'active' : '' }}" href="{{ route('news.index') }}">{{$word['menu_news']}}</a>
+                <a class="item {{ Request::is($adminPath.'/articleAuthors*') ? 'active' : '' }}" href="{{ route('articleAuthors.index') }}">{{$word['menu_article_authors']}}</a>
+                <a class="item {{ Request::is($adminPath.'/newsCategories*') ? 'active' : '' }}" href="{{ route('newsCategories.index') }}">News category</a>
             </div>
         </div>
 
