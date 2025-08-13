@@ -33,6 +33,10 @@ return [
     'search_default' => 'search_default',
     'title_name' => 'title_name',
     'search_name' => 'search_name',
+    'title_descriptions_name' => 'title_descriptions_name',
+    'search_descriptions_name' => 'search_descriptions_name',
+    'title_descriptions_type_material' => 'title_descriptions_type_material',
+    'search_descriptions_type_material' => 'search_descriptions_type_material',
     'tab_main' => 'tab_main',
     'tab_sort' => 'tab_sort',
 ];

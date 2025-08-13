@@ -3,12 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Thiagoprz\CompositeKey\HasCompositeKey;
 
 class OptionValueDescription extends Model
 {
+    use HasCompositeKey;
+
     public $table = 'option_value_descriptions';
+    public $timestamps = false;
+    protected $primaryKey = [
+        'option_value_id',
+        'language_id',
+    ];
 
     public $fillable = [
+        'option_value_id',
         'language_id',
         'name',
         'type_material'
