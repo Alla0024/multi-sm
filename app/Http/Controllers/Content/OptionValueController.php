@@ -14,13 +14,15 @@ use Flash;
 class OptionValueController extends AppBaseController
 {
     /** @var OptionValueRepository $optionValueRepository*/
-    private $optionValueRepository;
+    private OptionValueRepository $optionValueRepository;
+    private int $defaultLanguageId;
 
     public function __construct(OptionValueRepository $optionValueRepo)
     {
         parent::__construct();
 
         $this->optionValueRepository = $optionValueRepo;
+        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -30,10 +32,15 @@ class OptionValueController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $optionValues = $this->optionValueRepository->paginate($perPage);
+        $optionValues = $this->optionValueRepository->filterIndexPage($perPage, request()->all(), $this->defaultLanguageId);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionValue::class
+        ], [
+            'name',
+            'image',
+            'sort_order',
+            'level',
         ]);
 
         $this->template = 'pages.option_values.index';

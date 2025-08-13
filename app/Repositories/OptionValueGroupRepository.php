@@ -8,10 +8,7 @@ use App\Repositories\BaseRepository;
 class OptionValueGroupRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'option_id',
-        'css_code',
         'image',
-        'path',
         'sort_order'
     ];
 
