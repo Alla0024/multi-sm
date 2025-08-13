@@ -28,4 +28,8 @@ class LanguageRepository extends BaseRepository
     {
         return Language::class;
     }
+
+    public function getAvailableLanguages()  {
+        return $this->model->getAvailable();
+    }
 }

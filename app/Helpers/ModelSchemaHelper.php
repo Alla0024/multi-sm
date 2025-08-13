@@ -40,6 +40,8 @@ class ModelSchemaHelper
             foreach ($order as $key) {
                 if (array_key_exists($key, $allFields)) {
                     $sorted[$key] = $allFields[$key];
+                } else {
+                    throw new \Error("{$key} field does not exist");
                 }
             }
 

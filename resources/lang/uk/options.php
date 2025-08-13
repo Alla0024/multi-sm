@@ -28,6 +28,15 @@ return [
     'search_name' => 'Пошук за назвою',
     'title_value_groups_count' => 'К-сть значень опцій',
     'search_value_groups_count' => 'Пошук за к-стю значень опцій',
+    'title_descriptions_name' => 'Назва (опис)',
+    'search_descriptions_name' => 'Пошук за назвою (опис)',
+    'title_descriptions_comment' => 'Коментар (опис)',
+    'search_descriptions_comment' => 'Пошук за коментарем (опис)',
+    'title_option_value_groups' => 'Групи значень опцій',
+    'search_option_value_groups' => 'Пошук за групами значень опцій',
     'tab_main' => 'Основне',
     'tab_sort' => 'Сортування',
+
+    'input_radio' => 'Прапорець (радіо-кнопка)',
+    'input_checkbox' => 'Перемикач (чекбокс)',
 ];
