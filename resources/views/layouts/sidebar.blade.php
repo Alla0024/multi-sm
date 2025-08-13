@@ -41,7 +41,7 @@
             </div>
             <div class="list" :class="{'list-open': open_list}">
                 <a class="item {{ Request::is($adminPath.'/options*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/options')}}">{{$word['menu_options']}}</a>
-                <a class="item {{ Request::is($adminPath.'/optionValueGroups*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/optionValueGroups')}}">{{$word['menu_option_values']}}</a>
+                <a class="item {{ Request::is($adminPath.'/optionValues*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/optionValues')}}">{{$word['menu_option_values']}}</a>
             </div>
         </div>
 
