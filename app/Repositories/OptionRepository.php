@@ -120,6 +120,8 @@ class OptionRepository extends BaseRepository
             );
         }
 
+        $option->optionValueGroups()->sync($optionValueGroups);
+
         return $option;
     }
 }
