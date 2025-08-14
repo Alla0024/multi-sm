@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateOptionValueRequest;
 use App\Http\Requests\UpdateOptionValueRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\OptionValueDescription;
+use App\Repositories\LanguageRepository;
 use App\Repositories\OptionValueRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -13,15 +15,20 @@ use Flash;
 
 class OptionValueController extends AppBaseController
 {
-    /** @var OptionValueRepository $optionValueRepository*/
+    /**
+     * @var OptionValueRepository $optionValueRepository
+     * @var LanguageRepository $languageRepository
+     */
     private OptionValueRepository $optionValueRepository;
+    private LanguageRepository $languageRepository;
     private int $defaultLanguageId;
 
-    public function __construct(OptionValueRepository $optionValueRepo)
+    public function __construct(OptionValueRepository $optionValueRepo, LanguageRepository $languageRepo)
     {
         parent::__construct();
 
         $this->optionValueRepository = $optionValueRepo;
+        $this->languageRepository = $languageRepo;
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
@@ -99,7 +106,12 @@ class OptionValueController extends AppBaseController
      */
     public function edit($id)
     {
-        $optionValue = $this->optionValueRepository->find($id);
+        $languages = $this->languageRepository->getAvailableLanguages();
+        $optionValue = $this->optionValueRepository->getDetails($id);
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            OptionValue::class,
+            OptionValueDescription::class
+        ]);
 
         if (empty($optionValue)) {
             Flash::error('Option Value not found');
@@ -109,7 +121,7 @@ class OptionValueController extends AppBaseController
 
         $this->template = 'pages.option_values.edit';
 
-        return $this->renderOutput(compact('optionValue'));
+        return $this->renderOutput(compact('optionValue', 'fields', 'languages'));
     }
 
     /**
@@ -125,7 +137,7 @@ class OptionValueController extends AppBaseController
             return redirect(route('optionValues.index'));
         }
 
-        $optionValue = $this->optionValueRepository->update($request->all(), $id);
+        $optionValue = $this->optionValueRepository->upsert($request->all(), $id);
 
         Flash::success('Option Value updated successfully.');
 

@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\SearchableBySimilarity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OptionValue extends Model
 {
+    use SearchableBySimilarity;
+
     public $table = 'option_values';
 
     public $fillable = [
@@ -36,18 +41,23 @@ class OptionValue extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function productOptionValueToOptionValueGroups(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function productOptionValueToOptionValueGroups(): HasMany
     {
-        return $this->hasMany(\App\Models\ProductOptionValueToOptionValueGroup::class, 'option_value_id');
+        return $this->hasMany(ProductOptionValueToOptionValueGroup::class, 'option_value_id');
     }
 
-    public function orderOptionProducts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orderOptionProducts(): HasMany
     {
-        return $this->hasMany(\App\Models\OrderOptionProduct::class, 'option_value_id');
+        return $this->hasMany(OrderOptionProduct::class, 'option_value_id');
     }
 
-    public function optionValueDescription(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function optionValueDescription(): HasOne
     {
-        return $this->hasOne(\App\Models\OptionValueDescription::class);
+        return $this->hasOne(OptionValueDescription::class);
+    }
+
+    public function descriptions(): HasMany
+    {
+        return $this->hasMany(OptionValueDescription::class, 'option_value_id');
     }
 }
