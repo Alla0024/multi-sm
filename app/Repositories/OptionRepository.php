@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Container\Container as Application;
 use App\Models\Option;
 use App\Models\OptionDescription;
 use App\Repositories\BaseRepository;
@@ -9,6 +10,21 @@ use function Symfony\Component\String\s;
 
 class OptionRepository extends BaseRepository
 {
+    /**
+     * @var OptionValueGroupRepository $optionValueGroupRepository;
+     */
+    private $optionValueGroupRepository;
+
+    public function __construct(
+        Application $app,
+        OptionValueGroupRepository $optionValueGroupRepo,
+    )
+    {
+        $this->optionValueGroupRepository = $optionValueGroupRepo;
+
+        parent::__construct($app);
+    }
+
     protected array $fieldSearchable = [
         'name',
         'value_groups_count',
@@ -93,9 +109,9 @@ class OptionRepository extends BaseRepository
     public function upsert($input, $id = null)
     {
         $descriptions = $input['descriptions'] ?? [];
-        $optionValueGroups = $input['option_value_groups'] ?? [];
+        $optionValueGroups = $input['option_value'] ?? [];
 
-        unset($input['descriptions'], $input['option_value_groups']);
+        unset($input['descriptions'], $input['option_value']);
 
         $option = $this->find($id);
 
@@ -119,6 +135,8 @@ class OptionRepository extends BaseRepository
                 $descData
             );
         }
+
+        $this->optionValueGroupRepository->upsertMany($optionValueGroups);
 
         return $option;
     }

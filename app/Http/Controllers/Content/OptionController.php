@@ -118,7 +118,6 @@ class OptionController extends AppBaseController
             OptionDescription::class,
             Option::class
         ]);
-        dump($option->toArray());
         if (empty($option)) {
             Flash::error('Option not found');
 
