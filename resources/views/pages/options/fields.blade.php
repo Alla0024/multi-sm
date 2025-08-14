@@ -66,12 +66,12 @@
 {{--@dd($option['optionValueGroups'])--}}
 @php
 $arrData = [
-    'name' => ['type' => 'string', 'name' => 'Значення'],
-    'image' => ['type' => 'image', 'name' => 'Зображення'],
-    'css_code' => ['type' => 'string', 'name' => 'CSS код'],
-    'meta_title' => ['type' => 'string', 'name' => 'Мета назва'],
-    'path' => ['type' => 'string', 'name' => 'Посилання'],
-    'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування'],
+    'name' => ['type' => 'string', 'name' => 'Значення', 'description' => true],
+    'image' => ['type' => 'image', 'name' => 'Зображення', 'description' => false],
+    'css_code' => ['type' => 'string', 'name' => 'CSS код', 'description' => false],
+    'meta_title' => ['type' => 'string', 'name' => 'Мета назва', 'description' => true],
+    'path' => ['type' => 'string', 'name' => 'Посилання', 'description' => false],
+    'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
 ]
 @endphp
 @include('components.table.table_items', ['inputType' => $arrData, 'data' => $option['optionValueGroups'], 'name' => 'option_value', 'id_name' => 'option_id'])

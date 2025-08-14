@@ -10,27 +10,28 @@
 
         <template x-for='(itemData, keyData) in data'>
             <div class="table-item">
+                <input type="hidden" :class="{'ignore_form': !itemData.id}" :name="'{{$name}}[' + keyData + '][{{$id_name}}]'" :value="itemData.id">
                 <template x-for='(itemInput, keyInput) in inputType'>
                     <div class="item" style="width: 30%">
-                        <input type="hidden" :name="'{{$name}}[' + keyData + '][{{$id_name}}]'" :value="itemData.id">
+
                         <template x-if="keyInput in itemData">
                             <div class="input">
 
                                 <template x-if="itemInput.type == 'string'">
                                     <div class="input-group">
-                                        <input type="text" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" :value="itemData[keyInput]" >
+                                        <input type="text" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" :value="itemData[keyInput]" >
                                     </div>
                                 </template>
 
                                 <template x-if="itemInput.type == 'number'">
                                     <div class="input-group">
-                                        <input type="number" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" :value="itemData[keyInput]" >
+                                        <input type="number" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" :value="itemData[keyInput]" >
                                     </div>
                                 </template>
 
                                 <template x-if="itemInput.type == 'image'">
                                     <div class="input-group">
-                                        <input type="text" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" :value="itemData[keyInput]" >
+                                        <input type="text" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" :value="itemData[keyInput]" >
                                     </div>
                                 </template>
 
@@ -52,7 +53,7 @@
                                             <template x-if="itemLang.id == 6">
                                                 <span class="input-group-text" id="basic-addon1">{!! $word['6'] !!}</span>
                                             </template>
-                                            <input type="text"  :name="'{{$name}}[' + keyData + '][description][' + itemLang.id + '][' + keyInput + ']'"  :value="itemData['descriptions'][itemLang.id][keyInput]">
+                                            <input type="text"  :name="'{{$name}}[' + keyData + '][description][' + itemLang.id + '][' + keyInput + ']'" x-model="itemData['descriptions'][itemLang.id][keyInput]"  :value="itemData['descriptions'][itemLang.id][keyInput]">
                                         </div>
                                     </template>
                                 </template>
@@ -91,12 +92,23 @@
                 this.data.splice(key, 1);
             },
             addItem(){
-                // this.products.push({
-                //     id: '',
-                //     sort_order: 0,
-                //     text: "",
-                // })
-                // console.log(this.products)
+                let newItem = {};
+                for(let input in this.inputType){
+                    if(this.inputType[input].description){
+                        if(!('descriptions' in newItem)){
+                            newItem['descriptions'] = {};
+                        }
+                        this.language.forEach(item => {
+                            if(!(item.id in newItem['descriptions'])){
+                                newItem['descriptions'][item.id] = {};
+                            }
+                            newItem['descriptions'][item.id][input] = ''
+                        })
+                    } else {
+                        newItem[input] = ''
+                    }
+                }
+                this.data.push(newItem)
             },
             setItem(e, key, id, text){
                 // this.products[key].id = id;
