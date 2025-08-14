@@ -55,17 +55,23 @@
 </div>
 
 <!-- Option Value Groups Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['option_value_groups']['inTab'] !!}">
-    {!! Form::label('option_value_groups', $word['title_option_value_groups']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::number('option_value_groups', null, ['class' => 'form-control', 'required']) !!}
-        </div>
-    </div>
-</div>
+{{--<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['option_value_groups']['inTab'] !!}">--}}
+{{--    {!! Form::label('option_value_groups', $word['title_option_value_groups']) !!}--}}
+{{--    <div class="flex-row input">--}}
+{{--        <div class="input-group">--}}
+{{--            {!! Form::number('option_value_groups', null, ['class' => 'form-control', 'required']) !!}--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+{{--@dd($option['optionValueGroups'])--}}
 @php
 $arrData = [
-
+    'name' => ['type' => 'string', 'name' => 'Значення'],
+    'image' => ['type' => 'image', 'name' => 'Зображення'],
+    'css_code' => ['type' => 'string', 'name' => 'CSS код'],
+    'meta_title' => ['type' => 'string', 'name' => 'Мета назва'],
+    'path' => ['type' => 'string', 'name' => 'Посилання'],
+    'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування'],
 ]
 @endphp
-@include('components.table.table_items', ['' => '', ])
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $option['optionValueGroups'], 'name' => 'option_value', 'id_name' => 'option_id'])

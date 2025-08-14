@@ -235,6 +235,8 @@
         border-right: 1px solid $col_border;
         //border-left: 1px solid $col_border;
         padding: 10px 20px;
+        display: flex;
+        align-items: center;
         .icon{
             font-size: 16px;
 
@@ -243,7 +245,7 @@
             justify-content: center;
             height: 30px;
             width: 30px;
-            padding-top: 3px;
+            //padding-top: 3px;
             margin: 0 auto ;
             border-radius: 6px;
             color: black;
@@ -272,5 +274,4 @@
             }
         }
     }
-
 }
