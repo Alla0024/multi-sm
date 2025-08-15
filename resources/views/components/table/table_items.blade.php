@@ -1,4 +1,4 @@
-<div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products" x-init="view()" data-for-tab="main">
+<div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products" x-init="view()" data-for-tab="{{$tab}}">
 
     <div class="table-items">
         <div class="table-item item-head">
@@ -34,6 +34,34 @@
                                         <input type="text" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" :value="itemData[keyInput]" >
                                     </div>
                                 </template>
+
+                                <template x-if="itemInput.type == 'search_select'">
+                                    <div class="input-group input-list-search" style="position: relative;">
+                                        <input type="hidden" :name="'{{$name}}[' + keyData + '][id]'" x-model="itemData['id']" :value="itemData['id']">
+                                        <input
+                                            class="ignore_form"
+                                            :name="'{{$name}}[' + keyData + '][id]'"
+                                            placeholder="Пошук..."
+                                            autocomplete="off"
+                                            :value="itemData[keyInput]"
+                                            x-model="itemData[keyInput]"
+                                            @isset($url)
+                                            data-url="{{route($url)}}"
+                                            @endisset
+                                            @input="$store.page.searchSelect($event.target)"
+                                            @focus="$store.page.searchSelect($event.target)"
+                                            custom="false"
+                                        >
+                                        <ul class="custom-list hide">
+                                        </ul>
+                                        <div class="svg">
+                                            <img src="/images/common/arrow_select.png" alt="">
+                                        </div>
+
+                                    </div>
+                                </template>
+
+
 
                             </div>
                         </template>
@@ -111,9 +139,9 @@
                 this.data.push(newItem)
             },
             setItem(e, key, id, text){
-                // this.products[key].id = id;
-                // this.products[key].text = text;
-                // e.parentElement.classList.add('hide');
+                this.data[key].id = id;
+                this.data[key].text = text;
+                e.parentElement.classList.add('hide');
             },
             view(){
                 console.log(this.inputType)
