@@ -141,4 +141,12 @@ class OptionRepository extends BaseRepository
 
         return $option;
     }
+
+    public function delete($id) {
+        $option = $this->model->find($id);
+
+        $this->optionValueGroupRepository->deleteAllByOptionId($option->id);
+
+        $option->delete();
+    }
 }

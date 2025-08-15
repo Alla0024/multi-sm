@@ -68,4 +68,8 @@ class OptionValueGroupRepository extends BaseRepository
         }
 
     }
+
+    public function deleteAllByOptionId($optionId) {
+        return $this->model->where('option_id', $optionId)->delete();
+    }
 }
