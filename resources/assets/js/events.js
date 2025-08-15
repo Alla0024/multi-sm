@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 items.forEach(item => {
                     const li = document.createElement('li');
                     li.textContent = item.text;
-                    if(input.getAttribute('custom')){
+                    if(input.getAttribute('custom') === 'true'){
                         function setItem(){
                             input.value = item.text;
                             hidden.value = item.id;
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         li.removeEventListener('click', setItem);
                         li.addEventListener('click', setItem);
                     } else {
-                        li.setAttribute('x-on:click', `setItem($event.target, key, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
+                        li.setAttribute('x-on:click', `setItem($event.target, keyData, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
                     }
 
                     list.appendChild(li);
@@ -106,58 +106,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Choices Multi-select ///////////////////////////////////////////////////////////////////////////
-    document.querySelectorAll('.tag-select').forEach(select => {
-        const choices = new Choices(select, {
-            removeItemButton: true,
-            placeholderValue: 'Виберіть або введіть...',
-            searchPlaceholderValue: 'Пошук...',
-            duplicateItemsAllowed: false,
-            shouldSort: false,
-            searchEnabled: !select.dataset.noSearch,
+
+    Alpine.store('page').multiSelect = function (){
+        document.querySelectorAll('.tag-select').forEach(select => {
+            const choices = new Choices(select, {
+                removeItemButton: true,
+                placeholderValue: 'Виберіть або введіть...',
+                searchPlaceholderValue: 'Пошук...',
+                duplicateItemsAllowed: false,
+                shouldSort: false,
+                searchEnabled: !select.dataset.noSearch,
+            });
+
+            let searchTimeout;
+            const url = select.dataset.url;
+            if (!url) {
+                return;
+            }
+
+            const searchInput = select.parentElement.querySelector('input[type="search"]')
+            function handler(event) {
+                const searchValue = event.target.value;
+
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    axios.get(url, { params: { q: searchValue } })
+                        .then(response => {
+                            const items = response.data.items || [];
+
+                            const existingValues = Array.from(select.options).filter(opt => opt.selected).map(opt => opt.value);
+
+                            const newOptions = items.filter(item => !existingValues.includes(item.id.toString()));
+
+                            if (newOptions.length) {
+                                choices.setChoices(
+                                    newOptions.map(item => ({
+                                        value: item.id,
+                                        label: item.text,
+                                        selected: false,
+                                        disabled: false,
+                                    })),
+                                    'value',
+                                    'label',
+                                    false
+                                );
+                            }
+                        })
+                        .catch(err => {
+                            console.error('AJAX error:', err);
+                        });
+                }, 300);
+            }
+            searchInput.addEventListener('input', handler);
+            searchInput.addEventListener('click', handler);
         });
+    },
+    Alpine.store('page').multiSelect()
 
-        let searchTimeout;
-        const url = select.dataset.url;
-        if (!url) {
-            return;
-        }
-
-        const searchInput = select.parentElement.querySelector('input[type="search"]')
-        function handler(event) {
-            const searchValue = event.target.value;
-
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                axios.get(url, { params: { q: searchValue } })
-                    .then(response => {
-                        const items = response.data.items || [];
-
-                        const existingValues = Array.from(select.options).filter(opt => opt.selected).map(opt => opt.value);
-
-                        const newOptions = items.filter(item => !existingValues.includes(item.id.toString()));
-
-                        if (newOptions.length) {
-                            choices.setChoices(
-                                newOptions.map(item => ({
-                                    value: item.id,
-                                    label: item.text,
-                                    selected: false,
-                                    disabled: false,
-                                })),
-                                'value',
-                                'label',
-                                false
-                            );
-                        }
-                    })
-                    .catch(err => {
-                        console.error('AJAX error:', err);
-                    });
-            }, 300);
-        }
-        searchInput.addEventListener('input', handler);
-        searchInput.addEventListener('click', handler);
-    });
 
     // Image upload ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('.image-upload').forEach(block => {

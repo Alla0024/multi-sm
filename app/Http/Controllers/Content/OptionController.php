@@ -120,6 +120,7 @@ class OptionController extends AppBaseController
             OptionDescription::class,
             Option::class
         ]);
+
         if (empty($option)) {
             Flash::error('Option not found');
 

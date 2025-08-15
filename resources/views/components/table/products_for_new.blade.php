@@ -9,6 +9,7 @@
 
         <template x-for='(product, key) in products'>
             <div class="table-item">
+
                 <div class="item" style="width: 30%">
                     <div class="flex-row input">
                         <div class="input-group input-list-search" style="position: relative;">
@@ -33,6 +34,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="item" style="width: 60%">
                     <div class="input">
                         <div class="input-group">

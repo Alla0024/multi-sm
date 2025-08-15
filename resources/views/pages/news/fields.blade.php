@@ -68,7 +68,7 @@
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -176,5 +176,14 @@
     </div>
 </div>
 
+
+
 <!-- Products Fields -->
-@include('components.table.products_for_new', ['tab' => 'product'])
+{{--@include('components.table.products_for_new', ['tab' => 'product'])--}}
+@php
+    $arrData = [
+        'text' => ['type' => 'search_select', 'name' => 'Виберіть товар', 'description' => false],
+        'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
+    ]
+@endphp
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $news["products"], 'name' => 'products', 'id_name' => 'item_id', 'url' => 'getProducts', 'tab' => 'product'])

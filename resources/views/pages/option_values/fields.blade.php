@@ -5,7 +5,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][name]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+                {!! Form::text("descriptions[$language->id][name]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -18,7 +18,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][type_material]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+                {!! Form::text("descriptions[$language->id][type_material]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -66,19 +66,21 @@
 
 <!-- Status Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['status']['inTab'] !!}">
-    <div class="form-check">
-        {!! Form::hidden('status', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('status', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('status', $word['title_status'], ['class' => 'form-check-label']) !!}
+    {!! Form::label('status', $word['title_status']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
+        </div>
     </div>
 </div>
 
 <!-- Default Field -->
+
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['default']['inTab'] !!}">
     {!! Form::label('default', $word['title_default']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('default', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('default', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -89,7 +91,7 @@
     {!! Form::label('level', $word['title_level']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('level', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('level', null, ['class' => 'form-control', 'required', 'disabled']) !!}
         </div>
     </div>
 </div>
