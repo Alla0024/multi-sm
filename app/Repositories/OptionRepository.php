@@ -52,9 +52,15 @@ class OptionRepository extends BaseRepository
         return Option::class;
     }
 
-    public function isOptionWithProvidedPathExists($path)
+    public function isOptionWithProvidedPathExists($path, int|null $id = null): bool
     {
-        return $this->model->where('path', $path)->exists();
+        $query = $this->model->where('path', $path);
+
+        if ($id !== null) {
+            $query->where('id', '<>', $id);
+        }
+
+        return $query->exists();
     }
 
     public function find($id, $columns = ['*'])
