@@ -74,4 +74,4 @@ $arrData = [
     'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
 ];
 @endphp
-@include('components.table.table_items', ['inputType' => $arrData, 'data' => $option['optionValueGroups'], 'name' => 'option_value', 'id_name' => 'id'])
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $option['optionValueGroups'] ?? [], 'name' => 'option_value', 'id_name' => 'id'])

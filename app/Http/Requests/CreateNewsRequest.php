@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\News;
+use App\Repositories\OptionRepository;
 use App\Traits\AdditionalRequestRules;
 use Illuminate\Foundation\Http\FormRequest;
 

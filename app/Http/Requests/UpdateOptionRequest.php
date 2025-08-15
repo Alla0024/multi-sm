@@ -25,7 +25,7 @@ class UpdateOptionRequest extends FormRequest
     public function rules()
     {
         $rules = Option::$rules;
-        
+
         return $rules;
     }
 }
