@@ -17,7 +17,7 @@
         @foreach($languages as $language)
             <div class="form-group mt-3">
                 {!! Form::label("description[$language->id][name]", $language->id) !!}
-                {!! Form::text("description[$language->id][name]", null, ['class' => 'form-control', 'required']) !!}
+                {!! Form::text("description[$language->id][name]", null, ['class' => 'form-control', ]) !!}
             </div>
         @endforeach
     </div>
