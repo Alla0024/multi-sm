@@ -6,6 +6,7 @@ use App\Models\OptionValue;
 use App\Models\OptionValueDescription;
 use App\Repositories\BaseRepository;
 use Illuminate\Container\Container as Application;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class OptionValueRepository extends BaseRepository
 {
@@ -48,8 +49,12 @@ class OptionValueRepository extends BaseRepository
         }
     }
 
-    public function getBreadCrumbsRecursive($child_id, $language_id, $level = null)
+    public function getBreadCrumbsRecursive($child_id, $language_id, $level = null): array
     {
+        if (!is_numeric($child_id) && !is_null($child_id)) {
+            return [];
+        }
+
         $breadcrumbs = [];
         $currentLevel = $level;
 
@@ -78,8 +83,12 @@ class OptionValueRepository extends BaseRepository
         return array_reverse($breadcrumbs);
     }
 
-    public function filterIndexPage(int $perPage, array $params, int $language_id, int|null $id = null)
+    public function filterIndexPage(int $perPage, array $params, int $language_id, int|null|string $id = null)
     {
+        if (!is_numeric($id) && !is_null($id)) {
+            return new LengthAwarePaginator([], 0, $perPage);
+        }
+
         $optionValues = $this
             ->model
             ->leftJoin((new OptionValueDescription())->getTable() . " as od", 'od.option_value_id', '=', 'option_values.id')

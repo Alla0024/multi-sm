@@ -25,6 +25,7 @@ class OptionValue extends Model
     ];
 
     protected $casts = [
+        'id' => 'integer',
         'type' => 'string',
         'image' => 'string',
         'status' => 'boolean'
@@ -34,7 +35,6 @@ class OptionValue extends Model
         'parent_id' => 'nullable',
         'type' => 'required|string|max:255',
         'image' => 'required|string|max:255',
-        'level' => 'required',
         'sort_order' => 'required',
         'status' => 'required|boolean',
         'default' => 'required',
@@ -42,6 +42,9 @@ class OptionValue extends Model
         'updated_at' => 'nullable'
     ];
 
+    protected $attributes = [
+        'level' => 0
+    ];
     public function productOptionValueToOptionValueGroups(): HasMany
     {
         return $this->hasMany(ProductOptionValueToOptionValueGroup::class, 'option_value_id');

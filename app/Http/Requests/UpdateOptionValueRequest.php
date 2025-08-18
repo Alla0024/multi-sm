@@ -25,11 +25,6 @@ class UpdateOptionValueRequest extends FormRequest
      */
     public function rules()
     {
-//        $rules = OptionValue::$rules;
-
-        return [];
-    }
-
-    public function withValidator(Validator $validator) {
+        return OptionValue::$rules;
     }
 }

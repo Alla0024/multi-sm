@@ -40,6 +40,7 @@ class OptionValueController extends AppBaseController
         $perPage = $request->input('perPage', 10);
 
         $optionValues = $this->optionValueRepository->filterIndexPage($perPage, request()->all(), $this->defaultLanguageId, $id);
+
         $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id, $this->defaultLanguageId);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
@@ -56,6 +57,7 @@ class OptionValueController extends AppBaseController
         return $this->renderOutput([
             'optionValues' => $optionValues,
             'breadcrumbs' => $breadcrumbs,
+            'parent_id' => $id,
             'fields' => $fields,
         ]);
     }
@@ -66,9 +68,25 @@ class OptionValueController extends AppBaseController
      */
     public function create()
     {
+        $parent_id = request()->input('parent_id');
+
+        $parent = is_numeric($parent_id) ? $this->optionValueRepository->find($parent_id) : null;
+
+        if (empty($parent) && !is_null($parent_id)) {
+            Flash::error('Parent element not found');
+
+            return redirect(route('optionValues.index'));
+        }
+
+        $languages = $this->languageRepository->getAvailableLanguages();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            OptionValue::class,
+            OptionValueDescription::class
+        ]);
+
         $this->template = 'pages.option_values.create';
 
-        return $this->renderOutput();
+        return $this->renderOutput(['languages' => $languages, 'fields' => $fields, 'parent_id' => $parent_id]);
     }
 
     /**
@@ -91,7 +109,7 @@ class OptionValueController extends AppBaseController
     public function show(Request $request, $id)
     {
         return $this->index($request, $id);
-}
+    }
 
     /**
      * Show the form for editing the specified OptionValue.

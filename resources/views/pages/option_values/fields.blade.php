@@ -29,7 +29,7 @@
     {!! Form::label('parent_id', $word['title_parent_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('parent_id', null, ['class' => 'form-control']) !!}
+            {!! Form::number('parent_id', old('parent_id', $parent_id ?? null), ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>
@@ -85,22 +85,25 @@
     </div>
 </div>
 
-<!-- Toggle Children Status Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['children_status']['inTab'] !!}">
-    {!! Form::label('children_status', $word['title_children_status']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::select('children_status', [null => 'Змінити статус дочірніх елементів', true => 'Активний', false => 'Неактивний'], ['class' => 'form-control']) !!}
+@if(str_contains(request()->path(), 'edit'))
+    <!-- Toggle Children Status Field -->
+    <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['children_status']['inTab'] !!}">
+        {!! Form::label('children_status', $word['title_children_status']) !!}
+        <div class="flex-row input">
+            <div class="input-group">
+                {!! Form::select('children_status', [null => 'Змінити статус дочірніх елементів', true => 'Активний', false => 'Неактивний'], ['class' => 'form-control']) !!}
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Level Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['level']['inTab'] !!}">
-    {!! Form::label('level', $word['title_level']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::number('level', null, ['class' => 'form-control', 'required', 'disabled']) !!}
+    <!-- Level Field -->
+    <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['level']['inTab'] !!}">
+        {!! Form::label('level', $word['title_level']) !!}
+        <div class="flex-row input">
+            <div class="input-group">
+                {!! Form::number('level', null, ['class' => 'form-control', 'required', 'disabled']) !!}
+            </div>
         </div>
     </div>
-</div>
+
+@endif
