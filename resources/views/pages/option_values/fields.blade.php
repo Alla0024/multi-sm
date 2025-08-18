@@ -85,6 +85,15 @@
     </div>
 </div>
 
+<!-- Toggle Children Status Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['children_status']['inTab'] !!}">
+    {!! Form::label('children_status', $word['title_children_status']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('children_status', [null => 'Змінити статус дочірніх елементів', true => 'Активний', false => 'Неактивний'], ['class' => 'form-control']) !!}
+        </div>
+    </div>
+</div>
 
 <!-- Level Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['level']['inTab'] !!}">

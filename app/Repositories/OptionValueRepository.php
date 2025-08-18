@@ -17,7 +17,8 @@ class OptionValueRepository extends BaseRepository
     ];
 
     protected $additionalFields = [
-        'name'
+        'name',
+        'children_status'
     ];
 
     public function getFieldsSearchable(): array
@@ -33,6 +34,18 @@ class OptionValueRepository extends BaseRepository
     public function model(): string
     {
         return OptionValue::class;
+    }
+
+    private function updateStatusRecursive(int $parent_id, bool $status): void
+    {
+        $descendants = $this->model->where('parent_id', $parent_id)
+            ->where('id', '<>', $parent_id)
+            ->get();
+
+        foreach ($descendants as $descendant) {
+            $descendant->update(['status' => $status]);
+            $this->updateStatusRecursive($descendant->id, $status);
+        }
     }
 
     public function getBreadCrumbsRecursive($child_id, $language_id, $level = null)
@@ -98,8 +111,10 @@ class OptionValueRepository extends BaseRepository
     public function upsert($input, $id = null)
     {
         $descriptions = $input['descriptions'] ?? [];
+        $children_status = $input['children_status'] ?? 0;
+        $input['level'] = 0;
 
-        unset($input['descriptions']);
+        unset($input['descriptions'],$input['children_status']);
 
         $optionValue = $this->find($id);
 
@@ -109,19 +124,29 @@ class OptionValueRepository extends BaseRepository
 
         if (!$optionValue) {
             $optionValue = new $this->model();
+            $id = $optionValue->id;
         }
 
         $optionValue->fill($input);
         $optionValue->save();
 
         foreach ($descriptions as $languageId => $descData) {
+            foreach ($descData as $key => $value) {
+                if (is_null($value)) {
+                    $descData[$key] = "";
+                }
+            }
             OptionValueDescription::updateOrCreate(
                 [
-                    'option_value_id' => $optionValue->id,
+                    'option_value_id' => $id,
                     'language_id' => $languageId
                 ],
                 $descData
             );
+        }
+
+        if (isset($children_status)) {
+            $this->updateStatusRecursive($id, $children_status);
         }
 
         return $optionValue;

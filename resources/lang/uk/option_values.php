@@ -39,6 +39,7 @@ return [
     'search_descriptions_name' => 'Пошук за назвою (опис)',
     'title_descriptions_type_material' => 'Тип матеріалу (опис)',
     'search_descriptions_type_material' => 'Пошук за типом матеріалу (опис)',
+    'title_children_status' => 'Статус дочірніх елементів',
     'tab_main' => 'Основне',
     'tab_sort' => 'Сортування',
 ];

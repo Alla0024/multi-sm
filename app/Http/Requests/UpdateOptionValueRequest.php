@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\OptionValue;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class UpdateOptionValueRequest extends FormRequest
 {
@@ -24,8 +25,11 @@ class UpdateOptionValueRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = OptionValue::$rules;
-        
-        return $rules;
+//        $rules = OptionValue::$rules;
+
+        return [];
+    }
+
+    public function withValidator(Validator $validator) {
     }
 }
