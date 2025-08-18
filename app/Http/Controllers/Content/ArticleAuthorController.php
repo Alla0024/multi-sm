@@ -20,9 +20,11 @@ class ArticleAuthorController extends AppBaseController
     /**
      * @var ArticleAuthorRepository $articleAuthorRepository
      * @var LanguageRepository $languageRepository
+     * @var int $defaultLanguageId
      */
-    private $articleAuthorRepository;
-    private $languageRepository;
+    private ArticleAuthorRepository $articleAuthorRepository;
+    private LanguageRepository $languageRepository;
+    private int $defaultLanguageId;
 
     public function __construct(ArticleAuthorRepository $articleAuthorRepo, LanguageRepository $languageRepository)
     {
@@ -30,6 +32,8 @@ class ArticleAuthorController extends AppBaseController
 
         $this->articleAuthorRepository = $articleAuthorRepo;
         $this->languageRepository = $languageRepository;
+
+        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -39,7 +43,7 @@ class ArticleAuthorController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $articleAuthors = $this->articleAuthorRepository->filterIndexPage($perPage, 5, $request->all());
+        $articleAuthors = $this->articleAuthorRepository->filterIndexPage($perPage, $this->defaultLanguageId, $request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ArticleAuthorDescription::class,
