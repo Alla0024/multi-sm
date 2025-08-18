@@ -2,6 +2,19 @@
 
 @section('content')
     <section class="content-header">
+        <div>
+            @if(!empty($breadcrumbs))
+                <a href="{{ route('optionValues.index') }}">
+                    {!!  $word['option_values'] !!} /
+                </a>
+                @foreach($breadcrumbs as $key => $crumb)
+                    @if($key > 0) / @endif
+                    <a href="{{ route('optionValues.show', ['optionValue' => $crumb['id']]) }}">
+                        {{ $crumb['name'] }}
+                    </a>
+                @endforeach
+            @endif
+        </div>
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
