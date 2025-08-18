@@ -1,5 +1,4 @@
 <div class="card-body p-0">
-
     <div class="table-responsive">
         <table class="table" id="option-values-table">
             <thead>
@@ -69,7 +68,10 @@
 
 
 
-
+                            <a href="{{ route('optionValues.show', [$optionValue->id]) }}"
+                               class='btn btn-default butt-edit btn-xs'>
+                                <i class="bi bi-eye fs-40"></i>
+                            </a>
                             <a href="{{ route('optionValues.edit', [$optionValue->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>

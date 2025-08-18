@@ -56,15 +56,15 @@
 
 <!-- Option Value Groups Field -->
 @php
-$arrData = [
-    'name' => ['type' => 'string', 'name' => 'Значення', 'description' => true],
-    'image' => ['type' => 'image', 'name' => 'Зображення', 'description' => false],
-    'css_code' => ['type' => 'string', 'name' => 'CSS код', 'description' => false],
-    'meta_title' => ['type' => 'string', 'name' => 'Мета назва', 'description' => true],
-    'path' => ['type' => 'string', 'name' => 'Посилання', 'description' => false],
-    'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
-];
+    $arrData = [
+        'name' => ['type' => 'string', 'name' => 'Значення', 'description' => true],
+        'image' => ['type' => 'image', 'name' => 'Зображення', 'description' => false],
+        'css_code' => ['type' => 'string', 'name' => 'CSS код', 'description' => false],
+        'meta_title' => ['type' => 'string', 'name' => 'Мета назва', 'description' => true],
+        'path' => ['type' => 'string', 'name' => 'Посилання', 'description' => false],
+        'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
+    ];
 @endphp
 
-@include('components.table.table_items', ['inputType' => $arrData, 'data' => $option['optionValueGroups'], 'name' => 'option_value', 'id_name' => 'id', 'tab' => 'main'])
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $option['optionValueGroups'] ?? [], 'name' => 'option_value', 'id_name' => 'id', 'tab' => 'main'])
 

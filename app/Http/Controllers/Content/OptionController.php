@@ -66,13 +66,15 @@ class OptionController extends AppBaseController
      */
     public function create()
     {
+        $languages = $this->languageRepository->getAvailableLanguages();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            OptionDescription::class,
             Option::class
         ]);
 
         $this->template = 'pages.options.create';
 
-        return $this->renderOutput('fields');
+        return $this->renderOutput(['fields' => $fields, 'languages' => $languages]);
     }
 
     /**

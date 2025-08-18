@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class OptionValueGroup extends Model
 {
     public $table = 'option_value_groups';
+    public $timestamps = false;
 
     public $fillable = [
         'option_id',

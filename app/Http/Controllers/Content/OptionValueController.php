@@ -35,11 +35,12 @@ class OptionValueController extends AppBaseController
     /**
      * Display a listing of the OptionValue.
      */
-    public function index(Request $request)
+    public function index(Request $request, $id = null)
     {
         $perPage = $request->input('perPage', 10);
 
-        $optionValues = $this->optionValueRepository->filterIndexPage($perPage, request()->all(), $this->defaultLanguageId);
+        $optionValues = $this->optionValueRepository->filterIndexPage($perPage, request()->all(), $this->defaultLanguageId, $id);
+        $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id, $this->defaultLanguageId);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionValue::class
@@ -54,6 +55,7 @@ class OptionValueController extends AppBaseController
 
         return $this->renderOutput([
             'optionValues' => $optionValues,
+            'breadcrumbs' => $breadcrumbs,
             'fields' => $fields,
         ]);
     }
@@ -86,19 +88,9 @@ class OptionValueController extends AppBaseController
     /**
      * Display the specified OptionValue.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $optionValue = $this->optionValueRepository->find($id);
-
-        if (empty($optionValue)) {
-            Flash::error('Option Value not found');
-
-            return redirect(route('optionValues.index'));
-        }
-
-        $this->template = 'pages.option_values.show';
-
-        return $this->renderOutput(compact('optionValue'));
+        return $this->index($request, $id);
 }
 
     /**

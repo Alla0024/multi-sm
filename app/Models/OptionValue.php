@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\SearchableBySimilarity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -59,5 +60,15 @@ class OptionValue extends Model
     public function descriptions(): HasMany
     {
         return $this->hasMany(OptionValueDescription::class, 'option_value_id');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(OptionValue::class, 'parent_id', 'id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(OptionValue::class, 'parent_id', 'id');
     }
 }

@@ -52,6 +52,17 @@ class OptionRepository extends BaseRepository
         return Option::class;
     }
 
+    public function isOptionWithProvidedPathExists($path, int|null $id = null): bool
+    {
+        $query = $this->model->where('path', $path);
+
+        if ($id !== null) {
+            $query->where('id', '<>', $id);
+        }
+
+        return $query->exists();
+    }
+
     public function find($id, $columns = ['*'])
     {
         $option = $this->model->find($id, $columns);
@@ -113,10 +124,6 @@ class OptionRepository extends BaseRepository
 
         unset($input['descriptions'], $input['option_value']);
 
-        $option = $this->find($id);
-
-        $option->update($input);
-
         $option = isset($id) ? $this->model->find($id) : null;
 
         if (!$option) {
@@ -136,8 +143,16 @@ class OptionRepository extends BaseRepository
             );
         }
 
-        $this->optionValueGroupRepository->upsertMany($optionValueGroups);
+        $this->optionValueGroupRepository->upsertMany($optionValueGroups, $option->id);
 
         return $option;
+    }
+
+    public function delete($id) {
+        $option = $this->model->find($id);
+
+        $this->optionValueGroupRepository->deleteAllByOptionId($option->id);
+
+        $option->delete();
     }
 }

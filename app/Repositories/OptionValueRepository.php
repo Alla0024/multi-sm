@@ -35,11 +35,43 @@ class OptionValueRepository extends BaseRepository
         return OptionValue::class;
     }
 
-    public function filterIndexPage(int $perPage, array $params, int $language_id) {
+    public function getBreadCrumbsRecursive($child_id, $language_id, $level = null)
+    {
+        $breadcrumbs = [];
+        $currentLevel = $level;
+
+        while ($child_id) {
+            $optionValue = $this->model
+                ->join((new OptionValueDescription())->getTable() . ' as od', 'od.option_value_id', '=', 'option_values.id')
+                ->where('option_values.id', $child_id)
+                ->where('od.language_id', $language_id)
+                ->when($currentLevel && $currentLevel >= 0, function ($query) use ($currentLevel) {
+                    $query->where('od.level', $currentLevel);
+                })
+                ->select('option_values.id', 'option_values.parent_id', 'od.name')
+                ->first();
+
+            if (!$optionValue || $optionValue->id == $optionValue->parent_id) break;
+
+            $breadcrumbs[] = [
+                'id' => $optionValue->id,
+                'name' => $optionValue->name,
+            ];
+
+            $child_id = $optionValue->parent_id ?: null;
+            $currentLevel = $currentLevel - 1;
+        }
+
+        return array_reverse($breadcrumbs);
+    }
+
+    public function filterIndexPage(int $perPage, array $params, int $language_id, int|null $id = null)
+    {
         $optionValues = $this
             ->model
             ->leftJoin((new OptionValueDescription())->getTable() . " as od", 'od.option_value_id', '=', 'option_values.id')
             ->where('od.language_id', $language_id)
+            ->where('parent_id', $id)
             ->when(isset($params['name']), function ($q) use ($params) {
                 return $q->searchSimilarity(['od.name'], $params['name']);
             })

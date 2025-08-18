@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\Option;
+use App\Repositories\OptionRepository;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class UpdateOptionRequest extends FormRequest
 {
@@ -24,8 +26,16 @@ class UpdateOptionRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Option::$rules;
-        
-        return $rules;
+        $id = $this->route()->parameter('option');
+
+        return array_merge(Option::$rules, [
+            'path' => [
+                function ($attribute, $value, $fail) use ($id) {
+                    if (isset($value) && app(OptionRepository::class)->isOptionWithProvidedPathExists($value, $id)) {
+                        $fail(__('common.error_path_already_taken'));
+                    }
+                },
+            ],
+        ]);
     }
 }
