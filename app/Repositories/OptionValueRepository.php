@@ -119,32 +119,33 @@ class OptionValueRepository extends BaseRepository
 
     public function upsert($input, $id = null)
     {
+        $isCreating = is_null($id);
+
         $descriptions = $input['descriptions'] ?? [];
         $children_status = $input['children_status'] ?? 0;
         $input['level'] = 0;
 
         unset($input['descriptions'],$input['children_status']);
 
-        $optionValue = $this->find($id);
-
-        $optionValue->update($input);
-
         $optionValue = isset($id) ? $this->model->find($id) : null;
 
-        if (!$optionValue) {
+        if ($optionValue) {
+            $optionValue->fill($input);
+            $optionValue->save();
+        } else {
             $optionValue = new $this->model();
+            $optionValue->fill($input);
+            $optionValue->save();
             $id = $optionValue->id;
         }
 
-        $optionValue->fill($input);
-        $optionValue->save();
+        if ($isCreating && isset($input['parent_id'])) {
+            $parent = $this->model->find($input['parent_id']);
+
+            $input['level'] = $parent ? $parent->level+1 : 0;
+        }
 
         foreach ($descriptions as $languageId => $descData) {
-            foreach ($descData as $key => $value) {
-                if (is_null($value)) {
-                    $descData[$key] = "";
-                }
-            }
             OptionValueDescription::updateOrCreate(
                 [
                     'option_value_id' => $id,

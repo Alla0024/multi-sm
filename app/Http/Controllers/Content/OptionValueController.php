@@ -96,7 +96,7 @@ class OptionValueController extends AppBaseController
     {
         $input = $request->all();
 
-        $optionValue = $this->optionValueRepository->create($input);
+        $optionValue = $this->optionValueRepository->upsert($input);
 
         Flash::success('Option Value saved successfully.');
 
