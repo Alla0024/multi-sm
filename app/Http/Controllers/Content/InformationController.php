@@ -46,13 +46,13 @@ class InformationController extends AppBaseController
 
         $information = $this->informationRepository->filterIndexPage($perPage, $this->defaultLanguageId, request()->all());
 
-        $information->each(function ($item) {
+        foreach ($information as $item) {
             if ($item->seoPath) {
                 $baseUrl = config('app.client_url');
                 $path = $item->seoPath->path;
                 $item->setAttribute('client_url', rtrim($baseUrl, '/') . '/' . ltrim($path, '/'));
             }
-        });
+        }
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,

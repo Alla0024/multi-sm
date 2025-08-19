@@ -90,6 +90,10 @@ return [
         'newsletter' => [
             'width' => 500,
             'height' => 500,
-        ]
+        ],
+        'option_values' => [
+            'width' => 420,
+            'height' => 420,
+        ],
     ],
 ];
