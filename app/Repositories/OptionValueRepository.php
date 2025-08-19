@@ -37,6 +37,30 @@ class OptionValueRepository extends BaseRepository
         return OptionValue::class;
     }
 
+    private function buildTree(array $elements): array
+    {
+        $map = [];
+        $tree = [];
+
+        foreach ($elements as &$element) {
+            $element['children'] = [];
+            $map[$element['id']] = &$element;
+        }
+
+        foreach ($elements as &$element) {
+            if ($element['parent_id'] === null) {
+                $tree[] = &$element;
+            } else {
+                if (isset($map[$element['parent_id']])) {
+                    $map[$element['parent_id']]['children'][] = &$element;
+                }
+            }
+        }
+
+        return $tree;
+    }
+
+
     private function updateStatusRecursive(int $parent_id, bool $status): void
     {
         $descendants = $this->model->where('parent_id', $parent_id)
@@ -114,6 +138,14 @@ class OptionValueRepository extends BaseRepository
         unset($optionValue->descriptions);
         $optionValue->setAttribute('descriptions', $preshaped_descriptions);
 
+        $values = $this
+            ->model
+            ->leftJoin((new OptionValueDescription())->getTable() . " as od", 'od.option_value_id', '=', 'option_values.id')
+            ->where('od.language_id', 5)
+            ->get();
+        $valuesTree = $this->buildTree($values->toArray());
+        $optionValue->setAttribute('values_tree', $valuesTree);
+
         return $optionValue;
     }
 
@@ -160,5 +192,18 @@ class OptionValueRepository extends BaseRepository
         }
 
         return $optionValue;
+    }
+
+    public function delete($id) {
+        $descendants = $this->model
+            ->where('parent_id', $id)
+            ->where('id', '<>', $id)
+            ->get();
+
+        foreach ($descendants as $descendant) {
+            $this->delete($descendant->id);
+        }
+
+        $this->model->find($id)->delete();
     }
 }

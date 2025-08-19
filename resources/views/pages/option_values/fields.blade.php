@@ -5,7 +5,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::text("descriptions[$language->id][name]", null, ['class' => '', 'rows' => 2, ]) !!}
+                {!! Form::text("descriptions[$language->id][name]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -18,7 +18,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::text("descriptions[$language->id][type_material]", null, ['class' => '', 'rows' => 2, ]) !!}
+                {!! Form::text("descriptions[$language->id][type_material]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -29,7 +29,7 @@
     {!! Form::label('parent_id', $word['title_parent_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('parent_id', old('parent_id', $parent_id ?? null), ['class' => 'form-control']) !!}
+            {!! Form::number('parent_id', old('parent_id', $parentId ?? null), ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>

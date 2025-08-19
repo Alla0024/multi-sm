@@ -57,7 +57,7 @@ class OptionValueController extends AppBaseController
         return $this->renderOutput([
             'optionValues' => $optionValues,
             'breadcrumbs' => $breadcrumbs,
-            'parent_id' => $id,
+            'parentId' => $id,
             'fields' => $fields,
         ]);
     }
@@ -68,11 +68,11 @@ class OptionValueController extends AppBaseController
      */
     public function create()
     {
-        $parent_id = request()->input('parent_id');
+        $parentId = request()->input('parent_id');
 
-        $parent = is_numeric($parent_id) ? $this->optionValueRepository->find($parent_id) : null;
+        $parent = is_numeric($parentId) ? $this->optionValueRepository->find($parentId) : null;
 
-        if (empty($parent) && !is_null($parent_id)) {
+        if (empty($parent) && !is_null($parentId)) {
             Flash::error('Parent element not found');
 
             return redirect(route('optionValues.index'));
@@ -86,7 +86,7 @@ class OptionValueController extends AppBaseController
 
         $this->template = 'pages.option_values.create';
 
-        return $this->renderOutput(['languages' => $languages, 'fields' => $fields, 'parent_id' => $parent_id]);
+        return $this->renderOutput(['languages' => $languages, 'fields' => $fields, 'parentId' => $parentId]);
     }
 
     /**
@@ -99,6 +99,10 @@ class OptionValueController extends AppBaseController
         $optionValue = $this->optionValueRepository->upsert($input);
 
         Flash::success('Option Value saved successfully.');
+
+        if ($request->get('parent_id') !== null) {
+            return redirect(route('optionValues.show', $request->get('parent_id')));
+        }
 
         return redirect(route('optionValues.index'));
     }
@@ -150,6 +154,10 @@ class OptionValueController extends AppBaseController
         $optionValue = $this->optionValueRepository->upsert($request->all(), $id);
 
         Flash::success('Option Value updated successfully.');
+
+        if ($request->get('parent_id') !== null) {
+            return redirect(route('optionValues.show', $request->get('parent_id')));
+        }
 
         return redirect(route('optionValues.index'));
     }
