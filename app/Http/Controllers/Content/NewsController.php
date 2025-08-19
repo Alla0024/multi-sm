@@ -48,9 +48,10 @@ class NewsController extends AppBaseController
     public function index(Request $request)
     {
         $perPage = $request->input('perPage', 10);
+        $language_id = $request->get('language_id') ?? $this->defaultLanguageId;
 
         $languages = $this->languageRepository->all();
-        $news = $this->newsRepository->filterIndexPage($perPage, $this->defaultLanguageId, $request->all());
+        $news = $this->newsRepository->filterIndexPage($perPage, $language_id, $request->all());
         $sortFields = [
             'default',
             'name_asc',

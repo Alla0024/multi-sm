@@ -13,6 +13,23 @@
                             <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                         @endforeach
 
+                        @isset($languages)
+                            <div style="display: flex; column-gap: 10px; margin-right: 20px">
+                                <label for="language_id">{{ $word['language'] }}</label>
+                                <select name="language_id" id="language_id" onchange="this.form.submit()">
+                                    <option
+                                        value="{{ null }}" {{ request('language_id') == null ? 'selected' : '' }}>
+                                        {!! $word['select'] !!}
+                                    </option>
+                                    @foreach($languages as $language)
+                                        <option
+                                            value="{{ $language->id }}" {{ request('language_id') == $language->id ? 'selected' : '' }}>
+                                            {!! $language->code !!}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endisset
                         <div style="display: flex; column-gap: 10px; margin-right: 20px">
                             <label for="perPage">{{ $word['show_by'] }}</label>
                             <select name="perPage" id="perPage" onchange="this.form.submit()">
@@ -28,7 +45,8 @@
                                 <label for="sortBy">{{ $word['sort_by'] }}</label>
                                 <select name="sortBy" id="sortBy" onchange="this.form.submit()">
                                     @foreach($sortFields as $field)
-                                        <option value="{{ $field }}" {{ request('sortBy') == $field ? 'selected' : '' }}>
+                                        <option
+                                            value="{{ $field }}" {{ request('sortBy') == $field ? 'selected' : '' }}>
                                             {{ $word['sort_'.$field] }}
                                         </option>
                                     @endforeach
