@@ -42,6 +42,7 @@ class OptionController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $options = $this->optionRepository->filterIndexPage($perPage, $languageId, request()->all());
 
@@ -57,6 +58,7 @@ class OptionController extends AppBaseController
 
         return $this->renderOutput([
             'options' => $options,
+            'languages' => $languages,
             'fields' => $fields,
         ]);
     }

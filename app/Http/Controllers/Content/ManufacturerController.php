@@ -38,7 +38,7 @@ class ManufacturerController extends AppBaseController
         $perPage = $request->input('perPage', 10);
 
         $manufacturers = $this->manufacturerRepository->with(['descriptions'])->paginate($perPage);
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Manufacturer::class,
@@ -65,7 +65,7 @@ class ManufacturerController extends AppBaseController
             Manufacturer::class,
             ManufacturerDescription::class,
         ]);
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
         return $this->renderOutput([
             'fields' => $fields,
             'languages' => $languages,
@@ -123,7 +123,7 @@ class ManufacturerController extends AppBaseController
 
             return redirect(route('manufacturers.index'));
         }
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
         $this->template = 'pages.manufacturers.edit';
 
 

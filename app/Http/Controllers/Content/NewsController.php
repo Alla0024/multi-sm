@@ -50,7 +50,7 @@ class NewsController extends AppBaseController
         $perPage = $request->input('perPage', 10);
         $language_id = $request->get('language_id') ?? $this->defaultLanguageId;
 
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
         $news = $this->newsRepository->filterIndexPage($perPage, $language_id, $request->all());
         $sortFields = [
             'default',
@@ -82,7 +82,7 @@ class NewsController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.news.create';
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
             News::class,
@@ -115,7 +115,7 @@ class NewsController extends AppBaseController
     public function show($id)
     {
         $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($news)) {
             Flash::error(__('news.error_news_not_found'));
@@ -133,7 +133,7 @@ class NewsController extends AppBaseController
      */
     public function edit($id)
     {
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
         $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
         $authors = $this->articleAuthorRepository->getAuthorIdNameMap($this->defaultLanguageId);
 

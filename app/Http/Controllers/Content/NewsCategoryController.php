@@ -40,6 +40,7 @@ class NewsCategoryController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all(), $languageId);
 
@@ -52,6 +53,7 @@ class NewsCategoryController extends AppBaseController
 
         return $this->renderOutput([
             'newsCategories' => $newsCategories,
+            'languages' => $languages,
             'fields' => $fields,
         ]);
     }
@@ -93,7 +95,7 @@ class NewsCategoryController extends AppBaseController
     public function show($id)
     {
         $newsCategory = $this->newsCategoryRepository->find($id);
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($newsCategory)) {
             Flash::error('News Category not found');

@@ -44,6 +44,7 @@ class InformationController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $information = $this->informationRepository->filterIndexPage($perPage, $languageId, request()->all());
 
@@ -64,6 +65,7 @@ class InformationController extends AppBaseController
 
         return $this->renderOutput([
             'information' => $information,
+            'languages' => $languages,
             'fields' => $fields,
         ]);
     }
@@ -74,7 +76,7 @@ class InformationController extends AppBaseController
      */
     public function create()
     {
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         $this->template = 'pages.information.create';
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
@@ -110,7 +112,7 @@ class InformationController extends AppBaseController
     public function show($id)
     {
         $information = $this->informationRepository->find($id);
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($information)) {
             Flash::error('Information not found');
@@ -129,7 +131,7 @@ class InformationController extends AppBaseController
     public function edit($id)
     {
         $information = $this->informationRepository->find($id);
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($information)) {
             Flash::error('Information not found');

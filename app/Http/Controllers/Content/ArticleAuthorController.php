@@ -43,6 +43,7 @@ class ArticleAuthorController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
 
         $articleAuthors = $this->articleAuthorRepository->filterIndexPage($perPage, $languageId, $request->all());
@@ -56,6 +57,7 @@ class ArticleAuthorController extends AppBaseController
 
         return $this->renderOutput([
             'articleAuthors' => $articleAuthors,
+            'languages' => $languages,
             'fields' => $fields,
         ]);
     }
@@ -66,7 +68,7 @@ class ArticleAuthorController extends AppBaseController
      */
     public function create()
     {
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         $this->template = 'pages.article_authors.create';
 
@@ -102,7 +104,7 @@ class ArticleAuthorController extends AppBaseController
     public function show($id)
     {
         $articleAuthor = $this->articleAuthorRepository->find($id);
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($articleAuthor)) {
             Flash::error('Article Author not found');
@@ -124,7 +126,7 @@ class ArticleAuthorController extends AppBaseController
     public function edit($id)
     {
         $articleAuthor = $this->articleAuthorRepository->find($id);
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($articleAuthor)) {
             Flash::error('Article Author not found');
