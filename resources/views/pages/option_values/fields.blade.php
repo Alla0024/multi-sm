@@ -1,3 +1,19 @@
+@php
+    $renderTree = function($items, $name = '', $space = '') use (&$renderTree) {
+
+        foreach ($items as $item) {
+            echo "<li id='{$item['id']}'>{$space}{$name}{$item['name']}</li>";
+
+            if (!empty($item['children'])) {
+                $name = $name . $item['name'] . ' -> ';
+                $space = $space . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                $renderTree($item['children'], $name, $space);
+            }
+        }
+
+    };
+@endphp
+
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['name']['inTab'] !!}">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}
@@ -23,13 +39,34 @@
         @endforeach
     </div>
 </div>
-
+@dump($optionValue)
 <!-- Parent Id Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['parent_id']['inTab'] !!}">
     {!! Form::label('parent_id', $word['title_parent_id']) !!}
     <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::number('parent_id', old('parent_id', $parentId ?? null), ['class' => 'form-control']) !!}
+        <div class="input-group input-list-search" style="position: relative;">
+            @isset($optionValue['parent_id'])
+                <input type="hidden" name="parent_id" value="{{$optionValue['parent_id']}}">
+            @else
+                <input type="hidden" name="parent_id" value="">
+            @endisset
+            <input
+                class="ignore_form"
+                name="parent_id"
+                placeholder="Пошук..."
+                autocomplete="off"
+                value=""
+                data-url=""
+                @input="$store.page.searchSelect($event.target)"
+                @focus="$store.page.searchSelect($event.target)"
+                custom="true"
+            >
+            <ul class="custom-list hide">
+                {!! $renderTree($optionValue['values_tree']) !!}
+            </ul>
+            <div class="svg">
+                <img src="/images/common/arrow_select.png" alt="">
+            </div>
         </div>
     </div>
 </div>

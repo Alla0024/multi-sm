@@ -30,6 +30,21 @@
                                 </select>
                             </div>
                         @endisset
+
+                        @isset($sortFields)
+                                <div style="display: flex; column-gap: 10px; margin-right: 20px">
+                                    <label for="sortBy">{{ $word['sort_by'] }}</label>
+                                    <select name="sortBy" id="sortBy" onchange="this.form.submit()">
+                                        @foreach($sortFields as $field)
+                                            <option
+                                                value="{{ $field }}" {{ request('sortBy') == $field ? 'selected' : '' }}>
+                                                {{ $word['sort_'.$field] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endisset
+
                         <div style="display: flex; column-gap: 10px; margin-right: 20px">
                             <label for="perPage">{{ $word['show_by'] }}</label>
                             <select name="perPage" id="perPage" onchange="this.form.submit()">
@@ -40,19 +55,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        @isset($sortFields)
-                            <div style="display: flex; column-gap: 10px">
-                                <label for="sortBy">{{ $word['sort_by'] }}</label>
-                                <select name="sortBy" id="sortBy" onchange="this.form.submit()">
-                                    @foreach($sortFields as $field)
-                                        <option
-                                            value="{{ $field }}" {{ request('sortBy') == $field ? 'selected' : '' }}>
-                                            {{ $word['sort_'.$field] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endisset
+
                     </form>
                 </div>
                 <div class="col-sm-2 action-item">

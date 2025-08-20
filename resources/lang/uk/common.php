@@ -14,6 +14,13 @@ return [
     'show_by' => 'Показувати по',
     'select' => 'Вибрати',
 
+    'sort_by' => 'Сортувати за',
+    'sort_default' => 'За замовчуванням',
+    'sort_name_asc' => 'Назва (А–Я)',
+    'sort_name_desc' => 'Назва (Я–А)',
+    'sort_created_at_asc' => 'Найстаріші',
+    'sort_created_at_desc' => 'Найновіші',
+
     'status_0' => 'Вимкнено',
     'status_1' => 'Увікнено',
 

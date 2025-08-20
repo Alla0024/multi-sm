@@ -67,6 +67,9 @@ input, textarea, select{
         box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, .25) !important;
     }
 }
+select{
+    padding-right: 30px;
+}
 .image-upload{
     display: flex;
     column-gap: 10px;

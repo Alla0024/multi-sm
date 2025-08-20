@@ -45,9 +45,7 @@
                                             autocomplete="off"
                                             :value="itemData[keyInput]"
                                             x-model="itemData[keyInput]"
-                                            @isset($url)
-                                            data-url="{{route($url)}}"
-                                            @endisset
+                                            data-url="@isset($url){{route($url)}}@endisset"
                                             @input="$store.page.searchSelect($event.target)"
                                             @focus="$store.page.searchSelect($event.target)"
                                             custom="false"

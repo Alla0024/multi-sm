@@ -84,6 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     let hasMatch = false;
                     list.querySelectorAll('li').forEach(li => {
                         const match = li.textContent.toLowerCase().includes(value);
+                        if(input.getAttribute('custom') === 'true'){
+                            function setItem(){
+                                input.value = li.textContent;
+                                hidden.value = li.id;
+                                list.classList.add('hide');
+                            }
+                            li.removeEventListener('click', setItem);
+                            li.addEventListener('click', setItem);
+                        } else {
+                            li.setAttribute('x-on:click', `setItem($event.target, keyData, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
+                        }
                         li.style.display = match ? 'block' : 'none';
                         if (match) hasMatch = true;
                     });
