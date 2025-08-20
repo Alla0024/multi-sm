@@ -90,7 +90,7 @@ class ManufacturerController extends AppBaseController
 
         $manufacturer = $this->manufacturerRepository->create($input);
 
-        Flash::success(__('messages.saved', ['model' => __('models/manufacturers.singular')]));
+        Flash::success(__('common.flash_saved_successfully'));
 
         return redirect(route('manufacturers.index'));
     }
@@ -103,7 +103,7 @@ class ManufacturerController extends AppBaseController
         $manufacturer = $this->manufacturerRepository->find($id);
 
         if (empty($manufacturer)) {
-            Flash::error(__('models/manufacturers.singular').' '.__('messages.not_found'));
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('manufacturers.index'));
         }
@@ -128,7 +128,7 @@ class ManufacturerController extends AppBaseController
         $inTabs = array_unique(array_column($fields, 'inTab'));
 
         if (empty($manufacturer)) {
-            Flash::error(__('models/manufacturers.singular') . ' ' . __('messages.not_found'));
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('manufacturers.index'));
         }
@@ -147,14 +147,14 @@ class ManufacturerController extends AppBaseController
         $manufacturer = $this->manufacturerRepository->find($id);
 
         if (empty($manufacturer)) {
-            Flash::error(__('models/manufacturers.singular').' '.__('messages.not_found'));
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('manufacturers.index'));
         }
 
         $manufacturer = $this->manufacturerRepository->update($request->all(), $id);
 
-        Flash::success(__('messages.updated', ['model' => __('models/manufacturers.singular')]));
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('manufacturers.index'));
     }
@@ -169,14 +169,14 @@ class ManufacturerController extends AppBaseController
         $manufacturer = $this->manufacturerRepository->find($id);
 
         if (empty($manufacturer)) {
-            Flash::error(__('models/manufacturers.singular').' '.__('messages.not_found'));
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('manufacturers.index'));
         }
 
         $this->manufacturerRepository->delete($id);
 
-        Flash::success(__('messages.deleted', ['model' => __('models/manufacturers.singular')]));
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('manufacturers.index'));
     }

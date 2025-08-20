@@ -89,6 +89,20 @@ return [
     'menu_combinations' => 'Питання-Відповідь',
     'menu_generate' => 'Підбір товарів',
 
+    // Flash
+    'flash_saved_successfully' => 'Збережено успішно',
+    'flash_not_found'            => 'Не знайдено',
+    'flash_updated_successfully' => 'Оновлено успішно',
+    'flash_deleted_successfully' => 'Видалено успішно',
+
+    // Sort
+    'sort_by' => 'Сортувати за',
+    'sort_default' => 'За замовчуванням',
+    'sort_name_asc' => 'Назва (А–Я)',
+    'sort_name_desc' => 'Назва (Я–А)',
+    'sort_created_at_asc' => 'Найстаріші',
+    'sort_created_at_desc' => 'Найновіші',
+
     // Errors
     'error_path_already_taken' => 'Цей шлях уже використовується'
 ];

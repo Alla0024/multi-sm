@@ -85,7 +85,7 @@ class OptionValueController extends AppBaseController
         $parent = is_numeric($parentId) ? $this->optionValueRepository->find($parentId) : null;
 
         if (empty($parent) && !is_null($parentId)) {
-            Flash::error('Parent element not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('optionValues.index'));
         }
@@ -110,7 +110,7 @@ class OptionValueController extends AppBaseController
 
         $optionValue = $this->optionValueRepository->upsert($input);
 
-        Flash::success('Option Value saved successfully.');
+        Flash::success(__('common.flash_saved_successfully'));
 
         if ($request->get('parent_id') !== null) {
             return redirect(route('optionValues.show', $request->get('parent_id')));
@@ -140,7 +140,7 @@ class OptionValueController extends AppBaseController
         ]);
 
         if (empty($optionValue)) {
-            Flash::error('Option Value not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('optionValues.index'));
         }
@@ -158,14 +158,14 @@ class OptionValueController extends AppBaseController
         $optionValue = $this->optionValueRepository->find($id);
 
         if (empty($optionValue)) {
-            Flash::error('Option Value not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('optionValues.index'));
         }
 
         $optionValue = $this->optionValueRepository->upsert($request->all(), $id);
 
-        Flash::success('Option Value updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         if ($request->get('parent_id') !== null) {
             return redirect(route('optionValues.show', $request->get('parent_id')));
@@ -184,14 +184,14 @@ class OptionValueController extends AppBaseController
         $optionValue = $this->optionValueRepository->find($id);
 
         if (empty($optionValue)) {
-            Flash::error('Option Value not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('optionValues.index'));
         }
 
         $this->optionValueRepository->delete($id);
 
-        Flash::success('Option Value deleted successfully.');
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('optionValues.index'));
     }

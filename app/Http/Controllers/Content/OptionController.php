@@ -98,7 +98,7 @@ class OptionController extends AppBaseController
 
         $option = $this->optionRepository->upsert($input);
 
-        Flash::success('Option saved successfully.');
+        Flash::success(__('common.flash_saved_successfully'));
 
         return redirect(route('options.index'));
     }
@@ -111,11 +111,11 @@ class OptionController extends AppBaseController
         $option = $this->optionRepository->find($id);
 
         if (empty($option)) {
-            Flash::error('Option not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('options.index'));
         }
-//        option_values_count
+
         $this->template = 'pages.options.show';
 
         return $this->renderOutput(compact('option'));
@@ -134,7 +134,7 @@ class OptionController extends AppBaseController
         ]);
 
         if (empty($option)) {
-            Flash::error('Option not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('options.index'));
         }
@@ -152,14 +152,14 @@ class OptionController extends AppBaseController
         $option = $this->optionRepository->find($id);
 
         if (empty($option)) {
-            Flash::error('Option not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('options.index'));
         }
 
         $option = $this->optionRepository->upsert($request->all(), $id);
 
-        Flash::success('Option updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('options.index'));
     }
@@ -174,14 +174,14 @@ class OptionController extends AppBaseController
         $option = $this->optionRepository->find($id);
 
         if (empty($option)) {
-            Flash::error('Option not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('options.index'));
         }
 
         $this->optionRepository->delete($id);
 
-        Flash::success('Option deleted successfully.');
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('options.index'));
     }

@@ -104,7 +104,7 @@ class NewsController extends AppBaseController
 
         $new = $this->newsRepository->upsert($input);
 
-        Flash::success(__('news.success_news_saved'));
+        Flash::success(__('common.flash_saved_successfully'));
 
         return redirect(route('news.index'));
     }
@@ -118,7 +118,7 @@ class NewsController extends AppBaseController
         $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($news)) {
-            Flash::error(__('news.error_news_not_found'));
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('news.index'));
         }
@@ -138,7 +138,7 @@ class NewsController extends AppBaseController
         $authors = $this->articleAuthorRepository->getAuthorIdNameMap($this->defaultLanguageId);
 
         if (empty($news)) {
-            Flash::error(__('news.error_news_not_found'));
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('news.index'));
         }
@@ -172,14 +172,14 @@ class NewsController extends AppBaseController
         $news = $this->newsRepository->find($id);
 
         if (empty($news)) {
-            Flash::error(__('news.error_news_not_found'));
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('news.index'));
         }
 
         $news = $this->newsRepository->upsert($dto, $id);
 
-        Flash::success('News updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('news.index'));
     }
@@ -194,14 +194,14 @@ class NewsController extends AppBaseController
         $new = $this->newsRepository->find($id);
 
         if (empty($new)) {
-            Flash::error(__('news.error_news_not_found'));
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('news.index'));
         }
 
         $this->newsRepository->delete($id);
 
-        Flash::success(__('news.success_news_deleted'));
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('news.index'));
     }

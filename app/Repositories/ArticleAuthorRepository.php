@@ -57,23 +57,25 @@ class ArticleAuthorRepository extends BaseRepository
 
     public function find($id, $columns = ['*'])
     {
-        $authors = $this->model->with(['descriptions' => function ($query) {
+        $author = $this->model->with(['descriptions' => function ($query) {
             return $query->with('language');
         }])->find($id, $columns);
 
         $preshaped_descriptions = [];
 
-        foreach ($authors->descriptions as $description) {
-            $preshaped_descriptions[$description->language->id] = [
-                'title' => $description->title,
-                'name' => $description->name,
-                'description' => $description->description,
-            ];
+        if (!empty($author)) {
+            foreach ($author->descriptions as $description) {
+                $preshaped_descriptions[$description->language->id] = [
+                    'title' => $description->title,
+                    'name' => $description->name,
+                    'description' => $description->description,
+                ];
+            }
+            unset($author->descriptions);
+            $author->setAttribute('descriptions', $preshaped_descriptions);
         }
-        unset($authors->descriptions);
-        $authors->setAttribute('descriptions', $preshaped_descriptions);
 
-        return $authors;
+        return $author;
     }
 
     public function filterIndexPage($perPage, $language_id, $params)
@@ -91,7 +93,7 @@ class ArticleAuthorRepository extends BaseRepository
             ->paginate($perPage);
 
         foreach ($authors as $author) {
-            $name = $author->descriptions->first()->name;
+            $name = $author->descriptions->first()->name ?? '';
             unset($author->descriptions);
 
             $author->setAttribute('name', $name);
@@ -173,11 +175,7 @@ class ArticleAuthorRepository extends BaseRepository
 
         $firstPathQuery = FirstPathQuery::where(['type' => 'authors', 'type_id' => $id ])->first();
 
-        if (!$firstPathQuery) {
-            throw new \Error('First path query not found.');
-        }
-
-        $firstPathQuery->delete();
+        $firstPathQuery?->delete();
         $articleAuthor->delete();
     }
 

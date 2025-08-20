@@ -48,10 +48,4 @@ return [
     'title_descriptions_meta_description' => 'Мета-тег Description:',
     'title_descriptions_meta_keyword' => 'Мета-тег Keywords:',
     'title_descriptions_products_title' => 'Заголовок для товарів',
-    'sort_by' => 'Сортувати за',
-    'sort_default' => 'За замовчуванням',
-    'sort_name_asc' => 'Назва (А–Я)',
-    'sort_name_desc' => 'Назва (Я–А)',
-    'sort_created_at_asc' => 'Найстаріші',
-    'sort_created_at_desc' => 'Найновіші',
 ];
