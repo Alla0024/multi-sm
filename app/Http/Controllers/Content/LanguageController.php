@@ -61,7 +61,7 @@ class LanguageController extends AppBaseController
         $language = $this->languageRepository->find($id);
 
         if (empty($language)) {
-            Flash::error('Language not found');
+             Flash::error(__('common.flash_not_found'));
 
             return redirect(route('pages.languages.index'));
         }
@@ -77,7 +77,7 @@ class LanguageController extends AppBaseController
         $language = $this->languageRepository->find($id);
 
         if (empty($language)) {
-            Flash::error('Language not found');
+             Flash::error(__('common.flash_not_found'));
 
             return redirect(route('pages.languages.index'));
         }
@@ -93,14 +93,14 @@ class LanguageController extends AppBaseController
         $language = $this->languageRepository->find($id);
 
         if (empty($language)) {
-            Flash::error('Language not found');
+             Flash::error(__('common.flash_not_found'));
 
             return redirect(route('pages.languages.index'));
         }
 
         $language = $this->languageRepository->update($request->all(), $id);
 
-        Flash::success('Language updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('pages.languages.index'));
     }
@@ -115,14 +115,14 @@ class LanguageController extends AppBaseController
         $language = $this->languageRepository->find($id);
 
         if (empty($language)) {
-            Flash::error('Language not found');
+             Flash::error(__('common.flash_not_found'));
 
             return redirect(route('pages.languages.index'));
         }
 
         $this->languageRepository->delete($id);
 
-        Flash::success('Language deleted successfully.');
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('pages.languages.index'));
     }

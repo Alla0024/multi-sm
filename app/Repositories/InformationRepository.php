@@ -75,6 +75,10 @@ class InformationRepository extends BaseRepository
             ])
             ->find($id, $columns);
 
+        if (empty($information)) {
+            return $information;
+        }
+
         $preshaped_descriptions = [];
 
         foreach ($information->descriptions as $description) {

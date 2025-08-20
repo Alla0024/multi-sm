@@ -93,7 +93,7 @@ class NewsCategoryController extends AppBaseController
 
         $newsCategory = $this->newsCategoryRepository->create($input);
 
-        Flash::success('News Category saved successfully.');
+        Flash::success(__('common.flash_saved_successfully'));
 
         return redirect(route('newsCategories.index'));
     }
@@ -107,7 +107,7 @@ class NewsCategoryController extends AppBaseController
         $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($newsCategory)) {
-            Flash::error('News Category not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('newsCategories.index'));
         }
@@ -125,7 +125,7 @@ class NewsCategoryController extends AppBaseController
         $newsCategory = $this->newsCategoryRepository->find($id);
 
         if (empty($newsCategory)) {
-            Flash::error('News Category not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('newsCategories.index'));
         }
@@ -150,14 +150,14 @@ class NewsCategoryController extends AppBaseController
         $newsCategory = $this->newsCategoryRepository->find($id);
 
         if (empty($newsCategory)) {
-            Flash::error('News Category not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('newsCategories.index'));
         }
 
         $newsCategory = $this->newsCategoryRepository->update($request->all(), $id);
 
-        Flash::success('News Category updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('newsCategories.index'));
     }
@@ -172,14 +172,14 @@ class NewsCategoryController extends AppBaseController
         $newsCategory = $this->newsCategoryRepository->find($id);
 
         if (empty($newsCategory)) {
-            Flash::error('News Category not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('newsCategories.index'));
         }
 
         $this->newsCategoryRepository->delete($id);
 
-        Flash::success('News Category deleted successfully.');
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('newsCategories.index'));
     }

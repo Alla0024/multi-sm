@@ -102,7 +102,7 @@ class ArticleAuthorController extends AppBaseController
 
         $articleAuthor = $this->articleAuthorRepository->create($input);
 
-        Flash::success('Article Author saved successfully.');
+        Flash::success(__('common.flash_saved_successfully'));
 
         return redirect(route('articleAuthors.index'));
     }
@@ -116,13 +116,10 @@ class ArticleAuthorController extends AppBaseController
         $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($articleAuthor)) {
-            Flash::error('Article Author not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('articleAuthors.index'));
         }
-
-        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'authors')->value('path');;
-        $articleAuthor->setAttribute('path', $seoUrl);
 
         $this->template = 'pages.article_authors.show';
 
@@ -138,13 +135,10 @@ class ArticleAuthorController extends AppBaseController
         $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($articleAuthor)) {
-            Flash::error('Article Author not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('articleAuthors.index'));
         }
-
-        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'authors')->value('path');;
-        $articleAuthor->setAttribute('path', $seoUrl);
 
         $this->template = 'pages.article_authors.edit';
 
@@ -169,14 +163,14 @@ class ArticleAuthorController extends AppBaseController
         $articleAuthor = $this->articleAuthorRepository->find($id);
 
         if (empty($articleAuthor)) {
-            Flash::error('Article Author not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('articleAuthors.index'));
         }
 
         $this->articleAuthorRepository->update($request->all(), $id);
 
-        Flash::success('Article Author updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('articleAuthors.index'));
     }
@@ -191,14 +185,14 @@ class ArticleAuthorController extends AppBaseController
         $articleAuthor = $this->articleAuthorRepository->find($id);
 
         if (empty($articleAuthor)) {
-            Flash::error('Article Author not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('articleAuthors.index'));
         }
 
         $this->articleAuthorRepository->delete($id);
 
-        Flash::success('Article Author deleted successfully.');
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('articleAuthors.index'));
     }

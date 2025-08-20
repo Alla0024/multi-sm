@@ -110,7 +110,7 @@ class InformationController extends AppBaseController
 
         $information = $this->informationRepository->upsert($input);
 
-        Flash::success('Information saved successfully.');
+        Flash::success(__('common.flash_saved_successfully'));
 
         return redirect(route('information.index'));
     }
@@ -124,7 +124,7 @@ class InformationController extends AppBaseController
         $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($information)) {
-            Flash::error('Information not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('information.index'));
         }
@@ -143,7 +143,7 @@ class InformationController extends AppBaseController
         $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($information)) {
-            Flash::error('Information not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('information.index'));
         }
@@ -172,14 +172,14 @@ class InformationController extends AppBaseController
         $dto = $request->all();
 
         if (empty($information)) {
-            Flash::error('Information not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('information.index'));
         }
 
         $information = $this->informationRepository->upsert($dto, $id);
 
-        Flash::success('Information updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('information.index'));
     }
@@ -194,14 +194,14 @@ class InformationController extends AppBaseController
         $information = $this->informationRepository->find($id);
 
         if (empty($information)) {
-            Flash::error('Information not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('information.index'));
         }
 
         $this->informationRepository->delete($id);
 
-        Flash::success('Information deleted successfully.');
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('information.index'));
     }

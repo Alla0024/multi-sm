@@ -49,7 +49,7 @@ class StoreController extends AppBaseController
 
         $store = $this->storeRepository->create($input);
 
-        Flash::success('Store saved successfully.');
+        Flash::success(__('common.flash_saved_successfully'));
 
         return redirect(route('pages.stores.index'));
     }
@@ -62,7 +62,7 @@ class StoreController extends AppBaseController
         $store = $this->storeRepository->find($id);
 
         if (empty($store)) {
-            Flash::error('Store not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('pages.stores.index'));
         }
@@ -78,7 +78,7 @@ class StoreController extends AppBaseController
         $store = $this->storeRepository->find($id);
 
         if (empty($store)) {
-            Flash::error('Store not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('pages.stores.index'));
         }
@@ -94,14 +94,14 @@ class StoreController extends AppBaseController
         $store = $this->storeRepository->find($id);
 
         if (empty($store)) {
-            Flash::error('Store not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('pages.stores.index'));
         }
 
         $store = $this->storeRepository->update($request->all(), $id);
 
-        Flash::success('Store updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('pages.stores.index'));
     }
@@ -116,14 +116,14 @@ class StoreController extends AppBaseController
         $store = $this->storeRepository->find($id);
 
         if (empty($store)) {
-            Flash::error('Store not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('pages.stores.index'));
         }
 
         $this->storeRepository->delete($id);
 
-        Flash::success('Store deleted successfully.');
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('pages.stores.index'));
     }

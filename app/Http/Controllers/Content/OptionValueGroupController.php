@@ -86,7 +86,7 @@ class OptionValueGroupController extends AppBaseController
 
         $optionValueGroup = $this->optionValueGroupRepository->create($input);
 
-        Flash::success('Option Value Group saved successfully.');
+        Flash::success(__('common.flash_saved_successfully'));
 
         return redirect(route('optionValueGroups.index'));
     }
@@ -99,7 +99,7 @@ class OptionValueGroupController extends AppBaseController
         $optionValueGroup = $this->optionValueGroupRepository->find($id);
 
         if (empty($optionValueGroup)) {
-            Flash::error('Option Value Group not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('optionValueGroups.index'));
         }
@@ -117,7 +117,7 @@ class OptionValueGroupController extends AppBaseController
         $optionValueGroup = $this->optionValueGroupRepository->find($id);
 
         if (empty($optionValueGroup)) {
-            Flash::error('Option Value Group not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('optionValueGroups.index'));
         }
@@ -135,14 +135,14 @@ class OptionValueGroupController extends AppBaseController
         $optionValueGroup = $this->optionValueGroupRepository->find($id);
 
         if (empty($optionValueGroup)) {
-            Flash::error('Option Value Group not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('optionValueGroups.index'));
         }
 
         $optionValueGroup = $this->optionValueGroupRepository->update($request->all(), $id);
 
-        Flash::success('Option Value Group updated successfully.');
+        Flash::success(__('common.flash_updated_successfully'));
 
         return redirect(route('optionValueGroups.index'));
     }
@@ -157,14 +157,14 @@ class OptionValueGroupController extends AppBaseController
         $optionValueGroup = $this->optionValueGroupRepository->find($id);
 
         if (empty($optionValueGroup)) {
-            Flash::error('Option Value Group not found');
+            Flash::error(__('common.flash_not_found'));
 
             return redirect(route('optionValueGroups.index'));
         }
 
         $this->optionValueGroupRepository->delete($id);
 
-        Flash::success('Option Value Group deleted successfully.');
+        Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('optionValueGroups.index'));
     }
