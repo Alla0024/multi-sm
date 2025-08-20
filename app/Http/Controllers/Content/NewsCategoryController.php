@@ -40,7 +40,8 @@ class NewsCategoryController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all(), $this->defaultLanguageId);
+        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
+        $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all(), $languageId);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsCategoryDescription::class,

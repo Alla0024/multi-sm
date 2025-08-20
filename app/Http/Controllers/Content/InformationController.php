@@ -44,7 +44,8 @@ class InformationController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $information = $this->informationRepository->filterIndexPage($perPage, $this->defaultLanguageId, request()->all());
+        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
+        $information = $this->informationRepository->filterIndexPage($perPage, $languageId, request()->all());
 
         foreach ($information as $item) {
             if ($item->seoPath) {

@@ -43,7 +43,9 @@ class ArticleAuthorController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $articleAuthors = $this->articleAuthorRepository->filterIndexPage($perPage, $this->defaultLanguageId, $request->all());
+        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
+
+        $articleAuthors = $this->articleAuthorRepository->filterIndexPage($perPage, $languageId, $request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ArticleAuthorDescription::class,

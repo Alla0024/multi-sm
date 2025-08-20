@@ -42,7 +42,8 @@ class OptionController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $options = $this->optionRepository->filterIndexPage($perPage, $this->defaultLanguageId, request()->all());
+        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
+        $options = $this->optionRepository->filterIndexPage($perPage, $languageId, request()->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Option::class

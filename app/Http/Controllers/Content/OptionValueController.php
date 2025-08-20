@@ -39,9 +39,10 @@ class OptionValueController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $optionValues = $this->optionValueRepository->filterIndexPage($perPage, request()->all(), $this->defaultLanguageId, $id);
+        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
+        $optionValues = $this->optionValueRepository->filterIndexPage($perPage, request()->all(), $languageId, $id);
 
-        $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id, $this->defaultLanguageId);
+        $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id, $languageId);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionValue::class
