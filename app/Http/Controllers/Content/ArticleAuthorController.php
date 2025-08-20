@@ -121,9 +121,6 @@ class ArticleAuthorController extends AppBaseController
             return redirect(route('articleAuthors.index'));
         }
 
-        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'authors')->value('path');;
-        $articleAuthor->setAttribute('path', $seoUrl);
-
         $this->template = 'pages.article_authors.show';
 
         return $this->renderOutput(compact('articleAuthor', 'languages'));
@@ -142,9 +139,6 @@ class ArticleAuthorController extends AppBaseController
 
             return redirect(route('articleAuthors.index'));
         }
-
-        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'authors')->value('path');;
-        $articleAuthor->setAttribute('path', $seoUrl);
 
         $this->template = 'pages.article_authors.edit';
 

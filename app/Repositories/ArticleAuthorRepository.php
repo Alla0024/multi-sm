@@ -75,6 +75,9 @@ class ArticleAuthorRepository extends BaseRepository
             $author->setAttribute('descriptions', $preshaped_descriptions);
         }
 
+        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'authors')->value('path');;
+        $author->setAttribute('path', $seoUrl);
+
         return $author;
     }
 

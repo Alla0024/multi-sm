@@ -143,9 +143,6 @@ class NewsController extends AppBaseController
             return redirect(route('news.index'));
         }
 
-        $seoUrl = FirstPathQuery::where('type_id', $id)->where('type', 'news')->value('path');
-        $news->setAttribute('path', $seoUrl);
-
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             News::class,
             FirstPathQuery::class,
