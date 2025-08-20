@@ -37,6 +37,14 @@ class ManufacturerController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+        $sortFields = [
+            'default',
+            'name_asc',
+            'name_desc',
+            'created_at_asc',
+            'created_at_desc',
+        ];
+
         $manufacturers = $this->manufacturerRepository->with(['descriptions'])->paginate($perPage);
         $languages = $this->languageRepository->getAvailableLanguages();
 
@@ -50,6 +58,7 @@ class ManufacturerController extends AppBaseController
         return $this->renderOutput([
             'manufacturers' => $manufacturers,
             'languages' => $languages,
+            'sortFields' => $sortFields,
             'fields' => $fields,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);

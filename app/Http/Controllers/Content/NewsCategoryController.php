@@ -40,6 +40,14 @@ class NewsCategoryController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+        $sortFields = [
+            'default',
+            'name_asc',
+            'name_desc',
+            'created_at_asc',
+            'created_at_desc',
+        ];
+
         $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all(), $languageId);
@@ -54,6 +62,7 @@ class NewsCategoryController extends AppBaseController
         return $this->renderOutput([
             'newsCategories' => $newsCategories,
             'languages' => $languages,
+            'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
     }

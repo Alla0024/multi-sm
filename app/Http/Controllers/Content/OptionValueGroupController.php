@@ -39,6 +39,14 @@ class OptionValueGroupController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+        $sortFields = [
+            'default',
+            'name_asc',
+            'name_desc',
+            'created_at_asc',
+            'created_at_desc',
+        ];
+
         $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
 
@@ -54,6 +62,7 @@ class OptionValueGroupController extends AppBaseController
             'optionValueGroups' => $optionValueGroups,
             'languages' => $languages,
             'fields' => $fields,
+            'sortFields' => $sortFields,
         ]);
     }
 

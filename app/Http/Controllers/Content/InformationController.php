@@ -44,6 +44,14 @@ class InformationController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
+        $sortFields = [
+            'default',
+            'name_asc',
+            'name_desc',
+            'created_at_asc',
+            'created_at_desc',
+        ];
+
         $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $information = $this->informationRepository->filterIndexPage($perPage, $languageId, request()->all());
@@ -65,6 +73,7 @@ class InformationController extends AppBaseController
 
         return $this->renderOutput([
             'information' => $information,
+            'sortFields' => $sortFields,
             'languages' => $languages,
             'fields' => $fields,
         ]);
