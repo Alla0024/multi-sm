@@ -1,5 +1,5 @@
 <!-- Image Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['image']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['image']['inTab'] !!}" x-data="manufacture">
     {!! Form::label('image', $word['title_image']) !!}
     <div class="input-group">
         <div class="custom-file image-upload">
@@ -9,6 +9,9 @@
             {{$manufacturer['image']}}
         </div>
     </div>
+    <div class="lfm" data-input="thumbnail" data-preview="holder" data-path="/images/catalog/category/logo_wtm">Обрати</div>
+    <input id="thumbnail" type="text" name="filepath">
+    <img id="holder" alt="" style="max-width:200px;">
 </div>
 <div class="clearfix"></div>
 <div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
@@ -27,3 +30,15 @@
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
 </div>
+
+<script>
+    document.addEventListener('alpine:init', ()=>{
+        Alpine.data('manufacture', () => ({
+            // open(el){
+            //     filemanager('image', {
+            //         prefix: '/filemanager'
+            //     });
+            // },
+        }))
+    })
+</script>

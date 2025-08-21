@@ -29,6 +29,25 @@ return [
     'allow_multi_user' => false,
     // If true, share folder will be created when allow_multi_user is true.
     'allow_share_folder' => true,
+    'allow_private_folder' => false,
+    'folder_categories' => [
+        'file' => [
+            'folder_name' => '.',
+            'startup_view' => 'list',
+            'valid_mime'  => ['*'],
+            'max_size'    => 0,
+            'allow_private_folder' => false,
+            'allow_shared_folder'  => true,
+        ],
+        'image' => [
+            'folder_name' => '.',
+            'startup_view' => 'grid',
+            'valid_mime'  => ['image/jpeg','image/png','image/gif','image/webp','image/svg+xml'],
+            'max_size'    => 0,
+            'allow_private_folder' => false,
+            'allow_shared_folder'  => true,
+        ],
+    ],
 
     // Flexible way to customize client folders accessibility
     // If you want to customize client folders, publish tag="lfm_handler"
@@ -36,7 +55,7 @@ return [
     // And set 'user_field' to App\Handler\ConfigHander::class
     // Ex: The private folder of user will be named as the user id.
     'user_field' => UniSharp\LaravelFilemanager\Handlers\ConfigHandler::class,
-
+    'disk'                     => 'lfm',
     /*
     |--------------------------------------------------------------------------
     | Working Directory
