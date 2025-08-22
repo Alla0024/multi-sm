@@ -9,7 +9,7 @@
             {{$manufacturer['image']}}
         </div>
     </div>
-    <div class="lfm" data-input="thumbnail" data-preview="holder" data-path="/images/catalog/category/logo_wtm">Обрати</div>
+    <div class="lfm" data-input="thumbnail" data-preview="holder" data-path="">Обрати</div>
     <input id="thumbnail" type="text" name="filepath">
     <img id="holder" alt="" style="max-width:200px;">
 </div>

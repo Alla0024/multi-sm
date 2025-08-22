@@ -45,12 +45,14 @@ class ManufacturerController extends AppBaseController
             'created_at_desc',
         ];
 
-        $manufacturers = $this->manufacturerRepository->with(['descriptions'])->paginate($perPage);
+        $language_id = $request->input('language_id', config('settings.locale.default_language_id'));
+
+        $manufacturers = $this->manufacturerRepository->filterIndexPage($request->all(), $perPage, $language_id);
         $languages = $this->languageRepository->getAvailableLanguages();
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            Manufacturer::class,
             ManufacturerDescription::class,
+            Manufacturer::class,
         ]);
 
         $this->template = 'pages.manufacturers.index';

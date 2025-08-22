@@ -71,4 +71,15 @@ class ManufacturerRepository extends BaseRepository
 
         return $manufacturer;
     }
+
+    public function filterIndexPage($input, $perPage, $languageId)
+    {
+        return $this->model
+            ->leftJoin((new ManufacturerDescription())->getTable() . " as md", 'md.manufacturer_id', '=', 'manufacturers.id')
+            ->where('md.language_id', $languageId)
+            ->when(isset($input['name']), function ($q) use ($input) {
+                return $q->searchSimilarity(['md.name'], $input['name']);
+            })
+            ->paginate($perPage);
+    }
 }
