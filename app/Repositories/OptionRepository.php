@@ -29,12 +29,14 @@ class OptionRepository extends BaseRepository
         'name',
         'value_groups_count',
         'sort_order',
+        'appears_in_categories'
     ];
 
     protected array $additionalFields = [
         'name',
         'value_groups_count',
-        'option_value_groups'
+        'option_value_groups',
+        'appears_in_categories'
     ];
 
     public function getFieldsSearchable(): array
@@ -73,15 +75,34 @@ class OptionRepository extends BaseRepository
     public function filterIndexPage($perPage, $language_id, array $params)
     {
         $options = $this->model
-
             ->leftJoin((new OptionDescription())->getTable() . " as od", 'od.option_id', '=', 'options.id')
             ->select('options.*', 'od.*')
             ->where('od.language_id', $language_id)
             ->withCount('optionValueGroups as value_groups_count')
+            ->with(['products' => function ($query) use ($language_id) {
+                return $query->select('id', 'category_id')->with([
+                    'category.descriptions' => function ($query) use ($language_id) {
+                        return $query->select('category_id', 'name')->where('language_id', $language_id);
+                    }
+                ]);
+            }])
             ->when(isset($params['name']), function ($q) use ($params) {
                 return $q->searchSimilarity(['od.name'], $params['name']);
-            })
-            ->paginate($perPage);
+            })->paginate($perPage);
+
+        $options->getCollection()->transform(function ($option) {
+            $names = collect($option->products)
+                ->pluck('category.descriptions.*.name')
+                ->flatten()
+                ->unique()
+                ->sort()
+                ->values();
+
+            $option->appears_in_categories = $names->toArray();
+            unset($option->products);
+
+            return $option;
+        });
 
         return $options;
     }

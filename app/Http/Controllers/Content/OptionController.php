@@ -59,6 +59,7 @@ class OptionController extends AppBaseController
         ], [
             'name',
             'sort_order',
+            'appears_in_categories',
             'value_groups_count',
         ]);
 

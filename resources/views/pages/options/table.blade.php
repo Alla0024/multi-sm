@@ -55,8 +55,15 @@
                                 <td><div class="status_enable">{{ $word['status_1'] }}</div></td>
                             @endif
                         @else
-                         @if($index != 'id' && $field['inTable'])
+                         @if($index != 'id' && $index != 'appears_in_categories' && $field['inTable'])
                             <td>{{ $option[$index] }}</td>
+
+                         @elseif($index == 'appears_in_categories')
+                             <td>
+                                 @foreach($option[$index] as $category)
+                                     <span class="badge badge-info">{{$category}}</span>
+                                 @endforeach
+                             </td>
                          @endif
                         @endif
                     @endforeach

@@ -34,6 +34,8 @@ return [
     'search_descriptions_comment' => 'Пошук за коментарем (опис)',
     'title_option_value_groups' => 'Групи значень опцій',
     'search_option_value_groups' => 'Пошук за групами значень опцій',
+    'search_appears_in_categories' => 'Пошук за категроіями',
+    'title_appears_in_categories' => 'З\'являється в категоріях',
     'tab_main' => 'Основне',
     'tab_sort' => 'Сортування',
 
