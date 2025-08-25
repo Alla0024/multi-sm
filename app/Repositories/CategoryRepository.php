@@ -62,10 +62,12 @@ class CategoryRepository extends BaseRepository
 
 
         foreach ($items as $item) {
-            $result[] = [
-                "id" => $item->id,
-                "text" => $item->descriptions->first()->name,
-            ];
+            if ($item->id && $item->descriptions->first()?->name) {
+                $result[] = [
+                    "id" => $item->id,
+                    "text" => $item->descriptions->first()->name,
+                ];
+            }
         }
 
         return $result ?? [];

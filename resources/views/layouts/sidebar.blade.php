@@ -59,6 +59,12 @@
             </div>
         </div>
 
+        <a href="{{ route('vacancies.index') }}" class="item {{ Request::is($adminPath.'/vacancies*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-gift fs-20"></i></div>
+            <div class="name">{{$word['menu_vacancies']}}</div>
+        </a>
+
+
     </div>
 </div>
 @endisset

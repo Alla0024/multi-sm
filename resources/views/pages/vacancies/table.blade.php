@@ -1,7 +1,7 @@
 <div class="card-body p-0">
 
     <div class="table-responsive">
-        <table class="table" id="options-table">
+        <table class="table" id="vacancies-table">
             <thead>
             <tr>
                 <form class="search-form" method="GET" action="">
@@ -16,27 +16,20 @@
                                                 <option value="1" @if(request($index) == '1') selected @endif>{{$word['status_1']}}</option>
                                                 <option value="0" @if(request($index) == '0') selected @endif>{{$word['status_0']}}</option>
                                             </select>
-                                        @elseif($index == 'appears_in_categories')
-                                            <select class="" name="{{ $index }}" aria-label="{{ $word['search_'.$index] }}" aria-describedby="select-addon">
-                                                <option value="" @if(request($index) == null) selected @endif>{{ $word['all'] }}</option>
-                                                @foreach($categories as $category)
-                                                    <option value="{{ $category['id'] }}" @if(request($index) == $category['id']) selected @endif hidden>{{ $category['text'] }}</option>
-                                                @endforeach
-                                            </select>
-                                        @else
+                                            @else
                                             <div class="">
                                                 <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
                                             </div>
-                                        @endif
+                                            @endif
                                     @endif
                                 </th>
                             @endif
                         @endforeach
                     @endif
                     <th class="butt-action action-item">
-                        <span class="hide">options</span>
+                        <span class="hide">vacancies</span>
                         <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
-                        <a href="{{ route('options.index') }}">{{ $word['cancel'] }}</a>
+                        <a href="{{ route('vacancies.index') }}">{{ $word['cancel'] }}</a>
                     </th>
                 </form>
             </tr>
@@ -52,33 +45,32 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($options as $option)
+            @foreach($vacancies as $vacancy)
                 <tr>
+
+
                     @foreach($fields as $index => $field)
                         @if($index == 'status')
-                            @if($option[$index] == 1)
+                            @if($vacancy[$index] == 1)
                                 <td><div class="status_active">{{ $word['status_0'] }}</div></td>
                             @else
                                 <td><div class="status_enable">{{ $word['status_1'] }}</div></td>
                             @endif
                         @else
-                         @if($index != 'id' && $index != 'appears_in_categories' && $field['inTable'])
-                            <td>{{ $option[$index] }}</td>
-
-                         @elseif($index == 'appears_in_categories')
-                             <td>
-                                 @foreach($option[$index] as $category)
-                                     <span>{{$category}}</span>
-                                 @endforeach
-                             </td>
+                         @if($index != 'id' && $field['inTable'])
+                            <td>{{ $vacancy[$index] }}</td>
                          @endif
                         @endif
                     @endforeach
 
-                    <td  >
-                        {!! Form::open(['route' => ['options.destroy', $option->id], 'method' => 'delete']) !!}
+                    <td  colspan="3">
+                        {!! Form::open(['route' => ['vacancies.destroy', $vacancy->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-                            <a href="{{ route('options.edit', [$option->id]) }}"
+
+
+
+
+                            <a href="{{ route('vacancies.edit', [$vacancy->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>
                             </a>
@@ -94,7 +86,7 @@
 
     <div class="card-footer clearfix">
         <div class="float-right">
-            @include('adminlte-templates::common.paginate', ['records' => $options])
+            @include('adminlte-templates::common.paginate', ['records' => $vacancies])
         </div>
     </div>
 </div>
