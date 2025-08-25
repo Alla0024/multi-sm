@@ -16,11 +16,18 @@
                                                 <option value="1" @if(request($index) == '1') selected @endif>{{$word['status_1']}}</option>
                                                 <option value="0" @if(request($index) == '0') selected @endif>{{$word['status_0']}}</option>
                                             </select>
-                                            @else
+                                        @elseif($index == 'appears_in_categories')
+                                            <select class="" name="{{ $index }}" aria-label="{{ $word['search_'.$index] }}" aria-describedby="select-addon">
+                                                <option value="" @if(request($index) == null) selected @endif>{{ $word['select'] }}</option>
+                                                @foreach($categories as $category)
+                                                    <option value="{{ $category['id'] }}" @if(request($index) == $category['id']) selected @endif hidden>{{ $category['text'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        @else
                                             <div class="">
                                                 <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
                                             </div>
-                                            @endif
+                                        @endif
                                     @endif
                                 </th>
                             @endif
@@ -61,7 +68,7 @@
                          @elseif($index == 'appears_in_categories')
                              <td>
                                  @foreach($option[$index] as $category)
-                                     <span class="badge badge-info">{{$category}}</span>
+                                     <span>{{$category}}</span>
                                  @endforeach
                              </td>
                          @endif

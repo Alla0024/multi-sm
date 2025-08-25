@@ -88,7 +88,14 @@ class OptionRepository extends BaseRepository
             }])
             ->when(isset($params['name']), function ($q) use ($params) {
                 return $q->searchSimilarity(['od.name'], $params['name']);
-            })->paginate($perPage);
+            })
+            ->when(isset($params['appears_in_categories']), function ($q) use ($params, $language_id) {
+                return $q->whereHas('products.category.descriptions', function ($query) use ($params, $language_id) {
+                    $query->where('language_id', $language_id)
+                        ->where('category_id', $params['appears_in_categories']);
+                });
+            })
+            ->paginate($perPage);
 
         $options->getCollection()->transform(function ($option) {
             $names = collect($option->products)

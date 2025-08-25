@@ -41,7 +41,7 @@ class CategoryRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
-    public function getDropdownItems($language_id, $args): array
+    public function getDropdownItems($language_id, $args = []): array
     {
         $items = $this->model
             ->with([

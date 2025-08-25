@@ -6,6 +6,7 @@ use App\Http\Requests\CreateOptionRequest;
 use App\Http\Requests\UpdateOptionRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\OptionDescription;
+use App\Repositories\CategoryRepository;
 use App\Repositories\LanguageRepository;
 use App\Repositories\OptionRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -18,20 +19,24 @@ class OptionController extends AppBaseController
     /**
      * @var OptionRepository $optionRepository
      * @var LanguageRepository $languageRepository
+     * @var CategoryRepository $categoryRepository
      */
     private OptionRepository $optionRepository;
+    private CategoryRepository $categoryRepository;
     private LanguageRepository $languageRepository;
     private int $defaultLanguageId;
 
     public function __construct(
         OptionRepository $optionRepo,
-        LanguageRepository $languageRepo
+        LanguageRepository $languageRepo,
+        CategoryRepository $categoryRepo,
     )
     {
         parent::__construct();
 
         $this->optionRepository = $optionRepo;
         $this->languageRepository = $languageRepo;
+        $this->categoryRepository = $categoryRepo;
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
@@ -53,6 +58,7 @@ class OptionController extends AppBaseController
         $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $options = $this->optionRepository->filterIndexPage($perPage, $languageId, request()->all());
+        $categories = $this->categoryRepository->getDropdownItems($languageId);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Option::class
@@ -68,6 +74,7 @@ class OptionController extends AppBaseController
         return $this->renderOutput([
             'options' => $options,
             'languages' => $languages,
+            'categories' => $categories,
             'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
