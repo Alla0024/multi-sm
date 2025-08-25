@@ -6,6 +6,7 @@ use App\Http\Requests\CreateVacancyRequest;
 use App\Http\Requests\UpdateVacancyRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\VacancyDescription;
+use App\Repositories\LanguageRepository;
 use App\Repositories\VacancyRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -14,14 +15,25 @@ use Flash;
 
 class VacancyController extends AppBaseController
 {
-    /** @var VacancyRepository $vacancyRepository*/
-    private $vacancyRepository;
+    /**
+     * @var VacancyRepository $vacancyRepository
+     * @var LanguageRepository $languageRepository
+     * @var int $defaultLanguageId;
+     * */
+    private VacancyRepository $vacancyRepository;
+    private LanguageRepository $languageRepository;
+    private int $defaultLanguageId;
 
-    public function __construct(VacancyRepository $vacancyRepo)
+    public function __construct(
+        VacancyRepository $vacancyRepo,
+        LanguageRepository $languageRepo,
+    )
     {
         parent::__construct();
 
         $this->vacancyRepository = $vacancyRepo;
+        $this->languageRepository = $languageRepo;
+        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -31,7 +43,8 @@ class VacancyController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $vacancies = $this->vacancyRepository->paginate($perPage);
+        $vacancies = $this->vacancyRepository->filterIndexPage($perPage, $this->defaultLanguageId, $request->all());
+        $languages = $this->languageRepository->getAvailableLanguages();
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             VacancyDescription::class,
@@ -42,6 +55,7 @@ class VacancyController extends AppBaseController
 
         return $this->renderOutput([
             'vacancies' => $vacancies,
+            'languages' => $languages,
             'fields' => $fields,
         ]);
     }
@@ -94,7 +108,13 @@ class VacancyController extends AppBaseController
      */
     public function edit($id)
     {
-        $vacancy = $this->vacancyRepository->find($id);
+        $vacancy = $this->vacancyRepository->getDetails($id);
+        $languages = $this->languageRepository->getAvailableLanguages();
+
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            VacancyDescription::class,
+            Vacancy::class
+        ]);
 
         if (empty($vacancy)) {
             Flash::error(__('common.flash_not_found'));
@@ -104,7 +124,7 @@ class VacancyController extends AppBaseController
 
         $this->template = 'pages.vacancies.edit';
 
-        return $this->renderOutput(compact('vacancy'));
+        return $this->renderOutput(compact('vacancy', 'fields', 'languages'));
     }
 
     /**

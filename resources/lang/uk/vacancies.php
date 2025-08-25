@@ -24,6 +24,9 @@ return [
     'search_status' => 'Пошук за статусом',
     'title_title' => 'Назва',
     'search_title' => 'Пошук за назвою',
+    'title_descriptions_title' => 'Заголовок',
+    'title_descriptions_description' => 'Опис',
+    'title_descriptions_name_contact_person' => 'Контактна особа',
     'tab_main' => 'Основне',
     'tab_sort' => 'Сортування',
 ];
