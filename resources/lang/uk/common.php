@@ -18,6 +18,9 @@ return [
     'status_0' => 'Вимкнено',
     'status_1' => 'Увікнено',
 
+    'status_active' => 'Активний',
+    'status_inactive' => 'Неактивний',
+
     // Menu
     '1' => '🤢',
     '5' => '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"><rect width="22" height="10" fill="#0057B7"/><rect width="22" height="10" y="10" fill="#FFD700"/></svg>',

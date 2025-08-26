@@ -52,9 +52,9 @@
                     @foreach($fields as $index => $field)
                         @if($index == 'status')
                             @if($vacancy[$index] == 1)
-                                <td><div class="status_active">{{ $word['status_0'] }}</div></td>
+                                <td><div class="status_active">{{ $word['status_1'] }}</div></td>
                             @else
-                                <td><div class="status_enable">{{ $word['status_1'] }}</div></td>
+                                <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
                         @else
                          @if($index != 'id' && $field['inTable'])

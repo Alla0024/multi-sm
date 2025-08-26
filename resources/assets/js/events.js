@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             form.querySelectorAll('.ignore_form').forEach(function(el) {
                 el.disabled = true;
             });
+
         });
     });
 
