@@ -28,9 +28,10 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::get('/all_update_currencies', 'Settings\CurrencyController@allUpdateCurrencies')->name('all_update_currencies');
             Route::resource('currencies', 'Settings\CurrencyController');
             Route::resource('regions', 'Settings\RegionController');
-            Route::resource('locations', 'Settings\LocationController');
             Route::resource('settings', 'Settings\SettingController');
             Route::resource('pages', 'Settings\PageController');
+
+            Route::resource('locations', 'App\Http\Controllers\Content\LocationController');
         });
         Route::resource('example','App\Http\Controllers\Content\ExampleController');
         Route::resource('languages', 'App\Http\Controllers\Content\LanguageController');
@@ -44,6 +45,12 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('optionValues', 'App\Http\Controllers\Content\OptionValueController');
         Route::resource('optionValueGroups', 'App\Http\Controllers\Content\OptionValueGroupController');
         Route::resource('vacancies', 'App\Http\Controllers\Content\VacancyController');
+
+
+
+
+
+
         Route::resource('langs', App\Http\Controllers\LangController::class);
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('seodata', 'Content\SeoDataController');
@@ -190,6 +197,9 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::get('getAuthors', 'App\Http\Controllers\Content\ApiController@getAuthors')->name('getAuthors');
             Route::get('getProducts', 'App\Http\Controllers\Content\ApiController@getProducts')->name('getProducts');
             Route::get('getStores', 'App\Http\Controllers\Content\ApiController@getStores')->name('getStores');
+            Route::get('getLocations', 'App\Http\Controllers\Content\ApiController@getLocations')->name('getLocations');
+
+
             Route::get('getAttributes', 'Content\AttributeController@getAttributes')->name('getAttributes');
             Route::get('getFilters', 'Content\FilterController@getFilters')->name('getFilters');
             Route::get('getOptionValues', 'Content\OptionValueController@getOptionValues')->name('getOptionValues');

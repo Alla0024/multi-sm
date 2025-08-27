@@ -152,3 +152,10 @@
         <p>Vacancies</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('locations.index') }}" class="nav-link {{ Request::is('locations*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Locations</p>
+    </a>
+</li>

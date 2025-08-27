@@ -7,8 +7,10 @@ use App\Http\Requests\UpdateVacancyRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\VacancyDescription;
 use App\Repositories\LanguageRepository;
+use App\Repositories\LocationRepository;
 use App\Repositories\VacancyRepository;
 use App\Helpers\ModelSchemaHelper;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Models\Vacancy;
 use Flash;
@@ -22,17 +24,20 @@ class VacancyController extends AppBaseController
      * */
     private VacancyRepository $vacancyRepository;
     private LanguageRepository $languageRepository;
+    private LocationRepository $locationRepository;
     private int $defaultLanguageId;
 
     public function __construct(
         VacancyRepository $vacancyRepo,
         LanguageRepository $languageRepo,
+        LocationRepository $locationRepo,
     )
     {
         parent::__construct();
 
         $this->vacancyRepository = $vacancyRepo;
         $this->languageRepository = $languageRepo;
+        $this->locationRepository = $locationRepo;
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
@@ -42,8 +47,10 @@ class VacancyController extends AppBaseController
     public function index(Request $request)
     {
         $perPage = $request->input('perPage', 10);
+        $language_id = $request->get('language_id') ?? $this->defaultLanguageId;
 
-        $vacancies = $this->vacancyRepository->filterIndexPage($perPage, $this->defaultLanguageId, $request->all());
+        $locations = $this->locationRepository->getDropdownItems($language_id, $request->all());
+        $vacancies = $this->vacancyRepository->filterIndexPage($perPage, $language_id, $request->all());
         $languages = $this->languageRepository->getAvailableLanguages();
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
@@ -56,6 +63,7 @@ class VacancyController extends AppBaseController
         return $this->renderOutput([
             'vacancies' => $vacancies,
             'languages' => $languages,
+            'locations' => $locations,
             'fields' => $fields,
         ]);
     }
@@ -64,11 +72,15 @@ class VacancyController extends AppBaseController
     /**
      * Show the form for creating a new Vacancy.
      */
-    public function create()
+    public function create(Request $request)
     {
+        $languages = $this->languageRepository->getAvailableLanguages();
+        $locations = $this->locationRepository->getDropdownItems($this->defaultLanguageId, $request->all());
+        $locations = collect($locations)->pluck('text', 'id')->toArray();
+
         $this->template = 'pages.vacancies.create';
 
-        return $this->renderOutput();
+        return $this->renderOutput(compact('languages', 'locations'));
     }
 
     /**
@@ -106,10 +118,12 @@ class VacancyController extends AppBaseController
     /**
      * Show the form for editing the specified Vacancy.
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $vacancy = $this->vacancyRepository->getDetails($id);
         $languages = $this->languageRepository->getAvailableLanguages();
+        $locations = $this->locationRepository->getDropdownItems($this->defaultLanguageId, $request->all());
+        $locations = collect($locations)->pluck('text', 'id')->toArray();
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             VacancyDescription::class,
@@ -124,7 +138,7 @@ class VacancyController extends AppBaseController
 
         $this->template = 'pages.vacancies.edit';
 
-        return $this->renderOutput(compact('vacancy', 'fields', 'languages'));
+        return $this->renderOutput(compact('vacancy', 'fields', 'languages', 'locations'));
     }
 
     /**

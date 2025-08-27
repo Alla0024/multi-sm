@@ -75,6 +75,7 @@ class ProductRepository extends BaseRepository
             $products = $products->limit(10);
         }
 
+        /** @noinspection DuplicatedCode */
         if (isset($args['q'])) {
             if (is_numeric($args['q']) || preg_match('/^\s*[^,]+(\s*,\s*[^,]+)+\s*$/', $args['q'])) {
                 if (is_array($args['q'])) {

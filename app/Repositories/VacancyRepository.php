@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Location;
 use App\Models\Vacancy;
 use App\Models\VacancyDescription;
 use App\Repositories\BaseRepository;
@@ -13,8 +14,7 @@ class VacancyRepository extends BaseRepository
         'status'
     ];
 
-    protected array $additionalFields = [
-    ];
+    protected array $additionalFields = [];
 
     public function getFieldsSearchable(): array
     {
@@ -34,6 +34,11 @@ class VacancyRepository extends BaseRepository
     public function filterIndexPage(int $perPage, int $language_id, $params) {
         $vacancies = $this->model
             ->leftJoin((new VacancyDescription())->getTable() . " as vd", 'vd.vacancy_id', '=', 'vacancies.id')
+            ->with(['location' => function($query) use ($language_id) {
+                return $query->select('id')->with(['descriptions' => function($query) use ($language_id) {
+                    return $query->where('language_id', $language_id);
+                }]);
+            }])
             ->where('vd.language_id', $language_id)
             ->select(['id', 'title', 'location_id', 'status'])
             ->when(isset($params['title']), function ($q) use ($params) {
@@ -46,6 +51,13 @@ class VacancyRepository extends BaseRepository
                 return $q->where('location_id', $params['location_id']);
             })
             ->paginate($perPage);
+
+        $vacancies->getCollection()->transform(function ($item) {
+            $location = $item->location->descriptions->first()->name;
+            unset($item->location, $item->location_id);
+            $item->location_id = $location;
+            return $item;
+        });
 
         return $vacancies;
     }

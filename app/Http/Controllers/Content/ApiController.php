@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\ArticleAuthorRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\LocationRepository;
 use App\Repositories\NewsCategoryRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\StoreRepository;
@@ -19,6 +20,7 @@ class ApiController extends AppBaseController
      * @var ArticleAuthorRepository $articleAuthorRepository;
      * @var ProductRepository $productRepository
      * @var StoreRepository $storeRepository
+     * @var LocationRepository $locationRepository
      * @var String $DEFAULT_LANGUAGE_ID;
      */
     private $categoryRepository;
@@ -26,6 +28,7 @@ class ApiController extends AppBaseController
     private $articleAuthorRepository;
     private $productRepository;
     private $storeRepository;
+    private $locationRepository;
     private $defaultLanguageId;
 
     public function __construct(
@@ -34,6 +37,7 @@ class ApiController extends AppBaseController
         ArticleAuthorRepository $articleAuthorRepo,
         ProductRepository $productRepo,
         StoreRepository $storeRepo,
+        LocationRepository $locationRepo
     )
     {
         parent::__construct();
@@ -43,6 +47,7 @@ class ApiController extends AppBaseController
         $this->articleAuthorRepository = $articleAuthorRepo;
         $this->productRepository = $productRepo;
         $this->storeRepository = $storeRepo;
+        $this->locationRepository = $locationRepo;
 
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
@@ -104,6 +109,17 @@ class ApiController extends AppBaseController
             $data = $this->storeRepository->getDropdownItems($this->defaultLanguageId, $request->all());
 
             return response()->json(['items' => $data ?? []]);
+        } else {
+            return abort(404);
+        }
+    }
+
+    public function getLocations(Request $request): JsonResponse
+    {
+        if ($request->ajax()) {
+            $data = $this->locationRepository->getDropdownItems($this->defaultLanguageId, $request->all());
+
+            return response()->json(['items' => $data ?? []], 200);
         } else {
             return abort(404);
         }
