@@ -4,6 +4,7 @@
         <table class="table" id="options-table">
             <thead>
             <tr>
+
                 <form class="search-form" method="GET" action="">
                     @if(isset($fields))
                         @foreach($fields as $index => $field)
@@ -17,10 +18,10 @@
                                                 <option value="0" @if(request($index) == '0') selected @endif>{{$word['status_0']}}</option>
                                             </select>
                                         @elseif($index == 'appears_in_categories')
-                                            <select class="" name="{{ $index }}" aria-label="{{ $word['search_'.$index] }}" aria-describedby="select-addon">
+                                            <select class=""  name="{{ $index }}" aria-label="{{ $word['search_'.$index] }}" aria-describedby="select-addon">
                                                 <option value="" @if(request($index) == null) selected @endif>{{ $word['all'] }}</option>
                                                 @foreach($categories as $category)
-                                                    <option value="{{ $category['id'] }}" @if(request($index) == $category['id']) selected @endif hidden>{{ $category['text'] }}</option>
+                                                    <option value="{{ $category['id'] }}" @if(request($index) == $category['id']) selected @endif >{{ $category['text'] }}</option>
                                                 @endforeach
                                             </select>
                                         @else
@@ -67,9 +68,17 @@
 
                          @elseif($index == 'appears_in_categories')
                              <td>
+                                 <div style="
+                                 display: flex;
+                                 flex-direction: column;
+                                 height: 84px;
+                                 row-gap: 4px;
+                                 overflow-y: auto;
+                                 ">
                                  @foreach($option[$index] as $category)
                                      <span>{{$category}}</span>
                                  @endforeach
+                                 </div>
                              </td>
                          @endif
                         @endif

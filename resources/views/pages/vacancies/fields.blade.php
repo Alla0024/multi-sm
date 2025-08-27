@@ -1,9 +1,10 @@
 <!-- Status Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['status']['inTab'] !!}">
-    <div class="form-check">
-        {!! Form::hidden('status', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('status', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('status', $word['title_status'], ['class' => 'form-check-label']) !!}
+    {!! Form::label('status', $word['title_status']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
+        </div>
     </div>
 </div>
 
@@ -14,12 +15,12 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][title]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
+                {!! Form::text("descriptions[$language->id][title]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
             </div>
         @endforeach
     </div>
 </div>
-
+{{--@dd($vacancy)--}}
 <!-- Description Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['description']['inTab'] !!}">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
@@ -27,8 +28,8 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                @if(isset($news))
-                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1">{!! $news['descriptions'][$language->id]['description'] ?? '' !!}</textarea>
+                @if(isset($vacancy))
+                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1">{!! $vacancy['descriptions'][$language->id]['description'] ?? '' !!}</textarea>
                 @else
                     <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1"></textarea>
                 @endif
@@ -44,7 +45,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][name_contact_person]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
+                {!! Form::text("descriptions[$language->id][name_contact_person]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
             </div>
         @endforeach
     </div>

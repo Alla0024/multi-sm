@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             removeButtons: '',
             bodyClass: 'custom-editor-body',
         });
-        textarea.setAttribute('required', '')
+        // textarea.setAttribute('', '')
     });
 
     // Save ajax data form
