@@ -234,3 +234,8 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
     });
 });
+
+Route::resource('attribute-groups', App\Http\Controllers\Content\AttributeGroupController::class);
+Route::resource('attribute-icons', App\Http\Controllers\Content\AttributeIconController::class);
+Route::resource('attribute-words', App\Http\Controllers\Content\AttributeWordController::class);
+Route::resource('attributes', App\Http\Controllers\Content\AttributeController::class);
