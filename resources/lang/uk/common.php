@@ -107,6 +107,10 @@ return [
     'sort_created_at_asc' => 'Найстаріші',
     'sort_created_at_desc' => 'Найновіші',
 
+    // Shared search fields
+    'title_sort_order' => 'Порядок сортування',
+    'search_sort_order' => 'Пошук за порядком сортування',
+
     // Errors
     'error_path_already_taken' => 'Цей шлях уже використовується'
 ];

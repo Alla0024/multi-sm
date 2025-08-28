@@ -1,0 +1,24 @@
+<?php
+
+return [
+    'attribute_words' => 'Слова атрибутів',
+    'error_news_not_found' => 'Статтю не знайдено',
+    'success_news_deleted' => 'Успішно видалено',
+    'success_news_saved' => 'Успішно збережено',
+    'title_id' => 'Ідентифікатор',
+    'search_id' => 'Пошук за ID',
+    'title_avatar' => 'Аватар',
+    'search_avatar' => 'Пошук за аватаром',
+    'title_facebook' => 'Facebook',
+    'search_facebook' => 'Пошук у Facebook',
+    'title_instagram' => 'Instagram',
+    'search_instagram' => 'Пошук в Instagram',
+    'title_created_at' => 'Дата створення',
+    'search_created_at' => 'Пошук за датою створення',
+    'title_updated_at' => 'Дата оновлення',
+    'search_updated_at' => 'Пошук за датою оновлення',
+    'title_key' => 'Ключ',
+    'search_key' => 'Пошук за ключ',
+    'tab_main' => 'Основне',
+    'tab_sort' => 'Сортування',
+];

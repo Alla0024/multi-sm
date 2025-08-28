@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{!!  $word['attributeWords'] !!}</h1>
+                    <h1>{!!  $word['attribute_words'] !!}</h1>
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">
