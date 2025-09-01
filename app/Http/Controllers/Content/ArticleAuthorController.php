@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateArticleAuthorRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\ArticleAuthorDescription;
 use App\Models\FirstPathQuery;
-use App\Models\Language;
 use App\Repositories\ArticleAuthorRepository;
 use App\Helpers\ModelSchemaHelper;
 use App\Repositories\LanguageRepository;
@@ -19,11 +18,9 @@ class ArticleAuthorController extends AppBaseController
 {
     /**
      * @var ArticleAuthorRepository $articleAuthorRepository
-     * @var LanguageRepository $languageRepository
      * @var int $defaultLanguageId
      */
     private ArticleAuthorRepository $articleAuthorRepository;
-    private LanguageRepository $languageRepository;
     private int $defaultLanguageId;
 
     public function __construct(ArticleAuthorRepository $articleAuthorRepo, LanguageRepository $languageRepository)
@@ -31,7 +28,6 @@ class ArticleAuthorController extends AppBaseController
         parent::__construct();
 
         $this->articleAuthorRepository = $articleAuthorRepo;
-        $this->languageRepository = $languageRepository;
 
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
@@ -51,7 +47,6 @@ class ArticleAuthorController extends AppBaseController
             'created_at_desc',
         ];
 
-        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
 
         $articleAuthors = $this->articleAuthorRepository->filterIndexPage($perPage, $languageId, $request->all());
@@ -65,7 +60,6 @@ class ArticleAuthorController extends AppBaseController
 
         return $this->renderOutput([
             'articleAuthors' => $articleAuthors,
-            'languages' => $languages,
             'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
@@ -77,8 +71,6 @@ class ArticleAuthorController extends AppBaseController
      */
     public function create()
     {
-        $languages = $this->languageRepository->getAvailableLanguages();
-
         $this->template = 'pages.article_authors.create';
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
@@ -88,7 +80,6 @@ class ArticleAuthorController extends AppBaseController
         ]);
         return $this->renderOutput([
             'fields' => $fields,
-            'languages' => $languages,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
@@ -113,7 +104,6 @@ class ArticleAuthorController extends AppBaseController
     public function show($id)
     {
         $articleAuthor = $this->articleAuthorRepository->find($id);
-        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($articleAuthor)) {
             Flash::error(__('common.flash_not_found'));
@@ -123,7 +113,7 @@ class ArticleAuthorController extends AppBaseController
 
         $this->template = 'pages.article_authors.show';
 
-        return $this->renderOutput(compact('articleAuthor', 'languages'));
+        return $this->renderOutput(compact('articleAuthor'));
     }
 
     /**
@@ -132,7 +122,6 @@ class ArticleAuthorController extends AppBaseController
     public function edit($id)
     {
         $articleAuthor = $this->articleAuthorRepository->find($id);
-        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($articleAuthor)) {
             Flash::error(__('common.flash_not_found'));
@@ -149,7 +138,6 @@ class ArticleAuthorController extends AppBaseController
         ]);
         return $this->renderOutput([
             'articleAuthor' => $articleAuthor,
-            'languages' => $languages,
             'fields' => $fields,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);

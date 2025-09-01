@@ -3,15 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Language;
-use App\Repositories\BaseRepository;
 
 class LanguageRepository extends BaseRepository
 {
-    protected $fieldSearchable = [
+    protected array $fieldSearchable = [
 
     ];
 
-    protected $additionalFields = [
+    protected array $additionalFields = [
     ];
 
     public function getFieldsSearchable(): array
@@ -27,9 +26,5 @@ class LanguageRepository extends BaseRepository
     public function model(): string
     {
         return Language::class;
-    }
-
-    public function getAvailableLanguages()  {
-        return $this->model->getAvailable();
     }
 }

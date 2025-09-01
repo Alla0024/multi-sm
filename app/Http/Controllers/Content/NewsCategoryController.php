@@ -17,19 +17,16 @@ class NewsCategoryController extends AppBaseController
 {
     /**
      * @var NewsCategoryRepository $newsCategoryRepository
-     * @var LanguageRepository $languageRepository
-     * @var String $defaultLanguageId;
+     * @var String $defaultLanguageId ;
      * */
     private $newsCategoryRepository;
-    private $languageRepository;
     private $defaultLanguageId;
 
-    public function __construct(NewsCategoryRepository $newsCategoryRepo, LanguageRepository $languageRepo)
+    public function __construct(NewsCategoryRepository $newsCategoryRepo)
     {
         parent::__construct();
 
         $this->newsCategoryRepository = $newsCategoryRepo;
-        $this->languageRepository = $languageRepo;
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
@@ -48,7 +45,6 @@ class NewsCategoryController extends AppBaseController
             'created_at_desc',
         ];
 
-        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all(), $languageId);
 
@@ -61,7 +57,6 @@ class NewsCategoryController extends AppBaseController
 
         return $this->renderOutput([
             'newsCategories' => $newsCategories,
-            'languages' => $languages,
             'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
@@ -104,7 +99,6 @@ class NewsCategoryController extends AppBaseController
     public function show($id)
     {
         $newsCategory = $this->newsCategoryRepository->find($id);
-        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($newsCategory)) {
             Flash::error(__('common.flash_not_found'));
@@ -114,8 +108,8 @@ class NewsCategoryController extends AppBaseController
 
         $this->template = 'pages.news_categories.show';
 
-        return $this->renderOutput(compact('newsCategory', 'languages'));
-}
+        return $this->renderOutput(compact('newsCategory'));
+    }
 
     /**
      * Show the form for editing the specified NewsCategory.

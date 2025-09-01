@@ -27,7 +27,7 @@ class OptionController extends AppBaseController
     private int $defaultLanguageId;
 
     public function __construct(
-        OptionRepository $optionRepo,
+        OptionRepository   $optionRepo,
         LanguageRepository $languageRepo,
         CategoryRepository $categoryRepo,
     )
@@ -55,7 +55,6 @@ class OptionController extends AppBaseController
             'created_at_desc',
         ];
 
-        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $options = $this->optionRepository->filterIndexPage($perPage, $languageId, request()->all());
         $categories = $this->categoryRepository->getDropdownItems($languageId);
@@ -73,7 +72,6 @@ class OptionController extends AppBaseController
 
         return $this->renderOutput([
             'options' => $options,
-            'languages' => $languages,
             'categories' => $categories,
             'sortFields' => $sortFields,
             'fields' => $fields,
@@ -86,7 +84,6 @@ class OptionController extends AppBaseController
      */
     public function create()
     {
-        $languages = $this->languageRepository->getAvailableLanguages();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionDescription::class,
             Option::class
@@ -94,7 +91,7 @@ class OptionController extends AppBaseController
 
         $this->template = 'pages.options.create';
 
-        return $this->renderOutput(['fields' => $fields, 'languages' => $languages]);
+        return $this->renderOutput(['fields' => $fields]);
     }
 
     /**
@@ -135,7 +132,6 @@ class OptionController extends AppBaseController
     public function edit($id)
     {
         $option = $this->optionRepository->getDetails($id);
-        $languages = $this->languageRepository->getAvailableLanguages();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionDescription::class,
             Option::class
@@ -149,7 +145,7 @@ class OptionController extends AppBaseController
 
         $this->template = 'pages.options.edit';
 
-        return $this->renderOutput(compact('option', 'fields', 'languages'));
+        return $this->renderOutput(compact('option', 'fields'));
     }
 
     /**

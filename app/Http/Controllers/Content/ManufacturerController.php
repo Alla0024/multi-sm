@@ -12,20 +12,16 @@ use App\Repositories\ManufacturerRepository;
 use Flash;
 use Illuminate\Http\Request;
 use App\Models\Manufacturer;
+
 class ManufacturerController extends AppBaseController
 {
-    /** @var ManufacturerRepository $manufacturerRepository*/
+    /** @var ManufacturerRepository $manufacturerRepository */
     private ManufacturerRepository $manufacturerRepository;
 
-    /** @var LanguageRepository $languageRepository */
-    private LanguageRepository $languageRepository;
-
     public function __construct(
-        ManufacturerRepository $manufacturerRepo,
-        LanguageRepository     $languageRepo)
+        ManufacturerRepository $manufacturerRepo)
     {
         $this->manufacturerRepository = $manufacturerRepo;
-        $this->languageRepository = $languageRepo;
 
         parent::__construct();
     }
@@ -48,7 +44,6 @@ class ManufacturerController extends AppBaseController
         $language_id = $request->input('language_id', config('settings.locale.default_language_id'));
 
         $manufacturers = $this->manufacturerRepository->filterIndexPage($request->all(), $perPage, $language_id);
-        $languages = $this->languageRepository->getAvailableLanguages();
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ManufacturerDescription::class,
@@ -59,7 +54,6 @@ class ManufacturerController extends AppBaseController
 
         return $this->renderOutput([
             'manufacturers' => $manufacturers,
-            'languages' => $languages,
             'sortFields' => $sortFields,
             'fields' => $fields,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
@@ -76,10 +70,8 @@ class ManufacturerController extends AppBaseController
             Manufacturer::class,
             ManufacturerDescription::class,
         ]);
-        $languages = $this->languageRepository->getAvailableLanguages();
         return $this->renderOutput([
             'fields' => $fields,
-            'languages' => $languages,
         ]);
     }
 
@@ -134,11 +126,10 @@ class ManufacturerController extends AppBaseController
 
             return redirect(route('manufacturers.index'));
         }
-        $languages = $this->languageRepository->getAvailableLanguages();
         $this->template = 'pages.manufacturers.edit';
 
 
-        return $this->renderOutput(compact('manufacturer', 'fields', 'inTabs', 'languages'));
+        return $this->renderOutput(compact('manufacturer', 'fields', 'inTabs'));
     }
 
     /**
