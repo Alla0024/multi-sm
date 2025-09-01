@@ -1,5 +1,5 @@
 <!-- Location Group Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['location_group_id']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('location_group_id', $word['title_location_group_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -10,7 +10,7 @@
 
 
 <!-- Type Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['type']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -21,7 +21,7 @@
 
 
 <!-- Geocode Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['geocode']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('geocode', $word['title_geocode']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -32,7 +32,7 @@
 
 
 <!-- Path Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['path']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -43,7 +43,7 @@
 
 
 <!-- Isocode Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['isocode']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('isocode', $word['title_isocode']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -54,7 +54,7 @@
 
 
 <!-- Hash Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['hash']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('hash', $word['title_hash']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -65,7 +65,7 @@
 
 
 <!-- Ref Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['ref']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('ref', $word['title_ref']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -76,7 +76,7 @@
 
 
 <!-- Indexing Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['indexing']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('indexing', $word['title_indexing']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -87,7 +87,7 @@
 
 
 <!-- Status Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['status']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -98,7 +98,7 @@
 
 
 <!-- Delivery File Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['delivery_file']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('delivery_file', $word['title_delivery_file']) !!}
     <div class="flex-row input">
         <div class="input-group">

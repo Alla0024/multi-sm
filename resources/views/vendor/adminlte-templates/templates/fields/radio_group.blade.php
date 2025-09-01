@@ -1,5 +1,5 @@
 <!-- {{ $fieldTitle }} Field -->
-<div class="form-group col-sm-12 tab-pane input-block" data-for-tab="@{!! $fields['{{$fieldName}}']['inTab'] !!}">
+<div class="form-group col-sm-12 tab-pane input-block" data-for-tab="main">
 @if($config->options->localized)
     @{!! Form::label('{{ $fieldName }}', __('models/{{ $config->modelNames->camelPlural }}.fields.{{ $fieldName }}'), ['class' => 'form-check-label']) !!}
 @else

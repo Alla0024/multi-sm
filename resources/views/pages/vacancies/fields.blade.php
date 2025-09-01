@@ -1,5 +1,5 @@
 <!-- Status Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['status']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -9,7 +9,7 @@
 </div>
 
 <!-- Title Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['title']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_title', $word['title_descriptions_title']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)
@@ -22,7 +22,7 @@
 </div>
 {{--@dd($vacancy)--}}
 <!-- Description Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['description']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)
@@ -39,7 +39,7 @@
 </div>
 
 <!-- Contact Person Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['name_contact_person']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name_contact_person', $word['title_descriptions_name_contact_person']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)
@@ -52,7 +52,7 @@
 </div>
 
 <!-- Payment Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['payment']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('payment', $word['title_payment']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -63,7 +63,7 @@
 
 
 <!-- Phone Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['phone']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('phone', $word['title_phone']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -73,7 +73,7 @@
 </div>
 
 <!-- Location Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['location_id']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('location_id', $word['title_location_id']) !!}
     <div class="flex-row input">
         <div class="input-group">

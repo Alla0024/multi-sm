@@ -1,5 +1,5 @@
 <!-- Option Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['option_id']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('option_id', $word['title_option_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -10,7 +10,7 @@
 
 
 <!-- Css Code Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['css_code']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('css_code', $word['title_css_code']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -21,7 +21,7 @@
 
 
 <!-- Image Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['image']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('image', $word['title_image']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -32,7 +32,7 @@
 
 
 <!-- Path Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['path']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -43,7 +43,7 @@
 
 
 <!-- Sort Order Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
         <div class="input-group">

@@ -1,5 +1,5 @@
 <!-- Title Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['description']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_title', $word['title_descriptions_name']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)
@@ -12,7 +12,7 @@
 </div>
 
 <!-- Status Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['status']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -22,7 +22,7 @@
 </div>
 
 <!-- SEO Url Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['path']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -35,7 +35,7 @@
 @include('components.inputs.stores_multi_select', ['name' => 'stores', 'value' => $information ?? []])
 
 <!-- Description Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['description']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
 
     <div class="flex-row input">

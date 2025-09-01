@@ -1,5 +1,5 @@
 <!-- Image Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['image']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('image', $word['title_image']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -10,7 +10,7 @@
 
 
 <!-- Pattern Field -->
-<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="{!! $fields['pattern']['inTab'] !!}">
+<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('pattern', $word['title_pattern']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -21,7 +21,7 @@
 
 
 <!-- Value Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['value']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('value', $word['title_value']) !!}
     <div class="flex-row input">
         <div class="input-group">

@@ -23,11 +23,10 @@
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
-                    @foreach($inTabs as $tab)
-                        <li class="nav-item">
-                            <button class="nav-link active" type="button" data-tab="{{$tab}}">{{$word["tab_".$tab]}}</button>
-                        </li>
-                        @endforeach
+                    <li class="nav-item">
+                        <button class="nav-link active" type="button"
+                                data-tab="main">{{$word["tab_main"]}}</button>
+                    </li>
                         <li class="nav-item">
                             <button class="nav-link " type="button"
                                     data-tab="product">{{$word["tab_products"]}}</button>

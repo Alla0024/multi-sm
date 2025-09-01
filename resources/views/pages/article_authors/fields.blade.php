@@ -1,6 +1,6 @@
 <!-- Avatar Field -->
 
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['avatar']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane" data-for-tab="main">
     {!! Form::label('avatar', $word['title_avatar']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -24,7 +24,7 @@
 @endpush
 
 <!-- SEO url -->
-<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="{!! $fields['path']['inTab'] !!}">
+<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -34,7 +34,7 @@
 </div>
 
 <!-- Facebook Field -->
-<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="{!! $fields['facebook']['inTab'] !!}">
+<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('facebook', $word['title_facebook']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -45,7 +45,7 @@
 
 
 <!-- Instagram Field -->
-<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="{!! $fields['instagram']['inTab'] !!}">
+<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('instagram', $word['title_instagram']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -55,7 +55,7 @@
 </div>
 
 <!-- Name Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['name']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)
@@ -68,7 +68,7 @@
 </div>
 
 <!-- Description Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['description']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)

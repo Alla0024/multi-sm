@@ -6,7 +6,7 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <h1>
-                            {{ $word['create'] }} {!!  $word['Attribute Word'] !!}
+                            {{ $word['create'] }}
                     </h1>
                 </div>
             </div>
@@ -23,17 +23,9 @@
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
-                    @isset($inTabs)
-                        @foreach($inTabs as $tab)
-                            <li class="nav-item">
-                                <button class="nav-link active" type="button" data-tab="{{$tab}}">{{$word["tab_".$tab]}}</button>
-                            </li>
-                        @endforeach
-                    @else
                     <li class="nav-item">
                         <button class="nav-link active" type="button" data-tab="main">{{$word["tab_main"]}}</button>
                     </li>
-                    @endisset
                 </ul>
                 <div class="row card-items">
                     @include('pages.attribute_words.fields')

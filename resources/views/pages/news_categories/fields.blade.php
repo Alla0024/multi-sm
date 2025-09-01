@@ -1,5 +1,5 @@
 <!-- Status Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['status']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -10,21 +10,21 @@
 
 
 <!-- Seo Url Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['seo_url']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane" data-for-tab="main">
     {!! Form::label('seo_url', $word['title_seo_url']) !!}
     {!! Form::text('seo_url', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
 </div>
 
 
 <!-- Color Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['color']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane" data-for-tab="main">
     {!! Form::label('color', $word['title_color']) !!}
     {!! Form::text('color', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
 </div>
 
 
 <!-- Sort Order Field -->
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane" data-for-tab="main">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
 </div>

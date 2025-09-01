@@ -1,5 +1,5 @@
 <!-- Sort Order Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -10,7 +10,7 @@
 
 
 <!-- Key Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['key']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('key', $word['title_key']) !!}
     <div class="flex-row input">
         <div class="input-group">

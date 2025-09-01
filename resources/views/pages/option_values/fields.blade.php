@@ -15,7 +15,7 @@
 @endphp
 
 <!-- Name Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['name']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)
@@ -28,7 +28,7 @@
 </div>
 
 <!-- Type Material Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['type_material']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_type_material', $word['title_descriptions_type_material']) !!}
     <div class="flex-row input">
         @foreach($languages as $language)
@@ -39,9 +39,9 @@
         @endforeach
     </div>
 </div>
-@dump($optionValue)
+{{--@dump($optionValue)--}}
 <!-- Parent Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['parent_id']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('parent_id', $word['title_parent_id']) !!}
     <div class="flex-row input">
         <div class="input-group input-list-search" style="position: relative;">
@@ -72,7 +72,7 @@
 </div>
 
 <!-- Image Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['image']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('image', $word['title_image']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -82,7 +82,7 @@
 </div>
 
 <!-- Type Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['type']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -92,7 +92,7 @@
 </div>
 
 <!-- Sort Order Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -102,7 +102,7 @@
 </div>
 
 <!-- Status Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['status']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -113,7 +113,7 @@
 
 <!-- Default Field -->
 
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['default']['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('default', $word['title_default']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -124,7 +124,7 @@
 
 @if(str_contains(request()->path(), 'edit'))
     <!-- Toggle Children Status Field -->
-    <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['children_status']['inTab'] !!}">
+    <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
         {!! Form::label('children_status', $word['title_children_status']) !!}
         <div class="flex-row input">
             <div class="input-group">
@@ -134,7 +134,7 @@
     </div>
 
     <!-- Level Field -->
-    <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields['level']['inTab'] !!}">
+    <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
         {!! Form::label('level', $word['title_level']) !!}
         <div class="flex-row input">
             <div class="input-group">
