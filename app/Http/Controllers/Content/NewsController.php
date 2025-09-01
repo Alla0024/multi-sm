@@ -29,8 +29,8 @@ class NewsController extends AppBaseController
     private $defaultLanguageId;
 
     public function __construct(
-        NewsRepository $newsRepo,
-        LanguageRepository $languageRepository,
+        NewsRepository          $newsRepo,
+        LanguageRepository      $languageRepository,
         ArticleAuthorRepository $articleAuthorRepository
     )
     {
@@ -50,7 +50,6 @@ class NewsController extends AppBaseController
         $perPage = $request->input('perPage', 10);
         $language_id = $request->get('language_id') ?? $this->defaultLanguageId;
 
-        $languages = $this->languageRepository->getAvailableLanguages();
         $news = $this->newsRepository->filterIndexPage($perPage, $language_id, $request->all());
         $sortFields = [
             'default',
@@ -70,7 +69,6 @@ class NewsController extends AppBaseController
         return $this->renderOutput([
             'news' => $news,
             'sortFields' => $sortFields,
-            'languages' => $languages,
             'fields' => $fields,
         ]);
     }
@@ -82,7 +80,6 @@ class NewsController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.news.create';
-        $languages = $this->languageRepository->getAvailableLanguages();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
             News::class,
@@ -90,7 +87,6 @@ class NewsController extends AppBaseController
         ]);
         return $this->renderOutput([
             'fields' => $fields,
-            'languages' => $languages,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
@@ -115,7 +111,6 @@ class NewsController extends AppBaseController
     public function show($id)
     {
         $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
-        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($news)) {
             Flash::error(__('common.flash_not_found'));
@@ -125,7 +120,7 @@ class NewsController extends AppBaseController
 
         $this->template = 'pages.news.show';
 
-        return $this->renderOutput(compact('news', 'languages'));
+        return $this->renderOutput(compact('news'));
     }
 
     /**
@@ -133,7 +128,6 @@ class NewsController extends AppBaseController
      */
     public function edit($id)
     {
-        $languages = $this->languageRepository->getAvailableLanguages();
         $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
         $authors = $this->articleAuthorRepository->getAuthorIdNameMap($this->defaultLanguageId);
 
@@ -154,7 +148,6 @@ class NewsController extends AppBaseController
         return $this->renderOutput([
             'news' => $news,
             'fields' => $fields,
-            'languages' => $languages,
             'authors' => $authors,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);

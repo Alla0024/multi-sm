@@ -59,6 +59,20 @@
             </div>
         </div>
 
+        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/attribute*') ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is($adminPath.'/attribute*') ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="icon"><i class="bi bi-star fs-20"></i></div>
+                <div class="name">{{$word['menu_attribute']}}</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is($adminPath.'/attribute*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributes')}}">{{$word['menu_attribute']}}</a>
+                <a class="item {{ Request::is($adminPath.'/attributeGroups*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeGroups')}}">{{$word['menu_attribute_groups']}}</a>
+                <a class="item {{ Request::is($adminPath.'/attributeIcons*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeIcons')}}">{{$word['menu_attribute_icons']}}</a>
+                <a class="item {{ Request::is($adminPath.'/attributeWords*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeWords')}}">{{$word['menu_attribute_words']}}</a>
+            </div>
+        </div>
+
         <a href="{{ route('vacancies.index') }}" class="item {{ Request::is($adminPath.'/vacancies*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-gift fs-20"></i></div>
             <div class="name">{{$word['menu_vacancies']}}</div>

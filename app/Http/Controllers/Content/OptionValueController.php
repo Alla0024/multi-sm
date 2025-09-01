@@ -17,18 +17,15 @@ class OptionValueController extends AppBaseController
 {
     /**
      * @var OptionValueRepository $optionValueRepository
-     * @var LanguageRepository $languageRepository
      */
     private OptionValueRepository $optionValueRepository;
-    private LanguageRepository $languageRepository;
     private int $defaultLanguageId;
 
-    public function __construct(OptionValueRepository $optionValueRepo, LanguageRepository $languageRepo)
+    public function __construct(OptionValueRepository $optionValueRepo)
     {
         parent::__construct();
 
         $this->optionValueRepository = $optionValueRepo;
-        $this->languageRepository = $languageRepo;
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
@@ -47,7 +44,6 @@ class OptionValueController extends AppBaseController
             'created_at_desc',
         ];
 
-        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $optionValues = $this->optionValueRepository->filterIndexPage($perPage, request()->all(), $languageId, $id);
 
@@ -67,7 +63,6 @@ class OptionValueController extends AppBaseController
         return $this->renderOutput([
             'optionValues' => $optionValues,
             'breadcrumbs' => $breadcrumbs,
-            'languages' => $languages,
             'parentId' => $id,
             'fields' => $fields,
             'sortFields' => $sortFields,
@@ -90,7 +85,6 @@ class OptionValueController extends AppBaseController
             return redirect(route('optionValues.index'));
         }
 
-        $languages = $this->languageRepository->getAvailableLanguages();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionValue::class,
             OptionValueDescription::class
@@ -98,7 +92,7 @@ class OptionValueController extends AppBaseController
 
         $this->template = 'pages.option_values.create';
 
-        return $this->renderOutput(['languages' => $languages, 'fields' => $fields, 'parentId' => $parentId]);
+        return $this->renderOutput(['fields' => $fields, 'parentId' => $parentId]);
     }
 
     /**
@@ -132,7 +126,6 @@ class OptionValueController extends AppBaseController
      */
     public function edit($id)
     {
-        $languages = $this->languageRepository->getAvailableLanguages();
         $optionValue = $this->optionValueRepository->getDetails($id);
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionValue::class,
@@ -147,7 +140,7 @@ class OptionValueController extends AppBaseController
 
         $this->template = 'pages.option_values.edit';
 
-        return $this->renderOutput(compact('optionValue', 'fields', 'languages'));
+        return $this->renderOutput(compact('optionValue', 'fields'));
     }
 
     /**

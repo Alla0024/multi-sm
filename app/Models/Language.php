@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Language extends Model
 {
@@ -36,7 +37,12 @@ class Language extends Model
         'sort_order' => 'required'
     ];
 
-    public static function getAvailable() {
-        return Language::where('status', true)->get();
+    public static function getLanguages()
+    {
+        return Cache::rememberForever('languages', function () {
+            return self::where('status', 1)
+                ->orderBy('sort_order')
+                ->get();
+        });
     }
 }

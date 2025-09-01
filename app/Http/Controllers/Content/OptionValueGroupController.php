@@ -16,11 +16,9 @@ class OptionValueGroupController extends AppBaseController
 {
     /**
      * @var OptionValueGroupRepository $optionValueGroupRepository
-     * @var LanguageRepository $languageRepository
      * @var int $defaultLanguageId
      * */
     private OptionValueGroupRepository $optionValueGroupRepository;
-    private LanguageRepository $languageRepository;
     private int $defaultLanguageId;
 
     public function __construct(OptionValueGroupRepository $optionValueGroupRepo, LanguageRepository $languageRepo)
@@ -28,7 +26,6 @@ class OptionValueGroupController extends AppBaseController
         parent::__construct();
 
         $this->optionValueGroupRepository = $optionValueGroupRepo;
-        $this->languageRepository = $languageRepo;
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
@@ -47,7 +44,6 @@ class OptionValueGroupController extends AppBaseController
             'created_at_desc',
         ];
 
-        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
 
         $optionValueGroups = $this->optionValueGroupRepository->paginate($perPage);
@@ -60,7 +56,6 @@ class OptionValueGroupController extends AppBaseController
 
         return $this->renderOutput([
             'optionValueGroups' => $optionValueGroups,
-            'languages' => $languages,
             'fields' => $fields,
             'sortFields' => $sortFields,
         ]);

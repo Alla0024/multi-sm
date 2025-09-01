@@ -18,11 +18,9 @@ class InformationController extends AppBaseController
 {
     /**
      * @var InformationRepository $informationRepository
-     * @var LanguageRepository $languageRepository
-     * @var int $defaultLanguageId;
+     * @var int $defaultLanguageId ;
      * */
     private InformationRepository $informationRepository;
-    private LanguageRepository $languageRepository;
     private int $defaultLanguageId;
 
     public function __construct(
@@ -33,7 +31,6 @@ class InformationController extends AppBaseController
         parent::__construct();
 
         $this->informationRepository = $informationRepo;
-        $this->languageRepository = $languageRepo;
         $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
@@ -52,7 +49,6 @@ class InformationController extends AppBaseController
             'created_at_desc',
         ];
 
-        $languages = $this->languageRepository->getAvailableLanguages();
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $information = $this->informationRepository->filterIndexPage($perPage, $languageId, request()->all());
 
@@ -74,7 +70,6 @@ class InformationController extends AppBaseController
         return $this->renderOutput([
             'information' => $information,
             'sortFields' => $sortFields,
-            'languages' => $languages,
             'fields' => $fields,
         ]);
     }
@@ -85,8 +80,6 @@ class InformationController extends AppBaseController
      */
     public function create()
     {
-        $languages = $this->languageRepository->getAvailableLanguages();
-
         $this->template = 'pages.information.create';
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,
@@ -96,7 +89,6 @@ class InformationController extends AppBaseController
 
         return $this->renderOutput([
             'fields' => $fields,
-            'languages' => $languages,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
@@ -121,7 +113,6 @@ class InformationController extends AppBaseController
     public function show($id)
     {
         $information = $this->informationRepository->find($id);
-        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($information)) {
             Flash::error(__('common.flash_not_found'));
@@ -131,8 +122,8 @@ class InformationController extends AppBaseController
 
         $this->template = 'pages.information.show';
 
-        return $this->renderOutput(compact('information', 'languages'));
-}
+        return $this->renderOutput(compact('information'));
+    }
 
     /**
      * Show the form for editing the specified Information.
@@ -140,7 +131,6 @@ class InformationController extends AppBaseController
     public function edit($id)
     {
         $information = $this->informationRepository->find($id);
-        $languages = $this->languageRepository->getAvailableLanguages();
 
         if (empty($information)) {
             Flash::error(__('common.flash_not_found'));
@@ -157,7 +147,6 @@ class InformationController extends AppBaseController
 
         return $this->renderOutput([
             'information' => $information,
-            'languages' => $languages,
             'fields' => $fields,
             'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);

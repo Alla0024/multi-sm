@@ -45,9 +45,10 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('optionValues', 'App\Http\Controllers\Content\OptionValueController');
         Route::resource('optionValueGroups', 'App\Http\Controllers\Content\OptionValueGroupController');
         Route::resource('vacancies', 'App\Http\Controllers\Content\VacancyController');
-
-
-
+        Route::resource('attributeGroups', 'App\Http\Controllers\Content\AttributeGroupController');
+        Route::resource('attributeIcons', 'App\Http\Controllers\Content\AttributeIconController');
+        Route::resource('attributeWords', 'App\Http\Controllers\Content\AttributeWordController');
+        Route::resource('attributes', 'App\Http\Controllers\Content\AttributeController');
 
 
 
@@ -57,10 +58,10 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('informations', 'Content\InformationController');
         Route::resource('shipping_methods', 'Content\ShippingController');
         Route::resource('filters', 'Content\FilterController');
-        Route::resource('attributes', 'Content\AttributeController');
-        Route::resource('attribute_groups', 'Content\AttributeGroupController');
-        Route::resource('attribute_words', 'Content\AttributeWordController');
-        Route::resource('attribute_icons', 'Content\AttributeIconController');
+//        Route::resource('attributes', 'Content\AttributeController');
+//        Route::resource('attribute_groups', 'Content\AttributeGroupController');
+//        Route::resource('attribute_words', 'Content\AttributeWordController');
+//        Route::resource('attribute_icons', 'Content\AttributeIconController');
         Route::get('fiscalization', 'Content\FiscalizationController@index')->name('fiscalization');
         Route::resource('option_values', 'Content\OptionValueController');
         Route::resource('categories', 'Content\CategoryController');

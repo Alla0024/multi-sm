@@ -159,3 +159,31 @@
         <p>Locations</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('attributeGroups.index') }}" class="nav-link {{ Request::is('attributeGroups*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Attribute Groups</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('attributeIcons.index') }}" class="nav-link {{ Request::is('attributeIcons*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Attribute Icons</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('attributeWords.index') }}" class="nav-link {{ Request::is('attributeWords*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Attribute Words</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('attributes.index') }}" class="nav-link {{ Request::is('attributes*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Attributes</p>
+    </a>
+</li>
