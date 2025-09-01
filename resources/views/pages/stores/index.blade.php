@@ -25,7 +25,7 @@
                 <div class="col-sm-2">
                     <a class="btn btn-primary float-right"
                        href="{{ route('stores.create') }}">
-                        {{$word['add']}}
+                        {!! $word['add'] !!}
                     </a>
                 </div>
             </div>

@@ -67,7 +67,7 @@
     {!! Form::label('phone', $word['title_phone']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('phone', null, ['class' => 'form-control', 'required', 'maxlength' => 255]) !!}
+            <input type="text" value="{{$vacancy['phone'] ?? ''}}" required x-on:input="$store.page.mask($el)" x-on:paste="$nextTick(() => $store.page.mask($el))">
         </div>
     </div>
 </div>

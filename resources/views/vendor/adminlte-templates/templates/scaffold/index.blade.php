@@ -63,7 +63,7 @@
                 <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"
                        href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.create') }}">
-                        @{{$word['add']}}
+                        @{!! $word['add'] !!}
                     </a>
                 </div>
             </div>

@@ -7,19 +7,23 @@ return [
     'details' => 'Деталі',
     'delete' => 'Видалити',
     'edit' => 'Редагувати',
-    'add' => 'Додати',
+    'add' => '<i class="bi bi-plus-circle"></i>',
     'action' => 'Дія',
-    'language' => 'Мова',
     'search' => 'Пошук',
     'show_by' => 'Показувати по',
     'select' => 'Вибрати',
     'all' => 'Всі',
 
+    'language' => 'Мова',
+    'language_ru' => 'Російська',
+    'language_uk' => 'Українська',
+    'language_es' => 'Іспанська',
+
     'status_0' => 'Вимкнено',
     'status_1' => 'Увікнено',
 
-    'status_active' => 'Активний',
-    'status_inactive' => 'Неактивний',
+    'status_active' => 'Увікнено',
+    'status_inactive' => 'Вимкнено',
 
     // Menu
     '1' => '🤢',

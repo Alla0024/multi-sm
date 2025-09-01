@@ -60,7 +60,7 @@
                 <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"
                        href="{{ route('optionValues.create', [...((!is_numeric($id ?? null) && !is_null($id ?? null)) ? [] : ['parent_id' => $parentId])]) }}">
-                    {{$word['add']}}
+                    {!! $word['add'] !!}
                     </a>
                 </div>
             </div>

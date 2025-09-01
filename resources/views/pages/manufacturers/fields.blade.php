@@ -3,28 +3,19 @@
     {!! Form::label('image', $word['title_image']) !!}
     <div class="input-group">
         <div class="custom-file image-upload">
-            {!! Form::file('image', ['class' => 'custom-file-input']) !!}
-            <label for="image" class="custom-file-label"><i class="bi bi-arrow-up-square"></i></label>
-            <img src="" alt="Прев’ю" style="max-width: 200px; margin-top: 10px; display: none;">
-            {{$manufacturer['image']}}
+{{--            {!! Form::file('image', ['class' => 'custom-file-input']) !!}--}}
+            <label for="image" class="custom-file-label lfm" data-input="thumbnail" data-preview="holder" data-path=""><i class="bi bi-arrow-up-square"></i></label>
+            <input id="thumbnail" type="hidden" name="image" value="{{$manufacturer['image'] ?? ''}}">
+            <img class="hide @if(isset($manufacturer['image'])) show @endif " src="{{$manufacturer['image'] ?? ''}}" id="holder" alt="Прев’ю" style="max-width: 200px;">
+
         </div>
     </div>
-    <div class="lfm" data-input="thumbnail" data-preview="holder" data-path="">Обрати</div>
-    <input id="thumbnail" type="text" name="filepath">
-    <img id="holder" alt="" style="max-width:200px;">
+{{--    <div class="" >Обрати</div>--}}
+
+{{--    <img  alt="" style="max-width:200px;">--}}
 </div>
 <div class="clearfix"></div>
-<div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
-    {!! Form::label("description_name", $word['title_sort_order']) !!}
-    <div class="flex-row w-full">
-        @foreach($languages as $language)
-            <div class="form-group mt-3">
-                {!! Form::label("description[$language->id][name]", $language->id) !!}
-                {!! Form::text("description[$language->id][name]", null, ['class' => 'form-control', ]) !!}
-            </div>
-        @endforeach
-    </div>
-</div>
+
 <!-- Sort Order Field -->
 <div class="form-group col-sm-6 tab-pane" data-for-tab="{!! $fields['sort_order']['inTab'] !!}">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}

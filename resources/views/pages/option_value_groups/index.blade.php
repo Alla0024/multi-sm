@@ -39,7 +39,7 @@
                 <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"
                        href="{{ route('optionValueGroups.create') }}">
-                        {{$word['add']}}
+                        {!! $word['add'] !!}
                     </a>
                 </div>
             </div>

@@ -34,16 +34,36 @@
             .col-sm-6{
                 padding: 0;
             }
-            .btn{
-                background-color: $col_blue_pr;
-                font-size: 14px;
-                border: none;
-                color: white;
-                &:hover{
-                    background-color: $col_blue_pr_hover;
+            .action-item{
+                position: absolute;
+                right: 12px;
+                top: 12px;
+                padding: 0;
+                .btn{
+                    background-color: $col_blue_pr;
+                    border: none;
+                    color: white;
+                    &:hover{
+                        background-color: $col_blue_pr_hover;
+                    }
+                }
+                .btn-primary{
+                    font-size: 18px;
+                    //line-height: 110%;
+                    padding: 6px 8px 2px;
                 }
             }
+
+
         }
+    }
+
+
+}
+.edit-container{
+    margin-top: 0;
+    h1{
+        font-size: 24px;
     }
 }
 

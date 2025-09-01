@@ -84,6 +84,7 @@ function filemanager(elements, options = {}) {
                     if (previewEl) {
                         if ('src' in previewEl) {
                             previewEl.src = chosenUrl;
+                            previewEl.classList.remove('hide')
                         } else {
                             previewEl.style.backgroundImage = `url("${chosenUrl}")`;
                         }

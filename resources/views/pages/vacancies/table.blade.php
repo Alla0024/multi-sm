@@ -4,11 +4,13 @@
         <table class="table" id="vacancies-table">
             <thead>
             <tr>
+
                 <form class="search-form" method="GET" action="">
                     @if(isset($fields))
                         @foreach($fields as $index => $field)
                             @if($index != 'id' && $field['inTable'])
                                 <th class="">
+
                                     @if(isset($field['searchable']) && $field['searchable'])
                                         @if($index == 'status')
                                             <select class="" name="{{ $index }}" aria-label="{{ $word['search_'.$index] }}" aria-describedby="select-addon">
@@ -19,9 +21,10 @@
                                         @elseif($index == 'location_id' && $field['searchable'])
                                             <select class="" name="{{ $index }}" aria-label="{{ $word['search_'.$index] }}" aria-describedby="select-addon">
                                                 <option value="{{ null }}" hidden @if(request($index) == null) selected @endif>{{ $word['all'] }}</option>
+
                                                 @if(isset($locations))
                                                     @foreach($locations as $location)
-                                                        <option value="{{ $location['id'] }}" hidden @if(request($index) == $location['id']) selected @endif>{{ $location['text'] }}</option>
+                                                        <option value="{{ $location['id'] }}"  @if(request($index) == $location['id']) selected @endif>{{ $location['text'] }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>

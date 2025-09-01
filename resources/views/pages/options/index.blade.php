@@ -23,7 +23,7 @@
                                         @foreach($languages as $language)
                                             <option
                                                 value="{{ $language->id }}" {{ request('language_id') == $language->id ? 'selected' : '' }}>
-                                                {!! $language->code !!}
+                                                {{$word['language_'.$language->code]}}
                                             </option>
                                         @endforeach
                                     </select>
@@ -59,7 +59,7 @@
                 <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"
                        href="{{ route('options.create') }}">
-                        {{$word['add']}}
+                        {!! $word['add'] !!}
                     </a>
                 </div>
             </div>

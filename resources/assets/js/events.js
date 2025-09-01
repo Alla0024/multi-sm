@@ -200,4 +200,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Mask number
+    Alpine.store('page').mask = (el) => {
+        let d = (el.value || '').replace(/\D+/g, '');
+
+        if (d.startsWith('380')) d = d.slice(3);
+        else if (d.startsWith('0')) d = d.slice(1);
+
+        d = d.slice(0, 9);
+
+        if (!d.length) {
+            el.value = '';
+            return;
+        }
+
+        let out = '+380 ';
+        if (d.length <= 2) {
+            out += d; // +380 XX
+        } else if (d.length <= 5) {
+            out += d.slice(0,2) + ' ' + d.slice(2);
+        } else if (d.length <= 7) {
+            out += d.slice(0,2) + ' ' + d.slice(2,5) + '-' + d.slice(5);
+        } else {
+            out += d.slice(0,2) + ' ' + d.slice(2,5) + '-' + d.slice(5,7) + '-' + d.slice(7,9);
+        }
+        el.value = out;
+    }
+
 })

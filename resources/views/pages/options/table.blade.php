@@ -70,13 +70,25 @@
                              <td>
                                  <div style="
                                  display: flex;
-                                 flex-direction: column;
-                                 height: 84px;
+                                 align-items: start;
+                                 flex-wrap: wrap;
+                                 width: 100%;
+                                 max-width: 480px;
+                                 height: auto;
+                                 max-height: 100px;
                                  row-gap: 4px;
                                  overflow-y: auto;
+                                 margin: 0 auto;
                                  ">
                                  @foreach($option[$index] as $category)
-                                     <span>{{$category}}</span>
+                                     <div style="
+                                        background: #FBFCFCFF;
+                                        padding: 2px 4px;
+                                        margin: 1px 4px;
+                                        height: 20px;
+                                        border: 1px solid #ACACACFF;
+                                        border-radius: 4px;
+                                     ">{{$category}}</div>
                                  @endforeach
                                  </div>
                              </td>
