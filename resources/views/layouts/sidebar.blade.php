@@ -16,17 +16,17 @@
             <div class="name">Головна</div>
         </a>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/example*') ? 'true' : 'false' }}}">
-            <div class="item {{ Request::is($adminPath.'/example*') ? 'active' : '' }}" @click="open_list = !open_list">
-                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
-                <div class="name">Example</div>
-                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
-            </div>
-            <div class="list" :class="{'list-open': open_list}">
-                <a class="item {{ Request::is($adminPath.'/example') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/example')}}">Form</a>
-                <a class="item {{ Request::is($adminPath.'/example/edit*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/example/edit')}}">Inputs</a>
-            </div>
-        </div>
+{{--        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/example*') ? 'true' : 'false' }}}">--}}
+{{--            <div class="item {{ Request::is($adminPath.'/example*') ? 'active' : '' }}" @click="open_list = !open_list">--}}
+{{--                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>--}}
+{{--                <div class="name">Example</div>--}}
+{{--                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>--}}
+{{--            </div>--}}
+{{--            <div class="list" :class="{'list-open': open_list}">--}}
+{{--                <a class="item {{ Request::is($adminPath.'/example') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/example')}}">Form</a>--}}
+{{--                <a class="item {{ Request::is($adminPath.'/example/edit*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/example/edit')}}">Inputs</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
         <a href="{{ route('manufacturers.index') }}" class="item {{ Request::is($adminPath.'/manufacturers*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-bootstrap fs-20"></i></div>
@@ -66,7 +66,7 @@
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
-                <a class="item {{ Request::is($adminPath.'/attribute*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributes')}}">{{$word['menu_attribute']}}</a>
+                <a class="item {{ Request::is($adminPath.'/attributes*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributes')}}">{{$word['menu_attribute']}}</a>
                 <a class="item {{ Request::is($adminPath.'/attributeGroups*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeGroups')}}">{{$word['menu_attribute_groups']}}</a>
                 <a class="item {{ Request::is($adminPath.'/attributeIcons*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeIcons')}}">{{$word['menu_attribute_icons']}}</a>
                 <a class="item {{ Request::is($adminPath.'/attributeWords*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeWords')}}">{{$word['menu_attribute_words']}}</a>
