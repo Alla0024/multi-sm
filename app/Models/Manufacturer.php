@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Traits\SearchableBySimilarity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Manufacturer extends Model
 {
-    use HasFactory, SearchableBySimilarity;
+    use HasFactory;
 
     public $table = 'manufacturers';
 
@@ -26,7 +26,7 @@ class Manufacturer extends Model
         'sort_order' => 'required'
     ];
 
-    public function descriptions()
+    public function descriptions(): HasMany
     {
         return $this->hasMany(ManufacturerDescription::class, 'manufacturer_id');
     }
@@ -34,5 +34,9 @@ class Manufacturer extends Model
     public function products()
     {
         return $this->hasMany(Product::class, 'manufacturer_id');
+    }
+    public function seoPath()
+    {
+        return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'manufacturer');
     }
 }

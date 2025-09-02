@@ -6,8 +6,8 @@ use App\Helpers\ModelSchemaHelper;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateManufacturerRequest;
 use App\Http\Requests\UpdateManufacturerRequest;
+use App\Models\FirstPathQuery;
 use App\Models\ManufacturerDescription;
-use App\Repositories\LanguageRepository;
 use App\Repositories\ManufacturerRepository;
 use Flash;
 use Illuminate\Http\Request;
@@ -18,8 +18,7 @@ class ManufacturerController extends AppBaseController
     /** @var ManufacturerRepository $manufacturerRepository */
     private ManufacturerRepository $manufacturerRepository;
 
-    public function __construct(
-        ManufacturerRepository $manufacturerRepo)
+    public function __construct(ManufacturerRepository $manufacturerRepo)
     {
         $this->manufacturerRepository = $manufacturerRepo;
 
@@ -31,19 +30,7 @@ class ManufacturerController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
-        $sortFields = [
-            'default',
-            'name_asc',
-            'name_desc',
-            'created_at_asc',
-            'created_at_desc',
-        ];
-
-        $language_id = $request->input('language_id', config('settings.locale.default_language_id'));
-
-        $manufacturers = $this->manufacturerRepository->filterIndexPage($request->all(), $perPage, $language_id);
+        $manufacturers = $this->manufacturerRepository->filterIndexPage($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ManufacturerDescription::class,
@@ -54,9 +41,7 @@ class ManufacturerController extends AppBaseController
 
         return $this->renderOutput([
             'manufacturers' => $manufacturers,
-            'sortFields' => $sortFields,
             'fields' => $fields,
-            'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
 
@@ -112,24 +97,22 @@ class ManufacturerController extends AppBaseController
      */
     public function edit($id)
     {
-        $manufacturer = $this->manufacturerRepository->with(['descriptions'])->find($id);
+        $manufacturer = $this->manufacturerRepository->find($id);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Manufacturer::class,
             ManufacturerDescription::class,
+            FirstPathQuery::class
         ]);
-
-        $inTabs = array_unique(array_column($fields, 'inTab'));
 
         if (empty($manufacturer)) {
             Flash::error(__('common.flash_not_found'));
-
             return redirect(route('manufacturers.index'));
         }
+
         $this->template = 'pages.manufacturers.edit';
 
-
-        return $this->renderOutput(compact('manufacturer', 'fields', 'inTabs'));
+        return $this->renderOutput(compact('manufacturer', 'fields'));
     }
 
     /**

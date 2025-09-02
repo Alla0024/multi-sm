@@ -4,9 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class ManufacturerDescription extends Model
 {
-    use HasFactory;    public $table = 'manufacturer_descriptions';
+    use HasFactory;
+
+    public $timestamps = false;
+
+    public $table = 'manufacturer_descriptions';
 
     public $fillable = [
         'manufacturer_id',
@@ -33,5 +39,9 @@ class ManufacturerDescription extends Model
     public function manufacturer()
     {
         return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
+    }
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id');
     }
 }

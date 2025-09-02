@@ -20,6 +20,13 @@ class AppBaseController extends BaseController
 
     protected array $vars = [];
     protected string $template = '';
+    protected array $defaultSortFields = [
+        'default',
+        'name_asc',
+        'name_desc',
+        'created_at_asc',
+        'created_at_desc',
+    ];
 
     public function __construct()
     {
@@ -27,6 +34,7 @@ class AppBaseController extends BaseController
 
         $this->vars['word'] = Lang::get('common', []);
         $this->vars['languages'] = Language::getLanguages();
+        $this->vars['sortFields'] = $this->defaultSortFields;
     }
 
     public function renderOutput($vars = []): Response
