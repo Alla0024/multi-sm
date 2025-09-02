@@ -85,9 +85,10 @@ class ManufacturerRepository extends BaseRepository
 
         $descriptions = $manufacturer->descriptions
             ->mapWithKeys(fn ($desc) => [
-                (string)($desc->language->code ?? $desc->language_id) => [
+                (string)($desc->language_id ?? $desc->language->code) => [
                     'name' => $desc->name,
                     'description' => $desc->description,
+                    'tag' => $desc->tag,
                 ]
             ])
             ->toArray();
