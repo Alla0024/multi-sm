@@ -53,6 +53,7 @@
             </tr>
             </thead>
             <tbody>
+{{--            @dump($options)--}}
             @foreach($options as $option)
                 <tr>
                     @foreach($fields as $index => $field)
@@ -63,9 +64,11 @@
                                 <td><div class="status_enable">{{ $word['status_1'] }}</div></td>
                             @endif
                         @else
-                         @if($index != 'id' && $index != 'appears_in_categories' && $field['inTable'])
+                         @if($index != 'id' && $index != 'appears_in_categories' && $index != 'name' && $field['inTable'])
                             <td>{{ $option[$index] }}</td>
 
+                         @elseif($index == 'name')
+                                <td style="font-size: 14px; text-align: start">{{ $option[$index] }}</td>
                          @elseif($index == 'appears_in_categories')
                              <td>
                                  <div style="
@@ -73,12 +76,11 @@
                                  align-items: start;
                                  flex-wrap: wrap;
                                  width: 100%;
-                                 max-width: 480px;
+                                 max-width: 580px;
                                  height: auto;
-                                 max-height: 100px;
                                  row-gap: 4px;
-                                 overflow-y: auto;
                                  margin: 0 auto;
+                                 font-size: 12px;
                                  ">
                                  @foreach($option[$index] as $category)
                                      <div style="
