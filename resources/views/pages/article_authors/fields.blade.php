@@ -1,17 +1,13 @@
 <!-- Avatar Field -->
-
-<div class="form-group col-sm-6 tab-pane" data-for-tab="main">
-    {!! Form::label('avatar', $word['title_avatar']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            <div class="custom-file image-upload">
-                {!! Form::file('avatar', null, ['class' => 'custom-file-input']) !!}
-                @if(isset($articleAuthor))
-                    <img src="https://i.svit-matrasiv.com.ua/storage/images/{{$articleAuthor['avatar']}}" alt="{{$articleAuthor['avatar']}}" title="{{$articleAuthor['avatar']}}" style="max-width: 200px; margin-top: 10px; @if(isset($articleAuthor['avatar']) && $articleAuthor['avatar']) display: block; @else display: none; @endif">
-                @else
-                    <img src="" alt="Прев’ю" title="" style="max-width: 200px; margin-top: 10px;  display: none;">
-                @endif
-                <label for="avatar" class="custom-file-label"><i class="bi bi-arrow-up-square"></i></label>
+<div class="form-group col-sm-6 tab-pane image-block" data-for-tab="main" x-data="{open_butt: false}">
+    {!! Form::label('image', $word['title_avatar']) !!}
+    <div class="input-group">
+        <div class="custom-file image-upload" @click="open_butt = !open_butt" @keydown.escape.window="open_butt=false" @click.outside="open_butt=false">
+            <input id="thumbnail" type="hidden" name="avatar" value="{{$articleAuthor['avatar'] ?? ''}}">
+            <img class="" src="{{isset($articleAuthor['avatar']) && $articleAuthor['avatar'] != '' ? "https://i.svit-matrasiv.com.ua/storage/images/".$articleAuthor['avatar'] : '/images/common/no_images.png'}}" id="holder" alt="Прев’ю" style="max-width: 200px;">
+            <div class="butt hide" :class="{'show': open_butt}">
+                <div class="custom-file-label lfm" data-input="thumbnail" data-preview="holder" data-path="/blog/Author"><i class="bi bi-arrow-up-square"></i></div>
+                <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
             </div>
         </div>
     </div>

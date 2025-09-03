@@ -73,11 +73,12 @@ function filemanager(elements, options = {}) {
                 if (targetInputId) {
                     const inputEl = document.getElementById(targetInputId);
                     if (inputEl) {
-                        let relativeUrl = chosenUrl.replace(/^https?:\/\/[^/]+/, '');
+                        let relativeUrl = chosenUrl.replace(/^.*\/images/, '');
                         inputEl.value = relativeUrl || '';
                         inputEl.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 }
+
 
                 if (targetPreviewId) {
                     const previewEl = document.getElementById(targetPreviewId);

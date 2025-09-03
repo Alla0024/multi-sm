@@ -46,8 +46,6 @@
             <tbody>
             @foreach($optionValues as $optionValue)
                 <tr>
-
-
                     @foreach($fields as $index => $field)
                         @if($index == 'status')
                             @if($optionValue[$index] == 1)
@@ -55,6 +53,8 @@
                             @else
                                 <td><div class="status_enable">{{ $word['status_1'] }}</div></td>
                             @endif
+                        @elseif($index == 'image')
+                            <td><img style="width: 140px;" src="{{isset($optionValue[$index]) && $optionValue[$index] != '' ? $optionValue[$index] : '/images/common/no_images.png'}}" alt=""></td>
                         @else
                          @if($index != 'id' && $field['inTable'])
                             <td>{{ $optionValue[$index] }}</td>

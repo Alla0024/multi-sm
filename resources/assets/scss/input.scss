@@ -70,25 +70,8 @@ input, textarea, select{
 select{
     padding-right: 30px;
 }
-.image-upload{
-    display: flex;
-    column-gap: 10px;
-    align-items: center;
-}
 input[type=file]{
     display: none;
-}
-.custom-file-label{
-    width: auto !important;
-    color: white !important;
-    position: relative;
-    background-color: #007bff;
-    padding: 8px 10px 6px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
-    height: max-content;
 }
 textarea{
     height: auto;
@@ -202,5 +185,59 @@ select{
         background-color: $col_bg_light !important;
     }
 
+}
+
+.image-block{
+    .image-upload{
+        display: flex;
+        column-gap: 10px;
+        align-items: center;
+        position: relative;
+        img{
+            cursor: pointer;
+        }
+        .butt{
+            padding: 10px;
+            background: white;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: -110px;
+            box-shadow: $shadow;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: row;
+            gap: 6px;
+            z-index: 5;
+            &:before{
+                content: ' ';
+                width: 14px;
+                height: 14px;
+                background: white;
+                box-shadow: 0 18px 16px 3px #1400001a;
+                position: absolute;
+                bottom: 17px;
+                left: -7px;
+                z-index: 4;
+                transform: rotateZ(45deg);
+            }
+            .custom-file-label, .clear-img{
+                width: auto !important;
+                color: white !important;
+                position: relative;
+                background-color: #007bff;
+                padding: 8px 10px 6px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.3s;
+                height: max-content;
+            }
+            .clear-img{
+                background: $col_red;
+            }
+
+        }
+    }
 }
 

@@ -177,28 +177,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Image upload ///////////////////////////////////////////////////////////////////////////
-    document.querySelectorAll('.image-upload').forEach(block => {
-        const input = block.querySelector('input[type="file"]');
-        const preview = block.querySelector('img');
+    let img_items = document.querySelectorAll('.image-upload')
+    if(false){
+        img_items.forEach(block => {
+            const input = block.querySelector('input[type="file"]');
+            const preview = block.querySelector('img');
 
-        input.addEventListener('change', (event) => {
-            const file = event.target.files[0];
+            input.addEventListener('change', (event) => {
+                const file = event.target.files[0];
 
-            if (file && file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                // Якщо файл не зображення — сховати прев'ю
-                preview.src = '';
-                preview.style.display = 'none';
-                alert('Будь ласка, виберіть зображення (JPEG, PNG, WEBP...)');
-            }
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    // Якщо файл не зображення — сховати прев'ю
+                    preview.src = '';
+                    preview.style.display = 'none';
+                    alert('Будь ласка, виберіть зображення (JPEG, PNG, WEBP...)');
+                }
+            });
         });
-    });
+    }
+
+    // Clear image
+    const clearImage = document.querySelectorAll('.clear-img');
+    if(clearImage){
+        clearImage.forEach(item => {
+            item.addEventListener('click', ()=>{
+                item.parentElement.parentElement.querySelector('input').value = ''
+                item.parentElement.parentElement.querySelector('img').src = '/images/common/no_images.png'
+            })
+        })
+    }
+
 
     // Mask number
     Alpine.store('page').mask = (el) => {

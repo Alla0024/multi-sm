@@ -60,10 +60,12 @@
                             @@else
                                 <td><div class="status_enable">@{{ $word['status_0'] }}</div></td>
                             @@endif
-                        @@else
-                         @@if($index != 'id' && $field['inTable'])
-                            <td>@{{ ${!! $config->modelNames->camel !!}[$index] }}</td>
-                         @@endif
+                         @@elseif($index == 'image')
+                            <td><img style="width: 140px;" src="@{{isset($optionValue[$index]) && $optionValue[$index] != '' ? $optionValue[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                         @@else
+                             @@if($index != 'id' && $field['inTable'])
+                                <td>@{{ ${!! $config->modelNames->camel !!}[$index] }}</td>
+                             @@endif
                         @@endif
                     @@endforeach
 

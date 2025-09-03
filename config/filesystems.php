@@ -39,8 +39,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/public/images'),
+            'url' => env('APP_URL').'/storage/images',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -59,8 +59,8 @@ return [
 
         'lfm' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
+            'root' => storage_path('app/public/images'),
+            'url' => env('APP_URL') . '/storage/images',
             'visibility' => 'public',
         ],
 
@@ -78,7 +78,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/public/images'),
     ],
 
 ];
