@@ -6,7 +6,7 @@
             <label for="language_id">{{ $word['language'] }}</label>
             <select name="language_id" id="language_id" onchange="this.form.submit()">
                 <option
-                    value="" {{ request('language_id') == null ? 'selected' : '' }}>
+                    value="{{$languages[1]->id}}" {{ request('language_id') == null ? 'selected' : '' }}>
                     {!! $word['select'] !!}
                 </option>
                 @foreach($languages as $language)
