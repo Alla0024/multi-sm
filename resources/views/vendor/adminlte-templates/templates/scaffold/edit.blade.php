@@ -38,6 +38,7 @@
 
             <div class="card-footer">
                 @{!! Form::submit($word['save'], ['class' => 'btn btn-primary']) !!}
+                @{!! Form::submit($word['update'], ['class' => 'btn btn-primary update-form']) !!}
                 <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.index') }}" class="btn btn-default"> @{{ $word['cancel'] }}</a>
             </div>
 

@@ -19,32 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // textarea.setAttribute('', '')
     });
 
-    // Save ajax data form
-    Alpine.store('page').ajax = (e) => {
-        e.preventDefault();
-        let form = e.target;
-
-        Object.keys(editors).forEach(id => {
-            editors[id].updateElement();
-        });
-
-        let formData = new FormData(form)
-        axios({
-            method: form.method,
-            url: form.action,
-            data: formData,
-        }).then(function (response) {
-
-        }).catch(function () {
-
-        })
-    }
-
-    // Logout
-    Alpine.store('page').logout = function() {
-        document.querySelector('#logout-form').submit()
-    };
-
     // Cookie
     Alpine.store('page').getCookie = function (name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));

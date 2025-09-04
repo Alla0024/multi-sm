@@ -57,6 +57,7 @@
     <script type="module" src="{{asset('/vendor/laravel-filemanager/js/filemanager.js')}}"></script>
     <script type="module" src="{{asset('js/bootstrap.min.js')}}"></script>
     <script type="module" src="{{asset('js/events.min.js')}}"></script>
+    <script type="module" src="{{asset('js/ajax.min.js')}}"></script>
     <script type="module" src="{{asset('js/quill/quill.min.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.21.0/full/ckeditor.js"></script>
 </body>

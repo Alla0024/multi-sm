@@ -1,13 +1,16 @@
 <?php
 return [
     'create' => 'Створити',
-    'save' => 'Зберегти',
+    'save' => 'Зберегти і вийти',
+    'update' => 'Оновити',
     'cancel' => 'Скасувати',
     'back' => 'Назад',
     'details' => 'Деталі',
     'delete' => 'Видалити',
     'edit' => 'Редагувати',
     'add' => '<i class="bi bi-plus-circle"></i>',
+    'copy' => '<i class="bi bi-files"></i>',
+    'deleted' => '<i class="bi bi-trash-fill"></i>',
     'action' => 'Дія',
     'search' => 'Пошук',
     'show_by' => 'Показувати по',

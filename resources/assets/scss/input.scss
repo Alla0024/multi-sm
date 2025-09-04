@@ -118,11 +118,51 @@ select{
     .name, label{
         width: 130px;
     }
+    .form-switch{
+        position: relative;
+        margin: 0 auto;
+        padding: 0;
+        width: min-content;
 
-    .form-check-input{
-        width: 3em;
-        height: 2em;
+        .form-check-input{
+            width: 56px;
+            height: 26px;
+            padding: 0;
+            position: relative;
+            margin: 0;
+            &:before{
+                content: attr(data-content);
+                color: black;
+                position: absolute;
+                top: 50%;
+                width: 23px;
+                text-align: center;
+                transform: translateY(-50%);
+                padding-top: 3px;
+                right: 6px;
+                font-size: 10px;
+            }
+        }
+        .bi-check-all{
+            position: absolute;
+            top: 50%;
+            text-align: center;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 10px;
+            right: 6px;
+            font-size: 10px;
+            pointer-events: none;
+        }
+        .form-check-input:checked{
+            &:before{
+                right: auto;
+                left: 8px;
+                color: white;
+            }
+        }
     }
+
     .input-list-search{
         position: relative;
         .svg{

@@ -118,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Choices Multi-select ///////////////////////////////////////////////////////////////////////////
-
     Alpine.store('page').multiSelect = function (){
         document.querySelectorAll('.tag-select').forEach(select => {
             const choices = new Choices(select, {
@@ -177,8 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Image upload ///////////////////////////////////////////////////////////////////////////
-    let img_items = document.querySelectorAll('.image-upload')
-    if(false){
+    let img_items = document.querySelectorAll('.image-uploaddd')
+    if(img_items){
         img_items.forEach(block => {
             const input = block.querySelector('input[type="file"]');
             const preview = block.querySelector('img');
@@ -194,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
                     reader.readAsDataURL(file);
                 } else {
-                    // Якщо файл не зображення — сховати прев'ю
                     preview.src = '';
                     preview.style.display = 'none';
                     alert('Будь ласка, виберіть зображення (JPEG, PNG, WEBP...)');
@@ -240,6 +238,16 @@ document.addEventListener('DOMContentLoaded', () => {
             out += d.slice(0,2) + ' ' + d.slice(2,5) + '-' + d.slice(5,7) + '-' + d.slice(7,9);
         }
         el.value = out;
+    }
+
+    // Switch checkbox
+    const switch_father = document.querySelector('.checkbox-father');
+    if(switch_father){
+        switch_father.addEventListener('change', ()=>{
+            document.querySelectorAll('.checkbox-child').forEach(item => {
+                item.checked = switch_father.checked
+            })
+        })
     }
 
 })

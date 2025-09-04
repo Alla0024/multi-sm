@@ -8,7 +8,7 @@
                     <h1>{!!  $word['New'] !!}</h1>
                 </div>
                 <div class="col-sm-4">
-                    <form class="view-form d-flex gap-2" method="GET" action="">
+                    <form class="view-form d-flex gap-2" method="GET" action="{{url()->current()}}">
                         @include('components.basic.sort')
 
                     </form>
@@ -18,6 +18,14 @@
                        href="{{ route('news.create') }}">
                         {!! $word['add'] !!}
                     </a>
+                    <div class="btn btn-primary btn-copy float-right" data-action="copy_news" data-name="news_id" @click="$store.page.copyItem($event.target)">
+                        {!! $word['copy'] !!}
+                    </div>
+                    {!! Form::open(['route' => ['news.destroy', ''], 'method' => 'delete', '@submit.prevent = $store.page.deletedItems($event.target)']) !!}
+                    <button type="submit" class="btn btn-primary btn-deleted float-right">
+                        {!! $word['deleted'] !!}
+                    </button>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

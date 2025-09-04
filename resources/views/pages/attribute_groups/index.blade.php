@@ -17,6 +17,14 @@
                        href="{{ route('attributeGroups.create') }}">
                         {!! $word['add'] !!}
                     </a>
+                    <div class="btn btn-primary btn-copy float-right" data-action="copy_attributeGroups" data-name="attributeGroups_id" @click="$store.page.copyItem($event.target)">
+                        {!! $word['copy'] !!}
+                    </div>
+                    {!! Form::open(['route' => ['attributeGroups.destroy', ''], 'method' => 'delete', '@submit.prevent = $store.page.deletedItems($event.target)']) !!}
+                    <button type="submit" class="btn btn-primary btn-deleted float-right">
+                        {!! $word['deleted'] !!}
+                    </button>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

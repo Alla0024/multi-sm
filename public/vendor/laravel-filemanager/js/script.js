@@ -48,6 +48,14 @@ $(document).ready(function () {
     ]
   });
 
+  // const workingDir = getUrlParam('working_dir');
+  // if (workingDir) {
+  //   document.querySelectorAll('input[name="working_dir"]').forEach(el => {
+  //     el.value = decodeURIComponent(workingDir);
+  //   });
+  //   console.log("Set working_dir:", workingDir);
+  // }
+
   actions.reverse().forEach(function (action) {
     $('#nav-buttons > ul').prepend(
       $('<li>').addClass('nav-item').append(
@@ -245,6 +253,7 @@ function setOpenFolders() {
   $('#tree [data-path]').each(function (index, folder) {
     // close folders that are not parent
     var should_open = ($('#working_dir').val() + '/').startsWith($(folder).data('path') + '/');
+
     $(folder).children('i')
       .toggleClass('fa-folder-open', should_open)
       .toggleClass('fa-folder', !should_open);
@@ -484,6 +493,7 @@ function loadItems(page) {
       $('#nav-buttons > ul').removeClass('d-none');
 
       $('#working_dir').val(working_dir);
+      $('#working_dir_upload').val(working_dir);
       console.log('Current working_dir : ' + working_dir);
       var breadcrumbs = [];
       var validSegments = working_dir.split('/').filter(function (e) { return e; });
@@ -798,6 +808,7 @@ function usingWysiwygEditor() {
 // ==================================
 
 function defaultParameters() {
+
   return {
     working_dir: $('#working_dir').val()|| getUrlParam('working_dir'),
     type: $('#type').val()

@@ -4,37 +4,11 @@
         <table class="table" id="{{ $config->modelNames->dashedPlural }}-table">
             <thead>
             <tr>
-                <form class="search-form" method="GET" action="">
-                    @@if(isset($fields))
-                        @@foreach($fields as $index => $field)
-                            @@if($index != 'id' && $field['inTable'])
-                                <th class="">
-                                    @@if(isset($field['searchable']) && $field['searchable'])
-                                        @@if($index == 'status')
-                                            <select class="" name="@{{ $index }}" aria-label="@{{ $word['search_'.$index] }}" aria-describedby="select-addon">
-                                                <option value=""  selected hidden>@{{ $word['search_'.$index] }}</option>
-                                                <option value="1" @@if(request($index) == '1') selected @@endif>@{{$word['status_1']}}</option>
-                                                <option value="0" @@if(request($index) == '0') selected @@endif>@{{$word['status_0']}}</option>
-                                            </select>
-                                            @@else
-                                            <div class="">
-                                                <input type="text" name="@{{ $index }}" placeholder="@{{ $word['search_'.$index] }}" value="@{{ request($index) }}">
-                                            </div>
-                                            @@endif
-                                    @@endif
-                                </th>
-                            @@endif
-                        @@endforeach
-                    @@endif
-                    <th class="butt-action action-item">
-                        <span class="hide">{!! $config->modelNames->dashedPlural !!}</span>
-                        <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">@{{ $word['search'] }}</button>
-                        <a href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.index') }}">@{{ $word['cancel'] }}</a>
-                    </th>
-                </form>
+                @@include('components.basic.search')
             </tr>
             <tr>
                 @@if(isset($fields))
+                    <th></th>
                     @@foreach($fields as $index => $field)
                          @@if($index != 'id' && $field['inTable'])
                             <th>@{{ $word['title_'.$index] }}</th>
@@ -51,7 +25,13 @@
             <tbody>
             @@foreach(${{ $config->modelNames->camelPlural }} as ${{ $config->modelNames->camel }})
                 <tr>
-
+                    <th>
+                        <div class="input-block input-toggle flex">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input checkbox-child" data-content="@{{  {!! $config->modelNames->camel !!}['id']}}" name="input-toggle_@{{ {!! $config->modelNames->camel !!}['id']}}" type="checkbox" role="switch" id="switchCheckChecked_@{{ {!! $config->modelNames->camel !!}['id']}}">
+                            </div>
+                        </div>
+                    </th>
 {{--                    {!! $fieldBody !!}--}}
                     @@foreach($fields as $index => $field)
                         @@if($index == 'status')
@@ -80,7 +60,7 @@
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>
                             </a>
-                            @{!! Form::button('<i class="bi bi-trash fs-20"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+{{--                            @{!! Form::button('<i class="bi bi-trash fs-20"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}--}}
                         </div>
                         @{!! Form::close() !!}
                     </td>

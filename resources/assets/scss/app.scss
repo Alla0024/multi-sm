@@ -68,7 +68,9 @@ a{
         color: $col_item_hover ;
     }
 }
-
+i{
+    pointer-events: none;
+}
 form{
     display: flex;
     flex-direction: column;

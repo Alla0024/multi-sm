@@ -4,30 +4,11 @@
         <table class="table" id="article-authors-table">
             <thead>
             <tr>
-                <form class="search-form" method="GET" action="">
-                    @if(isset($fields))
-                        @foreach($fields as $index => $field)
-                            @if($index != 'id' && $field['inTable'])
-                                <th class="">
-                                    @if(isset($field['searchable']) && $field['searchable'])
-                                        <div class="">
-
-                                            <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
-                                        </div>
-                                    @endif
-                                </th>
-                            @endif
-                        @endforeach
-                    @endif
-                    <th class="butt-action action-item">
-                        <span class="hide">article-authors</span>
-                        <button class="btn btn-primary" type="submit" style="margin: 0 auto 6px">{{ $word['search'] }}</button>
-                        <a href="{{ route('articleAuthors.index') }}">{{ $word['cancel'] }}</a>
-                    </th>
-                </form>
+                @include('components.basic.search')
             </tr>
             <tr>
                 @if(isset($fields))
+                    <th></th>
                     @foreach($fields as $index => $field)
                          @if($index != 'id' && $field['inTable'])
                             <th>{{ $word['title_'.$index] }}</th>
@@ -40,8 +21,13 @@
             <tbody>
             @foreach($articleAuthors as $articleAuthor)
                 <tr>
-
-
+                    <th>
+                        <div class="input-block input-toggle flex">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input checkbox-child" data-content="{{$articleAuthor['id']}}" name="input-toggle_{{$articleAuthor['id']}}" type="checkbox" role="switch" id="switchCheckChecked_{{$articleAuthor['id']}}">
+                            </div>
+                        </div>
+                    </th>
                     @foreach($fields as $index => $field)
                          @if($index != 'id' && $field['inTable'])
                             <td>{{ $articleAuthor[$index] }}</td>
@@ -59,7 +45,7 @@
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>
                             </a>
-                            {!! Form::button('<i class="bi bi-trash fs-20"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}
+                            {{--  {!! Form::button('<i class="bi bi-trash fs-20"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Are you sure?')"]) !!}--}}
                         </div>
                         {!! Form::close() !!}
                     </td>

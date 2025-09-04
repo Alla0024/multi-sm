@@ -39,6 +39,11 @@
                 right: 12px;
                 top: 12px;
                 padding: 0;
+                display: flex;
+                gap: 6px;
+                form{
+                    padding: 0;
+                }
                 .btn{
                     background-color: $col_blue_pr;
                     border: none;
@@ -51,6 +56,18 @@
                     font-size: 18px;
                     //line-height: 110%;
                     padding: 6px 8px 2px;
+                }
+                .btn-copy{
+                    background: $col_blue_light;
+                    &:hover{
+                        background: $col_blue_light_hover;
+                    }
+                }
+                .btn-deleted{
+                    background: $col_red;
+                    &:hover{
+                        background: $col_red_hover;
+                    }
                 }
             }
 
