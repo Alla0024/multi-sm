@@ -43,14 +43,14 @@
         </select>
     </div>
 
-        @php($keep = request()->except(['language_id','sortBy','perPage','page']))
-        @foreach($keep as $key => $value)
-            @if(is_array($value))
-                @foreach($value as $v)
-                    <input type="hidden" name="{{ $key }}[]" value="{{ e($v) }}">
-                @endforeach
-            @else
-                <input type="hidden" name="{{ $key }}" value="{{ e($value) }}">
-            @endif
+@php($keep = request()->except(['language_id','sortBy','perPage','page']))
+@foreach($keep as $key => $value)
+    @if(is_array($value))
+        @foreach($value as $v)
+            <input type="hidden" name="{{ $key }}[]" value="{{ e($v) }}">
         @endforeach
+    @else
+        <input type="hidden" name="{{ $key }}" value="{{ e($value) }}">
+    @endif
+@endforeach
 
