@@ -77,38 +77,39 @@ class ManufacturerRepository extends BaseRepository
             }
         ]);
 
-        if ($request->filled('sort_order')) {
-            $query->where('sort_order', $request->input('sort_order'));
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->input('status'));
+        foreach (['sort_order', 'status'] as $field) {
+            if ($request->filled($field)) {
+                $query->where($field, $request->input($field));
+            }
         }
 
         if ($request->filled('name')) {
             $name = mb_strtolower($request->input('name'), 'UTF-8');
 
-            $query->whereHas('descriptions', function ($q) use ($name) {
-                $q->whereRaw("LOWER(name) LIKE ?", ["%{$name}%"]);
-            })->orderByRaw(
-                "COALESCE(NULLIF(LOCATE(?, LOWER((SELECT name FROM manufacturer_descriptions WHERE manufacturer_id = manufacturers.id LIMIT 1))), 0), 999999)",
-                [$name]
-            );
+            $query->whereHas('descriptions', function ($q) use ($name, $languageId) {
+                $q->where('language_id', $languageId)
+                    ->whereRaw('LOWER(name) LIKE ?', ["%{$name}%"]);
+            });
         }
 
         if ($request->filled('sortBy')) {
-            switch ($request->input('sortBy')) {
+            $sortBy = $request->input('sortBy');
+
+            switch ($sortBy) {
                 case 'name_asc':
                     $query->withAggregate(['descriptions as name' => fn($q) => $q->where('language_id', $languageId)], 'name')
                         ->orderBy('name', 'asc');
                     break;
+
                 case 'name_desc':
                     $query->withAggregate(['descriptions as name' => fn($q) => $q->where('language_id', $languageId)], 'name')
                         ->orderBy('name', 'desc');
                     break;
+
                 case 'created_at':
-                    $query->orderBy('created_at');
+                    $query->orderBy('created_at', 'asc');
                     break;
+
                 case 'created_at_desc':
                     $query->orderBy('created_at', 'desc');
                     break;
@@ -121,11 +122,10 @@ class ManufacturerRepository extends BaseRepository
         $manufacturers->getCollection()->transform(function ($item) use ($baseUrl) {
             $item->setAttribute('name', optional($item->descriptions->first())->name);
 
-            if ($item->seoPath) {
-                $item->setAttribute('client_url', rtrim($baseUrl, '/') . '/' . ltrim($item->seoPath->path, '/'));
-            } else {
-                $item->setAttribute('client_url', null);
-            }
+            $item->setAttribute('client_url', $item->seoPath
+                ? rtrim($baseUrl, '/') . '/' . ltrim($item->seoPath->path, '/')
+                : null
+            );
 
             return $item;
         });
