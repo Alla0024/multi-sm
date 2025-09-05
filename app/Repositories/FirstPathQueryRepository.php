@@ -3,25 +3,25 @@
 namespace App\Repositories;
 
 use App\Models\FirstPathQuery;
-use App\Repositories\BaseRepository;
-use Exception;
 
 class FirstPathQueryRepository extends BaseRepository
 {
-    protected $fieldSearchable = [
-        'path'
+    protected array $fieldSearchable = ['path'];
+
+    protected array $additionalFields = [];
+
+    protected array $validTypes = [
+        'category', 'bonus_program', 'news', 'authors',
+        'manufacturer', 'product', 'information', 'sale'
     ];
 
-    protected $additionalFields = [];
-
-    /**
-     * @throws Exception
-     */
-    private function validateType($type): string {
-        return match ($type) {
-            'category', 'bonus_program', 'news', 'authors', 'manufacturer', 'product', 'information', 'sale' => $type,
-            default => throw new Exception("Type $type not exists"),
-        };
+    public function rules(): array
+    {
+        return [
+            'type' => 'required|string|in:' . implode(',', $this->validTypes),
+            'type_id' => 'required|integer',
+            'seo_url.*.path' => 'string|min:3|max:255|unique:first_path_queries,path,id'
+        ];
     }
 
     public function getFieldsSearchable(): array
@@ -39,35 +39,25 @@ class FirstPathQueryRepository extends BaseRepository
         return FirstPathQuery::class;
     }
 
-    public function isThisPathExists(string $path, $exclude_id = null, $item_type = null): bool
+    public function pathExists(string $path, ?int $excludeId = null, ?string $type = null): bool
     {
-        $query = $this->model->where('path', $path);
-
-        if (isset($item_type) && isset($exclude_id)) {
-            $query->whereNot([
-                ['type', '=', $item_type],
-                ['type_id', '=', $exclude_id]
-            ]);
-        } else if (isset($exclude_id)) {
-            $query->where('type_id', '<>', $exclude_id);
-        }
-
-        return $query->exists();
+        return $this->model
+            ->where('path', $path)
+            ->when($excludeId !== null, fn($query) => $query->where('type_id', '<>', $excludeId))
+            ->when($excludeId !== null && $type !== null, fn($query) => $query->where('type', '<>', $type))
+            ->exists();
     }
 
-    public function upsert($id, $type, $path)
+    public function save(int $id, string $type, string $path)
     {
-        $type = $this->validateType($type);
-
-        $fist_path_query = $this->model->updateOrCreate(
+        return $this->model->updateOrCreate(
             ['type' => $type, 'type_id' => $id],
-            ['type' => $type, 'type_id' => $id, 'path' => $path]
+            ['path' => $path]
         );
-
-        return $fist_path_query;
     }
 
-    public function destroy($id, $type) {
+    public function destroy($id, $type)
+    {
         return $this->model->where('type', $type)->where('type_id', $id)->delete();
     }
 }

@@ -105,6 +105,8 @@ return [
     'flash_not_found'            => 'Не знайдено',
     'flash_updated_successfully' => 'Оновлено успішно',
     'flash_deleted_successfully' => 'Видалено успішно',
+    'flash_copied_successfully'  => 'Скопійовано успішно',
+    'flash_error'                => 'Виникла помилка',
 
     // Sort
     'sort_by' => 'Сортувати за',

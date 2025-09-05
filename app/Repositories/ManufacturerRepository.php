@@ -2,13 +2,15 @@
 
 namespace App\Repositories;
 
+use App\Helpers\PictureHelper;
+use App\Models\FirstPathQuery;
 use App\Models\Manufacturer;
 use App\Models\ManufacturerDescription;
 
 class ManufacturerRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-         'sort_order',
+        'sort_order',
     ];
 
     protected $additionalFields = [
@@ -34,43 +36,7 @@ class ManufacturerRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
-    public function create(array $input)
-    {
-        $descriptions = $input['descriptions'] ?? [];
-        unset($input['descriptions']);
-
-        $manufacturer = $this->model->create($input);
-
-        foreach ($descriptions as $languageId => $descData) {
-            $descData['language_id'] = $languageId;
-            $descData['manufacturer_id'] = $manufacturer->id;
-            ManufacturerDescription::create($descData);
-        }
-
-        return $manufacturer;
-    }
-
-    public function update(array $input, $id)
-    {
-        $descriptions = $input['descriptions'] ?? [];
-        unset($input['descriptions']);
-
-        $manufacturer = $this->find($id);
-        $manufacturer->update($input);
-
-        foreach ($descriptions as $languageId => $descData) {
-            ManufacturerDescription::updateOrCreate(
-                [
-                    'manufacturer_id' => $manufacturer->id,
-                    'language_id' => $languageId
-                ],
-                $descData
-            );
-        }
-
-        return $manufacturer;
-    }
-    public function find($id, $columns = ['*'])
+    public function findFull($id, $columns = ['*'])
     {
         $manufacturer = $this->model
             ->with([
@@ -84,7 +50,7 @@ class ManufacturerRepository extends BaseRepository
         }
 
         $descriptions = $manufacturer->descriptions
-            ->mapWithKeys(fn ($desc) => [
+            ->mapWithKeys(fn($desc) => [
                 (string)($desc->language_id ?? $desc->language->code) => [
                     'name' => $desc->name,
                     'description' => $desc->description,
@@ -99,18 +65,138 @@ class ManufacturerRepository extends BaseRepository
             ->makeHidden('seoPath');
     }
 
-    public function filterIndexPage($request)
+    public function filterRows($request)
     {
-        $params = $request->all();
-        $perPage = $request->get('per_page', 20);
-        $languageId = $request->get('language_id', config('settings.locale.default_language_id'));
+        $perPage = $request->integer('perPage', 10);
+        $languageId = $request->input('language_id', config('settings.locale.default_language_id'));
 
-        return $this->model
-            ->leftJoin((new ManufacturerDescription())->getTable() . " as md", 'md.manufacturer_id', '=', 'manufacturers.id')
-            ->where('md.language_id', $languageId)
-            ->when(isset($input['name']), function ($q) use ($params) {
-                return $q->searchSimilarity(['md.name'], $params['name']);
-            })
-            ->paginate($perPage);
+        $query = $this->model::with([
+            'seoPath',
+            'descriptions' => function ($q) use ($languageId) {
+                $q->where('language_id', $languageId);
+            }
+        ]);
+
+        if ($request->filled('sort_order')) {
+            $query->where('sort_order', $request->input('sort_order'));
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('name')) {
+            $name = mb_strtolower($request->input('name'), 'UTF-8');
+
+            $query->whereHas('descriptions', function ($q) use ($name) {
+                $q->whereRaw("LOWER(name) LIKE ?", ["%{$name}%"]);
+            })->orderByRaw(
+                "COALESCE(NULLIF(LOCATE(?, LOWER((SELECT name FROM manufacturer_descriptions WHERE manufacturer_id = manufacturers.id LIMIT 1))), 0), 999999)",
+                [$name]
+            );
+        }
+
+        if ($request->filled('sortBy')) {
+            switch ($request->input('sortBy')) {
+                case 'name_asc':
+                    $query->withAggregate(['descriptions as name' => fn($q) => $q->where('language_id', $languageId)], 'name')
+                        ->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->withAggregate(['descriptions as name' => fn($q) => $q->where('language_id', $languageId)], 'name')
+                        ->orderBy('name', 'desc');
+                    break;
+                case 'created_at':
+                    $query->orderBy('created_at');
+                    break;
+                case 'created_at_desc':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        }
+
+        $manufacturers = $query->paginate($perPage);
+
+        $baseUrl = config('app.client_url');
+        $manufacturers->getCollection()->transform(function ($item) use ($baseUrl) {
+            $item->setAttribute('name', optional($item->descriptions->first())->name);
+
+            if ($item->seoPath) {
+                $item->setAttribute('client_url', rtrim($baseUrl, '/') . '/' . ltrim($item->seoPath->path, '/'));
+            } else {
+                $item->setAttribute('client_url', null);
+            }
+
+            return $item;
+        });
+
+        return $manufacturers;
+    }
+
+
+    public function save(array $input, ?int $id = null)
+    {
+        $seoPath = $input['path'] ?? null;
+        $descriptions = $input['descriptions'] ?? [];
+
+        unset($input['descriptions'], $input['path'], $input['stores']);
+
+        $manufacturerSave = $input;
+
+        if (!empty($input['image'])) {
+            PictureHelper::rewrite(
+                $input['image'],
+                config('settings.images.manufacturer.width'),
+                config('settings.images.manufacturer.height')
+            );
+
+            if (str_contains($input['image'], 'storage/images')) {
+                $input['image'] = substr($input['image'], 15);
+            }
+
+            $manufacturerSave['image'] = $input['image'];
+        }
+
+        $manufacturer = $this->model->updateOrCreate(['id' => $id], $manufacturerSave);
+
+        foreach ($descriptions as $languageId => $descData) {
+            ManufacturerDescription::updateOrInsert(
+                [
+                    'manufacturer_id' => (int)$manufacturer->id,
+                    'language_id' => $languageId
+                ],
+                $descData
+            );
+        }
+
+        $seoPath && FirstPathQuery::updateOrCreate(
+            ['type' => 'manufacturer', 'type_id' => $manufacturer->id],
+            ['path' => $seoPath]
+        );
+
+        return $manufacturer;
+    }
+
+    public function copy($ids): void
+    {
+        $manufacturers = Manufacturer::with('descriptions')->whereIn('id', $ids)->get();
+
+        foreach ($manufacturers as $manufacturer) {
+            $newManufacturer = $manufacturer->replicate();
+            $newManufacturer->save();
+
+            foreach ($manufacturer->descriptions as $description) {
+                $newDescription = $description->replicate();
+                $newDescription->manufacturer_id = $newManufacturer->id;
+                $newDescription->save();
+            }
+        }
+    }
+
+    public function multiDelete($ids): void
+    {
+        Manufacturer::whereIn('id', $ids)->delete();
+        ManufacturerDescription::whereIn('manufacturer_id', $ids)->delete();
+        FirstPathQuery::where('type', 'manufacturer')->whereIn('type_id', $ids)->delete();
     }
 }
