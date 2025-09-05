@@ -19,6 +19,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // textarea.setAttribute('', '')
     });
 
+    // Save ajax data form
+    Alpine.store('page').ajax = (e) => {
+        // e.preventDefault();
+
+        let form = e.parentElement.parentElement;
+
+        Object.keys(editors).forEach(id => {
+            editors[id].updateElement();
+        });
+
+        let formData = new FormData(form)
+
+        axios({
+            method: form.method,
+            url: form.action,
+            data: formData,
+        }).then(function (response) {
+            window.scrollTo({top: 0})
+            location.reload();
+
+        }).catch(function () {
+
+        })
+    }
+
     // Cookie
     Alpine.store('page').getCookie = function (name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));

@@ -36,7 +36,7 @@
 
             <div class="card-footer">
                 {!! Form::submit($word['save'], ['class' => 'btn btn-primary']) !!}
-                {!! Form::submit($word['update'], ['class' => 'btn btn-primary update-form']) !!}
+                {!! Form::submit($word['update'], ['class' => 'btn btn-primary update-form', '@click.prevent = $store.page.ajax($event.target)']) !!}
                 <a href="{{ route('langs.index') }}" class="btn btn-default"> {{ $word['cancel'] }}</a>
             </div>
 
