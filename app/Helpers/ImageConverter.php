@@ -19,10 +19,10 @@ class ImageConverter
         $image = $manager->read($filepath);
         switch ($extension) {
             case 'jpg':
-                $image->encode($extension)->save($new_filepath);
+                $image->toJpeg(90)->save($new_filepath);
                 break;
             case 'webp':
-                $image->encode($extension, 90)->save($new_filepath);
+                $image->toWebp(90)->save($new_filepath);
                 break;
             default:
                 break;

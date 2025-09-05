@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Content;
 
 use App\Helpers\ModelSchemaHelper;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\CreateManufacturerRequest;
-use App\Http\Requests\UpdateManufacturerRequest;
+use App\Http\Requests\ManufacturerRequest;
 use App\Models\FirstPathQuery;
 use App\Models\ManufacturerDescription;
 use App\Repositories\ManufacturerRepository;
-use Flash;
 use Illuminate\Http\Request;
 use App\Models\Manufacturer;
+use Flash;
 
 class ManufacturerController extends AppBaseController
 {
@@ -30,7 +29,7 @@ class ManufacturerController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $manufacturers = $this->manufacturerRepository->filterIndexPage($request);
+        $manufacturers = $this->manufacturerRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ManufacturerDescription::class,
@@ -54,6 +53,7 @@ class ManufacturerController extends AppBaseController
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Manufacturer::class,
             ManufacturerDescription::class,
+            FirstPathQuery::class
         ]);
         return $this->renderOutput([
             'fields' => $fields,
@@ -63,11 +63,9 @@ class ManufacturerController extends AppBaseController
     /**
      * Store a newly created Manufacturer in storage.
      */
-    public function store(CreateManufacturerRequest $request)
+    public function store(ManufacturerRequest $request)
     {
-        $input = $request->all();
-
-        $manufacturer = $this->manufacturerRepository->create($input);
+        $manufacturer = $this->manufacturerRepository->save($request->all());
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -79,7 +77,7 @@ class ManufacturerController extends AppBaseController
      */
     public function show($id)
     {
-        $manufacturer = $this->manufacturerRepository->find($id);
+        $manufacturer = $this->manufacturerRepository->findFull($id);
 
         if (empty($manufacturer)) {
             Flash::error(__('common.flash_not_found'));
@@ -97,18 +95,18 @@ class ManufacturerController extends AppBaseController
      */
     public function edit($id)
     {
-        $manufacturer = $this->manufacturerRepository->find($id);
+        $manufacturer = $this->manufacturerRepository->findFull($id);
+
+        if (empty($manufacturer)) {
+            Flash::error(__('common.flash_not_found'));
+            return redirect(route('manufacturers.index'));
+        }
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Manufacturer::class,
             ManufacturerDescription::class,
             FirstPathQuery::class
         ]);
-
-        if (empty($manufacturer)) {
-            Flash::error(__('common.flash_not_found'));
-            return redirect(route('manufacturers.index'));
-        }
 
         $this->template = 'pages.manufacturers.edit';
 
@@ -118,7 +116,7 @@ class ManufacturerController extends AppBaseController
     /**
      * Update the specified Manufacturer in storage.
      */
-    public function update($id, UpdateManufacturerRequest $request)
+    public function update($id, ManufacturerRequest $request)
     {
         $manufacturer = $this->manufacturerRepository->find($id);
 
@@ -128,32 +126,44 @@ class ManufacturerController extends AppBaseController
             return redirect(route('manufacturers.index'));
         }
 
-        $manufacturer = $this->manufacturerRepository->update($request->all(), $id);
+        $manufacturer = $this->manufacturerRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 
+        if ($request->ajax()) {
+            return redirect(route('manufacturers.edit', $id));
+        }
         return redirect(route('manufacturers.index'));
     }
 
     /**
      * Remove the specified Manufacturer from storage.
-     *
-     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $manufacturer = $this->manufacturerRepository->find($id);
-
-        if (empty($manufacturer)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('manufacturers.index'));
-        }
-
-        $this->manufacturerRepository->delete($id);
+        $this->manufacturerRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('manufacturers.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('manufacturer_ids');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->manufacturerRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('manufacturers.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('manufacturers.index');
     }
 }

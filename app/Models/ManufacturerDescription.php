@@ -14,6 +14,8 @@ class ManufacturerDescription extends Model
 
     public $table = 'manufacturer_descriptions';
 
+    public $incrementing = false;
+
     public $fillable = [
         'manufacturer_id',
         'language_id',

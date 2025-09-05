@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Manufacturer;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateManufacturerRequest extends FormRequest
+class ManufacturerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,6 @@ class UpdateManufacturerRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Manufacturer::$rules;
-        
-        return $rules;
+        return Manufacturer::$rules;
     }
 }

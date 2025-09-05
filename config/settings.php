@@ -5,6 +5,10 @@ return [
         'default_language_id' => 5
     ],
     'images' => [
+        'manufacturer' => [
+            'width' => 130,
+            'height' => 50,
+        ],
         'product' => [
             'width' => 1275,
             'height' => 850,
