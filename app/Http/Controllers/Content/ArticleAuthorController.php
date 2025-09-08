@@ -9,7 +9,6 @@ use App\Models\ArticleAuthorDescription;
 use App\Models\FirstPathQuery;
 use App\Repositories\ArticleAuthorRepository;
 use App\Helpers\ModelSchemaHelper;
-use App\Repositories\LanguageRepository;
 use Illuminate\Http\Request;
 use App\Models\ArticleAuthor;
 use Flash;
@@ -21,15 +20,12 @@ class ArticleAuthorController extends AppBaseController
      * @var int $defaultLanguageId
      */
     private ArticleAuthorRepository $articleAuthorRepository;
-    private int $defaultLanguageId;
 
-    public function __construct(ArticleAuthorRepository $articleAuthorRepo, LanguageRepository $languageRepository)
+    public function __construct(ArticleAuthorRepository $articleAuthorRepo)
     {
         parent::__construct();
 
         $this->articleAuthorRepository = $articleAuthorRepo;
-
-        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -37,19 +33,7 @@ class ArticleAuthorController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
-        $sortFields = [
-            'default',
-            'name_asc',
-            'name_desc',
-            'created_at_asc',
-            'created_at_desc',
-        ];
-
-        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
-
-        $articleAuthors = $this->articleAuthorRepository->filterIndexPage($perPage, $languageId, $request->all());
+        $articleAuthors = $this->articleAuthorRepository->filterIndexPage($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ArticleAuthorDescription::class,
@@ -60,7 +44,6 @@ class ArticleAuthorController extends AppBaseController
 
         return $this->renderOutput([
             'articleAuthors' => $articleAuthors,
-            'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
     }

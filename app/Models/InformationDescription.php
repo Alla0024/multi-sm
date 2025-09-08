@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\SearchableBySimilarity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Thiagoprz\CompositeKey\HasCompositeKey;
-
 class InformationDescription extends Model
 {
-    use SearchableBySimilarity, HasCompositeKey;
-
     public $table = 'information_descriptions';
+
     public $timestamps = false;
-    protected $primaryKey = ['information_id', 'language_id'];
+
+    protected $primaryKey = null;
 
     public $fillable = [
         'information_id',

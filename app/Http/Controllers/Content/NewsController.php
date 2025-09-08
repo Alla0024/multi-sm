@@ -6,7 +6,6 @@ use App\Http\Requests\CreateNewsRequest;
 use App\Http\Requests\UpdateNewsRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\FirstPathQuery;
-use App\Models\NewsCategoryDescription;
 use App\Models\NewsDescription;
 use App\Repositories\ArticleAuthorRepository;
 use App\Repositories\LanguageRepository;
@@ -24,22 +23,16 @@ class NewsController extends AppBaseController
      * @var ArticleAuthorRepository $articleAuthorRepository
      */
     private NewsRepository $newsRepository;
-    private LanguageRepository $languageRepository;
     private ArticleAuthorRepository $articleAuthorRepository;
-    private $defaultLanguageId;
-
     public function __construct(
         NewsRepository          $newsRepo,
-        LanguageRepository      $languageRepository,
         ArticleAuthorRepository $articleAuthorRepository
     )
     {
         parent::__construct();
 
         $this->newsRepository = $newsRepo;
-        $this->languageRepository = $languageRepository;
         $this->articleAuthorRepository = $articleAuthorRepository;
-        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -47,18 +40,7 @@ class NewsController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-        $language_id = $request->get('language_id') ?? $this->defaultLanguageId;
-
-        $news = $this->newsRepository->filterIndexPage($perPage, $language_id, $request->all());
-        $sortFields = [
-            'default',
-            'name_asc',
-            'name_desc',
-            'created_at_asc',
-            'created_at_desc',
-        ];
-
+        $news = $this->newsRepository->filterIndexPage( $request->all());
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
             News::class,
@@ -68,7 +50,6 @@ class NewsController extends AppBaseController
 
         return $this->renderOutput([
             'news' => $news,
-            'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
     }

@@ -36,11 +36,15 @@ class NewsCategoryRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
-    public function filterIndexPage($perPage, $params, $language_id)
+    public function filterIndexPage($request)
     {
+        $params = $request->all();
+        $perPage = $request->get('per_page', 20);
+        $languageId = $request->get('language_id', config('settings.locale.default_language_id'));
+
         $news = $this->model
-            ->with(['descriptions' => function ($query) use ($language_id) {
-                $query->where('language_id', $language_id);
+            ->with(['descriptions' => function ($query) use ($languageId) {
+                $query->where('language_id', $languageId);
             }])
             ->when(isset($params['sort_order']), function ($query) use ($params) {
                 $query->where('sort_order', '=', $params['sort_order']);

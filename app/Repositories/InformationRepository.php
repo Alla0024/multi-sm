@@ -5,33 +5,16 @@ namespace App\Repositories;
 use App\Models\FirstPathQuery;
 use App\Models\Information;
 use App\Models\InformationDescription;
-use App\Models\Store;
-use App\Repositories\BaseRepository;
-use Illuminate\Container\Container as Application;
+use Illuminate\Database\Eloquent\Builder;
 
 class InformationRepository extends BaseRepository
 {
-    /**
-     * @var FirstPathQueryRepository $firstPathQueryRepository;
-     */
-    private FirstPathQueryRepository $firstPathQueryRepository;
-
-    public function __construct(
-        Application $app,
-        FirstPathQueryRepository $firstPathQueryRepo
-    )
-    {
-        $this->firstPathQueryRepository = $firstPathQueryRepo;
-
-        parent::__construct($app);
-    }
-
-    protected $fieldSearchable = [
+    protected array $fieldSearchable = [
         'sort_order',
         'status'
     ];
 
-    protected $additionalFields = [
+    protected array $additionalFields = [
         'stores' => [
             'validations' => 'nullable|array',
         ]
@@ -52,121 +35,132 @@ class InformationRepository extends BaseRepository
         return Information::class;
     }
 
-    public function with($relations)
+    public function with($relations): Builder
     {
         return $this->model->with($relations);
     }
-
-    public function find($id, $columns = ['*'])
+    public function findFull($id, $columns = ['*'])
     {
         $information = $this->model
             ->with([
-                'stores' =>
-                    function ($query) {
-                        return $query->select(['id', 'name']);
-                    },
-                'descriptions' =>
-                    function ($query) {
-                        return $query->with('language');
-                    },
-                'seoPath' => function ($query) {
-                    return $query->select(['type_id', 'path']);
-                },
+                'stores:id,name',
+                'descriptions.language:id,code',
+                'seoPath:type_id,path',
             ])
             ->find($id, $columns);
 
-        if (empty($information)) {
-            return $information;
+        if (!$information) {
+            return null;
         }
 
-        $preshaped_descriptions = [];
-
-        foreach ($information->descriptions as $description) {
-            $preshaped_descriptions[$description->language->id] = [
-                'name' => $description->name,
-                'description' => $description->description,
-            ];
-        }
-
-        $seoPath = $information->seoPath->path ?? '';
-        unset($information->descriptions, $information->seoPath);
-        $information->setAttribute('descriptions', $preshaped_descriptions);
-        $information->setAttribute('path', $seoPath);
-
-        return $information;
-    }
-
-    public function filterIndexPage($perPage, $language_id, $params)
-    {
-        $informations = $this->model
-            ->with(['descriptions' => function ($query) use ($language_id) {
-                $query->select('information_id', 'language_id', 'name')
-                    ->where('language_id', $language_id);
-                },
-                'seoPath'
+        $descriptions = $information->descriptions
+            ->mapWithKeys(fn ($desc) => [
+                $desc->language->id => [
+                    'name' => $desc->name,
+                    'description' => $desc->description,
+                ]
             ])
-            ->when(isset($params['sort_order']), function ($query) use ($params) {
-                $query->where('sort_order', '=', $params['sort_order']);
-            })
-            ->when(isset($params['status']), function ($query) use ($params) {
-                $query->where('status', '=', $params['status']);
-            })
-            ->when(isset($params['name']), function ($q) use ($params) {
-                return $q->whereHas('descriptions', function ($q) use ($params) {
-                    return $q->searchSimilarity(['name'], $params['name']);
-                });
-            })
-            ->paginate($perPage);
+            ->toArray();
 
-        foreach ($informations as $information) {
-            $name = $information->descriptions->first()->name ?? '';
-            unset($information->descriptions);
-
-            $information->setAttribute('name', $name);
-        }
-
-        return $informations;
+        return $information
+            ->setRelation('descriptions', $descriptions)
+            ->setAttribute('path', $information->seoPath->path ?? '')
+            ->makeHidden('seoPath');
     }
 
-    public function upsert(array $input, int|null $id = null)
+    public function filterRows($request)
     {
-        $descriptions = $input['descriptions'] ?? [];
-        $seoPath = $input['path'];
+        $perPage    = $request->integer('perPage', 10);
+        $languageId = $request->input('language_id', config('settings.locale.default_language_id'));
+
+        $query = $this->model::with([
+            'descriptions' => function ($q) use ($languageId) {
+                $q->select('information_id', 'language_id', 'name')
+                    ->where('language_id', $languageId);
+            },
+            'seoPath'
+        ]);
+
+        if ($request->filled('sort_order')) {
+            $query->where('sort_order', $request->input('sort_order'));
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('name')) {
+            $name = mb_strtolower($request->input('name'), 'UTF-8');
+
+            $query->whereHas('descriptions', function ($q) use ($name) {
+                $q->whereRaw("LOWER(name) LIKE ?", ["%{$name}%"]);
+            });
+
+            $query->with(['descriptions' => function ($q) use ($languageId, $name) {
+                $q->select('information_id', 'language_id', 'name')
+                    ->where('language_id', $languageId)
+                    ->orderByRaw("COALESCE(NULLIF(LOCATE('{$name}', LOWER(name)), 0), 999999)");
+            }]);
+        }
+
+        $informationList = $query->paginate($perPage);
+
+        $baseUrl = config('app.client_url');
+
+        $informationList->getCollection()->transform(function ($item) use ($baseUrl) {
+            $item->setAttribute('name', optional($item->descriptions->first())->name);
+
+            if ($item->seoPath) {
+                $path = $item->seoPath->path;
+                $item->setAttribute('client_url', rtrim($baseUrl, '/') . '/' . ltrim($path, '/'));
+            } else {
+                $item->setAttribute('client_url', null);
+            }
+
+            unset($item->descriptions);
+            return $item;
+        });
+
+        return $informationList;
+    }
+
+    public function save(array $input, ?int $id = null)
+    {
+        $seoPath = $input['path'] ?? null;
         $stores = $input['stores'] ?? [];
+        $descriptions = $input['descriptions'] ?? [];
+
         unset($input['descriptions'], $input['path'], $input['stores']);
 
-        $information = isset($id) ? $this->model->find($id) : null;
+        $information = $this->model->updateOrCreate(['id' => $id], $input);
 
-        if (!$information) {
-            $information = new $this->model();
-        }
+            foreach ($descriptions as $languageId => $descData) {
+                InformationDescription::updateOrCreate(
+                    [
+                        'information_id' => $information->id,
+                        'language_id' => $languageId
+                    ],
+                    $descData
+                );
+            }
 
-        $information->fill($input);
-        $information->save();
+        $stores && $information->stores()->sync($stores);
 
-        foreach ($descriptions as $languageId => $descData) {
-            InformationDescription::updateOrCreate(
-                [
-                    'information_id' => $information->id,
-                    'language_id' => $languageId
-                ],
-                $descData
-            );
-        }
-
-        $information->stores()->sync($stores);
-
-        $this->firstPathQueryRepository->upsert($information->id, 'information', $seoPath);
+        $seoPath && FirstPathQuery::updateOrCreate(
+            ['type' => 'information', 'type_id' => $information->id],
+            ['path' => $seoPath]
+        );
 
         return $information;
     }
 
-    public function delete($id) {
-        $information = $this->find($id);
+    public function delete($id)
+    {
+        $this->find($id)?->delete();
 
-        $firstPathQuery = FirstPathQuery::where(['type' => 'information', 'type_id' => $id ])->first();
-
-        $firstPathQuery?->delete();
-        $information->delete();
+        FirstPathQuery::where('type', 'information')
+            ->where('type_id', $id)
+            ->first()?->delete();
     }
+
 }

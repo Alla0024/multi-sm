@@ -20,14 +20,12 @@ class NewsCategoryController extends AppBaseController
      * @var String $defaultLanguageId ;
      * */
     private $newsCategoryRepository;
-    private $defaultLanguageId;
 
     public function __construct(NewsCategoryRepository $newsCategoryRepo)
     {
         parent::__construct();
 
         $this->newsCategoryRepository = $newsCategoryRepo;
-        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -35,18 +33,7 @@ class NewsCategoryController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
-        $sortFields = [
-            'default',
-            'name_asc',
-            'name_desc',
-            'created_at_asc',
-            'created_at_desc',
-        ];
-
-        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
-        $newsCategories = $this->newsCategoryRepository->filterIndexPage($perPage, $request->all(), $languageId);
+        $newsCategories = $this->newsCategoryRepository->filterIndexPage($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsCategoryDescription::class,
@@ -57,7 +44,6 @@ class NewsCategoryController extends AppBaseController
 
         return $this->renderOutput([
             'newsCategories' => $newsCategories,
-            'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
     }

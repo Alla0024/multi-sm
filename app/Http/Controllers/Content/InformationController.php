@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Content;
 
-use App\Http\Requests\CreateInformationRequest;
-use App\Http\Requests\UpdateInformationRequest;
+use App\Http\Requests\InformationRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\FirstPathQuery;
 use App\Models\InformationDescription;
 use App\Repositories\InformationRepository;
 use App\Helpers\ModelSchemaHelper;
-use App\Repositories\LanguageRepository;
 use Illuminate\Http\Request;
 use App\Models\Information;
 use Flash;
@@ -21,17 +19,12 @@ class InformationController extends AppBaseController
      * @var int $defaultLanguageId ;
      * */
     private InformationRepository $informationRepository;
-    private int $defaultLanguageId;
 
-    public function __construct(
-        InformationRepository $informationRepo,
-        LanguageRepository    $languageRepo,
-    )
+    public function __construct(InformationRepository $informationRepo)
     {
         parent::__construct();
 
         $this->informationRepository = $informationRepo;
-        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -39,26 +32,7 @@ class InformationController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
-        $sortFields = [
-            'default',
-            'name_asc',
-            'name_desc',
-            'created_at_asc',
-            'created_at_desc',
-        ];
-
-        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
-        $information = $this->informationRepository->filterIndexPage($perPage, $languageId, request()->all());
-
-        foreach ($information as $item) {
-            if ($item->seoPath) {
-                $baseUrl = config('app.client_url');
-                $path = $item->seoPath->path;
-                $item->setAttribute('client_url', rtrim($baseUrl, '/') . '/' . ltrim($path, '/'));
-            }
-        }
+        $information = $this->informationRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,
@@ -69,38 +43,35 @@ class InformationController extends AppBaseController
 
         return $this->renderOutput([
             'information' => $information,
-            'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
     }
 
 
     /**
-     * Show the form for creating a new Information.
+     * Show the form for creating the Information.
      */
     public function create()
     {
-        $this->template = 'pages.information.create';
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Information::class,
             InformationDescription::class,
             FirstPathQuery::class
         ]);
 
+        $this->template = 'pages.information.create';
+
         return $this->renderOutput([
             'fields' => $fields,
-            'inTabs' => array_unique(array_column($fields, 'inTab')),
         ]);
     }
 
     /**
      * Store a newly created Information in storage.
      */
-    public function store(CreateInformationRequest $request)
+    public function store(InformationRequest $request)
     {
-        $input = $request->all();
-
-        $information = $this->informationRepository->upsert($input);
+        $information = $this->informationRepository->save($request->all());
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -112,7 +83,7 @@ class InformationController extends AppBaseController
      */
     public function show($id)
     {
-        $information = $this->informationRepository->find($id);
+        $information = $this->informationRepository->findFull($id);
 
         if (empty($information)) {
             Flash::error(__('common.flash_not_found'));
@@ -130,7 +101,7 @@ class InformationController extends AppBaseController
      */
     public function edit($id)
     {
-        $information = $this->informationRepository->find($id);
+        $information = $this->informationRepository->findFull($id);
 
         if (empty($information)) {
             Flash::error(__('common.flash_not_found'));
@@ -155,10 +126,9 @@ class InformationController extends AppBaseController
     /**
      * Update the specified Information in storage.
      */
-    public function update($id, UpdateInformationRequest $request)
+    public function update($id, InformationRequest $request)
     {
         $information = $this->informationRepository->find($id);
-        $dto = $request->all();
 
         if (empty($information)) {
             Flash::error(__('common.flash_not_found'));
@@ -166,7 +136,7 @@ class InformationController extends AppBaseController
             return redirect(route('information.index'));
         }
 
-        $information = $this->informationRepository->upsert($dto, $id);
+        $information = $this->informationRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 
@@ -175,8 +145,6 @@ class InformationController extends AppBaseController
 
     /**
      * Remove the specified Information from storage.
-     *
-     * @throws \Exception
      */
     public function destroy($id)
     {

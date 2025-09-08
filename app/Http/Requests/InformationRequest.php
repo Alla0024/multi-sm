@@ -3,11 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Models\Information;
-use App\Repositories\FirstPathQueryRepository;
 use App\Traits\AdditionalRequestRules;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateInformationRequest extends FormRequest
+class InformationRequest extends FormRequest
 {
     use AdditionalRequestRules;
     /**

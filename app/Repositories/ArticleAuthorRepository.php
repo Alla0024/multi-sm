@@ -81,12 +81,16 @@ class ArticleAuthorRepository extends BaseRepository
         return $author;
     }
 
-    public function filterIndexPage($perPage, $language_id, $params)
+    public function filterIndexPage($request)
     {
+        $params = $request->all();
+        $perPage = $request->input('perPage', 10);
+        $languageId = $request->get('language_id') ?? config('settings.locale.default_language_id');
+
         $authors = $this->model
-            ->with(['descriptions' => function ($query) use ($language_id) {
+            ->with(['descriptions' => function ($query) use ($languageId) {
                 $query->select('author_id', 'language_id', 'name')
-                    ->where('language_id', $language_id);
+                    ->where('language_id', $languageId);
             }])
             ->when(isset($params['name']), function ($q) use ($params) {
                 return $q->whereHas('descriptions', function ($q) use ($params) {
