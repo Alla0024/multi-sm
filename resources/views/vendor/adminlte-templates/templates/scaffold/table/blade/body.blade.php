@@ -28,7 +28,7 @@
                     <th>
                         <div class="input-block input-toggle flex">
                             <div class="form-check form-switch">
-                                <input class="form-check-input checkbox-child" data-content="@{{  {!! $config->modelNames->camel !!}['id']}}" name="input-toggle_@{{ {!! $config->modelNames->camel !!}['id']}}" type="checkbox" role="switch" id="switchCheckChecked_@{{ {!! $config->modelNames->camel !!}['id']}}">
+                                <input class="form-check-input checkbox-child" data-content="@{{  ${!! $config->modelNames->camel !!}['id']}}" name="input-toggle_@{{ ${!! $config->modelNames->camel !!}['id']}}" type="checkbox" role="switch" id="switchCheckChecked_@{{ ${!! $config->modelNames->camel !!}['id']}}">
                             </div>
                         </div>
                     </th>

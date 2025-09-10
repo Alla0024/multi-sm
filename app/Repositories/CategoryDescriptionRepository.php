@@ -8,7 +8,6 @@ use App\Repositories\BaseRepository;
 class CategoryDescriptionRepository extends BaseRepository
 {
     protected $fieldSearchable = [
-        'language_id',
         'name',
         'tag'
     ];

@@ -19,6 +19,8 @@
             </tr>
             </thead>
             <tbody>
+            @dump($fields)
+            @dump($categories)
             @foreach($categories as $category)
                 <tr>
                     <th>
@@ -30,13 +32,13 @@
                     </th>
 
                     @foreach($fields as $index => $field)
-                        @if($index == 'status')
+                        @if($index == 'status' && $field['inTable'])
                             @if($category[$index] == 1)
                                 <td><div class="status_active">{{ $word['status_1'] }}</div></td>
                             @else
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
-                         @elseif($index == 'image')
+                         @elseif($index == 'image' && $field['inTable'])
                             <td><img style="width: 140px;" src="{{isset($optionValue[$index]) && $optionValue[$index] != '' ? $optionValue[$index] : '/images/common/no_images.png'}}" alt=""></td>
                          @else
                              @if($index != 'id' && $field['inTable'])
