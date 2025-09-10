@@ -35,6 +35,5 @@ return [
     'search_created_at' => 'Пошук за датою створення',
     'title_updated_at' => 'Дата оновлення',
     'search_updated_at' => 'Пошук за датою оновлення',
-    'tab_main' => 'Основна вкладка',
-    'tab_sort' => 'Сортування',
+    'tab_main' => 'Головне',
 ];

@@ -1,4 +1,3 @@
-@dump($category)
 
 <!-- Name Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
@@ -33,17 +32,6 @@
     </div>
 </div>
 
-<!-- Sub Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    {!! Form::label('sub', $word['title_sub']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::number('sub', null, ['class' => 'form-control']) !!}
-        </div>
-    </div>
-</div>
-
-
 <!-- Sort Order Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
@@ -54,13 +42,16 @@
     </div>
 </div>
 
-
-<!-- Status Field -->
+<!-- Tag Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    {!! Form::label('status', $word['title_status']) !!}
+    {!! Form::label('sub', $word['title_tag']) !!}
     <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::number('status', null, ['class' => 'form-control', 'required']) !!}
-        </div>
+        @foreach($languages as $language)
+            <div class="input-group">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
+                {!! Form::text("descriptions[$language->id][tag]", null, ['class' => 'form-control']) !!}
+            </div>
+        @endforeach
     </div>
 </div>
+

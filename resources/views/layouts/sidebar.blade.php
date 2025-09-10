@@ -33,6 +33,16 @@
             <div class="name">{{$word['menu_manufacturers']}}</div>
         </a>
 
+        <a href="{{ route('categories.index') }}" class="item {{ Request::is($adminPath.'/categories*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-columns-gap fs-20"></i></div>
+            <div class="name">{{$word['menu_categories']}}</div>
+        </a>
+
+        <a href="{{ route('filters.index') }}" class="item {{ Request::is($adminPath.'/filters*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-filter fs-20"></i></div>
+            <div class="name">{{$word['menu_filters']}}</div>
+        </a>
+
         <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/option*') ? 'true' : 'false' }}}">
             <div class="item {{ Request::is($adminPath.'/option*') ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
@@ -77,7 +87,6 @@
             <div class="icon"><i class="bi bi-gift fs-20"></i></div>
             <div class="name">{{$word['menu_vacancies']}}</div>
         </a>
-
 
     </div>
 </div>

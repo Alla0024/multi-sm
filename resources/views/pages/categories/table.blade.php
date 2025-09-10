@@ -19,8 +19,6 @@
             </tr>
             </thead>
             <tbody>
-            @dump($fields)
-            @dump($categories)
             @foreach($categories as $category)
                 <tr>
                     <th>
