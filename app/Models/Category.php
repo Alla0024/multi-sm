@@ -112,4 +112,9 @@ class Category extends Model
     {
         return $this->hasMany(CategoryDescription::class, 'category_id');
     }
+
+    public function seoPath()
+    {
+        return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'category');
+    }
 }

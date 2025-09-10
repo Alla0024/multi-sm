@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CategoryDescription extends Model
 {
-    use SearchableBySimilarity;
 
     public $table = 'category_descriptions';
 
