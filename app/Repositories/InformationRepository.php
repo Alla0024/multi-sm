@@ -153,7 +153,6 @@ class InformationRepository extends BaseRepository
 
         return $information;
     }
-
     public function delete($id)
     {
         $this->find($id)?->delete();
@@ -163,4 +162,27 @@ class InformationRepository extends BaseRepository
             ->first()?->delete();
     }
 
+    public function copy($ids): void
+    {
+        $informations = Information::with('descriptions')->whereIn('id', $ids)->get();
+
+        foreach ($informations as $information) {
+            $newInformation = $information->replicate();
+            $newInformation->status = 0;
+            $newInformation->save();
+
+            foreach ($information->descriptions as $description) {
+                $newDescription = $description->replicate();
+                $newDescription->information_id = $newInformation->id;
+                $newDescription->save();
+            }
+        }
+    }
+
+    public function multiDelete($ids): void
+    {
+        Information::whereIn('id', $ids)->delete();
+        InformationDescription::whereIn('information_id', $ids)->delete();
+        FirstPathQuery::where('type', 'information')->whereIn('type_id', $ids)->delete();
+    }
 }

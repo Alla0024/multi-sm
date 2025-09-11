@@ -146,20 +146,31 @@ class InformationController extends AppBaseController
     /**
      * Remove the specified Information from storage.
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $information = $this->informationRepository->find($id);
-
-        if (empty($information)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('information.index'));
-        }
-
-        $this->informationRepository->delete($id);
+        $this->informationRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('information.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('information_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->informationRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('information.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('information.index');
     }
 }

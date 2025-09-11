@@ -17,19 +17,7 @@
                        href="{{ route('information.create') }}">
                         {!! $word['add'] !!}
                     </a>
-                    <div class="btn btn-primary btn-copy float-right" >
-                        {!! $word['copy'] !!}
-                    </div>
-                    <div class="btn btn-primary btn-deleted float-right">
-                        {!! $word['deleted'] !!}
-                    </div>
-                </div>
-                <div class="col-sm-2 action-item">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('information.create') }}">
-                        {!! $word['add'] !!}
-                    </a>
-                    <div class="btn btn-primary btn-copy float-right" data-action="copy_information" data-name="information_id" @click="$store.page.copyItem($event.target)">
+                    <div class="btn btn-primary btn-copy float-right" data-action="copy_information?XDEBUG_SESSION_START=APP" data-name="information_id" @click="$store.page.copyItem($event.target)">
                         {!! $word['copy'] !!}
                     </div>
                     {!! Form::open(['route' => ['information.destroy', ''], 'method' => 'delete', '@submit.prevent = $store.page.deletedItems($event.target)']) !!}
