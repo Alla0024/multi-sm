@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Filter extends Model
 {
@@ -38,6 +39,11 @@ class Filter extends Model
         return $this->belongsTo(\App\Models\FilterGroup::class, 'filter_group_id');
     }
 
+    public function descriptions(): HasMany
+    {
+        return $this->hasMany(FilterDescription::class, 'filter_id');
+    }
+
     public function filterDescription(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(\App\Models\FilterDescription::class);
@@ -52,4 +58,9 @@ class Filter extends Model
     {
         return $this->belongsToMany(\App\Models\OptionValueGroup::class, 'filter_to_option_value_groups');
     }
+    public function seoPath()
+    {
+        return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'filter');
+    }
+
 }
