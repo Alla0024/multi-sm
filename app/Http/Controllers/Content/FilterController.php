@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateFilterRequest;
 use App\Http\Requests\UpdateFilterRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\FilterGroup;
+use App\Models\FilterGroupDescription;
+use App\Repositories\FilterGroupRepository;
 use App\Repositories\FilterRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -16,11 +19,18 @@ class FilterController extends AppBaseController
     /** @var FilterRepository $filterRepository*/
     private $filterRepository;
 
-    public function __construct(FilterRepository $filterRepo)
+    /** @var FilterGroupRepository $filterGroupRepository*/
+    private $filterGroupRepository;
+
+    public function __construct(
+        FilterRepository $filterRepo,
+        FilterGroupRepository $filterGroupRepo
+    )
     {
         parent::__construct();
 
         $this->filterRepository = $filterRepo;
+        $this->filterGroupRepository = $filterGroupRepo;
     }
 
     /**
@@ -28,12 +38,12 @@ class FilterController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
 
-        $filters = $this->filterRepository->paginate($perPage);
+        $filters = $this->filterGroupRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            Filter::class
+            FilterGroupDescription::class,
+            FilterGroup::class
         ]);
 
         $this->template = 'pages.filters.index';
