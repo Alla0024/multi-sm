@@ -21,6 +21,8 @@ return [
     'search_attribute_group_id' => 'Пошук за групою атрибутів',
     'title_sort_order' => 'Порядок сортування',
     'search_sort_order' => 'Пошук за порядком сортування',
+    'title_name' => 'Атрибути',
+    'search_name' => 'Пошук за назвою',
     'tab_main' => 'Основне',
     'tab_sort' => 'Сортування',
 ];

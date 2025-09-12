@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Attribute extends Model
 {
@@ -14,7 +18,7 @@ class Attribute extends Model
     ];
 
     protected $casts = [
-        
+
     ];
 
     public static array $rules = [
@@ -24,33 +28,33 @@ class Attribute extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function attributeGroup(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function attributeGroup(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\AttributeGroup::class, 'attribute_group_id');
+        return $this->belongsTo(AttributeGroup::class, 'attribute_group_id');
     }
 
-    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(\App\Models\Category::class, 'attribute_to_category');
+        return $this->belongsToMany(Category::class, 'attribute_to_category');
     }
 
-    public function attributeIconToAttributes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function attributeIconToAttributes(): HasMany
     {
-        return $this->hasMany(\App\Models\AttributeIconToAttribute::class, 'attribute_id');
+        return $this->hasMany(AttributeIconToAttribute::class, 'attribute_id');
     }
 
-    public function productAttributeIcons(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function productAttributeIcons(): HasMany
     {
-        return $this->hasMany(\App\Models\ProductAttributeIcon::class, 'attribute_id');
+        return $this->hasMany(ProductAttributeIcon::class, 'attribute_id');
     }
 
-    public function productAttributes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function productAttributes(): HasMany
     {
-        return $this->hasMany(\App\Models\ProductAttribute::class, 'attribute_id');
+        return $this->hasMany(ProductAttribute::class, 'attribute_id');
     }
 
-    public function attributeDescription(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function descriptions(): HasMany
     {
-        return $this->hasOne(\App\Models\AttributeDescription::class);
+        return $this->hasMany(AttributeDescription::class, 'attribute_id');
     }
 }

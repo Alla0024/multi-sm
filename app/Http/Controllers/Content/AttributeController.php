@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateAttributeRequest;
 use App\Http\Requests\UpdateAttributeRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\AttributeDescription;
 use App\Repositories\AttributeRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -28,12 +29,15 @@ class AttributeController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
-        $attributes = $this->attributeRepository->paginate($perPage);
+        $attributes = $this->attributeRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            Attribute::class
+            AttributeDescription::class,
+            Attribute::class,
+        ], [
+            'name',
+            'attribute_group_id',
+            'sort_order',
         ]);
 
         $this->template = 'pages.attributes.index';
