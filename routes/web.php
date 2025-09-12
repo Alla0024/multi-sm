@@ -52,6 +52,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
+        Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
 
         Route::resource('langs', App\Http\Controllers\LangController::class);
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');

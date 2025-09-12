@@ -130,7 +130,6 @@ class NewsCategoryRepository extends BaseRepository
             ];
         }
 
-
         return $result ?? [];
     }
 }

@@ -6,8 +6,10 @@ use App\Models\FirstPathQuery;
 use App\Models\News;
 use App\Models\NewsDescription;
 use App\Models\NewsToNewsCategory;
+use App\Models\NewsToProduct;
 use App\Repositories\BaseRepository;
 use Illuminate\Container\Container as Application;
+use Illuminate\Http\Request;
 use function Laravel\Prompts\select;
 
 class NewsRepository extends BaseRepository
@@ -62,25 +64,25 @@ class NewsRepository extends BaseRepository
         return News::class;
     }
 
-    public function getDetails($id, $language_id)
+    public function findFull($id)
     {
         $news = $this->model->with([
             'descriptions',
             'seoPath' => function($query) {
                 $query->select('type', 'type_id', 'path');
             },
-            'author.descriptions' => function($query) use ($language_id) {
-                $query->where('language_id', $language_id);
+            'author.descriptions' => function($query) {
+                $query->where('language_id', config('settings.locale.default_language_id'));
             },
-            'category.descriptions' => function($query) use ($language_id) {
-                $query->where('language_id', $language_id);
+            'category.descriptions'=> function($query) {
+                $query->where('language_id', config('settings.locale.default_language_id'));
             },
-            'newsCategories.descriptions' => function($query) use ($language_id) {
-                $query->where('language_id', $language_id);
+            'newsCategories.descriptions' => function($query) {
+                $query->where('language_id', config('settings.locale.default_language_id'));
             },
         ])->find($id);
 
-        $products = $this->newsToProductRepository->getProductsDropdownByNewsId($id, $language_id);
+        $products = $this->newsToProductRepository->getProductsDropdownByNewsId($id);
 
         $seo_path = $news->seoPath?->path;
         $category = $news->category->descriptions->first();
@@ -132,11 +134,15 @@ class NewsRepository extends BaseRepository
         return $news;
     }
 
-    public function filterIndexPage($perPage, $language_id, $params)
+    public function filterRows(Request $request)
     {
+        $perPage    = $request->integer('perPage', 10);
+        $languageId = $request->input('language_id', config('settings.locale.default_language_id'));
+        $params = $request->all();
+
         $news = $this->model
             ->leftJoin((new NewsDescription())->getTable() . " as nd", 'nd.news_id', '=', 'news.id')
-            ->where('nd.language_id', $language_id)
+            ->where('nd.language_id', $languageId)
             ->with(['seoPath' => function($query) {
                 $query->select('type', 'type_id', 'path');
             }])
@@ -206,7 +212,7 @@ class NewsRepository extends BaseRepository
         $news->save();
 
         $this->newsDescriptionRepository->upsert($news->id, $descriptions);
-        $this->firstPathQueryRepository->upsert($news->id, 'news', $seoPath);
+        $this->firstPathQueryRepository->save($news->id, 'news', $seoPath);
         $this->newsToNewsCategoryRepository->sync($news->id, $newsCategories);
         $this->newsToProductRepository->sync($news->id, $products);
 
@@ -218,5 +224,45 @@ class NewsRepository extends BaseRepository
 
         $this->firstPathQueryRepository->destroy($news->id, 'news');
         $news->delete();
+    }
+
+    public function copy($ids): void
+    {
+        $news = News::whereIn('id', $ids)->get();
+
+        foreach ($news as $item) {
+            $newItem = $item->replicate();
+            $newItem->status = 0;
+            $newItem->save();
+
+            $newsDescriptions = NewsDescription::where('news_id', $item->id)
+                ->get()
+                ->keyBy('language_id')
+                ->each(function ($item) {
+                    unset($item->news_id);
+                })
+                ->toArray();
+
+            $newsCategories = NewsToNewsCategory::where('news_id', $item->id)
+                ->get()
+                ->pluck('news_category_id')
+                ->toArray();
+
+            $products = NewsToProduct::where('news_id', $item->id)
+                ->get()
+                ->pluck('product_id')
+                ->toArray();
+
+            $this->newsDescriptionRepository->upsert($newItem->id, $newsDescriptions);
+            $this->newsToNewsCategoryRepository->sync($newItem->id, $newsCategories);
+            $this->newsToProductRepository->sync($newItem->id, $products);
+        }
+    }
+
+    public function multiDelete($ids): void
+    {
+        News::whereIn('id', $ids)->delete();
+        NewsDescription::whereIn('news_id', $ids)->delete();
+        FirstPathQuery::where('type', 'news')->whereIn('type_id', $ids)->delete();
     }
 }

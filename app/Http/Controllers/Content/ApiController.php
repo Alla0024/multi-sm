@@ -23,13 +23,13 @@ class ApiController extends AppBaseController
      * @var LocationRepository $locationRepository
      * @var String $DEFAULT_LANGUAGE_ID;
      */
-    private $categoryRepository;
-    private $newsCategoryRepository;
-    private $articleAuthorRepository;
-    private $productRepository;
-    private $storeRepository;
-    private $locationRepository;
-    private $defaultLanguageId;
+    private CategoryRepository $categoryRepository;
+    private NewsCategoryRepository $newsCategoryRepository;
+    private ArticleAuthorRepository $articleAuthorRepository;
+    private ProductRepository $productRepository;
+    private StoreRepository $storeRepository;
+    private LocationRepository $locationRepository;
+    private String $defaultLanguageId;
 
     public function __construct(
         CategoryRepository $categoryRepo,

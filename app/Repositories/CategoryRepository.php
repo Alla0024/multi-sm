@@ -37,6 +37,38 @@ class CategoryRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
+    public function getDropdownItems($language_id, $args = []): array
+    {
+        $items = $this->model
+            ->with([
+                'descriptions' => function ($query) use ($language_id) {
+                    $query
+                        ->where('language_id', $language_id)
+                        ->select(['category_id', 'language_id', 'name']);
+                }
+            ])
+            ->when(isset($args['q']), function ($query) use ($args, $language_id) {
+                $query->whereHas('descriptions', function ($query) use ($args, $language_id) {
+                    $query
+                        ->where('language_id', $language_id)
+                        ->where('name', 'LIKE', '%' . trim($args['q']) . '%');
+                });
+            })
+            ->get(['id']);
+
+
+        foreach ($items as $item) {
+            if ($item->id && $item->descriptions->first()?->name) {
+                $result[] = [
+                    "id" => $item->id,
+                    "text" => $item->descriptions->first()->name,
+                ];
+            }
+        }
+
+        return $result ?? [];
+    }
+
     public function findFull($id, $columns = ['*'])
     {
         $category = $this->model

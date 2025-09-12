@@ -198,7 +198,7 @@ class ArticleAuthorRepository extends BaseRepository
                 $query->whereHas('descriptions', function ($query) use ($args, $language_id) {
                     $query
                         ->where('language_id', $language_id)
-                        ->searchSimilarity(['name'], $args['q']);
+                        ->where('name', 'LIKE', '%' . trim($args['q']) . '%');
                 });
             })
             ->get(['id']);

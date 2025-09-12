@@ -28,14 +28,14 @@ class NewsToProductRepository extends BaseRepository
         return NewsToProduct::class;
     }
 
-    public function getProductsDropdownByNewsId($news_id, $language_id, $fields = ['*']): array
+    public function getProductsDropdownByNewsId($news_id, $fields = ['*']): array
     {
         $news_to_product = $this->model
             ->where('news_id', '=', $news_id)
             ->select($fields)
-            ->with(['product' => function ($query) use ($language_id) {
-                $query->select('id')->with(['descriptions' => function ($query) use ($language_id) {
-                    $query->select('product_id', 'language_id', 'name')->where('language_id', $language_id);
+            ->with(['product' => function ($query) {
+                $query->select('id')->with(['descriptions' => function ($query) {
+                    $query->select('product_id', 'language_id', 'name')->where('language_id', config('settings.locale.default_language_id'));
                 }]);
             }])
             ->orderBy('sort_order', 'asc')

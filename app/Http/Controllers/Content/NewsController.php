@@ -40,7 +40,7 @@ class NewsController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $news = $this->newsRepository->filterIndexPage( $request->all());
+        $news = $this->newsRepository->filterRows($request);
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             NewsDescription::class,
             News::class,
@@ -89,9 +89,9 @@ class NewsController extends AppBaseController
     /**
      * Display the specified News.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
+        $news = $this->newsRepository->findFull($request);
 
         if (empty($news)) {
             Flash::error(__('common.flash_not_found'));
@@ -107,10 +107,12 @@ class NewsController extends AppBaseController
     /**
      * Show the form for editing the specified News.
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $news = $this->newsRepository->getDetails($id, $this->defaultLanguageId);
-        $authors = $this->articleAuthorRepository->getAuthorIdNameMap($this->defaultLanguageId);
+        $language_id = $request->get('language_id', config('settings.locale.default_language_id'));
+
+        $news = $this->newsRepository->findFull($id);
+        $authors = $this->articleAuthorRepository->getAuthorIdNameMap($language_id);
 
         if (empty($news)) {
             Flash::error(__('common.flash_not_found'));
@@ -155,25 +157,31 @@ class NewsController extends AppBaseController
         return redirect(route('news.index'));
     }
 
-    /**
-     * Remove the specified News from storage.
-     *
-     * @throws \Exception
-     */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $new = $this->newsRepository->find($id);
-
-        if (empty($new)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('news.index'));
-        }
-
-        $this->newsRepository->delete($id);
+        $this->newsRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('news.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('news_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->newsRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('news.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('news.index');
     }
 }
