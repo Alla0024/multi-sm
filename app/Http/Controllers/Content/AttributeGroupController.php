@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateAttributeGroupRequest;
 use App\Http\Requests\UpdateAttributeGroupRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\AttributeGroupDescription;
 use App\Repositories\AttributeGroupRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -30,10 +31,14 @@ class AttributeGroupController extends AppBaseController
     {
         $perPage = $request->input('perPage', 10);
 
-        $attributeGroups = $this->attributeGroupRepository->paginate($perPage);
+        $attributeGroups = $this->attributeGroupRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            AttributeGroupDescription::class,
             AttributeGroup::class
+        ], [
+            'name',
+            'sort_order'
         ]);
 
         $this->template = 'pages.attribute_groups.index';
