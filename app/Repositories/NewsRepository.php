@@ -250,7 +250,11 @@ class NewsRepository extends BaseRepository
 
             $products = NewsToProduct::where('news_id', $item->id)
                 ->get()
-                ->pluck('product_id')
+                ->each(function ($item) {
+                    $product_id = $item->product_id;
+                    $item->setAttribute('id', $product_id);
+                    unset($item->news_id, $item->product_id);
+                })
                 ->toArray();
 
             $this->newsDescriptionRepository->upsert($newItem->id, $newsDescriptions);
