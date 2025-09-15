@@ -15,7 +15,7 @@ use Flash;
 class AttributeGroupController extends AppBaseController
 {
     /** @var AttributeGroupRepository $attributeGroupRepository*/
-    private $attributeGroupRepository;
+    private AttributeGroupRepository $attributeGroupRepository;
 
     public function __construct(AttributeGroupRepository $attributeGroupRepo)
     {
@@ -29,8 +29,6 @@ class AttributeGroupController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
         $attributeGroups = $this->attributeGroupRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([

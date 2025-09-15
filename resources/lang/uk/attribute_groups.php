@@ -17,6 +17,7 @@ return [
     'search_created_at' => 'Пошук за датою створення',
     'title_updated_at' => 'Дата оновлення',
     'search_updated_at' => 'Пошук за датою оновлення',
+    'title_descriptions_name' => 'Характеристики матраса',
     'title_name' => 'Групи атрибутів',
     'search_name' => 'Пошук за назвою',
     'tab_main' => 'Основне',
