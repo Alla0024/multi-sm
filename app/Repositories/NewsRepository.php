@@ -143,9 +143,6 @@ class NewsRepository extends BaseRepository
         $news = $this->model
             ->leftJoin((new NewsDescription())->getTable() . " as nd", 'nd.news_id', '=', 'news.id')
             ->where('nd.language_id', $languageId)
-            ->with(['seoPath' => function($query) {
-                $query->select('type', 'type_id', 'path');
-            }])
             ->when(isset($params['sort_order']), function ($query) use ($params) {
                 $query->where('sort_order', '=', $params['sort_order']);
             })
