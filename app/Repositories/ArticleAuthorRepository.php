@@ -214,4 +214,27 @@ class ArticleAuthorRepository extends BaseRepository
 
         return $result ?? [];
     }
+
+    public function multiDelete($ids): void
+    {
+        ArticleAuthor::whereIn('id', $ids)->delete();
+        ArticleAuthorDescription::whereIn('author_id', $ids)->delete();
+        FirstPathQuery::where('type', 'authors')->whereIn('type_id', $ids)->delete();
+    }
+
+    public function copy($ids): void
+    {
+        $articleAuthors = ArticleAuthor::with('descriptions')->whereIn('id', $ids)->get();
+
+        foreach ($articleAuthors as $author) {
+            $newAuthor = $author->replicate();
+            $newAuthor->save();
+
+            foreach ($newAuthor->descriptions as $description) {
+                $newDescription = $description->toArray();
+                $newDescription['author_id'] = $newAuthor->id;
+                ArticleAuthorDescription::create($newDescription);
+            }
+        }
+    }
 }
