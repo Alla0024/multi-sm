@@ -172,20 +172,31 @@ class OptionValueController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Request $request, $ids)
     {
-        $optionValue = $this->optionValueRepository->find($id);
-
-        if (empty($optionValue)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('optionValues.index'));
-        }
-
-        $this->optionValueRepository->delete($id);
+        $this->optionValueRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
-        return redirect(route('optionValues.index'));
+        return redirect(route('options.show'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('optionValues_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->optionValueRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('options.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('options.index');
     }
 }

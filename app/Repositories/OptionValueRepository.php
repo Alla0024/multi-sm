@@ -73,6 +73,25 @@ class OptionValueRepository extends BaseRepository
         }
     }
 
+    private function copyRecursive(int $parent_id, int $new_parent_id): void
+    {
+        $descendants = $this->model->where('parent_id', $parent_id)->with('descriptions')->get();
+
+        foreach ($descendants as $descendant) {
+            $new = $descendant->replicate();
+            $new->parent_id = $new_parent_id;
+            $new->save();
+
+            foreach ($descendant->descriptions as $description) {
+                $newDescription = $description->toArray();
+                $newDescription['option_value_id'] = $new->id;
+                OptionValueDescription::create($newDescription);
+            }
+
+            $this->copyRecursive($descendant->id, $new->id);
+        }
+    }
+
     public function getBreadCrumbsRecursive($child_id, $language_id, $level = null): array
     {
         if (!is_numeric($child_id) && !is_null($child_id)) {
@@ -205,5 +224,30 @@ class OptionValueRepository extends BaseRepository
         }
 
         $this->model->find($id)->delete();
+    }
+
+    public function multiDelete($ids): void
+    {
+        foreach ($ids as $id) {
+            $this->delete($id);
+        }
+    }
+
+    public function copy($ids): void
+    {
+        $optionValues = OptionValue::with('descriptions')->whereIn('id', $ids)->get();
+
+        foreach ($optionValues as $optionValue) {
+            $newOptionValue = $optionValue->replicate();
+            $newOptionValue->save();
+
+            foreach ($optionValue->descriptions as $description) {
+                $newDescription = $description->toArray();
+                $newDescription['option_value_id'] = $newOptionValue->id;
+                OptionValueDescription::create($newDescription);
+            }
+
+            $this->copyRecursive($optionValue->id, $newOptionValue->id);
+        }
     }
 }
