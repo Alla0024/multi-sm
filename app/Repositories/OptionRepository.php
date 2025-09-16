@@ -2,10 +2,15 @@
 
 namespace App\Repositories;
 
+use App\Models\OptionValueGroup;
+use App\Models\OptionValueGroupDescription;
+use App\Models\ProductOption;
+use App\Models\ProductOptionValueGroup;
 use Illuminate\Container\Container as Application;
 use App\Models\Option;
 use App\Models\OptionDescription;
 use App\Repositories\BaseRepository;
+use Illuminate\Http\Request;
 use function Symfony\Component\String\s;
 
 class OptionRepository extends BaseRepository
@@ -72,13 +77,17 @@ class OptionRepository extends BaseRepository
         return $option;
     }
 
-    public function filterIndexPage($perPage, $language_id, array $params)
+    public function filterRows(Request $request)
     {
+        $perPage = $request->get('perPage', 15);
+        $language_id = $request->get('language_id', config('settings.locale.default_language_id'));
+        $params = $request->all();
+
         $options = $this->model
             ->leftJoin((new OptionDescription())->getTable() . " as od", 'od.option_id', '=', 'options.id')
             ->select('options.*', 'od.*')
             ->where('od.language_id', $language_id)
-            ->withCount('optionValueGroups as value_groups_count')
+            ->withCount('valueGroups as value_groups_count')
             ->with(['products' => function ($query) use ($language_id) {
                 return $query->select('id', 'category_id')->with([
                     'category.descriptions' => function ($query) use ($language_id) {
@@ -114,12 +123,12 @@ class OptionRepository extends BaseRepository
         return $options;
     }
 
-    public function getDetails($id)
+    public function findFull($id)
     {
         $option = $this->model
             ->with([
                 'descriptions',
-                'optionValueGroups' => function ($q) {
+                'valueGroups' => function ($q) {
                     $q->with('descriptions');
                 }
             ])
@@ -133,7 +142,7 @@ class OptionRepository extends BaseRepository
 
         $option->setAttribute('descriptions', $preshaped_descriptions);
 
-        foreach ($option->optionValueGroups as $option_value_group) {
+        foreach ($option->valueGroups as $option_value_group) {
             $desc = $option_value_group->descriptions
                 ->keyBy('language_id')
                 ->toArray();
@@ -176,11 +185,48 @@ class OptionRepository extends BaseRepository
         return $option;
     }
 
-    public function delete($id) {
-        $option = $this->model->find($id);
+    public function copy($ids): void
+    {
+        $options = Option::with(['descriptions', 'valueGroups.descriptions'])->whereIn('id', $ids)->get();
 
-        $this->optionValueGroupRepository->deleteAllByOptionId($option->id);
+        foreach ($options as $option) {
+            $newOption = $option->replicate();
+            $newOption->path = isset($newOption->path) ? $newOption->path.'-copy' : $newOption->path;
+            $newOption->save();
 
-        $option->delete();
+            $productsPivot = ProductOption::where('option_id', $option->id)->get();
+
+            foreach ($option->descriptions as $description) {
+                $newDescription = $description->toArray();
+                $newDescription['option_id'] = $newOption->id;
+                OptionDescription::create($newDescription);
+            }
+
+            foreach ($option->valueGroups as $option_value_group) {
+                $newOptionValueGroup = $option_value_group->replicate();
+                $newOptionValueGroup->option_id = $newOption->id;
+                $newOptionValueGroup->save();
+
+                foreach ($option_value_group->descriptions as $description) {
+                    $newDescription = $description->toArray();
+                    $newDescription['option_value_group_id'] = $newOptionValueGroup->id;
+                    OptionValueGroupDescription::create($newDescription);
+                }
+            }
+
+            foreach ($productsPivot as $product) {
+                $newProduct = $product->toArray();
+                $newProduct['option_id'] = $newOption->id;
+                ProductOption::create($newProduct);
+            }
+        }
+    }
+
+    public function multiDelete($ids): void
+    {
+        Option::whereIn('id', $ids)->delete();
+        OptionDescription::whereIn('option_id', $ids)->delete();
+        OptionValueGroup::whereIn('option_id', $ids)->delete();
+        ProductOption::whereIn('option_id', $ids)->delete();
     }
 }

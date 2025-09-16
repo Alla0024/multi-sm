@@ -67,7 +67,7 @@ class Option extends Model
         return $this->hasOne(OptionDescription::class);
     }
 
-    public function optionValueGroups(): HasMany {
+    public function valueGroups(): HasMany {
         return $this->hasMany(OptionValueGroup::class);
     }
 

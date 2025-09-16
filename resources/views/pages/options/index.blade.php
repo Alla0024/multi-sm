@@ -17,7 +17,7 @@
                        href="{{ route('options.create') }}">
                         {!! $word['add'] !!}
                     </a>
-                    <div class="btn btn-primary btn-copy float-right" data-action="copy_options" data-name="options_id" @click="$store.page.copyItem($event.target)">
+                    <div class="btn btn-primary btn-copy float-right" data-action="copy_options?XDEBUG_SESSION_START=APP" data-name="options_id" @click="$store.page.copyItem($event.target)">
                         {!! $word['copy'] !!}
                     </div>
                     {!! Form::open(['route' => ['options.destroy', ''], 'method' => 'delete', '@submit.prevent = $store.page.deletedItems($event.target)']) !!}

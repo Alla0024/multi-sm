@@ -37,20 +37,20 @@ class CategoryRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
-    public function getDropdownItems($language_id, $args = []): array
+    public function getDropdownItems($args = []): array
     {
         $items = $this->model
             ->with([
-                'descriptions' => function ($query) use ($language_id) {
+                'descriptions' => function ($query) {
                     $query
-                        ->where('language_id', $language_id)
+                        ->where('language_id', $args['language_id'] ?? config('settings.locale.default_language_id'))
                         ->select(['category_id', 'language_id', 'name']);
                 }
             ])
-            ->when(isset($args['q']), function ($query) use ($args, $language_id) {
-                $query->whereHas('descriptions', function ($query) use ($args, $language_id) {
+            ->when(isset($args['q']), function ($query) use ($args) {
+                $query->whereHas('descriptions', function ($query) use ($args) {
                     $query
-                        ->where('language_id', $language_id)
+                        ->where('language_id', $args['language_id'] ?? config('settings.locale.default_language_id'))
                         ->where('name', 'LIKE', '%' . trim($args['q']) . '%');
                 });
             })
