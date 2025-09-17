@@ -95,7 +95,7 @@ class AttributeGroupController extends AppBaseController
      */
     public function edit($id)
     {
-        $attributeGroup = $this->attributeGroupRepository->find($id);
+        $attributeGroup = $this->attributeGroupRepository->findFull($id);
 
         if (empty($attributeGroup)) {
             Flash::error(__('common.flash_not_found'));
@@ -133,20 +133,31 @@ class AttributeGroupController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Request $request, $ids)
     {
-        $attributeGroup = $this->attributeGroupRepository->find($id);
-
-        if (empty($attributeGroup)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('attributeGroups.index'));
-        }
-
-        $this->attributeGroupRepository->delete($id);
+        $this->attributeGroupRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('attributeGroups.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('optionValues_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->attributeGroupRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('attributeGroups.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('attributeGroups.index');
     }
 }

@@ -51,4 +51,47 @@ class AttributeGroupRepository extends BaseRepository
 
         return $rows;
     }
+
+    public function findFull($id)
+    {
+        $query = $this->model->with([
+            'descriptions',
+            'attributes.descriptions',
+        ]);
+
+        $attributeGroup = $query->find($id);
+
+        $attributeGroup->setRelation(
+            'descriptions',
+            $attributeGroup->descriptions->keyBy('language_id')
+        );
+
+        $attributeGroup->attributes->each(function ($attr) {
+
+            $descriptions = $attr->descriptions->keyBy('language_id')->toArray();
+            unset($attr->descriptions);
+            $attr->setAttribute('descriptions', $descriptions);
+            return $attr;
+        });
+
+        return $attributeGroup;
+    }
+
+    public function copy($ids): void
+    {
+        $attributeGroups = AttributeGroup::with(['descriptions'])->whereIn('id', $ids)->get();
+
+        foreach ($attributeGroups as $attributeGroup) {
+            $newAttributeGroup = $attributeGroup->replicate();
+            $newAttributeGroup->save();
+        }
+    }
+
+    public function multiDelete($ids): void
+    {
+        Option::whereIn('id', $ids)->delete();
+        OptionDescription::whereIn('option_id', $ids)->delete();
+        OptionValueGroup::whereIn('option_id', $ids)->delete();
+        ProductOption::whereIn('option_id', $ids)->delete();
+    }
 }

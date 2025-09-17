@@ -20,3 +20,16 @@
         </div>
     </div>
 </div>
+
+<!-- Option Value Groups Field -->
+@php
+    $arrData = [
+        'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
+        'name' => ['type' => 'string', 'name' => 'Значення', 'description' => true],
+        'explanation' => ['type' => 'string', 'name' => 'Значення', 'description' => true],
+    ];
+
+    $data = $attributeGroup['attributes']->toArray() ?? [];
+@endphp
+
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $data, 'name' => 'attribute_group', 'id_name' => 'id', 'tab' => 'main'])

@@ -24,9 +24,9 @@ class AttributeGroup extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function descriptions(): HasOne
+    public function descriptions(): HasMany
     {
-        return $this->hasOne(AttributeGroupDescription::class);
+        return $this->hasMany(AttributeGroupDescription::class, 'attribute_group_id');
     }
 
     public function attributes(): HasMany
