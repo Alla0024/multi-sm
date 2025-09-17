@@ -29,7 +29,7 @@
         'explanation' => ['type' => 'string', 'name' => 'Значення', 'description' => true],
     ];
 
-    $data = $attributeGroup['attributes']->toArray() ?? [];
+    $data = $attributeGroup['attributes'] ?? [];
 @endphp
 
 @include('components.table.table_items', ['inputType' => $arrData, 'data' => $data, 'name' => 'attribute_group', 'id_name' => 'id', 'tab' => 'main'])

@@ -103,4 +103,26 @@ class VacancyRepository extends BaseRepository
 
         return $vacancy;
     }
+
+    public function copy($ids): void
+    {
+        $vacancies = Vacancy::with('descriptions')->whereIn('id', $ids)->get();
+
+        foreach ($vacancies as $vacancy) {
+            $newVacancy = $vacancy->replicate();
+            $newVacancy->status = 0;
+            $newVacancy->save();
+
+            foreach ($vacancy->descriptions as $description) {
+                $newDescription = $description->toArray();
+                $newDescription['vacancy_id'] = $newVacancy->id;
+                VacancyDescription::create($newDescription);
+            }
+        }
+    }
+
+    public function multiDelete($ids): void
+    {
+        Vacancy::whereIn('id', $ids)->delete();
+    }
 }
