@@ -34,7 +34,7 @@ class OptionValue extends Model
     public static array $rules = [
         'parent_id' => 'nullable',
         'type' => 'required|string|max:255',
-        'image' => 'required|string|max:255',
+        'image' => 'nullable|string|max:255',
         'sort_order' => 'required',
         'status' => 'required|boolean',
         'default' => 'required',

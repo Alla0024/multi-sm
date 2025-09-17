@@ -62,7 +62,7 @@
                 custom="true"
             >
             <ul class="custom-list hide">
-                {!! $renderTree($optionValue['values_tree']) !!}
+                {!! $renderTree($valuesTree) !!}
             </ul>
             <div class="svg">
                 <img src="/images/common/arrow_select.png" alt="">
@@ -91,7 +91,7 @@
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('type', null, ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::select('type', $optionValueTypes, ['class' => 'form-control', 'required', 'maxlength' => 255]) !!}
         </div>
     </div>
 </div>

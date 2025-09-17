@@ -6,6 +6,7 @@ use App\Models\OptionValue;
 use App\Models\OptionValueDescription;
 use App\Repositories\BaseRepository;
 use Illuminate\Container\Container as Application;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class OptionValueRepository extends BaseRepository
@@ -37,8 +38,15 @@ class OptionValueRepository extends BaseRepository
         return OptionValue::class;
     }
 
-    private function buildTree(array $elements): array
+    public function getValuesTree(): array
     {
+        $elements = $this
+            ->model
+            ->leftJoin((new OptionValueDescription())->getTable() . " as od", 'od.option_value_id', '=', 'option_values.id')
+            ->where('od.language_id', 5)
+            ->get()
+            ->toArray();
+
         $map = [];
         $tree = [];
 
@@ -126,26 +134,60 @@ class OptionValueRepository extends BaseRepository
         return array_reverse($breadcrumbs);
     }
 
-    public function filterIndexPage(int $perPage, array $params, int $language_id, int|null|string $id = null)
+    public function filterRows(Request $request, int|null|string $id = null)
     {
-        if (!is_numeric($id) && !is_null($id)) {
-            return new LengthAwarePaginator([], 0, $perPage);
-        }
+        $perPage = $request->get('perPage', 10);
+        $params = $request->all();
+        $language_id = $request->get('language_id', config('settings.locale.default_language_id'));
 
-        $optionValues = $this
+        $query = $this
             ->model
             ->leftJoin((new OptionValueDescription())->getTable() . " as od", 'od.option_value_id', '=', 'option_values.id')
             ->where('od.language_id', $language_id)
             ->where('parent_id', $id)
             ->when(isset($params['name']), function ($q) use ($params) {
                 return $q->searchSimilarity(['od.name'], $params['name']);
-            })
-            ->paginate($perPage);
+            });
 
-        return $optionValues;
+        if ($request->filled('name')) {
+            $name = mb_strtolower($request->input('name'), 'UTF-8');
+
+            $query->where('name', 'LIKE', "%{$name}%");
+        }
+
+        if ($request->filled('level')) {
+            $query->where('level', $request->get('level'));
+        }
+
+        if ($request->filled('sort_order')) {
+            $query->where('sort_order', $request->get('sort_order'));
+        }
+
+        $query->when(isset($params['sortBy']), function ($query) use ($params) {
+            switch ($params['sortBy']) {
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'created_at':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'created_at_desc':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                default:
+                    break;
+            }
+
+            return $query;
+        });
+
+        return $query->paginate($perPage);
     }
 
-    public function getDetails($id)
+    public function findFull($id)
     {
         $optionValue = $this->model
             ->with('descriptions')
@@ -157,26 +199,19 @@ class OptionValueRepository extends BaseRepository
         unset($optionValue->descriptions);
         $optionValue->setAttribute('descriptions', $preshaped_descriptions);
 
-        $values = $this
-            ->model
-            ->leftJoin((new OptionValueDescription())->getTable() . " as od", 'od.option_value_id', '=', 'option_values.id')
-            ->where('od.language_id', 5)
-            ->get();
-        $valuesTree = $this->buildTree($values->toArray());
-        $optionValue->setAttribute('values_tree', $valuesTree);
-
         return $optionValue;
     }
 
-    public function upsert($input, $id = null)
+    public function save($input, $id = null)
     {
         $isCreating = is_null($id);
 
         $descriptions = $input['descriptions'] ?? [];
         $children_status = $input['children_status'] ?? 0;
         $input['level'] = 0;
+        $input['image'] = $input['image'] ?? '';
 
-        unset($input['descriptions'],$input['children_status']);
+        unset($input['descriptions'], $input['children_status']);
 
         $optionValue = isset($id) ? $this->model->find($id) : null;
 
@@ -193,7 +228,7 @@ class OptionValueRepository extends BaseRepository
         if ($isCreating && isset($input['parent_id'])) {
             $parent = $this->model->find($input['parent_id']);
 
-            $input['level'] = $parent ? $parent->level+1 : 0;
+            $input['level'] = $parent ? $parent->level + 1 : 0;
         }
 
         foreach ($descriptions as $languageId => $descData) {
@@ -213,7 +248,8 @@ class OptionValueRepository extends BaseRepository
         return $optionValue;
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $descendants = $this->model
             ->where('parent_id', $id)
             ->where('id', '<>', $id)
