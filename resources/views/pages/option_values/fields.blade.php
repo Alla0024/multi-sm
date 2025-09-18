@@ -48,7 +48,7 @@
             @isset($optionValue['parent_id'])
                 <input type="hidden" name="parent_id" value="{{$optionValue['parent_id']}}">
             @else
-                <input type="hidden" name="parent_id" value="">
+                <input type="hidden" name="parent_id" value="0">
             @endisset
             <input
                 class="ignore_form"
@@ -79,7 +79,7 @@
             <input id="thumbnail" type="hidden" name="image" value="{{$optionValue['image'] ?? ''}}">
             <img class="" src="{{isset($optionValue['image']) && $optionValue['image'] != '' ? "https://i.svit-matrasiv.com.ua/storage/images/".$optionValue['image'] : '/images/common/no_images.png'}}" id="holder" alt="Прев’ю" style="max-width: 200px;">
             <div class="butt hide" :class="{'show': open_butt}">
-                <div class="custom-file-label lfm" data-input="thumbnail" data-preview="holder" data-path=""><i class="bi bi-arrow-up-square"></i></div>
+                <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" data-input="thumbnail" data-preview="holder" data-path=""><i class="bi bi-arrow-up-square"></i></div>
                 <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
             </div>
         </div>

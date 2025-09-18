@@ -3,10 +3,10 @@
     {!! Form::label('thumbnail', $word['title_thumbnail']) !!}
     <div class="input-group">
         <div class="custom-file image-upload" @click="open_butt = !open_butt" @keydown.escape.window="open_butt=false" @click.outside="open_butt=false">
-            <input id="thumbnail" type="hidden" name="" value="{{$news['thumbnail'] ?? ''}}">
+            <input id="thumbnail" type="hidden" name="image" value="{{$news['thumbnail'] ?? ''}}">
             <img class="" src="{{isset($news['thumbnail']) && $news['thumbnail'] != '' ? "https://i.svit-matrasiv.com.ua/storage/images/".$news['thumbnail'] : '/images/common/no_images.png'}}" id="holder" alt="Прев’ю" style="max-width: 200px;">
             <div class="butt hide" :class="{'show': open_butt}">
-                <div class="custom-file-label lfm" data-input="thumbnail" data-preview="holder" data-path="/catalog/category/logo_wtm"><i class="bi bi-arrow-up-square"></i></div>
+                <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" data-input="thumbnail" data-preview="holder" data-path=""><i class="bi bi-arrow-up-square"></i></div>
                 <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
             </div>
         </div>
@@ -20,7 +20,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][title]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
+                {!! Form::textarea("descriptions[$language->id][title]", '', ['class' => '', 'rows' => 2, 'required' ]) !!}
             </div>
         @endforeach
     </div>
@@ -47,7 +47,7 @@
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('sort_order', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -57,7 +57,7 @@
     {!! Form::label('reviews_count', $word['title_reviews_count']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('reviews_count', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('reviews_count', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -67,7 +67,7 @@
     {!! Form::label('reviews_rating', $word['title_reviews_rating']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('reviews_rating', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('reviews_rating', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -77,7 +77,7 @@
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -87,7 +87,7 @@
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::text('path', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -108,7 +108,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][meta_title]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][meta_title]", '', ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -121,7 +121,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][meta_h1]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][meta_h1]", '', ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -134,7 +134,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][meta_description]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][meta_description]", '', ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>

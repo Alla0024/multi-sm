@@ -3,7 +3,7 @@
     {!! Form::label('filter_group_id', $word['title_filter_group_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('filter_group_id', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('filter_group_id', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -14,7 +14,7 @@
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('path', null, ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('path', '', ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('sort_order', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>

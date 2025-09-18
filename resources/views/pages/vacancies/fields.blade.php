@@ -3,7 +3,7 @@
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -15,7 +15,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::text("descriptions[$language->id][title]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
+                {!! Form::text("descriptions[$language->id][title]", '', ['class' => '', 'rows' => 2, 'required' ]) !!}
             </div>
         @endforeach
     </div>
@@ -45,7 +45,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::text("descriptions[$language->id][name_contact_person]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
+                {!! Form::text("descriptions[$language->id][name_contact_person]", '', ['class' => '', 'rows' => 2, 'required' ]) !!}
             </div>
         @endforeach
     </div>
@@ -56,7 +56,7 @@
     {!! Form::label('payment', $word['title_payment']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('payment', null, ['class' => 'form-control', 'required', 'maxlength' => 255]) !!}
+            {!! Form::text('payment', '', ['class' => 'form-control', 'required', 'maxlength' => 255]) !!}
         </div>
     </div>
 </div>
@@ -71,13 +71,12 @@
         </div>
     </div>
 </div>
-
 <!-- Location Id Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('location_id', $word['title_location_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('location_id', $locations ?? null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('location_id', $locations ?? '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>

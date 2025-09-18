@@ -3,7 +3,7 @@
     {!! Form::label('attribute_group_id', $word['title_attribute_group_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('attribute_group_id', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('attribute_group_id', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -14,7 +14,7 @@
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('sort_order', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
