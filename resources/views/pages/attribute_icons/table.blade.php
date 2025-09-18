@@ -48,9 +48,6 @@
                         {!! Form::open(['route' => ['attributeIcons.destroy', $attributeIcon->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
 
-
-
-
                             <a href="{{ route('attributeIcons.edit', [$attributeIcon->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>
