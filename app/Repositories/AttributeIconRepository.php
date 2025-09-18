@@ -76,4 +76,16 @@ class AttributeIconRepository extends BaseRepository
 
         return $attributeIcons;
     }
+
+    public function findFull($id) {
+        $query = $this->model->with(['descriptions']);
+
+        $attributeIcon = $query->find($id);
+
+        $descriptions = $attributeIcon->descriptions->keyBy('language_id')->toArray();
+        unset($attributeIcon->descriptions);
+        $attributeIcon->setAttribute('descriptions', $descriptions);
+
+        return $attributeIcon;
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateAttributeIconRequest;
 use App\Http\Requests\UpdateAttributeIconRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Language;
 use App\Repositories\AttributeIconRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -13,7 +14,9 @@ use Flash;
 
 class AttributeIconController extends AppBaseController
 {
-    /** @var AttributeIconRepository $attributeIconRepository*/
+    /**
+     * @var AttributeIconRepository $attributeIconRepository
+     */
     private $attributeIconRepository;
 
     public function __construct(AttributeIconRepository $attributeIconRepo)
@@ -76,6 +79,7 @@ class AttributeIconController extends AppBaseController
     public function show($id)
     {
         $attributeIcon = $this->attributeIconRepository->find($id);
+        $languages = Language::getLanguages();
 
         if (empty($attributeIcon)) {
             Flash::error(__('common.flash_not_found'));
@@ -85,7 +89,7 @@ class AttributeIconController extends AppBaseController
 
         $this->template = 'pages.attribute_icons.show';
 
-        return $this->renderOutput(compact('attributeIcon'));
+        return $this->renderOutput(compact('attributeIcon', 'languages'));
 }
 
     /**
@@ -93,7 +97,9 @@ class AttributeIconController extends AppBaseController
      */
     public function edit($id)
     {
-        $attributeIcon = $this->attributeIconRepository->find($id);
+        $attributeIcon = $this->attributeIconRepository->findFull($id);
+        $languages = Language::getLanguages();
+        $values = [ 1 => __('attribute_icons.value_show'), 0 => __('attribute_icons.value_hide') ];
 
         if (empty($attributeIcon)) {
             Flash::error(__('common.flash_not_found'));
@@ -103,7 +109,7 @@ class AttributeIconController extends AppBaseController
 
         $this->template = 'pages.attribute_icons.edit';
 
-        return $this->renderOutput(compact('attributeIcon'));
+        return $this->renderOutput(compact('attributeIcon', 'languages', 'values'));
     }
 
     /**
