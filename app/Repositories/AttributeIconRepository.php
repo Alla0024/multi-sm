@@ -88,4 +88,37 @@ class AttributeIconRepository extends BaseRepository
 
         return $attributeIcon;
     }
+
+    public function save(array $input, $id = null)
+    {
+        $descriptions = $input['descriptions'] ?? [];
+        unset($input['descriptions']);
+
+        $input['pattern'] = $input['pattern'] ?? '';
+
+        $attributeIcon = isset($id) ? $this->model->find($id) : null;
+
+        if (!$attributeIcon) {
+            $attributeIcon = new $this->model();
+        }
+
+        $attributeIcon->fill($input);
+        $attributeIcon->save();
+
+        foreach ($descriptions as $languageId => $descData) {
+            AttributeIconDescription::updateOrInsert(
+                [
+                    'attribute_icon_id' => (int)$attributeIcon->id,
+                    'language_id' => $languageId
+                ],
+                [
+                    'title' => $descData['title'] ?? '',
+                    'description' => $descData['description'] ?? ''
+                ]
+            );
+        }
+
+        return $attributeIcon;
+    }
+
 }

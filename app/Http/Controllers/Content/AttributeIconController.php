@@ -66,7 +66,7 @@ class AttributeIconController extends AppBaseController
     {
         $input = $request->all();
 
-        $attributeIcon = $this->attributeIconRepository->create($input);
+        $attributeIcon = $this->attributeIconRepository->save($input);
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -98,6 +98,7 @@ class AttributeIconController extends AppBaseController
     public function edit($id)
     {
         $attributeIcon = $this->attributeIconRepository->findFull($id);
+
         $languages = Language::getLanguages();
         $values = [ '1' => __('attribute_icons.value_show'), "0" => __('attribute_icons.value_hide') ];
 
@@ -125,7 +126,7 @@ class AttributeIconController extends AppBaseController
             return redirect(route('attributeIcons.index'));
         }
 
-        $attributeIcon = $this->attributeIconRepository->update($request->all(), $id);
+        $attributeIcon = $this->attributeIconRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 

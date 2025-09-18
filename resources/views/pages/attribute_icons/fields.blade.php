@@ -20,7 +20,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][title]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
+                {!! Form::textarea("descriptions[$language->id][title]", null, ['class' => '', 'rows' => 2 ]) !!}
             </div>
         @endforeach
     </div>
@@ -33,7 +33,11 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][description]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
+                @if(isset($attributeIcon))
+                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1">{!! $attributeIcon['descriptions'][$language->id]['description'] ?? '' !!}</textarea>
+                @else
+                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="descriptions[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1"></textarea>
+                @endif
             </div>
         @endforeach
     </div>
@@ -44,20 +48,17 @@
     {!! Form::label('pattern', $word['title_pattern']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::textarea('pattern', null, ['class' => '', 'required']) !!}
+            {!! Form::textarea('pattern', '', ['class' => '']) !!}
         </div>
     </div>
 </div>
-
-@dump($attributeIcon)
-@dump($values)
 
 <!-- Value Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('value', $word['title_value']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('value', $values, null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('value', $values, $values[1], ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>

@@ -3,12 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Thiagoprz\CompositeKey\HasCompositeKey;
 
 class AttributeIconDescription extends Model
 {
+    use HasCompositeKey;
     public $table = 'attribute_icon_descriptions';
+    protected $primaryKey = ['attribute_icon_id', 'language_id'];
+    public $timestamps = false;
 
     public $fillable = [
+        'attribute_icon_id',
         'language_id',
         'title',
         'description'
@@ -25,8 +31,8 @@ class AttributeIconDescription extends Model
         'description' => 'required|string'
     ];
 
-    public function attributeIcon(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function attributeIcon(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\AttributeIcon::class, 'attribute_icon_id');
+        return $this->belongsTo(AttributeIcon::class, 'attribute_icon_id');
     }
 }
