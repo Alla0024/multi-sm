@@ -1,14 +1,14 @@
 <!-- Code Field -->
 <div class="form-group col-sm-6 tab-pane" data-for-tab="main">
     {!! Form::label('code', $word['title_code']) !!}
-    {!! Form::text('code', null, ['class' => 'form-control', 'required', 'maxlength' => 5]) !!}
+    {!! Form::text('code', '', ['class' => 'form-control', 'required', 'maxlength' => 5]) !!}
 </div>
 
 
 <!-- Path Field -->
 <div class="form-group col-sm-6 tab-pane" data-for-tab="main">
     {!! Form::label('path', $word['title_path']) !!}
-    {!! Form::text('path', null, ['class' => 'form-control', 'maxlength' => 5]) !!}
+    {!! Form::text('path', '', ['class' => 'form-control', 'maxlength' => 5]) !!}
 </div>
 
 
@@ -16,7 +16,7 @@
 <div class="form-group col-sm-6 tab-pane" data-for-tab="main">
     <div class="form-check">
         {!! Form::hidden('status', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('status', '1', null, ['class' => 'form-check-input']) !!}
+        {!! Form::checkbox('status', '1', '', ['class' => 'form-check-input']) !!}
         {!! Form::label('status', $word['title_status'], ['class' => 'form-check-label']) !!}
     </div>
 </div>
@@ -25,5 +25,5 @@
 <!-- Sort Order Field -->
 <div class="form-group col-sm-6 tab-pane" data-for-tab="main">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
-    {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::number('sort_order', '', ['class' => 'form-control', 'required']) !!}
 </div>

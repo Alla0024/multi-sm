@@ -3,7 +3,7 @@
     {!! Form::label('location_group_id', $word['title_location_group_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('location_group_id', null, ['class' => 'form-control']) !!}
+            {!! Form::number('location_group_id', '', ['class' => 'form-control']) !!}
         </div>
     </div>
 </div>
@@ -14,7 +14,7 @@
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('type', null, ['class' => 'form-control', 'required', 'maxlength' => 50, 'maxlength' => 50]) !!}
+            {!! Form::text('type', '', ['class' => 'form-control', 'required', 'maxlength' => 50, 'maxlength' => 50]) !!}
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
     {!! Form::label('geocode', $word['title_geocode']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('geocode', null, ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('geocode', '', ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
         </div>
     </div>
 </div>
@@ -36,7 +36,7 @@
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('path', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('path', '', ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
         </div>
     </div>
 </div>
@@ -47,7 +47,7 @@
     {!! Form::label('isocode', $word['title_isocode']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('isocode', null, ['class' => 'form-control', 'required', 'maxlength' => 15, 'maxlength' => 15]) !!}
+            {!! Form::text('isocode', '', ['class' => 'form-control', 'required', 'maxlength' => 15, 'maxlength' => 15]) !!}
         </div>
     </div>
 </div>

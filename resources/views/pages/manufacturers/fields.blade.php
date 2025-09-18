@@ -6,7 +6,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::text("descriptions[$language->id][name]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
+                {!! Form::text("descriptions[$language->id][name]", '', ['class' => '', 'rows' => 2, 'required' ]) !!}
             </div>
         @endforeach
     </div>
@@ -19,7 +19,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::textarea("descriptions[$language->id][description]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+                {!! Form::textarea("descriptions[$language->id][description]", '', ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -32,7 +32,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::text("descriptions[$language->id][tag]", null, ['class' => '', 'rows' => 2, 'required']) !!}
+                {!! Form::text("descriptions[$language->id][tag]", '', ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
         @endforeach
     </div>
@@ -59,7 +59,7 @@
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('path', null, ['class' => 'form-control', 'maxlength' => 255]) !!}
+            {!! Form::text('path', '', ['class' => 'form-control', 'maxlength' => 255]) !!}
         </div>
     </div>
 </div>
@@ -69,7 +69,7 @@
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::number('sort_order', '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>

@@ -7,7 +7,7 @@
 @endif
     <div class="flex-row input">
         <div class="input-group">
-            @{!! Form::email('{{ $fieldName }}', null, ['class' => 'form-control'@php if(isset($options)) { echo htmlspecialchars_decode($options); } @endphp]) !!}
+            @{!! Form::email('{{ $fieldName }}', '', ['class' => 'form-control'@php if(isset($options)) { echo htmlspecialchars_decode($options); } @endphp]) !!}
         </div>
     </div>
 </div>

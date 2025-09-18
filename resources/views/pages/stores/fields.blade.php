@@ -1,14 +1,14 @@
 <!-- Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('name', $word['title_name']) !!}
-    {!! Form::text('name', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::text('name', '', ['class' => 'form-control', 'required']) !!}
 </div>
 
 
 <!-- Url Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('url', $word['title_url']) !!}
-    {!! Form::text('url', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::text('url', '', ['class' => 'form-control', 'required']) !!}
 </div>
 
 

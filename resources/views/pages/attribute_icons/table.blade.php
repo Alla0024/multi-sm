@@ -35,6 +35,8 @@
                             @else
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
+                        @elseif($index == 'image')
+                            <td><img style="width: 100px;" src="{{isset($attributeIcon[$index]) && $attributeIcon[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$attributeIcon[$index] : '/images/common/no_images.png'}}" alt=""></td>
                         @else
                          @if($index != 'id' && $field['inTable'])
                             <td>{{ $attributeIcon[$index] }}</td>
