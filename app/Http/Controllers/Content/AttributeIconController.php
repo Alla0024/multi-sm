@@ -28,12 +28,13 @@ class AttributeIconController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
-        $attributeIcons = $this->attributeIconRepository->paginate($perPage);
+        $attributeIcons = $this->attributeIconRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             AttributeIcon::class
+        ], [
+            'title',
+            'image'
         ]);
 
         $this->template = 'pages.attribute_icons.index';

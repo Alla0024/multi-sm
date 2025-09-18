@@ -85,7 +85,7 @@ class VacancyController extends AppBaseController
     {
         $input = $request->all();
 
-        $vacancy = $this->vacancyRepository->create($input);
+        $vacancy = $this->vacancyRepository->save($input);
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -148,7 +148,7 @@ class VacancyController extends AppBaseController
             return redirect(route('vacancies.index'));
         }
 
-        $vacancy = $this->vacancyRepository->update($request->all(), $id);
+        $vacancy = $this->vacancyRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 
