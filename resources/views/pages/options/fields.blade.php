@@ -66,6 +66,5 @@
     ];
 @endphp
 
-
 @include('components.table.table_items', ['inputType' => $arrData, 'data' => $option['valueGroups'] ?? [], 'name' => 'option_value', 'id_name' => 'id', 'tab' => 'main'])
 

@@ -67,12 +67,15 @@ class AttributeGroupRepository extends BaseRepository
         );
 
         $attributeGroup->attributes->each(function ($attr) {
-
             $descriptions = $attr->descriptions->keyBy('language_id')->toArray();
             unset($attr->descriptions);
             $attr->setAttribute('descriptions', $descriptions);
             return $attr;
         });
+
+//        $attributes = $attributeGroup->attributes->toArray();
+//        unset($attributeGroup->attributes);
+//        $attributeGroup->setAttribute('attributes', $attributes);
 
         return $attributeGroup;
     }

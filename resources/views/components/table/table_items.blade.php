@@ -107,11 +107,13 @@
     </div>
 </div>
 
+<script id="payload" type="application/json">@json($data, JSON_UNESCAPED_UNICODE)</script>
 <script>
     document.addEventListener('alpine:init', () => {
+        console.log(JSON.parse(document.getElementById('payload').textContent))
         Alpine.data('table_products', () => ({
             inputType: JSON.parse('@json($inputType ?? [])'),
-            data: JSON.parse('@json($data ?? [])'),
+            data: JSON.parse(document.getElementById('payload').textContent),
             language: JSON.parse('@json($languages ?? [])'),
 
             deletedItem(key){
@@ -142,9 +144,9 @@
                 e.parentElement.classList.add('hide');
             },
             view(){
-                console.log(this.inputType)
-                console.log(this.data)
-                console.log(this.language)
+                // console.log(this.inputType)
+                // console.log(this.data)
+                // console.log(this.language)
             }
         }))
     })
