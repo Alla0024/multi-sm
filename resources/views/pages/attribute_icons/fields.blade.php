@@ -48,7 +48,7 @@
     {!! Form::label('pattern', $word['title_pattern']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::textarea('pattern', '', ['class' => '']) !!}
+            {!! Form::textarea('pattern', null, ['class' => '']) !!}
         </div>
     </div>
 </div>
@@ -58,7 +58,17 @@
     {!! Form::label('value', $word['title_value']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('value', $values, $values[1], ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('value', $values, null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
+</div>
+
+<!-- Attribute Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
+    {!! Form::label('attribute_id', $word['title_attribute_id']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('attribute_id', $attributes, null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>

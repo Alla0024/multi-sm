@@ -8,6 +8,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\Language;
 use App\Repositories\AttributeIconRepository;
 use App\Helpers\ModelSchemaHelper;
+use App\Repositories\AttributeRepository;
 use Illuminate\Http\Request;
 use App\Models\AttributeIcon;
 use Flash;
@@ -16,14 +17,17 @@ class AttributeIconController extends AppBaseController
 {
     /**
      * @var AttributeIconRepository $attributeIconRepository
+     * @var AttributeRepository $attributeRepository
      */
     private $attributeIconRepository;
+    private $attributeRepository;
 
-    public function __construct(AttributeIconRepository $attributeIconRepo)
+    public function __construct(AttributeIconRepository $attributeIconRepo, AttributeRepository $attributeRepository)
     {
         parent::__construct();
 
         $this->attributeIconRepository = $attributeIconRepo;
+        $this->attributeRepository = $attributeRepository;
     }
 
     /**
@@ -54,9 +58,12 @@ class AttributeIconController extends AppBaseController
      */
     public function create()
     {
+        $attributes = $this->attributeRepository->getDropdownItems()->pluck('text', 'id')->toArray();
+        $values = [ '1' => __('attribute_icons.value_show'), "0" => __('attribute_icons.value_hide') ];
+
         $this->template = 'pages.attribute_icons.create';
 
-        return $this->renderOutput();
+        return $this->renderOutput(compact('values', 'attributes'));
     }
 
     /**
@@ -98,7 +105,7 @@ class AttributeIconController extends AppBaseController
     public function edit($id)
     {
         $attributeIcon = $this->attributeIconRepository->findFull($id);
-
+        $attributes = $this->attributeRepository->getDropdownItems()->pluck('text', 'id')->toArray();
         $languages = Language::getLanguages();
         $values = [ '1' => __('attribute_icons.value_show'), "0" => __('attribute_icons.value_hide') ];
 
@@ -110,7 +117,7 @@ class AttributeIconController extends AppBaseController
 
         $this->template = 'pages.attribute_icons.edit';
 
-        return $this->renderOutput(compact('attributeIcon', 'languages', 'values'));
+        return $this->renderOutput(compact('attributeIcon', 'languages', 'values', 'attributes'));
     }
 
     /**
@@ -138,20 +145,31 @@ class AttributeIconController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $attributeIcon = $this->attributeIconRepository->find($id);
-
-        if (empty($attributeIcon)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('attributeIcons.index'));
-        }
-
-        $this->attributeIconRepository->delete($id);
+        $this->attributeIconRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('attributeIcons.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('news_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->attributeIconRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('attributeIcons.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('attributeIcons.index');
     }
 }

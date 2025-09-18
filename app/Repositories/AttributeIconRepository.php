@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\AttributeIcon;
 use App\Models\AttributeIconDescription;
+use App\Models\AttributeIconToAttribute;
 use App\Repositories\BaseRepository;
 use Illuminate\Http\Request;
 
@@ -81,10 +82,12 @@ class AttributeIconRepository extends BaseRepository
         $query = $this->model->with(['descriptions']);
 
         $attributeIcon = $query->find($id);
+        $attribute = AttributeIconToAttribute::where('attribute_icon_id', $attributeIcon->id)->first();
 
         $descriptions = $attributeIcon->descriptions->keyBy('language_id')->toArray();
         unset($attributeIcon->descriptions);
         $attributeIcon->setAttribute('descriptions', $descriptions);
+        $attributeIcon->setAttribute('attribute_id', $attribute?->id);
 
         return $attributeIcon;
     }
@@ -121,4 +124,21 @@ class AttributeIconRepository extends BaseRepository
         return $attributeIcon;
     }
 
+    public function copy($ids): void
+    {
+        $attributeIcons = AttributeIcon::whereIn('id', $ids)->get();
+
+        foreach ($attributeIcons as $attributeIcon) {
+            $newItem = $attributeIcon->replicate();
+            $newItem->status = 0;
+            $newItem->save();
+        }
+    }
+
+    public function multiDelete($ids): void
+    {
+        News::whereIn('id', $ids)->delete();
+        NewsDescription::whereIn('news_id', $ids)->delete();
+        FirstPathQuery::where('type', 'news')->whereIn('type_id', $ids)->delete();
+    }
 }
