@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AttributeIcon extends Model
 {
@@ -27,18 +29,18 @@ class AttributeIcon extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function attributeIconToAttributes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function attributeIconToAttributes(): HasMany
     {
-        return $this->hasMany(\App\Models\AttributeIconToAttribute::class, 'attribute_icon_id');
+        return $this->hasMany(AttributeIconToAttribute::class, 'attribute_icon_id');
     }
 
-    public function attributeIconDescription(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function descriptions(): HasMany
     {
-        return $this->hasOne(\App\Models\AttributeIconDescription::class);
+        return $this->hasMany(AttributeIconDescription::class, 'attribute_icon_id');
     }
 
-    public function productAttributeIcons(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function productAttributeIcons(): HasMany
     {
-        return $this->hasMany(\App\Models\ProductAttributeIcon::class, 'icon_id');
+        return $this->hasMany(ProductAttributeIcon::class, 'icon_id');
     }
 }

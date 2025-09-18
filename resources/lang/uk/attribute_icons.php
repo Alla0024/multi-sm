@@ -23,6 +23,8 @@ return [
     'search_pattern' => 'Пошук за шаблоном',
     'title_value' => 'Значення',
     'search_value' => 'Пошук за значенням',
+    'title_title' => 'Заголовок мініатюри',
+    'search_title' => 'Пошук за назвою',
     'tab_main' => 'Основне',
     'tab_sort' => 'Сортування',
 ];

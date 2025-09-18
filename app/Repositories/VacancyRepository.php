@@ -32,7 +32,7 @@ class VacancyRepository extends BaseRepository
     }
 
     public function filterIndexPage(int $perPage, int $language_id, $params) {
-        $vacancies = $this->model
+        $query = $this->model
             ->leftJoin((new VacancyDescription())->getTable() . " as vd", 'vd.vacancy_id', '=', 'vacancies.id')
             ->with(['location' => function($query) use ($language_id) {
                 return $query->select('id')->with(['descriptions' => function($query) use ($language_id) {
@@ -49,8 +49,30 @@ class VacancyRepository extends BaseRepository
             })
             ->when(isset($params['location_id']), function ($q) use ($params) {
                 return $q->where('location_id', $params['location_id']);
-            })
-            ->paginate($perPage);
+            });
+
+        $query->when(isset($params['sortBy']), function ($query) use ($params) {
+            switch ($params['sortBy']) {
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'created_at':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'created_at_desc':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                default:
+                    break;
+            }
+
+            return $query;
+        });
+
+        $vacancies = $query->paginate($perPage);
 
         $vacancies->getCollection()->transform(function ($item) {
             $location = $item->location->descriptions->first()->name;
@@ -75,7 +97,7 @@ class VacancyRepository extends BaseRepository
         return $vacancy;
     }
 
-    public function upsert(array $input, $id = null)
+    public function save(array $input, $id = null)
     {
         $descriptions = $input['descriptions'] ?? [];
         unset($input['descriptions']);
