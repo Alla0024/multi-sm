@@ -91,7 +91,7 @@
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('type', $optionValueTypes, ['class' => 'form-control', 'required', 'maxlength' => 255]) !!}
+            {!! Form::select('type', $optionValueTypes, null, ['class' => 'form-control', 'required', 'maxlength' => 255]) !!}
         </div>
     </div>
 </div>
@@ -133,7 +133,7 @@
         {!! Form::label('children_status', $word['title_children_status']) !!}
         <div class="flex-row input">
             <div class="input-group">
-                {!! Form::select('children_status', [null => 'Змінити статус дочірніх елементів', true => 'Активний', false => 'Неактивний'], ['class' => 'form-control']) !!}
+                {!! Form::select('children_status', [null => 'Змінити статус дочірніх елементів', true => 'Активний', false => 'Неактивний'], null, ['class' => 'form-control']) !!}
             </div>
         </div>
     </div>

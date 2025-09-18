@@ -77,7 +77,7 @@
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], '', ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>

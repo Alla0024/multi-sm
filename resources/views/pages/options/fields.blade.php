@@ -29,7 +29,7 @@
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('type', ['radio' => $word['input_radio'] , 'checkbox' => $word['input_checkbox']], ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('type', ['radio' => $word['input_radio'] , 'checkbox' => $word['input_checkbox']], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
