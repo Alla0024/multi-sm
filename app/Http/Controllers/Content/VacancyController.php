@@ -160,20 +160,31 @@ class VacancyController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $vacancy = $this->vacancyRepository->find($id);
-
-        if (empty($vacancy)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('vacancies.index'));
-        }
-
-        $this->vacancyRepository->delete($id);
+        $this->vacancyRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('vacancies.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('vacancies_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->vacancyRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('vacancies.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('vacancies.index');
     }
 }

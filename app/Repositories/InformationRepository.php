@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\FirstPathQuery;
 use App\Models\Information;
 use App\Models\InformationDescription;
+use App\Models\InformationToStore;
 use Illuminate\Database\Eloquent\Builder;
 
 class InformationRepository extends BaseRepository
@@ -39,6 +40,7 @@ class InformationRepository extends BaseRepository
     {
         return $this->model->with($relations);
     }
+
     public function findFull($id, $columns = ['*'])
     {
         $information = $this->model
@@ -54,7 +56,7 @@ class InformationRepository extends BaseRepository
         }
 
         $descriptions = $information->descriptions
-            ->mapWithKeys(fn ($desc) => [
+            ->mapWithKeys(fn($desc) => [
                 $desc->language->id => [
                     'name' => $desc->name,
                     'description' => $desc->description,
@@ -70,16 +72,13 @@ class InformationRepository extends BaseRepository
 
     public function filterRows($request)
     {
-        $perPage    = $request->integer('perPage', 10);
+        $perPage = $request->integer('perPage', 10);
         $languageId = $request->input('language_id', config('settings.locale.default_language_id'));
+        $params = $request->all();
 
-        $query = $this->model::with([
-            'descriptions' => function ($q) use ($languageId) {
-                $q->select('information_id', 'language_id', 'name')
-                    ->where('language_id', $languageId);
-            },
-            'seoPath'
-        ]);
+        $query = $this->model::with(['seoPath'])
+        ->leftJoin((new InformationDescription())->getTable() . " as ind", 'ind.information_id', '=', 'informations.id')
+        ->where('ind.language_id', $languageId);
 
         if ($request->filled('sort_order')) {
             $query->where('sort_order', $request->input('sort_order'));
@@ -92,24 +91,35 @@ class InformationRepository extends BaseRepository
         if ($request->filled('name')) {
             $name = mb_strtolower($request->input('name'), 'UTF-8');
 
-            $query->whereHas('descriptions', function ($q) use ($name) {
-                $q->whereRaw("LOWER(name) LIKE ?", ["%{$name}%"]);
-            });
-
-            $query->with(['descriptions' => function ($q) use ($languageId, $name) {
-                $q->select('information_id', 'language_id', 'name')
-                    ->where('language_id', $languageId)
-                    ->orderByRaw("COALESCE(NULLIF(LOCATE('{$name}', LOWER(name)), 0), 999999)");
-            }]);
+            $query->where('name', 'LIKE', "%{$name}%");
         }
+
+        $query->when(isset($params['sortBy']), function ($query) use ($params) {
+            switch ($params['sortBy']) {
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'created_at':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'created_at_desc':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                default:
+                    break;
+            }
+
+            return $query;
+        });
 
         $informationList = $query->paginate($perPage);
 
         $baseUrl = config('app.client_url');
 
         $informationList->getCollection()->transform(function ($item) use ($baseUrl) {
-            $item->setAttribute('name', optional($item->descriptions->first())->name);
-
             if ($item->seoPath) {
                 $path = $item->seoPath->path;
                 $item->setAttribute('client_url', rtrim($baseUrl, '/') . '/' . ltrim($path, '/'));
@@ -134,15 +144,15 @@ class InformationRepository extends BaseRepository
 
         $information = $this->model->updateOrCreate(['id' => $id], $input);
 
-            foreach ($descriptions as $languageId => $descData) {
-                InformationDescription::updateOrCreate(
-                    [
-                        'information_id' => $information->id,
-                        'language_id' => $languageId
-                    ],
-                    $descData
-                );
-            }
+        foreach ($descriptions as $languageId => $descData) {
+            InformationDescription::updateOrCreate(
+                [
+                    'information_id' => $information->id,
+                    'language_id' => $languageId
+                ],
+                $descData
+            );
+        }
 
         $stores && $information->stores()->sync($stores);
 
@@ -153,6 +163,7 @@ class InformationRepository extends BaseRepository
 
         return $information;
     }
+
     public function delete($id)
     {
         $this->find($id)?->delete();
@@ -171,10 +182,18 @@ class InformationRepository extends BaseRepository
             $newInformation->status = 0;
             $newInformation->save();
 
+            $stores = InformationToStore::where(['information_id' => $information->id])->get();
+
+            foreach ($stores as $store) {
+                $newStore = $store->toArray();
+                $newStore['information_id'] = $newInformation->id;
+                InformationToStore::create($newStore);
+            }
+
             foreach ($information->descriptions as $description) {
-                $newDescription = $description->replicate();
-                $newDescription->information_id = $newInformation->id;
-                $newDescription->save();
+                $newDescription = $description->toArray();
+                $newDescription['information_id'] = $newInformation->id;
+                InformationDescription::create($newDescription);
             }
         }
     }
@@ -183,6 +202,7 @@ class InformationRepository extends BaseRepository
     {
         Information::whereIn('id', $ids)->delete();
         InformationDescription::whereIn('information_id', $ids)->delete();
+        InformationToStore::whereIn('information_id', $ids)->delete();
         FirstPathQuery::where('type', 'information')->whereIn('type_id', $ids)->delete();
     }
 }

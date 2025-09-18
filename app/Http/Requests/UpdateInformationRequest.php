@@ -6,7 +6,7 @@ use App\Models\Information;
 use App\Traits\AdditionalRequestRules;
 use Illuminate\Foundation\Http\FormRequest;
 
-class InformationRequest extends FormRequest
+class UpdateInformationRequest extends FormRequest
 {
     use AdditionalRequestRules;
     /**
@@ -33,6 +33,7 @@ class InformationRequest extends FormRequest
     }
 
     public function withValidator($validator) {
-        $this->applyFirstPathQueryValidator($validator, $this->input('path'));
+        $id = $this->route()->parameter('information');
+        $this->applyFirstPathQueryValidator($validator, $this->input('path'), $id);
     }
 }

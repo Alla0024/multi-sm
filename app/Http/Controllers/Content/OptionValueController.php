@@ -34,8 +34,6 @@ class OptionValueController extends AppBaseController
      */
     public function index(Request $request, $id = null)
     {
-        $perPage = $request->input('perPage', 10);
-
         $sortFields = [
             'default',
             'name_asc',
@@ -45,7 +43,7 @@ class OptionValueController extends AppBaseController
         ];
 
         $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
-        $optionValues = $this->optionValueRepository->filterIndexPage($perPage, request()->all(), $languageId, $id);
+        $optionValues = $this->optionValueRepository->filterRows($request, $id);
 
         $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id, $languageId);
 
@@ -76,8 +74,9 @@ class OptionValueController extends AppBaseController
     public function create()
     {
         $parentId = request()->input('parent_id');
-
         $parent = is_numeric($parentId) ? $this->optionValueRepository->find($parentId) : null;
+        $valuesTree = $this->optionValueRepository->getValuesTree();
+        $optionValueTypes = ['category', 'type', 'line', 'material'];
 
         if (empty($parent) && !is_null($parentId)) {
             Flash::error(__('common.flash_not_found'));
@@ -92,7 +91,7 @@ class OptionValueController extends AppBaseController
 
         $this->template = 'pages.option_values.create';
 
-        return $this->renderOutput(['fields' => $fields, 'parentId' => $parentId]);
+        return $this->renderOutput(compact('parent', 'parentId', 'valuesTree', 'optionValueTypes', 'fields'));
     }
 
     /**
@@ -102,7 +101,7 @@ class OptionValueController extends AppBaseController
     {
         $input = $request->all();
 
-        $optionValue = $this->optionValueRepository->upsert($input);
+        $optionValue = $this->optionValueRepository->save($input);
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -126,7 +125,10 @@ class OptionValueController extends AppBaseController
      */
     public function edit($id)
     {
-        $optionValue = $this->optionValueRepository->getDetails($id);
+        $optionValue = $this->optionValueRepository->findFull($id);
+        $valuesTree = $this->optionValueRepository->getValuesTree();
+        $optionValueTypes = ['category', 'type', 'line', 'material'];
+
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionValue::class,
             OptionValueDescription::class
@@ -140,7 +142,7 @@ class OptionValueController extends AppBaseController
 
         $this->template = 'pages.option_values.edit';
 
-        return $this->renderOutput(compact('optionValue', 'fields'));
+        return $this->renderOutput(compact('optionValue', 'fields', 'valuesTree', 'optionValueTypes'));
     }
 
     /**
@@ -156,7 +158,7 @@ class OptionValueController extends AppBaseController
             return redirect(route('optionValues.index'));
         }
 
-        $optionValue = $this->optionValueRepository->upsert($request->all(), $id);
+        $optionValue = $this->optionValueRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 
@@ -172,20 +174,35 @@ class OptionValueController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Request $request, $ids)
     {
-        $optionValue = $this->optionValueRepository->find($id);
-
-        if (empty($optionValue)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('optionValues.index'));
-        }
-
-        $this->optionValueRepository->delete($id);
+        $this->optionValueRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
+        if ($request->get('parent_id') !== null) {
+            return redirect(route('optionValues.show', $request->get('parent_id')));
+        }
+
         return redirect(route('optionValues.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('optionValues_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->optionValueRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('optionValues.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('optionValues.index');
     }
 }

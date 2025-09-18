@@ -151,20 +151,31 @@ class ArticleAuthorController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $articleAuthor = $this->articleAuthorRepository->find($id);
-
-        if (empty($articleAuthor)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('articleAuthors.index'));
-        }
-
-        $this->articleAuthorRepository->delete($id);
+        $this->articleAuthorRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('articleAuthors.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('articleAuthor_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->articleAuthorRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('articleAuthors.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('articleAuthors.index');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateAttributeGroupRequest;
 use App\Http\Requests\UpdateAttributeGroupRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\AttributeGroupDescription;
 use App\Repositories\AttributeGroupRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ use Flash;
 class AttributeGroupController extends AppBaseController
 {
     /** @var AttributeGroupRepository $attributeGroupRepository*/
-    private $attributeGroupRepository;
+    private AttributeGroupRepository $attributeGroupRepository;
 
     public function __construct(AttributeGroupRepository $attributeGroupRepo)
     {
@@ -28,12 +29,14 @@ class AttributeGroupController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
-        $attributeGroups = $this->attributeGroupRepository->paginate($perPage);
+        $attributeGroups = $this->attributeGroupRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            AttributeGroupDescription::class,
             AttributeGroup::class
+        ], [
+            'name',
+            'sort_order'
         ]);
 
         $this->template = 'pages.attribute_groups.index';
@@ -92,7 +95,7 @@ class AttributeGroupController extends AppBaseController
      */
     public function edit($id)
     {
-        $attributeGroup = $this->attributeGroupRepository->find($id);
+        $attributeGroup = $this->attributeGroupRepository->findFull($id);
 
         if (empty($attributeGroup)) {
             Flash::error(__('common.flash_not_found'));
@@ -130,20 +133,31 @@ class AttributeGroupController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Request $request, $ids)
     {
-        $attributeGroup = $this->attributeGroupRepository->find($id);
-
-        if (empty($attributeGroup)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('attributeGroups.index'));
-        }
-
-        $this->attributeGroupRepository->delete($id);
+        $this->attributeGroupRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('attributeGroups.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('optionValues_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->attributeGroupRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('attributeGroups.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('attributeGroups.index');
     }
 }

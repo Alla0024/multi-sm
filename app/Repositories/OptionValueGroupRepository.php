@@ -60,6 +60,9 @@ class OptionValueGroupRepository extends BaseRepository
             $target->save();
 
             foreach ($optionValueGroup['description'] as $languageId => $description) {
+                $description['name'] = $description['name'] ?? '';
+                $description['meta_title'] = $description['meta_title'] ?? '';
+
                 OptionValueGroupDescription::updateOrCreate([
                     'option_value_group_id' => $target->id,
                     'language_id' => $languageId

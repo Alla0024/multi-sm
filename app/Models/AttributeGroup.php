@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AttributeGroup extends Model
 {
@@ -13,7 +15,7 @@ class AttributeGroup extends Model
     ];
 
     protected $casts = [
-        
+
     ];
 
     public static array $rules = [
@@ -22,13 +24,13 @@ class AttributeGroup extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function attributeGroupDescription(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function descriptions(): HasMany
     {
-        return $this->hasOne(\App\Models\AttributeGroupDescription::class);
+        return $this->hasMany(AttributeGroupDescription::class, 'attribute_group_id');
     }
 
-    public function attributes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function attributes(): HasMany
     {
-        return $this->hasMany(\App\Models\Attribute::class, 'attribute_group_id');
+        return $this->hasMany(Attribute::class, 'attribute_group_id');
     }
 }

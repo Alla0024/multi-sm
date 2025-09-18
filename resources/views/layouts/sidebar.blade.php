@@ -76,8 +76,8 @@
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
-                <a class="item {{ Request::is($adminPath.'/attributes*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributes')}}">{{$word['menu_attribute']}}</a>
-                <a class="item {{ Request::is($adminPath.'/attributeGroups*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeGroups')}}">{{$word['menu_attribute_groups']}}</a>
+{{--                <a class="item {{ Request::is($adminPath.'/attributes*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributes')}}">{{$word['menu_attribute']}}</a>--}}
+                <a class="item {{ Request::is($adminPath.'/attributeGroups*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeGroups')}}">{{$word['menu_attribute']}}</a>
                 <a class="item {{ Request::is($adminPath.'/attributeIcons*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeIcons')}}">{{$word['menu_attribute_icons']}}</a>
                 <a class="item {{ Request::is($adminPath.'/attributeWords*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/attributeWords')}}">{{$word['menu_attribute_words']}}</a>
             </div>

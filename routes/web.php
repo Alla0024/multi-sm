@@ -53,6 +53,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
         Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
+        Route::post('copy_vacancies', 'App\Http\Controllers\Content\VacancyController@copy');
 
         Route::resource('langs', App\Http\Controllers\LangController::class);
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
@@ -173,6 +174,9 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('api/get_combinations', 'ApiController@getCombination')->name('get_combinations');
         Route::get('api/get_orders', 'ApiController@getOrders')->name('get_orders');
         Route::post('copy_manufacturers', 'App\Http\Controllers\Content\ManufacturerController@copy')->name('copy_manufacturers');
+        Route::post('copy_options', 'App\Http\Controllers\Content\OptionController@copy')->name('copy_options');
+        Route::post('copy_optionValues', 'App\Http\Controllers\Content\OptionValueController@copy')->name('copy_optionValues');
+        Route::post('copy_articleAuthor', 'App\Http\Controllers\Content\ArticleAuthorController@copy')->name('copy_articleAuthor');
         Route::post('copy_product', 'Content\ProductController@copyProduct')->name('copy_product');
         Route::post('copy_promo_code_group', 'Content\PromoCodeGroupsController@copyPromoCodeGroup')->name('copy_promo_code_group');
         Route::post('copy_promo_code', 'Content\PromoCodesController@copyPromoCode')->name('copy_promo_code');

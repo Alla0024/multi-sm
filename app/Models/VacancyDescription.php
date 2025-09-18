@@ -15,6 +15,7 @@ class VacancyDescription extends Model
     protected $primaryKey = ['vacancy_id', 'language_id'];
 
     public $fillable = [
+        'vacancy_id',
         'language_id',
         'title',
         'description',

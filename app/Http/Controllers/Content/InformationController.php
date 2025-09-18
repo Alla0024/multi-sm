@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
-use App\Http\Requests\InformationRequest;
+use App\Http\Requests\UpdateInformationRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\FirstPathQuery;
 use App\Models\InformationDescription;
@@ -69,7 +69,7 @@ class InformationController extends AppBaseController
     /**
      * Store a newly created Information in storage.
      */
-    public function store(InformationRequest $request)
+    public function store(UpdateInformationRequest $request)
     {
         $information = $this->informationRepository->save($request->all());
 
@@ -126,7 +126,7 @@ class InformationController extends AppBaseController
     /**
      * Update the specified Information in storage.
      */
-    public function update($id, InformationRequest $request)
+    public function update($id, UpdateInformationRequest $request)
     {
         $information = $this->informationRepository->find($id);
 

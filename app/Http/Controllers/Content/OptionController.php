@@ -45,8 +45,6 @@ class OptionController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
         $sortFields = [
             'default',
             'name_asc',
@@ -55,9 +53,8 @@ class OptionController extends AppBaseController
             'created_at_desc',
         ];
 
-        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
-        $options = $this->optionRepository->filterIndexPage($perPage, $languageId, request()->all());
-        $categories = $this->categoryRepository->getDropdownItems($languageId);
+        $options = $this->optionRepository->filterRows($request);
+        $categories = $this->categoryRepository->getDropdownItems($request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Option::class
@@ -131,7 +128,7 @@ class OptionController extends AppBaseController
      */
     public function edit($id)
     {
-        $option = $this->optionRepository->getDetails($id);
+        $option = $this->optionRepository->findFull($id);
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionDescription::class,
             Option::class
@@ -173,20 +170,31 @@ class OptionController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $option = $this->optionRepository->find($id);
-
-        if (empty($option)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('options.index'));
-        }
-
-        $this->optionRepository->delete($id);
+        $this->optionRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('options.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('options_id');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->optionRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('options.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('options.index');
     }
 }
