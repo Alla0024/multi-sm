@@ -11,12 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const editors = {};
     document.querySelectorAll('.dynamic-editor').forEach((textarea) => {
         const id = textarea.id;
+        const req = textarea.hasAttribute('required')
         editors[id] = CKEDITOR.replace(id, {
             height: 200,
             removeButtons: '',
             bodyClass: 'custom-editor-body',
         });
-        // textarea.setAttribute('', '')
+        if(req){
+            textarea.setAttribute('required', '')
+        }
+        editors[id].on('change', () => editors[id].updateElement());
+        editors[id].on('key',   () => editors[id].updateElement());
+
     });
 
     // FileManager build
@@ -79,6 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
             editors[id].updateElement();
         });
 
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
         let formData = new FormData(form)
 
         axios({
@@ -93,6 +104,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         })
     }
+    // Ignore inputs value ///////////////////////////////////////////////////////////////////////////
+    document.querySelectorAll('form').forEach(function(form) {
+        form.addEventListener('submit', function() {
+            form.querySelectorAll('.ignore_form').forEach(function(el) {
+                el.disabled = true;
+            });
+        });
+    });
 
     // Cookie
     Alpine.store('page').getCookie = function (name) {

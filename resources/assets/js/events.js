@@ -1,17 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Ignore inputs value ///////////////////////////////////////////////////////////////////////////
-    document.querySelectorAll('form').forEach(function(form) {
-        form.addEventListener('submit', function() {
-            form.querySelectorAll('.ignore_form').forEach(function(el) {
-                el.disabled = true;
-            });
 
-        });
-    });
-
-
-    // Tab change ///////////////////////////////////////////////////////////////////////////
+    // Tab change //////////////////////////////////./////////////////////////////////////////
     const buttons = document.querySelectorAll('[data-tab]');
     const contents = document.querySelectorAll('[data-for-tab]');
 
