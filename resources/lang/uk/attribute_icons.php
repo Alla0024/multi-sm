@@ -27,7 +27,7 @@ return [
     'search_title' => 'Пошук за назвою',
     'title_descriptions_title' => 'Заголовок мініатюри',
     'title_descriptions_description' => 'Заголовок мініатюри',
-    'value_show' => 'Показувати',
+    'value_show' => 'Відображати',
     'value_hide' => 'Приховувати',
     'tab_main' => 'Основне',
     'tab_sort' => 'Сортування',

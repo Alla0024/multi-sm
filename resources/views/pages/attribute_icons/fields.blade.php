@@ -49,13 +49,15 @@
     </div>
 </div>
 
+@dump($attributeIcon->toArray())
+@dump($values)
 
 <!-- Value Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('value', $word['title_value']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('value', $values, ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('value', $values ?? '', ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>

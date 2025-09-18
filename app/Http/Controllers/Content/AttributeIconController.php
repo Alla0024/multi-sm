@@ -99,7 +99,7 @@ class AttributeIconController extends AppBaseController
     {
         $attributeIcon = $this->attributeIconRepository->findFull($id);
         $languages = Language::getLanguages();
-        $values = [ 1 => __('attribute_icons.value_show'), 0 => __('attribute_icons.value_hide') ];
+        $values = [ '1' => __('attribute_icons.value_show'), "0" => __('attribute_icons.value_hide') ];
 
         if (empty($attributeIcon)) {
             Flash::error(__('common.flash_not_found'));
