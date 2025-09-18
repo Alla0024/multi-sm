@@ -71,7 +71,6 @@
         </div>
     </div>
 </div>
-
 <!-- Location Id Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('location_id', $word['title_location_id']) !!}

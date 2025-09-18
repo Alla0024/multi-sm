@@ -25,8 +25,8 @@
 @php
     $arrData = [
         'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
-        'name' => ['type' => 'string', 'name' => 'Значення', 'description' => true],
-        'explanation' => ['type' => 'string', 'name' => 'Значення', 'description' => true],
+        'name' => ['type' => 'string', 'name' => 'Назва атрибута', 'description' => true],
+        'explanation' => ['type' => 'string', 'name' => 'Пояснення', 'description' => true],
     ];
 
     $data = $attributeGroup['attributes'] ?? [];

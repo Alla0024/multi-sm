@@ -6,7 +6,7 @@
             <input id="thumbnail" type="hidden" name="avatar" value="{{$articleAuthor['avatar'] ?? ''}}">
             <img class="" src="{{isset($articleAuthor['avatar']) && $articleAuthor['avatar'] != '' ? "https://i.svit-matrasiv.com.ua/storage/images/".$articleAuthor['avatar'] : '/images/common/no_images.png'}}" id="holder" alt="Прев’ю" style="max-width: 200px;">
             <div class="butt hide" :class="{'show': open_butt}">
-                <div class="custom-file-label lfm" data-input="thumbnail" data-preview="holder" data-path="/blog/Author"><i class="bi bi-arrow-up-square"></i></div>
+                <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" data-input="thumbnail" data-preview="holder" data-path="/blog/Author"><i class="bi bi-arrow-up-square"></i></div>
                 <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
             </div>
         </div>

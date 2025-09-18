@@ -46,7 +46,7 @@
             <input id="thumbnail" type="hidden" name="image" value="{{$manufacturer['image'] ?? ''}}">
             <img class="" src="{{isset($manufacturer['image']) && $manufacturer['image'] != '' ? "https://i.svit-matrasiv.com.ua/storage/images/".$manufacturer['image'] : '/images/common/no_images.png'}}" id="holder" alt="Прев’ю" style="max-width: 200px;">
             <div class="butt hide" :class="{'show': open_butt}">
-                <div class="custom-file-label lfm" data-input="thumbnail" data-preview="holder" data-path="/catalog/category/logo_wtm"><i class="bi bi-arrow-up-square"></i></div>
+                <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" data-input="thumbnail" data-preview="holder" data-path="/catalog/category/logo_wtm"><i class="bi bi-arrow-up-square"></i></div>
                 <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
             </div>
         </div>

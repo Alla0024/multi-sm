@@ -36,7 +36,7 @@ window.filemanager = function filemanager() {
     });
 };
 
-function filemanager(elements, options = {}) {
+function bindFilemanager(elements, options = {}) {
     const type = options.type || 'file';
     const prefix = options.prefix || '/filemanager';
 
@@ -47,7 +47,9 @@ function filemanager(elements, options = {}) {
                 : [elements]);
 
     nodes.forEach(node => {
+
         node.addEventListener('click', (e) => {
+
             e.preventDefault();
 
             const { input: inputId, preview: previewId, path = '' } = e.currentTarget.dataset || {};
@@ -96,4 +98,4 @@ function filemanager(elements, options = {}) {
         }, { passive: false });
     });
 }
-filemanager('.lfm', { type: 'image', prefix: '/filemanager' });
+// bindFilemanager('.lfm', { type: 'image', prefix: '/filemanager' });

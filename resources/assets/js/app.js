@@ -19,6 +19,56 @@ document.addEventListener('DOMContentLoaded', () => {
         // textarea.setAttribute('', '')
     });
 
+    // FileManager build
+    Alpine.store('page').bindFileManager = (el, options = { type: 'image', prefix: '/filemanager' }) => {
+        const type = options.type || 'file';
+        const prefix = options.prefix || '/filemanager';
+
+        const { input: inputId, preview: previewId, path = '' } = el.dataset || {};
+        if (inputId)  localStorage.setItem('target_input', inputId);
+        if (previewId) localStorage.setItem('target_preview', previewId);
+
+        const url = `${prefix}?type=${encodeURIComponent(type)}${path ? `&working_dir=${encodeURIComponent(path)}` : ''}`;
+
+        window.filemanager(url).then((urlOrItems) => {
+            let chosenUrl = urlOrItems;
+            let chosenPath = null;
+
+            if (Array.isArray(urlOrItems)) {
+                const item = urlOrItems[0] || {};
+                chosenUrl = item.url;
+                chosenPath = item.name || item.path || item.url;
+            }
+
+            const targetInputId = localStorage.getItem('target_input');
+            const targetPreviewId = localStorage.getItem('target_preview');
+
+            if (targetInputId) {
+                const inputEl = document.getElementById(targetInputId);
+                if (inputEl) {
+                    let relativeUrl = chosenUrl.replace(/^.*\/images/, '');
+                    inputEl.value = relativeUrl || '';
+                    inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+                    inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            }
+
+
+            if (targetPreviewId) {
+                const previewEl = document.getElementById(targetPreviewId);
+                if (previewEl) {
+                    if ('src' in previewEl) {
+                        previewEl.src = chosenUrl;
+                        previewEl.classList.remove('hide')
+                    } else {
+                        previewEl.style.backgroundImage = `url("${chosenUrl}")`;
+                    }
+                    previewEl.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            }
+        });
+    }
+
     // Save ajax data form
     Alpine.store('page').ajax = (e) => {
         // e.preventDefault();
