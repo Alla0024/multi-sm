@@ -10,7 +10,6 @@ use App\Repositories\BaseRepository;
 class AttributeWordRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'sort_order',
         'key'
     ];
 
@@ -136,7 +135,7 @@ class AttributeWordRepository extends BaseRepository
         foreach ($descriptions as $languageId => $descData) {
             AttributeWordDescription::updateOrInsert(
                 [
-                    'attribute_word_id' => (int)$attributeWord->id,
+                    'word_id' => (int)$attributeWord->id,
                     'lang_id' => $languageId
                 ],
                 $descData
@@ -156,7 +155,7 @@ class AttributeWordRepository extends BaseRepository
 
             foreach ($attributeWord->descriptions as $description) {
                 $newDescription = $description->replicate();
-                $newDescription->attribute_word_id = $newAttributeWord->id;
+                $newDescription->word_id = $newAttributeWord->id;
                 $newDescription->save();
             }
         }
@@ -165,7 +164,7 @@ class AttributeWordRepository extends BaseRepository
     public function multiDelete($ids): void
     {
         AttributeWord::whereIn('id', $ids)->delete();
-        AttributeWordDescription::whereIn('attribute_word_id', $ids)->delete();
+        AttributeWordDescription::whereIn('word_id', $ids)->delete();
     }
 }
 

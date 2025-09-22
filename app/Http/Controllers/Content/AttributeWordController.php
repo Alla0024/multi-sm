@@ -130,7 +130,7 @@ class AttributeWordController extends AppBaseController
             return redirect(route('attributeWords.index'));
         }
 
-        $attributeWord = $this->attributeWordRepository->update($request->all(), $id);
+        $attributeWord = $this->attributeWordRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 
