@@ -1,0 +1,21 @@
+<?php
+return [
+    'filling' => 'Наповнення',
+    'fillings' => 'Наповнення',
+    'title_id' => 'ID',
+    'title_title' => 'Назва',
+    'title_image' => 'Зоображення',
+    'title_sort_order' => 'Сортування',
+    'title_descriptions_title' => 'Назва',
+    'title_descriptions_description' => 'Опис',
+    'title_descriptions_header' => 'Заголовок',
+    'search_sort_order' => 'Пошук за сортуванням',
+    'search_title' => 'Пошук за назвою',
+    'title_created_at' => 'Створено',
+    'title_updated_at' => 'Оновлено',
+    'title_filling_id' => 'ID наповнення',
+    'title_language_id' => 'ID мови',
+    'title_description' => 'Опис',
+    'title_tag' => 'Тег',
+    'tab_main' => 'Загальне',
+];

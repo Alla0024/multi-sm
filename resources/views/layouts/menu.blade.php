@@ -187,3 +187,17 @@
         <p>Attributes</p>
     </a>
 </li>
+
+<li class="nav-item">
+    <a href="{{ route('filters.index') }}" class="nav-link {{ Request::is('filters*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Filters</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ route('fillings.index') }}" class="nav-link {{ Request::is('fillings*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-home"></i>
+        <p>Fillings</p>
+    </a>
+</li>

@@ -49,7 +49,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('attributeIcons', 'App\Http\Controllers\Content\AttributeIconController');
         Route::resource('attributeWords', 'App\Http\Controllers\Content\AttributeWordController');
         Route::resource('attributes', 'App\Http\Controllers\Content\AttributeController');
-
+        Route::resource('fillings', 'App\Http\Controllers\Content\FillingController');
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
         Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
@@ -87,7 +87,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('questions', 'Content\QuestionController');
         Route::resource('answers', 'Content\AnswerController');
         // Route::resource('news', 'Content\NewsController');
-        Route::resource('filling', 'Content\FillingController');
         Route::resource('services', 'Content\ServiceController');
         Route::resource('kit', 'Content\KitController');
         Route::resource('newsletters', 'Content\NewsletterController');
@@ -178,6 +177,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::post('copy_optionValues', 'App\Http\Controllers\Content\OptionValueController@copy')->name('copy_optionValues');
         Route::post('copy_articleAuthor', 'App\Http\Controllers\Content\ArticleAuthorController@copy')->name('copy_articleAuthor');
         Route::post('copy_attributeWords', 'App\Http\Controllers\Content\AttributeWordController@copy')->name('copy_attributeWords');
+        Route::post('copy_fillings', 'App\Http\Controllers\Content\FillingController@copy')->name('copy_fillings');
         Route::post('copy_product', 'Content\ProductController@copyProduct')->name('copy_product');
         Route::post('copy_promo_code_group', 'Content\PromoCodeGroupsController@copyPromoCodeGroup')->name('copy_promo_code_group');
         Route::post('copy_promo_code', 'Content\PromoCodesController@copyPromoCode')->name('copy_promo_code');
