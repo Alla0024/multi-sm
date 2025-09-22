@@ -45,7 +45,7 @@
 
         <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/option*') ? 'true' : 'false' }}}">
             <div class="item {{ Request::is($adminPath.'/option*') ? 'active' : '' }}" @click="open_list = !open_list">
-                <div class="icon"><i class="bi bi-gear-fill fs-20"></i></div>
+                <div class="icon"><i class="bi bi-collection-fill fs-20"></i></div>
                 <div class="name">{{$word['menu_option']}}</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
@@ -71,7 +71,7 @@
 
         <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/attribute*') ? 'true' : 'false' }}}">
             <div class="item {{ Request::is($adminPath.'/attribute*') ? 'active' : '' }}" @click="open_list = !open_list">
-                <div class="icon"><i class="bi bi-star fs-20"></i></div>
+                <div class="icon"><i class="bi bi-circle-square fs-20"></i></div>
                 <div class="name">{{$word['menu_attribute']}}</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
@@ -83,8 +83,13 @@
             </div>
         </div>
 
+        <a href="{{ route('fillings.index') }}" class="item {{ Request::is($adminPath.'/fillings*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-border-width fs-20"></i></div>
+            <div class="name">{{$word['menu_filling']}}</div>
+        </a>
+
         <a href="{{ route('vacancies.index') }}" class="item {{ Request::is($adminPath.'/vacancies*') ? 'active' : '' }}">
-            <div class="icon"><i class="bi bi-gift fs-20"></i></div>
+            <div class="icon"><i class="bi bi-person-vcard fs-20"></i></div>
             <div class="name">{{$word['menu_vacancies']}}</div>
         </a>
 
