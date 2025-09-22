@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateAttributeWordRequest;
 use App\Http\Requests\UpdateAttributeWordRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\AttributeWordDescription;
 use App\Repositories\AttributeWordRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -28,11 +29,10 @@ class AttributeWordController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 10);
-
-        $attributeWords = $this->attributeWordRepository->paginate($perPage);
+        $attributeWords = $this->attributeWordRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            AttributeWordDescription::class,
             AttributeWord::class
         ]);
 
@@ -52,7 +52,14 @@ class AttributeWordController extends AppBaseController
     {
         $this->template = 'pages.attribute_words.create';
 
-        return $this->renderOutput();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            AttributeWordDescription::class,
+            AttributeWord::class
+        ]);
+
+        return $this->renderOutput([
+            'fields' => $fields,
+        ]);
     }
 
     /**
@@ -62,7 +69,7 @@ class AttributeWordController extends AppBaseController
     {
         $input = $request->all();
 
-        $attributeWord = $this->attributeWordRepository->create($input);
+        $attributeWord = $this->attributeWordRepository->save($input);
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -74,7 +81,7 @@ class AttributeWordController extends AppBaseController
      */
     public function show($id)
     {
-        $attributeWord = $this->attributeWordRepository->find($id);
+        $attributeWord = $this->attributeWordRepository->findFull($id);
 
         if (empty($attributeWord)) {
             Flash::error(__('common.flash_not_found'));
@@ -92,7 +99,7 @@ class AttributeWordController extends AppBaseController
      */
     public function edit($id)
     {
-        $attributeWord = $this->attributeWordRepository->find($id);
+        $attributeWord = $this->attributeWordRepository->findFull($id);
 
         if (empty($attributeWord)) {
             Flash::error(__('common.flash_not_found'));
@@ -100,9 +107,14 @@ class AttributeWordController extends AppBaseController
             return redirect(route('attributeWords.index'));
         }
 
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            AttributeWordDescription::class,
+            AttributeWord::class
+        ]);
+
         $this->template = 'pages.attribute_words.edit';
 
-        return $this->renderOutput(compact('attributeWord'));
+        return $this->renderOutput(compact('attributeWord', 'fields'));
     }
 
     /**
@@ -122,6 +134,10 @@ class AttributeWordController extends AppBaseController
 
         Flash::success(__('common.flash_updated_successfully'));
 
+        if($request->ajax()){
+            return redirect(route('attributeWords.edit', $id));
+        }
+
         return redirect(route('attributeWords.index'));
     }
 
@@ -130,19 +146,30 @@ class AttributeWordController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $attributeWord = $this->attributeWordRepository->find($id);
-
-        if (empty($attributeWord)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('attributeWords.index'));
-        }
-
-        $this->attributeWordRepository->delete($id);
+      $this->attributeWordRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
+
+        return redirect(route('attributeWords.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('attribute_word_ids');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->attributeWordRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('attributeWords.index');
+        }
+
+        Flash::error(__('common.flash_error'));
 
         return redirect(route('attributeWords.index'));
     }

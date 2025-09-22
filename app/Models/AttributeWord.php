@@ -24,13 +24,12 @@ class AttributeWord extends Model
         'updated_at' => 'nullable'
     ];
 
-    public function productAttributes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(\App\Models\ProductAttribute::class, 'product_attribute_words');
-    }
-
     public function attributeWordDescription(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(\App\Models\AttributeWordDescription::class);
+    }
+    public function descriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\AttributeWordDescription::class, 'word_id');
     }
 }
