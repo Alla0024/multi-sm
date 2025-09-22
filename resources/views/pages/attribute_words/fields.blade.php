@@ -1,3 +1,4 @@
+<input type="hidden" name="sort_order" value="0">
 <!-- Word Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('word', $word['title_word']) !!}
