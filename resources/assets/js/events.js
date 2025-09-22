@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (active) switchTab(active.dataset.tab);
     }
 
+
     // Input search ///////////////////////////////////////////////////////////////////////////
     Alpine.store('page').searchSelect = function (el){
         const block = el.parentElement;
