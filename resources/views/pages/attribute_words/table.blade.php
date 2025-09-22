@@ -28,7 +28,6 @@
                             </div>
                         </div>
                     </th>
-
                     @foreach($fields as $index => $field)
                         @if($index == 'status' && $field['inTable'])
                             @if($attributeWord[$index] == 1)
@@ -38,6 +37,8 @@
                             @endif
                          @elseif($index == 'image' && $field['inTable'])
                             <td><img style="width: 140px;" src="{{isset($optionValue[$index]) && $optionValue[$index] != '' ? $optionValue[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                         @elseif($index == 'key' && $field['inTable'])
+                            <td>{{ '@'.$attributeWord[$index].'@' }}</td>
                          @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $attributeWord[$index] }}</td>

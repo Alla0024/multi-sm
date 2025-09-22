@@ -10,6 +10,7 @@ return [
     'search_word' => 'Пошук за словом',
     'title_word' => 'Слово',
     'title_sort_order' => 'Порядок сортування',
+    'title_descriptions_description' => 'Інформація про слово',
     'search_sort_order' => 'Пошук за порядком сортування',
     'title_created_at' => 'Дата створення',
     'search_created_at' => 'Пошук за датою створення',
