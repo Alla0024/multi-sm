@@ -27,6 +27,7 @@ return [
     'search_title' => 'Пошук за назвою',
     'title_descriptions_title' => 'Заголовок мініатюри',
     'title_descriptions_description' => 'Заголовок мініатюри',
+    'title_attribute_id' => 'Назва атрибута',
     'value_show' => 'Відображати',
     'value_hide' => 'Приховувати',
     'tab_main' => 'Основне',

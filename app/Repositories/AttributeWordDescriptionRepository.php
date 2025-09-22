@@ -8,9 +8,7 @@ use App\Repositories\BaseRepository;
 class AttributeWordDescriptionRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'lang_id',
         'word',
-        'description'
     ];
 
     protected array $additionalFields = [

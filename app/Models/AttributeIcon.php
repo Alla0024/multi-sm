@@ -23,7 +23,7 @@ class AttributeIcon extends Model
 
     public static array $rules = [
         'image' => 'required|string|max:255',
-        'pattern' => 'required|string',
+        'pattern' => 'nullable|string',
         'value' => 'required',
         'created_at' => 'nullable',
         'updated_at' => 'nullable'

@@ -29,4 +29,9 @@ class AttributeWordDescription extends Model
     {
         return $this->belongsTo(\App\Models\AttributeWord::class, 'word_id');
     }
+
+    public function language(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Language::class, 'lang_id');
+    }
 }

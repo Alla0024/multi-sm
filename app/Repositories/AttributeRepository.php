@@ -32,6 +32,19 @@ class AttributeRepository extends BaseRepository
         return Attribute::class;
     }
 
+    public function getDropdownItems()
+    {
+        return $this->model
+            ->with('descriptions')
+            ->get()
+            ->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'text' => $item->descriptions->where('language_id', config('settings.locale.default_language_id'))->first()->name,
+                ];
+            });
+    }
+
     public function filterRows(Request $request)
     {
         $perPage = $request->input('perPage', 10);
