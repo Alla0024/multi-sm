@@ -65,74 +65,54 @@ class ManufacturerRepository extends BaseRepository
             ->makeHidden('seoPath');
     }
 
-    public function filterRows($request)
+    public function filterRows(array $input)
     {
-        $perPage = $request->integer('perPage', 10);
-        $languageId = $request->input('language_id', config('settings.locale.default_language_id'));
+        $perPage    = $input['perPage'] ?? 10;
+        $languageId = $input['language_id'] ?? config('settings.locale.default_language_id');
 
         $query = $this->model::with([
             'seoPath',
-            'descriptions' => function ($q) use ($languageId) {
-                $q->where('language_id', $languageId);
-            }
+            'descriptions' => fn($q) => $q->where('language_id', $languageId),
         ]);
 
         foreach (['sort_order', 'status'] as $field) {
-            if ($request->filled($field)) {
-                $query->where($field, $request->input($field));
-            }
+            $query->when($input[$field] ?? null, fn($q, $value) => $q->where($field, $value));
         }
 
-        if ($request->filled('name')) {
-            $name = mb_strtolower($request->input('name'), 'UTF-8');
-
-            $query->whereHas('descriptions', function ($q) use ($name, $languageId) {
-                $q->where('language_id', $languageId)
-                    ->whereRaw('LOWER(name) LIKE ?', ["%{$name}%"]);
+        $query->when($input['name'] ?? null, function ($q, $name) use ($languageId) {
+            $q->whereHas('descriptions', function ($sub) use ($languageId, $name) {
+                $sub->where('language_id', $languageId)
+                    ->where('name', 'LIKE', "%{$name}%");
             });
-        }
+        });
 
-        if ($request->filled('sortBy')) {
-            $sortBy = $request->input('sortBy');
-
-            switch ($sortBy) {
-                case 'name_asc':
-                    $query->withAggregate(['descriptions as name' => fn($q) => $q->where('language_id', $languageId)], 'name')
-                        ->orderBy('name', 'asc');
-                    break;
-
-                case 'name_desc':
-                    $query->withAggregate(['descriptions as name' => fn($q) => $q->where('language_id', $languageId)], 'name')
-                        ->orderBy('name', 'desc');
-                    break;
-
-                case 'created_at':
-                    $query->orderBy('created_at', 'asc');
-                    break;
-
-                case 'created_at_desc':
-                    $query->orderBy('created_at', 'desc');
-                    break;
+        $query->when($input['sortBy'] ?? null, function ($q, $sortBy) use ($languageId) {
+            if (in_array($sortBy, ['name_asc', 'name_desc'])) {
+                $q->withAggregate(
+                    ['descriptions as name' => fn($sub) => $sub->where('language_id', $languageId)],
+                    'name'
+                )->orderBy('name', $sortBy === 'name_asc' ? 'asc' : 'desc');
+            } elseif ($sortBy === 'created_at_asc') {
+                $q->orderBy('created_at', 'asc');
+            } elseif ($sortBy === 'created_at_desc') {
+                $q->orderBy('created_at', 'desc');
             }
-        }
+        });
 
         $manufacturers = $query->paginate($perPage);
 
-        $baseUrl = config('app.client_url');
+        $baseUrl = rtrim(config('app.client_url'), '/');
         $manufacturers->getCollection()->transform(function ($item) use ($baseUrl) {
             $item->setAttribute('name', optional($item->descriptions->first())->name);
-
-            $item->setAttribute('client_url', $item->seoPath
-                ? rtrim($baseUrl, '/') . '/' . ltrim($item->seoPath->path, '/')
-                : null
+            $item->setAttribute(
+                'client_url',
+                $item->seoPath ? $baseUrl . '/' . ltrim($item->seoPath->path, '/') : null
             );
-
             return $item;
         });
 
         return $manufacturers;
     }
-
 
     public function save(array $input, ?int $id = null)
     {

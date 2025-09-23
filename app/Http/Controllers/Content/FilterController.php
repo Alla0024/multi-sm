@@ -11,7 +11,6 @@ use App\Repositories\FilterGroupRepository;
 use App\Repositories\FilterRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
-use App\Models\Filter;
 use Flash;
 
 class FilterController extends AppBaseController
@@ -38,8 +37,7 @@ class FilterController extends AppBaseController
      */
     public function index(Request $request)
     {
-
-        $filters = $this->filterGroupRepository->filterRows($request);
+        $filters = $this->filterGroupRepository->filterRows($request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             FilterGroupDescription::class,

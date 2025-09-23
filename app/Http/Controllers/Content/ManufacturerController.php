@@ -29,7 +29,7 @@ class ManufacturerController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $manufacturers = $this->manufacturerRepository->filterRows($request);
+        $manufacturers = $this->manufacturerRepository->filterRows($request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ManufacturerDescription::class,
