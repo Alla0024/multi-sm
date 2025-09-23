@@ -33,64 +33,47 @@ class FilterGroupRepository extends BaseRepository
     {
         return $this->model->with($relations);
     }
-    public function filterRows($request)
+
+    public function filterRows(array $input)
     {
-        $perPage = $request->integer('perPage', 10);
-        $languageId = $request->input('language_id', config('settings.locale.default_language_id'));
+        $perPage = $input['perPage'] ?? 10;
+        $languageId = $input['language_id'] ?? config('settings.locale.default_language_id');
 
         $query = $this->model::with([
-            'descriptions' => function ($q) use ($languageId) {
-                $q->where('language_id', $languageId);
-            }
+            'descriptions' => fn($q) => $q->where('language_id', $languageId),
         ]);
 
         foreach (['sort_order', 'status'] as $field) {
-            if ($request->filled($field)) {
-                $query->where($field, $request->input($field));
-            }
+            $query->when($input[$field] ?? null, fn($q, $value) => $q->where($field, $value));
         }
 
-        if ($request->filled('name')) {
-            $name = mb_strtolower($request->input('name'), 'UTF-8');
-
-            $query->whereHas('descriptions', function ($q) use ($name, $languageId) {
-                $q->where('language_id', $languageId)
-                    ->whereRaw('LOWER(name) LIKE ?', ["%{$name}%"]);
-            });
-        }
-
-        if ($request->filled('sortBy')) {
-            $sortBy = $request->input('sortBy');
-
-            switch ($sortBy) {
-                case 'name_asc':
-                    $query->withAggregate(['descriptions as name' => fn($q) => $q->where('language_id', $languageId)], 'name')
-                        ->orderBy('name', 'asc');
-                    break;
-
-                case 'name_desc':
-                    $query->withAggregate(['descriptions as name' => fn($q) => $q->where('language_id', $languageId)], 'name')
-                        ->orderBy('name', 'desc');
-                    break;
-
-                case 'created_at':
-                    $query->orderBy('created_at', 'asc');
-                    break;
-
-                case 'created_at_desc':
-                    $query->orderBy('created_at', 'desc');
-                    break;
-            }
-        }
-
-        $filterGroups = $query->paginate($perPage);
-
-        $filterGroups->getCollection()->transform(function ($item) {
-            $item->setAttribute('name', optional($item->descriptions->first())->name);
-
-            return $item;
+        $query->when($input['name'] ?? null, function ($q, $name) use ($languageId) {
+            $q->whereHas('descriptions', fn($sub) => $sub
+                ->where('language_id', $languageId)
+                ->where('name', 'LIKE', "%{$name}%")
+            );
         });
 
-        return $filterGroups;
+        $sortOptions = [
+            'name_asc' => fn($q) => $q->withAggregate(
+                ['descriptions as name' => fn($sq) => $sq->where('language_id', $languageId)],
+                'name'
+            )->orderBy('name', 'asc'),
+
+            'name_desc' => fn($q) => $q->withAggregate(
+                ['descriptions as name' => fn($sq) => $sq->where('language_id', $languageId)],
+                'name'
+            )->orderBy('name', 'desc'),
+
+            'created_at_asc' => fn($q) => $q->orderBy('created_at', 'asc'),
+            'created_at_desc' => fn($q) => $q->orderBy('created_at', 'desc'),
+        ];
+
+        $query->when($input['sortBy'] ?? null, fn($q, $sortBy) => $sortOptions[$sortBy]($q) ?? null);
+
+        return $query->paginate($perPage)->through(function ($item) {
+            $item->name = optional($item->descriptions->first())->name;
+            return $item;
+        });
     }
 }
