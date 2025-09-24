@@ -49,13 +49,16 @@ class NewsletterController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.newsletters.create';
-
+        $newsletter = [
+            'authors' => config('settings.message_authors'),
+            'types' => config('settings.message_types'),
+        ];
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Newsletter::class
         ]);
-
         return $this->renderOutput([
             'fields' => $fields,
+            'newsletter' => $newsletter,
         ]);
     }
 

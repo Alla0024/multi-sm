@@ -46,6 +46,9 @@ class NewsletterRepository extends BaseRepository
             return null;
         }
 
+        $newsletter->setAttribute('authors', config('settings.message_authors'));
+        $newsletter->setAttribute('types', config('settings.message_types'));
+
         return $newsletter;
     }
 

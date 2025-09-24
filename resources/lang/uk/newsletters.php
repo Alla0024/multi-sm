@@ -3,7 +3,7 @@ return [
     'newsletter' => 'Розсилка',
     'newsletters' => 'Розсилки',
     'title_id' => 'ID',
-    'title_title' => 'Назва',
+    'title_title' => 'Заголовок',
     'title_type' => 'Тип',
     'title_status' => 'Статус',
     'title_image' => 'Зоображення',

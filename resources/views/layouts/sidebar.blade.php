@@ -55,8 +55,8 @@
             </div>
         </div>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/news*', $adminPath.'/information*', $adminPath.'/articleAuthors*']) ? 'true' : 'false' }}}">
-            <div class="item {{ Request::is([$adminPath.'/news*', $adminPath.'/information*', $adminPath.'/articleAuthors*']) ? 'active' : '' }}" @click="open_list = !open_list">
+        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/news', $adminPath.'/news/*', $adminPath.'/information*', $adminPath.'/articleAuthors*']) ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is([$adminPath.'/news', $adminPath.'/news/*', $adminPath.'/information*', $adminPath.'/articleAuthors*']) ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-stickies fs-20"></i></div>
                 <div class="name">{{$word['menu_new']}}</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
@@ -92,6 +92,17 @@
             <div class="icon"><i class="bi bi-person-vcard fs-20"></i></div>
             <div class="name">{{$word['menu_vacancies']}}</div>
         </a>
+
+        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/newsletters*') ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is($adminPath.'/newsletters*') ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="icon"><i class="bi bi-telephone fs-20"></i></div>
+                <div class="name">{{$word['menu_service']}}</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is($adminPath.'/newsletters*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/newsletters')}}">{{$word['menu_newsletters']}}</a>
+            </div>
+        </div>
 
     </div>
 </div>

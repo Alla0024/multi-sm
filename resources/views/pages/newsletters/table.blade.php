@@ -36,9 +36,12 @@
                             @else
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
+
                          @elseif($index == 'image' && $field['inTable'])
                             <td><img style="width: 140px;" src="{{isset($optionValue[$index]) && $optionValue[$index] != '' ? $optionValue[$index] : '/images/common/no_images.png'}}" alt=""></td>
-                         @else
+                        @elseif($index == 'type' && $field['inTable'])
+                            <td>{{config('settings.message_types')[$newsletter[$index]]}}</td>
+                        @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $newsletter[$index] }}</td>
                              @endif
