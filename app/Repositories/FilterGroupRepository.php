@@ -34,6 +34,33 @@ class FilterGroupRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
+    public function findFull($id, $columns = ['*'])
+    {
+        $filterGroup = $this->model
+            ->with([
+                'descriptions.language:id,code',
+            ])
+            ->find($id, $columns);
+
+        if (!$filterGroup) {
+            return null;
+        }
+
+        $descriptions = $filterGroup->descriptions
+            ->mapWithKeys(fn($desc) => [
+                (string)($desc->language_id ?? $desc->language->code) => [
+                    'name' => $desc->name,
+                    'comment' => $desc->comment,
+                    'meta_title' => $desc->meta_title,
+                ]
+            ])
+            ->toArray();
+
+        return $filterGroup
+            ->setRelation('descriptions', $descriptions);
+    }
+
+
     public function filterRows(array $input)
     {
         $perPage = $input['perPage'] ?? 10;

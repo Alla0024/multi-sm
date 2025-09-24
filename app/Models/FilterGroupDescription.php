@@ -32,4 +32,8 @@ class FilterGroupDescription extends Model
     {
         return $this->belongsTo(\App\Models\FilterGroup::class, 'filter_group_id');
     }
+    public function language(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\Language::class, 'language_id');
+    }
 }

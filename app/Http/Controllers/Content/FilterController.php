@@ -52,7 +52,6 @@ class FilterController extends AppBaseController
         ]);
     }
 
-
     /**
      * Show the form for creating a new Filter.
      */
@@ -60,7 +59,14 @@ class FilterController extends AppBaseController
     {
         $this->template = 'pages.filters.create';
 
-        return $this->renderOutput();
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            FilterGroup::class,
+            FilterGroupDescription::class
+        ]);
+
+        return $this->renderOutput([
+            'fields' => $fields,
+        ]);
     }
 
     /**
@@ -70,7 +76,7 @@ class FilterController extends AppBaseController
     {
         $input = $request->all();
 
-        $filter = $this->filterRepository->create($input);
+        $filter = $this->filterRepository->save($input);
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -82,7 +88,7 @@ class FilterController extends AppBaseController
      */
     public function show($id)
     {
-        $filter = $this->filterRepository->find($id);
+        $filter = $this->filterRepository->findFull($id);
 
         if (empty($filter)) {
             Flash::error(__('common.flash_not_found'));
@@ -100,7 +106,7 @@ class FilterController extends AppBaseController
      */
     public function edit($id)
     {
-        $filter = $this->filterRepository->find($id);
+        $filter = $this->filterGroupRepository->findFull($id);
 
         if (empty($filter)) {
             Flash::error(__('common.flash_not_found'));
@@ -108,9 +114,14 @@ class FilterController extends AppBaseController
             return redirect(route('filters.index'));
         }
 
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            FilterGroup::class,
+            FilterGroupDescription::class
+        ]);
+
         $this->template = 'pages.filters.edit';
 
-        return $this->renderOutput(compact('filter'));
+        return $this->renderOutput(compact('filter', 'fields'));
     }
 
     /**
@@ -126,7 +137,7 @@ class FilterController extends AppBaseController
             return redirect(route('filters.index'));
         }
 
-        $filter = $this->filterRepository->update($request->all(), $id);
+        $filter = $this->filterRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 
@@ -138,20 +149,28 @@ class FilterController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $filter = $this->filterRepository->find($id);
-
-        if (empty($filter)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('filters.index'));
-        }
-
-        $this->filterRepository->delete($id);
+        $this->filterRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('filters.index'));
+    }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('filter_ids');
+
+        if($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+            $this->filterRepository->copy($ids);
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('filters.index');
+        }
+        Flash::error(__('common.flash_not_found'));
+
+        return redirect()->route('filters.index');
     }
 }
