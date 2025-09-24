@@ -38,7 +38,7 @@
                             @endif
 
                          @elseif($index == 'image' && $field['inTable'])
-                            <td><img style="width: 140px;" src="{{isset($optionValue[$index]) && $optionValue[$index] != '' ? $optionValue[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                            <td><img style="width: 140px;" src="{{isset($newsletter[$index]) && $newsletter[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$newsletter[$index] : '/images/common/no_images.png'}}" alt=""></td>
                         @elseif($index == 'type' && $field['inTable'])
                             <td>{{config('settings.message_types')[$newsletter[$index]]}}</td>
                         @else
@@ -51,9 +51,6 @@
                     <td  colspan="3">
                         {!! Form::open(['route' => ['newsletters.destroy', $newsletter->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-
-
-
 
                             <a href="{{ route('newsletters.edit', [$newsletter->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
