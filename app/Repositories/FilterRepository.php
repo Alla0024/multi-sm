@@ -42,29 +42,27 @@ class FilterRepository extends BaseRepository
         $filter = $this->model
             ->with([
                 'descriptions.language:id,code',
-                'seoPath:type_id,path',
+                'optionValueGroups'
             ])
-            ->find($id, $columns);
+            ->where('filter_group_id', $id)
+            ->first($columns);
 
-        if (!$filter ) {
+        if (!$filter) {
             return null;
         }
 
-        $descriptions = $filter ->descriptions
+        $descriptions = $filter->descriptions
             ->mapWithKeys(fn($desc) => [
-                (string)($desc->language_id ?? $desc->language->code) => [
-                    'name' => $desc->name,
-                    'description' => $desc->description,
-                    'tag' => $desc->tag,
-                ]
+                (string)($desc->language->code ?? $desc->language_id) => [
+                    'name'       => $desc->name,
+                    'meta_title' => $desc->meta_title,
+                ],
             ])
             ->toArray();
 
-        return $filter
-            ->setRelation('descriptions', $descriptions)
-            ->setAttribute('path', $filter ->seoPath->path ?? '')
-            ->makeHidden('seoPath');
+        return $filter->setRelation('descriptions', $descriptions);
     }
+
     public function filterRows($request)
     {
         $perPage = $request->integer('perPage', 10);

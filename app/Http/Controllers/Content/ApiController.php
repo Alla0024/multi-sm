@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Content;
 
 use App\Http\Controllers\AppBaseController;
+use App\Models\Filter;
+use App\Models\Language;
+use App\Models\OptionValueGroup;
 use App\Repositories\ArticleAuthorRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\LocationRepository;
@@ -120,6 +123,27 @@ class ApiController extends AppBaseController
             $data = $this->locationRepository->getDropdownItems($this->defaultLanguageId, $request->all());
 
             return response()->json(['items' => $data ?? []], 200);
+        } else {
+            return abort(404);
+        }
+    }
+    public function getOptionToFilter(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $filters = $request->has('group_id')
+                ? Filter::with(['description'])
+                    ->where('filter_group_id', 1)
+                    ->get()
+                : null;
+
+            if (isset($_GET['option_id'])) {
+                $option_id = $_GET['option_id'];
+                $option_values = OptionValueGroup::where('option_id', $option_id)->with('description')->get();
+                return response()->json(['option_values' => $option_values, 'filters' => $filters, 'words' => $this->vars['word'], 'languages' => $languages]);
+            }
+
+            return response()->json(['filters' => $filters ]);
         } else {
             return abort(404);
         }

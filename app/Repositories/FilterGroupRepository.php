@@ -39,6 +39,7 @@ class FilterGroupRepository extends BaseRepository
         $filterGroup = $this->model
             ->with([
                 'descriptions.language:id,code',
+                'option'
             ])
             ->find($id, $columns);
 

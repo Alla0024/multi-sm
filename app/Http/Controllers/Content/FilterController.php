@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateFilterRequest;
 use App\Http\Requests\UpdateFilterRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Filter;
+use App\Models\FilterDescription;
 use App\Models\FilterGroup;
 use App\Models\FilterGroupDescription;
 use App\Repositories\FilterGroupRepository;
@@ -106,22 +108,25 @@ class FilterController extends AppBaseController
      */
     public function edit($id)
     {
-        $filter = $this->filterGroupRepository->findFull($id);
+        $filter = $this->filterRepository->findFull($id);
+        $filterGroup = $this->filterGroupRepository->findFull($id);
 
-        if (empty($filter)) {
+        if (empty($filter) || empty($filterGroup)) {
             Flash::error(__('common.flash_not_found'));
 
             return redirect(route('filters.index'));
         }
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Filter::class,
+            FilterDescription::class,
             FilterGroup::class,
             FilterGroupDescription::class
         ]);
 
         $this->template = 'pages.filters.edit';
 
-        return $this->renderOutput(compact('filter', 'fields'));
+        return $this->renderOutput(compact('filter', 'filterGroup', 'fields'));
     }
 
     /**

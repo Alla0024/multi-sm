@@ -33,6 +33,10 @@ class Option extends Model
         'updated_at' => 'nullable'
     ];
 
+    public function description()
+    {
+        return $this->hasOne(OptionDescription::class)->where('language_id', config('settings.locale.default_language_id'));
+    }
     public function filterGroups(): HasMany
     {
         return $this->hasMany(FilterGroup::class, 'option_id');
