@@ -19,14 +19,12 @@ class OptionValueController extends AppBaseController
      * @var OptionValueRepository $optionValueRepository
      */
     private OptionValueRepository $optionValueRepository;
-    private int $defaultLanguageId;
 
     public function __construct(OptionValueRepository $optionValueRepo)
     {
         parent::__construct();
 
         $this->optionValueRepository = $optionValueRepo;
-        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -34,18 +32,9 @@ class OptionValueController extends AppBaseController
      */
     public function index(Request $request, $id = null)
     {
-        $sortFields = [
-            'default',
-            'name_asc',
-            'name_desc',
-            'created_at_asc',
-            'created_at_desc',
-        ];
-
-        $languageId = $request->get('language_id') ?? $this->defaultLanguageId;
         $optionValues = $this->optionValueRepository->filterRows($request, $id);
 
-        $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id, $languageId);
+        $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionValue::class
@@ -63,7 +52,6 @@ class OptionValueController extends AppBaseController
             'breadcrumbs' => $breadcrumbs,
             'parentId' => $id,
             'fields' => $fields,
-            'sortFields' => $sortFields,
         ]);
     }
 

@@ -31,7 +31,7 @@ class FilterGroup extends Model
 
     public function option(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(\App\Models\Option::class, 'option_id');
+        return $this->belongsTo(\App\Models\Option::class)->with('description');
     }
 
     public function descriptions()

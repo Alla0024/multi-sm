@@ -54,9 +54,9 @@ class Filter extends Model
         return $this->hasOne(\App\Models\FilterToCategory::class);
     }
 
-    public function optionValueGroups(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function optionValueGroups()
     {
-        return $this->belongsToMany(\App\Models\OptionValueGroup::class, 'filter_to_option_value_groups');
+        return $this->hasMany('App\Models\FilterToOptionValueGroup');
     }
     public function seoPath()
     {

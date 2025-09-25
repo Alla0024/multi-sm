@@ -18,26 +18,20 @@ class OptionController extends AppBaseController
 {
     /**
      * @var OptionRepository $optionRepository
-     * @var LanguageRepository $languageRepository
      * @var CategoryRepository $categoryRepository
      */
     private OptionRepository $optionRepository;
     private CategoryRepository $categoryRepository;
-    private LanguageRepository $languageRepository;
-    private int $defaultLanguageId;
 
     public function __construct(
         OptionRepository   $optionRepo,
-        LanguageRepository $languageRepo,
         CategoryRepository $categoryRepo,
     )
     {
         parent::__construct();
 
         $this->optionRepository = $optionRepo;
-        $this->languageRepository = $languageRepo;
         $this->categoryRepository = $categoryRepo;
-        $this->defaultLanguageId = config('settings.locale.default_language_id');
     }
 
     /**
@@ -45,14 +39,6 @@ class OptionController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $sortFields = [
-            'default',
-            'name_asc',
-            'name_desc',
-            'created_at_asc',
-            'created_at_desc',
-        ];
-
         $options = $this->optionRepository->filterRows($request);
         $categories = $this->categoryRepository->getDropdownItems($request->all());
 
@@ -70,7 +56,6 @@ class OptionController extends AppBaseController
         return $this->renderOutput([
             'options' => $options,
             'categories' => $categories,
-            'sortFields' => $sortFields,
             'fields' => $fields,
         ]);
     }
