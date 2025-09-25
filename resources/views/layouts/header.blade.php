@@ -62,10 +62,25 @@
                     {{ Auth::user()->name }}
                 </div>
                 <div class="description">
-                    Frontend developer
+                    @switch(Auth::user()->id)
+                        @case(3)
+                            Старша контент-менеджерка
+                            @break
+                        @case(42)
+                            Дизайнерка
+                            @break
+                        @case(44)
+                            Backend developer
+                            @break
+                        @default
+                            Frontend developer
+                        @break
+                    @endswitch
+
                 </div>
             </div>
         </div>
+
             <div class="logout" title="Logout" @click="$store.page.logout">
                 <i class="bi bi-arrow-bar-right fs-80" style="display: flex; height: 26px"></i>
             </div>
