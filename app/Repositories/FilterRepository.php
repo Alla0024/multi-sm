@@ -45,7 +45,7 @@ class FilterRepository extends BaseRepository
                 'optionValueGroups'
             ])
             ->where('filter_group_id', $id)
-            ->first($columns);
+            ->get($columns);
 
         if (!$filter) {
             return null;
