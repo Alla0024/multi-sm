@@ -39,28 +39,30 @@ class FilterRepository extends BaseRepository
 
     public function findFull($id, $columns = ['*'])
     {
-        $filter = $this->model
+        $filters = $this->model
             ->with([
                 'descriptions.language:id,code',
-                'optionValueGroups'
+                'optionValueGroups',
             ])
             ->where('filter_group_id', $id)
             ->get($columns);
 
-        if (!$filter) {
-            return null;
+        if ($filters->isEmpty()) {
+            return collect();
         }
 
-        $descriptions = $filter->descriptions
-            ->mapWithKeys(fn($desc) => [
-                (string)($desc->language->code ?? $desc->language_id) => [
-                    'name'       => $desc->name,
-                    'meta_title' => $desc->meta_title,
-                ],
-            ])
-            ->toArray();
+        return $filters->map(function ($filter) {
+            $descriptions = $filter->descriptions
+                ->mapWithKeys(fn($desc) => [
+                    (string)($desc->language->code ?? $desc->language_id) => [
+                        'name'       => $desc->name,
+                        'meta_title' => $desc->meta_title,
+                    ],
+                ])
+                ->toArray();
 
-        return $filter->setRelation('descriptions', $descriptions);
+            return $filter->setRelation('descriptions', $descriptions);
+        });
     }
 
     public function filterRows($request)
