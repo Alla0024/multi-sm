@@ -1,3 +1,5 @@
+@dump($filter)
+@dump($filterGroup)
 
 <!-- Title name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
