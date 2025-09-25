@@ -49,7 +49,7 @@ class FilterGroupRepository extends BaseRepository
 
         $descriptions = $filterGroup->descriptions
             ->mapWithKeys(fn($desc) => [
-                (string)($desc->language_id ?? $desc->language->code) => [
+                (string)($desc->language_id ?? $desc->language->id) => [
                     'name' => $desc->name,
                     'comment' => $desc->comment,
                     'meta_title' => $desc->meta_title,
