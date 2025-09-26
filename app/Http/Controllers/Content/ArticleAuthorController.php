@@ -17,7 +17,6 @@ class ArticleAuthorController extends AppBaseController
 {
     /**
      * @var ArticleAuthorRepository $articleAuthorRepository
-     * @var int $defaultLanguageId
      */
     private ArticleAuthorRepository $articleAuthorRepository;
 
