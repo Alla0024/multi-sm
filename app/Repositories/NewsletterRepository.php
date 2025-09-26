@@ -85,10 +85,8 @@ class NewsletterRepository extends BaseRepository
         $newsletterSave = $input;
 
         if (!empty($input['image'])) {
-            PictureHelper::rewrite(
+            PictureHelper::noRewrite(
                 $input['image'],
-                config('settings.images.newsletter.width'),
-                config('settings.images.newsletter.height')
             );
 
             if (str_contains($input['image'], 'storage/images')) {
