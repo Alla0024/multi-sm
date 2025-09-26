@@ -79,4 +79,8 @@ class Option extends Model
     {
         return $this->hasMany(OptionDescription::class, 'option_id');
     }
+    public function optionValueGroups()
+    {
+        return $this->hasMany('App\Models\OptionValueGroup')->with('description');
+    }
 }
