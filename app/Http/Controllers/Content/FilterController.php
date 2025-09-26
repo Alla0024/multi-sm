@@ -108,8 +108,8 @@ class FilterController extends AppBaseController
      */
     public function edit($id)
     {
-        $filter = $this->filterRepository->findFull($id);
-        $filterGroup = $this->filterGroupRepository->findFull($id);
+        $filterGroup = $this->filterRepository->findFull($id);
+        $filter = $this->filterGroupRepository->findFull($id);
 
         if (empty($filter) || empty($filterGroup)) {
             Flash::error(__('common.flash_not_found'));

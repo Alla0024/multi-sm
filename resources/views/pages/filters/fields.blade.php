@@ -1,5 +1,6 @@
-@dump($filter)
-@dump($filterGroup)
+@dump($filter->toArray())
+@dump($filterGroup->toArray())
+
 
 <!-- Title name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">

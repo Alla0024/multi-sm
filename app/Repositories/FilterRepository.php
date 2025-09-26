@@ -54,7 +54,7 @@ class FilterRepository extends BaseRepository
         return $filters->map(function ($filter) {
             $descriptions = $filter->descriptions
                 ->mapWithKeys(fn($desc) => [
-                    (string)($desc->language->code ?? $desc->language_id) => [
+                    (string)($desc->language_id ?? $desc->language->id) => [
                         'name'       => $desc->name,
                         'meta_title' => $desc->meta_title,
                     ],
