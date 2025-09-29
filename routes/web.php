@@ -50,6 +50,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('attributeWords', 'App\Http\Controllers\Content\AttributeWordController');
         Route::resource('attributes', 'App\Http\Controllers\Content\AttributeController');
         Route::resource('fillings', 'App\Http\Controllers\Content\FillingController');
+        Route::resource('clients', 'App\Http\Controllers\Content\ClientController');
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
         Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
