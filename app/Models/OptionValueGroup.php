@@ -66,4 +66,9 @@ class OptionValueGroup extends Model
     public function descriptions(): HasMany {
         return $this->hasMany(OptionValueGroupDescription::class, 'option_value_group_id');
     }
+
+    public function description()
+    {
+        return $this->hasOne(OptionValueGroupDescription::class)->where('language_id', config('settings.locale.default_language_id'));
+    }
 }

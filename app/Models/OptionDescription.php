@@ -37,4 +37,9 @@ class OptionDescription extends Model
     {
         return $this->belongsTo(Option::class, 'option_id');
     }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id');
+    }
 }

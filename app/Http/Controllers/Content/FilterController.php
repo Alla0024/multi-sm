@@ -12,6 +12,7 @@ use App\Models\FilterGroupDescription;
 use App\Repositories\FilterGroupRepository;
 use App\Repositories\FilterRepository;
 use App\Helpers\ModelSchemaHelper;
+use App\Repositories\OptionRepository;
 use Illuminate\Http\Request;
 use Flash;
 
@@ -23,15 +24,20 @@ class FilterController extends AppBaseController
     /** @var FilterGroupRepository $filterGroupRepository*/
     private $filterGroupRepository;
 
+    /** @var OptionRepository $optionRepository*/
+    private $optionRepository;
+
     public function __construct(
         FilterRepository $filterRepo,
-        FilterGroupRepository $filterGroupRepo
+        FilterGroupRepository $filterGroupRepo,
+        OptionRepository $optionRepo
     )
     {
         parent::__construct();
 
         $this->filterRepository = $filterRepo;
         $this->filterGroupRepository = $filterGroupRepo;
+        $this->optionRepository = $optionRepo;
     }
 
     /**
@@ -108,8 +114,10 @@ class FilterController extends AppBaseController
      */
     public function edit($id)
     {
+
         $filterGroup = $this->filterRepository->findFull($id);
-        $filter = $this->filterGroupRepository->findFull($id);
+        $filter= $this->filterGroupRepository->findFull($id);
+        $options = $this->optionRepository->getOptions();
 
         if (empty($filter) || empty($filterGroup)) {
             Flash::error(__('common.flash_not_found'));
@@ -126,7 +134,7 @@ class FilterController extends AppBaseController
 
         $this->template = 'pages.filters.edit';
 
-        return $this->renderOutput(compact('filter', 'filterGroup', 'fields'));
+        return $this->renderOutput(compact('filter', 'filterGroup', 'options', 'fields'));
     }
 
     /**

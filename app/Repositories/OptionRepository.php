@@ -77,6 +77,20 @@ class OptionRepository extends BaseRepository
         return $option;
     }
 
+    public function getOptions()
+    {
+        $languageId = config('settings.locale.default_language_id');
+
+        return $this->model
+            ->with([
+                'description' => fn($q) => $q
+                    ->where('language_id', $languageId)
+                    ->with('language:id,code'),
+                'optionValueGroups',
+            ])
+            ->get();
+    }
+
     public function filterRows(Request $request)
     {
         $perPage = $request->get('perPage', 15);

@@ -1,5 +1,8 @@
-@dump($filter->toArray())
-@dump($filterGroup->toArray())
+@dump($filter)
+@dump($filterGroup)
+@dump($options[0])
+
+@dump($options[0]['optionValueGroups'][0])
 
 
 <!-- Title name Fields -->
