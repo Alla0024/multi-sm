@@ -1,19 +1,25 @@
 <!-- Activation Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    <div class="form-check">
-        {!! Form::hidden('activation', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('activation', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('activation', $word['title_activation'], ['class' => 'form-check-label']) !!}
+    {!! Form::label('activation', $word['title_activation']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('activation', ['1' => $word['status_activation'] , '0' => $word['status_inactivation']], null, ['class' => 'form-control', 'required', 'disabled']) !!}
+        </div>
     </div>
 </div>
 
 
 <!-- Photo Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
+<div class="form-group col-sm-6 tab-pane image-block" data-for-tab="main" x-data="{open_butt: false}">
     {!! Form::label('photo', $word['title_photo']) !!}
-    <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::text('photo', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+    <div class="input-group">
+        <div class="custom-file image-upload" @keydown.escape.window="open_butt=false" @click.outside="open_butt=false">
+            <input id="thumbnail" type="hidden" name="photo" value="{{$client['image'] ?? ''}}">
+            <img class="" src="{{isset($client['photo']) && $client['photo'] != '' ? "https://i.svit-matrasiv.com.ua/storage/images/".$client['photo'] : '/images/common/no_images.png'}}" id="holder" alt="Прев’ю" style="max-width: 200px;">
+            <div class="butt hide" :class="{'show': open_butt}">
+                <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" data-input="thumbnail" data-preview="holder" data-path="/catalog/category/logo_wtm"><i class="bi bi-arrow-up-square"></i></div>
+                <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
+            </div>
         </div>
     </div>
 </div>
@@ -46,7 +52,7 @@
     {!! Form::label('birthday', $word['title_birthday']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::date('birthday', null, ['class' => 'form-control','id'=>'birthday']) !!}
+            {!! Form::datetimelocal('birthday', null, ['class' => 'form-control','id'=>'birthday', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -63,7 +69,7 @@
     {!! Form::label('email', $word['title_email']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::email('email', '', ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::email('email', '', ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -74,7 +80,7 @@
     {!! Form::label('phone', $word['title_phone']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('phone', null, ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('phone', null, ['class' => 'form-control', 'required', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -85,7 +91,7 @@
     {!! Form::label('password', $word['title_password']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::password('password', ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::password('password', ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -96,7 +102,7 @@
     {!! Form::label('user_agent', $word['title_user_agent']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::textarea('user_agent', null, ['class' => '', 'required', 'maxlength' => 65535, 'maxlength' => 65535]) !!}
+            {!! Form::textarea('user_agent', null, ['class' => '', 'required', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -107,7 +113,7 @@
     {!! Form::label('location_id', $word['title_location_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::number('location_id', null, ['class' => 'form-control']) !!}
+            {!! Form::number('location_id', null, ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -118,7 +124,7 @@
     {!! Form::label('address', $word['title_address']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('address', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('address', null, ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -129,7 +135,7 @@
     {!! Form::label('remember_token', $word['title_remember_token']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('remember_token', null, ['class' => 'form-control', 'maxlength' => 100, 'maxlength' => 100]) !!}
+            {!! Form::text('remember_token', null, ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -140,7 +146,7 @@
     {!! Form::label('temporary_code', $word['title_temporary_code']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::textarea('temporary_code', null, ['class' => '', 'maxlength' => 65535, 'maxlength' => 65535]) !!}
+            {!! Form::textarea('temporary_code', null, ['class' => '', 'disabled', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -151,7 +157,7 @@
     {!! Form::label('hash', $word['title_hash']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('hash', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('hash', null, ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -162,7 +168,7 @@
     {!! Form::label('viber_id', $word['title_viber_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('viber_id', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('viber_id', null, ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -173,7 +179,7 @@
     {!! Form::label('app_token', $word['title_app_token']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('app_token', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('app_token', null, ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -184,7 +190,7 @@
     {!! Form::label('verification_phone_code', $word['title_verification_phone_code']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('verification_phone_code', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('verification_phone_code', null, ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -195,7 +201,7 @@
     {!! Form::label('verification_email_code', $word['title_verification_email_code']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::text('verification_email_code', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
+            {!! Form::text('verification_email_code', null, ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
 </div>
@@ -203,30 +209,33 @@
 
 <!-- Verified Phone Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    <div class="form-check">
-        {!! Form::hidden('verified_phone', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('verified_phone', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('verified_phone', $word['title_verified_phone'], ['class' => 'form-check-label']) !!}
+    {!! Form::label('verified_phone', $word['title_verified_phone']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('verified_phone', ['1' => $word['status_confirm'] , '0' => $word['status_not_confirm']], null, ['class' => 'form-control', 'required', 'disabled']) !!}
+        </div>
     </div>
 </div>
 
 
 <!-- Verified Email Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    <div class="form-check">
-        {!! Form::hidden('verified_email', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('verified_email', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('verified_email', $word['title_verified_email'], ['class' => 'form-check-label']) !!}
+    {!! Form::label('verified_email', $word['title_verified_email']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('verified_email', ['1' => $word['status_confirm'] , '0' => $word['status_not_confirm']], null, ['class' => 'form-control', 'required', 'disabled']) !!}
+        </div>
     </div>
 </div>
 
 
 <!-- Up To 1C Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    <div class="form-check">
-        {!! Form::hidden('up_to_1c', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('up_to_1c', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('up_to_1c', $word['title_up_to_1c'], ['class' => 'form-check-label']) !!}
+    {!! Form::label('up_to_1c', $word['title_up_to_1c']) !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('up_to_1c', ['1' => $word['status_activation'] , '0' => $word['status_inactivation']], null, ['class' => 'form-control', 'required', 'disabled']) !!}
+        </div>
     </div>
 </div>
 
@@ -236,10 +245,11 @@
     {!! Form::label('updated_at_1c', $word['title_updated_at_1c']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::date('updated_at_1c', null, ['class' => 'form-control','id'=>'updated_at_1c']) !!}
+            {!! Form::datetimelocal('updated_at_1c', null, ['class' => 'form-control','id'=>'updated_at_1c', 'disabled']) !!}
         </div>
     </div>
 </div>
+
 
 @push('page_scripts')
     <script type="text/javascript">

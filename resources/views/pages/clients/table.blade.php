@@ -37,7 +37,7 @@
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
                          @elseif($index == 'image' && $field['inTable'])
-                            <td><img style="width: 140px;" src="{{isset(${{ $config->modelNames->camel }}[$index]) && $client[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$client[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                            <td><img style="width: 100px;" src="{{isset($client[$index]) && $client[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$client[$index] : '/images/common/no_images.png'}}" alt=""></td>
                          @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $client[$index] }}</td>

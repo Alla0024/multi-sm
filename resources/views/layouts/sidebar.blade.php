@@ -104,6 +104,16 @@
             </div>
         </div>
 
+        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/clients*') ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is($adminPath.'/clients*') ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="name">CRM</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is($adminPath.'/clients*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/clients')}}">Клінети</a>
+            </div>
+        </div>
+
     </div>
 </div>
 @endisset

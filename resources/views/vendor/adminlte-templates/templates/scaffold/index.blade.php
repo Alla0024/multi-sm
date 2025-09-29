@@ -30,7 +30,7 @@
                     <div class="btn btn-primary btn-copy float-right" data-action="copy_{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}" data-name="{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}_id" @click="$store.page.copyItem($event.target)">
                         @{!! $word['copy'] !!}
                     </div>
-                    @{!! Form::open(['route' => ['{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}', ''], 'method' => 'delete', '@submit.prevent = $store.page.deletedItems($event.target)']) !!}
+                    @{!! Form::open(['route' => ['{{ $config->prefixes->getRoutePrefixWith('.') }}{{ $config->modelNames->camelPlural }}.destroy', ''], 'method' => 'delete', '@submit.prevent = $store.page.deletedItems($event.target)']) !!}
                     <button type="submit" class="btn btn-primary btn-deleted float-right">
                         @{!! $word['deleted'] !!}
                     </button>

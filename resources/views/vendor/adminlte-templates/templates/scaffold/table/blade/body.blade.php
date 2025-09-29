@@ -41,7 +41,7 @@
                                 <td><div class="status_enable">@{{ $word['status_0'] }}</div></td>
                             @@endif
                          @@elseif($index == 'image' && $field['inTable'])
-                            <td><img style="width: 140px;" src="@{{isset(${{ $config->modelNames->camel }}[$index]) && ${{ $config->modelNames->camel }}[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.${{ $config->modelNames->camel }}[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                            <td><img style="width: 140px;" src="@{{isset(${!! $config->modelNames->camel !!}[$index]) && ${!! $config->modelNames->camel !!}[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.${!! $config->modelNames->camel !!}[$index] : '/images/common/no_images.png'}}" alt=""></td>
                          @@else
                              @@if($index != 'id' && $field['inTable'])
                                 <td>@{{ ${!! $config->modelNames->camel !!}[$index] }}</td>
