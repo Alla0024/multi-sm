@@ -58,8 +58,7 @@ class FilterRepository extends BaseRepository
                         'name'       => $desc->name,
                         'meta_title' => $desc->meta_title,
                     ],
-                ])
-                ->toArray();
+                ]);
 
             return $filter->setRelation('descriptions', $descriptions);
         });

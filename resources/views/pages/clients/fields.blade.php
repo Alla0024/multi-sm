@@ -1,4 +1,3 @@
-
 <!-- Photo Field -->
 <div class="form-group col-sm-6 tab-pane image-block" data-for-tab="main" x-data="{open_butt: false}">
     {!! Form::label('photo', $word['title_photo']) !!}
@@ -14,7 +13,6 @@
     </div>
 </div>
 
-
 <!-- Surname Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('surname', $word['title_surname']) !!}
@@ -25,7 +23,6 @@
     </div>
 </div>
 
-
 <!-- Name Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('name', $word['title_name']) !!}
@@ -35,7 +32,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Birthday Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
@@ -53,7 +49,6 @@
     </script>
 @endpush
 
-
 <!-- Email Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('email', $word['title_email']) !!}
@@ -63,7 +58,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Phone Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">

@@ -91,7 +91,7 @@
         </div>
     </div>
 </div>
-
+@dump($news)
 <!-- Category Id Field -->
 @include('components.inputs.input_search', ['name' => 'category_id', 'value' => $news ?? [], 'url' => 'getCategories'])
 

@@ -110,7 +110,7 @@
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
-                <a class="item {{ Request::is($adminPath.'/clients*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/clients')}}">Клінети</a>
+                <a class="item {{ Request::is($adminPath.'/clients*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/clients')}}">Клієнти</a>
             </div>
         </div>
 

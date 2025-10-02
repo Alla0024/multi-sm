@@ -22,6 +22,7 @@ return [
     'title_comment' => 'Коментар',
     'title_meta_tags' => 'Назва для Meta-tags',
     'title_type' => 'Тип',
+    'title_option' => 'Назва опції',
     'title_meta_title' => 'Мета-заголовок',
     'title_parent' => 'Батьківський елемент',
     'search_parent' => 'Пошук за батьківським елементом',

@@ -109,7 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Choices Multi-select ///////////////////////////////////////////////////////////////////////////
+    let arrChoices= []
     Alpine.store('page').multiSelect = function (){
+        arrChoices = []
         document.querySelectorAll('.tag-select').forEach(select => {
             const choices = new Choices(select, {
                 removeItemButton: true,
@@ -118,11 +120,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 duplicateItemsAllowed: false,
                 shouldSort: false,
                 searchEnabled: !select.dataset.noSearch,
+
             });
 
             let searchTimeout;
             const url = select.dataset.url;
             if (!url) {
+                arrChoices.push(choices)
                 return;
             }
 
@@ -161,8 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             searchInput.addEventListener('input', handler);
             searchInput.addEventListener('click', handler);
+            arrChoices.push(choices)
         });
-    },
+    }
+    Alpine.store('page').multiSelectDestroy = function (){
+        console.log(arrChoices)
+        arrChoices.forEach(item => item.destroy())
+    }
     Alpine.store('page').multiSelect()
 
 

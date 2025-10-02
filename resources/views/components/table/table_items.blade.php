@@ -1,4 +1,4 @@
-<div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products" x-init="view()" data-for-tab="{{$tab}}">
+<div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products"  data-for-tab="{{$tab}}">
 
     <div class="table-items">
         <div class="table-item item-head">
@@ -42,6 +42,41 @@
                                     </div>
                                 </template>
 
+                                <template x-if="itemInput.type == 'switch'">
+                                    <div class="input-block input-toggle flex">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input checkbox-child" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" data-content="" :checked="+itemData[keyInput]" x-model="+itemData[keyInput]" @click = "itemData[keyInput] = !itemData[keyInput]"  type="checkbox"  :id="'{{$name}}[' + keyData + '][' + keyInput + ']'">
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template x-if="itemInput.type == 'search_select_static_filter'">
+                                    <div class="input-group input-list-search" style="position: relative;">
+                                        <input type="hidden" :name="'{{$name}}[' + keyData + '][parent_id]'" x-model="itemData['parent_id']" :value="itemData['parent_id']">
+                                        <input
+                                                class="ignore_form"
+                                                :name="'{{$name}}[' + keyData + '][parent_id]'"
+                                                placeholder="Пошук..."
+                                                autocomplete="off"
+                                                :value="itemData[keyInput]"
+                                                x-model="itemData[keyInput]"
+                                                data-url=""
+                                                @input="$store.page.searchSelect($event.target)"
+                                                @focus="$store.page.searchSelect($event.target)"
+                                                custom="true"
+                                        >
+                                        <ul class="custom-list hide">
+                                            <template x-for="listItem in data">
+                                                <li :id="listItem.id" x-text="listItem.descriptions[5].name"></li>
+                                            </template>
+                                        </ul>
+                                        <div class="svg">
+                                            <img src="/images/common/arrow_select.png" alt="">
+                                        </div>
+
+                                    </div>
+                                </template>
+
                                 <template x-if="itemInput.type == 'search_select'">
                                     <div class="input-group input-list-search" style="position: relative;">
                                         <input type="hidden" :name="'{{$name}}[' + keyData + '][id]'" x-model="itemData['id']" :value="itemData['id']">
@@ -66,7 +101,30 @@
                                     </div>
                                 </template>
 
+                                <template x-if="itemInput.type == 'multi_select_static_filter'">
+                                    <div class="input-group input-tags">
 
+                                        <template x-if="itemData.option_value_groups && itemData.option_value_groups.length > 0">
+                                            <select class="tag-select" :name="'{{$name}}[' + keyData + '][option_value_group_id][]'" data-no-search="true" multiple data-url="">
+                                                <template x-for="itemMulti in itemData.option_value_groups">
+                                                    <option :value="itemMulti.option_value_group_id" selected x-text="dataMultiSelect.find(obj => obj.id == itemMulti.option_value_group_id).description.name"></option>
+                                                </template>
+                                                <template x-for="itemMulti in dataMultiSelect">
+                                                    <option :value="itemMulti.id" x-text="itemMulti.description.name"></option>
+                                                </template>
+                                            </select>
+                                        </template>
+
+                                        <template x-if="!itemData.option_value_groups || itemData.option_value_groups.length == 0">
+                                            <select class="tag-select" :name="'{{$name}}[' + keyData + '][option_value_group_id][]'" data-no-search="true" multiple data-url="">
+                                                <template x-for="itemMulti in dataMultiSelect">
+                                                    <option :value="itemMulti.id" @click="itemData.option_value_groups.push({'filter_id': '', 'option_value_group_id': itemMulti.id})" x-text="itemMulti.description.name"></option>
+                                                </template>
+                                            </select>
+                                        </template>
+
+                                    </div>
+                                </template>
 
                             </div>
                         </template>
@@ -96,7 +154,7 @@
                     </div>
                 </template>
                 <div class="item rm-item" style="width: 70px;">
-                    <div class="icon" @click="deletedItem(keyData)">
+                    <div class="icon" @click="deletedItem(keyData)" :id="keyData">
                         <i class="bi bi-x-lg fs-20"></i>
                     </div>
                 </div>
@@ -115,16 +173,30 @@
 </div>
 
 <script id="payload" type="application/json">@json($data, JSON_UNESCAPED_UNICODE)</script>
+<script id="payloadMultiSelect" type="application/json">@json($dataMultiSelect ?? '', JSON_UNESCAPED_UNICODE)</script>
 <script>
     document.addEventListener('alpine:init', () => {
         console.log(JSON.parse(document.getElementById('payload').textContent))
+        console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
+
         Alpine.data('table_products', () => ({
             inputType: JSON.parse('@json($inputType ?? [])'),
             data: JSON.parse(document.getElementById('payload').textContent),
+            dataMultiSelect: JSON.parse(document.getElementById('payloadMultiSelect').textContent),
             language: JSON.parse('@json($languages ?? [])'),
 
-            deletedItem(key){
+             deletedItem(key){
+                Alpine.store('page').multiSelectDestroy();
                 this.data.splice(key, 1);
+                setTimeout(() => {Alpine.store('page').multiSelect()}, 100)
+
+                // const newData = [];
+                // this.data.forEach((item, keyItem) => {
+                //     if(keyItem != key){
+                //         newData.push(item)
+                //     }
+                // })
+                // this.data = newData
             },
             addItem(){
                 let newItem = {};
@@ -143,7 +215,11 @@
                         newItem[input] = ''
                     }
                 }
+                console.log(newItem)
                 this.data.push(newItem)
+                console.log(this.data)
+                Alpine.store('page').multiSelectDestroy();
+                setTimeout(() => {Alpine.store('page').multiSelect()}, 100)
             },
             setItem(e, key, id, text){
                 this.data[key].id = id;
