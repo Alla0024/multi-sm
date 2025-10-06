@@ -39,6 +39,31 @@ class FilterRepository extends BaseRepository
         return $this->model->with($relations);
     }
 
+    public function getFiltersByCategoryId($categoryId)
+    {
+        $filters = $this->model
+            ->with([
+                'descriptions' => function ($query) {
+                    $query->where('language_id', 5);
+                },
+                'filterGroup.descriptions' => function ($query) {
+                    $query->where('language_id', 5);
+                }
+            ])
+            ->whereHas('categories', fn($q) => $q->where('categories.id', $categoryId))
+            ->get()
+            ->map(function ($filter) {
+                return [
+                    'id' => $filter->id,
+                    'name' => $filter->descriptions->first()?->name,
+                    'group_name' => $filter->filterGroup->descriptions->first()?->name,
+                    'filter_group_id' => $filter->filter_group_id,
+                ];
+            });
+
+        return $filters->groupBy('group_name')->toArray();
+    }
+
     public function findFull($id, $columns = ['*'])
     {
         $filters = $this->model

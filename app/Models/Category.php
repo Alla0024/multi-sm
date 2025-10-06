@@ -117,4 +117,8 @@ class Category extends Model
     {
         return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'category');
     }
+    public function top_sale()
+    {
+        return $this->hasMany('App\Models\TopSales')->with('description');
+    }
 }

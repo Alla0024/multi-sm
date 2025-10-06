@@ -62,5 +62,13 @@ class Filter extends Model
     {
         return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'filter');
     }
-
+    public function categories()
+    {
+        return $this->belongsToMany(
+            Category::class,
+            'filter_to_categories',
+            'filter_id',
+            'category_id'
+        )->withPivot('filter_group_id');
+    }
 }

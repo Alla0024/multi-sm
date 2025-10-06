@@ -8,6 +8,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\CategoryDescription;
 use App\Repositories\CategoryRepository;
 use App\Helpers\ModelSchemaHelper;
+use App\Repositories\FilterRepository;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Flash;
@@ -16,12 +17,15 @@ class CategoryController extends AppBaseController
 {
     /** @var CategoryRepository $categoryRepository*/
     private $categoryRepository;
+    /** @var FilterRepository $filterRepository*/
+    private $filterRepository;
 
-    public function __construct(CategoryRepository $categoryRepo)
+    public function __construct(CategoryRepository $categoryRepo, FilterRepository $filterRepo)
     {
         parent::__construct();
 
         $this->categoryRepository = $categoryRepo;
+        $this->filterRepository = $filterRepo;
     }
 
     /**
@@ -99,6 +103,10 @@ class CategoryController extends AppBaseController
     public function edit($id)
     {
         $category = $this->categoryRepository->findFull($id);
+        $activeCategories = $this->categoryRepository->getActiveCategories();
+        $categories = $this->categoryRepository->buildTree($id);
+
+        $filters = $this->filterRepository->getFiltersByCategoryId($id);
 
         if (empty($category)) {
             Flash::error(__('common.flash_not_found'));
@@ -108,7 +116,7 @@ class CategoryController extends AppBaseController
 
         $this->template = 'pages.categories.edit';
 
-        return $this->renderOutput(compact('category'));
+        return $this->renderOutput(compact('category', 'categories', 'activeCategories', 'filters'));
     }
 
     /**
