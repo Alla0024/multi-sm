@@ -118,7 +118,7 @@
                                         <template x-if="!itemData.option_value_groups || itemData.option_value_groups.length == 0">
                                             <select class="tag-select" :name="'{{$name}}[' + keyData + '][option_value_group_id][]'" data-no-search="true" multiple data-url="">
                                                 <template x-for="itemMulti in dataMultiSelect">
-                                                    <option :value="itemMulti.id" @click="itemData.option_value_groups.push({'filter_id': '', 'option_value_group_id': itemMulti.id})" x-text="itemMulti.description.name"></option>
+                                                    <option :value="itemMulti.id" @click="itemData.option_value_groups.push({'filter_id': '', 'option_value_group_id': itemMulti.id})" x-text="itemMulti?.description?.name"></option>
                                                 </template>
                                             </select>
                                         </template>
@@ -189,14 +189,6 @@
                 Alpine.store('page').multiSelectDestroy();
                 this.data.splice(key, 1);
                 setTimeout(() => {Alpine.store('page').multiSelect()}, 100)
-
-                // const newData = [];
-                // this.data.forEach((item, keyItem) => {
-                //     if(keyItem != key){
-                //         newData.push(item)
-                //     }
-                // })
-                // this.data = newData
             },
             addItem(){
                 let newItem = {};

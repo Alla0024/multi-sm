@@ -115,8 +115,8 @@ class FilterController extends AppBaseController
     public function edit($id)
     {
 
-        $filterGroup = $this->filterRepository->findFull($id);
-        $filter= $this->filterGroupRepository->findFull($id);
+        $filter = $this->filterRepository->findFull($id);
+        $filterGroup = $this->filterGroupRepository->findFull($id);
         $options = $this->optionRepository->getOptions();
 
         if (empty($filter) || empty($filterGroup)) {

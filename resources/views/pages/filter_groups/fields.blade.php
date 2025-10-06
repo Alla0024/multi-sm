@@ -1,7 +1,7 @@
 
 
-{{--@dump($filter)--}}
-{{--@dump($filterGroup)--}}
+@dump($filter)
+@dump($filterGroup)
 
 {{--@dump($filterGroup[0])--}}
 
@@ -22,7 +22,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                <input type="text" required name="descriptions[{{$language->id}}][name]" value="@if(isset($filterGroup)){{$filterGroup['descriptions'][$language->id]['name']}}@endif">
+                {!! Form::text("descriptions[$language->id][name]", null, ['required' ]) !!}
             </div>
         @endforeach
     </div>
@@ -35,7 +35,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                <textarea name="descriptions[{{$language->id}}][comment]" rows="2" cols="50" required>@if(isset($filterGroup)){{$filterGroup['descriptions'][$language->id]['comment']}}@endif</textarea>
+                {!! Form::textarea("descriptions[$language->id][comment]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
             </div>
         @endforeach
     </div>
@@ -48,7 +48,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                <input type="text" required name="descriptions[{{$language->id}}][meta_title]" value="@if(isset($filterGroup)){{$filterGroup['descriptions'][$language->id]['meta_title']}}@endif">
+                {!! Form::text("descriptions[$language->id][meta_title]", null, ['required']) !!}
             </div>
         @endforeach
     </div>
@@ -59,10 +59,7 @@
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            <select class="form-control" name="type" required id="type">
-                <option value="radio" @if(isset($filterGroup) && $filterGroup['type'] == 'radio') selected @endif>{{$word['input_radio']}}</option>
-                <option value="checkbox" @if(isset($filterGroup) && $filterGroup['type'] == 'checkbox') selected @endif>{{$word['input_checkbox']}}</option>
-            </select>
+            {!! Form::select('type', ['radio' => $word['input_radio'] , 'checkbox' => $word['input_checkbox']], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -72,7 +69,7 @@
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            <input class="form-control" type="text" required name="path" value="@if(isset($filterGroup)){{$filterGroup['path']}}@endif">
+            {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -82,7 +79,7 @@
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
         <div class="input-group">
-            <input class="form-control" type="number" required name="sort_order" value="@if(isset($filterGroup)){{$filterGroup['sort_order']}}@endif">
+            {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
@@ -102,18 +99,16 @@
                     name="option_id"
                     placeholder="Пошук..."
                     autocomplete="off"
-                    value="@if(isset($options)) {{ $options->firstWhere('description.option_id', $filterGroup['option_id'])['description']['name'] ?? ''}} @endif"
+                    value="{{$options->firstWhere('description.option_id', $filterGroup['option_id'])['description']['name'] ?? ''}}"
                     data-url=""
                     @input="$store.page.searchSelect($event.target)"
                     @focus="$store.page.searchSelect($event.target)"
                     custom="true"
             >
             <ul class="custom-list hide">
-                @if(isset($options))
-                    @foreach($options as $item)
-                        <li id="{{$item['description']['option_id']}}">{{$item['description']['name']}}</li>
-                    @endforeach
-                @endif
+                @foreach($options as $item)
+                    <li id="{{$item['description']['option_id']}}">{{$item['description']['name']}}</li>
+                @endforeach
             </ul>
             <div class="svg">
                 <img src="/images/common/arrow_select.png" alt="">
@@ -137,4 +132,4 @@ $arrData = [
 ];
 
 @endphp
-@include('components.table.table_items', ['inputType' => $arrData, 'data' => $filter ?? [], 'dataMultiSelect' => isset($options) ? $options->firstWhere('description.option_id', $filterGroup['option_id'])['optionValueGroups'] ?? '' : '', 'name' => 'filter', 'id_name' => 'filter_id', 'tab' => 'main'])
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $filter ?? [], 'dataMultiSelect' => $options->firstWhere('description.option_id', $filterGroup['option_id'])['optionValueGroups'] ?? '', 'name' => 'filter', 'id_name' => 'filter_id', 'tab' => 'main'])

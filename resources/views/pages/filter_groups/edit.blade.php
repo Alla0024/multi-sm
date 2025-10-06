@@ -19,7 +19,7 @@
 
         <div class="card">
 
-            {!! Form::model($filter, ['route' => ['filters.update', $filterGroup->id], 'method' => 'patch']) !!}
+            {!! Form::model($filter, ['route' => ['filterGroups.update', $filterGroup->id], 'method' => 'patch']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
@@ -28,14 +28,14 @@
                     </li>
                 </ul>
                 <div class="row card-items">
-                    @include('pages.filters.fields')
+                    @include('pages.filter_groups.fields')
                 </div>
             </div>
 
             <div class="card-footer">
                 {!! Form::submit($word['save'], ['class' => 'btn btn-primary']) !!}
                 {!! Form::submit($word['update'], ['class' => 'btn btn-primary update-form', '@click.prevent = $store.page.ajax($event.target)']) !!}
-                <a href="{{ route('filters.index') }}" class="btn btn-default"> {{ $word['cancel'] }}</a>
+                <a href="{{ route('filterGroups.index') }}" class="btn btn-default"> {{ $word['cancel'] }}</a>
             </div>
 
             {!! Form::close() !!}
