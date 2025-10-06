@@ -84,7 +84,8 @@ class FilterController extends AppBaseController
     {
         $input = $request->all();
 
-        $filter = $this->filterRepository->save($input);
+        $filterGroup = $this->filterGroupRepository->save($input);
+       $this->filterRepository->save($input);
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -142,15 +143,18 @@ class FilterController extends AppBaseController
      */
     public function update($id, UpdateFilterRequest $request)
     {
-        $filter = $this->filterRepository->find($id);
+        $filterGroup = $this->filterGroupRepository->find($id);
 
-        if (empty($filter)) {
+        $input = $request->all();
+        if (empty($filterGroup)) {
             Flash::error(__('common.flash_not_found'));
 
             return redirect(route('filters.index'));
         }
 
-        $filter = $this->filterRepository->save($request->all(), $id);
+        $filterGroup = $this->filterGroupRepository->save($input, $id);
+
+        $this->filterRepository->save($input, $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 
@@ -164,6 +168,7 @@ class FilterController extends AppBaseController
      */
     public function destroy($ids)
     {
+        $this->filterGroupRepository->multiDelete(explode(',', $ids));
         $this->filterRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));

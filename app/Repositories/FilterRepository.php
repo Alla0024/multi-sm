@@ -5,8 +5,10 @@ namespace App\Repositories;
 use App\Helpers\PictureHelper;
 use App\Models\Filter;
 use App\Models\FilterDescription;
+use App\Models\FilterToOptionValueGroup;
 use App\Models\FirstPathQuery;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\DB;
 
 class FilterRepository extends BaseRepository
 {
@@ -132,70 +134,103 @@ class FilterRepository extends BaseRepository
         return $filters;
     }
 
-
     public function save(array $input, ?int $id = null)
     {
-        $seoPath = $input['path'] ?? null;
-        $descriptions = $input['descriptions'] ?? [];
+        if (empty($input['filter'])) {
+            Filter::where('filter_group_id', $id)->delete();
+            return;
+        }
 
-        unset($input['descriptions'], $input['path'], $input['stores']);
+        $keptFilterIds = [];
 
-        $filterSave = $input;
+        foreach ($input['filter'] as $filterData) {
 
-        if (!empty($input['image'])) {
-            PictureHelper::rewrite(
-                $input['image'],
-                config('settings.images.filter.width'),
-                config('settings.images.filter.height')
-            );
+            $filterValues = [
+                'sort_order' => $filterData['sort_order'] ?? 0,
+                'path' => $filterData['path'] ?? '',
+                'default_viewed' => $filterData['default_viewed'] ?? 0,
+                'parent' => $filterData['parent'] ?? 0,
+                'filter_group_id' => $id,
+                'parent_id' => $filterData['parent_id'] ?? null,
+            ];
 
-            if (str_contains($input['image'], 'storage/images')) {
-                $input['image'] = substr($input['image'], 15);
+            $filter = isset($filterData['filter_id'])
+                ? tap(Filter::where('id', $filterData['filter_id']))->update($filterValues)
+                : Filter::create($filterValues);
+
+            $filterId = $filterData['filter_id'] ?? $filter->id;
+            $keptFilterIds[] = $filterId;
+
+            $optionGroupIds = $filterData['option_value_group_id'] ?? [];
+            FilterToOptionValueGroup::where('filter_id', $filterId)->delete();
+
+            if (!empty($optionGroupIds)) {
+                $optionGroups = array_map(fn($gid) => [
+                    'filter_id' => $filterId,
+                    'option_value_group_id' => $gid
+                ], $optionGroupIds);
+
+                FilterToOptionValueGroup::insert($optionGroups);
             }
 
-            $filterSave['image'] = $input['image'];
+            $descriptions = $filterData['description'] ?? [];
+            FilterDescription::where('filter_id', $filterId)->delete();
+
+            if (!empty($descriptions)) {
+                $descInsert = [];
+                foreach ($descriptions as $langId => $descData) {
+                    $descInsert[] = array_merge(
+                        ['filter_id' => $filterId, 'language_id' => $langId],
+                        $descData
+                    );
+                }
+                FilterDescription::insert($descInsert);
+            }
         }
 
-        $filter = $this->model->updateOrCreate(['id' => $id], $filterSave);
-
-        foreach ($descriptions as $languageId => $descData) {
-            FilterDescription::updateOrInsert(
-                [
-                    'filter_id' => (int)$filter->id,
-                    'language_id' => $languageId
-                ],
-                $descData
-            );
-        }
-
-        $seoPath && FirstPathQuery::updateOrCreate(
-            ['type' => 'filter', 'type_id' => $filter->id],
-            ['path' => $seoPath]
-        );
-
-        return $filter;
+        Filter::where('filter_group_id', $id)
+            ->whereNotIn('id', $keptFilterIds)
+            ->delete();
     }
 
     public function copy($ids): void
     {
-        $filters = Filter::with('descriptions')->whereIn('id', $ids)->get();
+        $filters = Filter::with(['descriptions', 'optionValueGroups'])
+            ->whereIn('filter_group_id', $ids)
+            ->get();
 
         foreach ($filters as $filter) {
             $newFilter = $filter->replicate();
+            $newFilter->path = $filter->path . '_copy';
             $newFilter->save();
 
-            foreach ($filter->descriptions as $description) {
-                $newDescription = $description->replicate();
-                $newDescription->filter_id = $newFilter->id;
-                $newDescription->save();
+            if ($filter->descriptions->isNotEmpty()) {
+                $newDescriptions = $filter->descriptions->map(function ($desc) use ($newFilter) {
+                    $newDesc = $desc->replicate();
+                    $newDesc->filter_id = $newFilter->id;
+                    return $newDesc->toArray();
+                })->toArray();
+
+                FilterDescription::insert($newDescriptions);
+            }
+
+            if ($filter->optionValueGroups->isNotEmpty()) {
+                $newRelations = $filter->optionValueGroups->map(function ($relation) use ($newFilter) {
+                    return [
+                        'filter_id' => $newFilter->id,
+                        'option_value_group_id' => $relation->option_value_group_id,
+                    ];
+                })->toArray();
+
+                FilterToOptionValueGroup::insert($newRelations);
             }
         }
     }
 
     public function multiDelete($ids): void
     {
-        Filter::whereIn('id', $ids)->delete();
         FilterDescription::whereIn('filter_id', $ids)->delete();
-        FirstPathQuery::where('type', 'filter')->whereIn('type_id', $ids)->delete();
+        FilterToOptionValueGroup::whereIn('filter_id', $ids)->delete();
+        Filter::whereIn('id', $ids)->delete();
     }
 }
