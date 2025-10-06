@@ -108,6 +108,11 @@ class CategoryController extends AppBaseController
 
         $filters = $this->filterRepository->getFiltersByCategoryId($id);
 
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            CategoryDescription::class,
+            Category::class,
+        ]);
+
         if (empty($category)) {
             Flash::error(__('common.flash_not_found'));
 
@@ -116,7 +121,7 @@ class CategoryController extends AppBaseController
 
         $this->template = 'pages.categories.edit';
 
-        return $this->renderOutput(compact('category', 'categories', 'activeCategories', 'filters'));
+        return $this->renderOutput(compact('category', 'categories', 'activeCategories', 'filters', 'fields'));
     }
 
     /**
