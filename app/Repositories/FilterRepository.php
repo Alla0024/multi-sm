@@ -53,6 +53,7 @@ class FilterRepository extends BaseRepository
             return collect();
         }
 
+
         return $filters->map(function ($filter) {
             $descriptions = $filter->descriptions
                 ->mapWithKeys(fn($desc) => [
@@ -61,6 +62,8 @@ class FilterRepository extends BaseRepository
                         'meta_title' => $desc->meta_title,
                     ],
                 ]);
+
+            $filter->setRelation('optionValueGroups', $filter->optionValueGroups->keyBy('option_value_group_id'));
 
             return $filter->setRelation('descriptions', $descriptions);
         });

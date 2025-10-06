@@ -115,12 +115,11 @@ class FilterController extends AppBaseController
      */
     public function edit($id)
     {
-
-        $filterGroup = $this->filterRepository->findFull($id);
-        $filter= $this->filterGroupRepository->findFull($id);
+        $filters = $this->filterRepository->findFull($id);
+        $filterGroup = $this->filterGroupRepository->findFull($id);
         $options = $this->optionRepository->getOptions();
 
-        if (empty($filter) || empty($filterGroup)) {
+        if (empty($filters) || empty($filterGroup)) {
             Flash::error(__('common.flash_not_found'));
 
             return redirect(route('filters.index'));
@@ -135,7 +134,7 @@ class FilterController extends AppBaseController
 
         $this->template = 'pages.filters.edit';
 
-        return $this->renderOutput(compact('filter', 'filterGroup', 'options', 'fields'));
+        return $this->renderOutput(compact('filters', 'filterGroup', 'options', 'fields'));
     }
 
     /**
