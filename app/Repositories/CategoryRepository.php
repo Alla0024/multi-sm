@@ -74,6 +74,9 @@ class CategoryRepository extends BaseRepository
         $category = $this->model
             ->with([
                 'descriptions.language:id,code',
+                'top_sale',
+                'attributes',
+                'news',
                 'seoPath:type_id,path',
             ])
             ->find($id, $columns);
@@ -96,6 +99,53 @@ class CategoryRepository extends BaseRepository
             ->setRelation('descriptions', $descriptions)
             ->setAttribute('path', $category->seoPath->path ?? '')
             ->makeHidden('seoPath');
+    }
+
+    public function getActiveCategories()
+    {
+        return $this->model
+            ->with(['descriptions' => function ($query) {
+                $query->where('language_id', config('settings.locale.default_language_id'));
+            }])
+            ->where('status', 1)
+            ->get();
+
+    }
+
+    public function buildTree($id)
+    {
+        $categories = $this->model
+            ->with(['descriptions' => function ($query) {
+                $query->where('language_id', config('settings.locale.default_language_id'));
+            }])
+            ->where('parent_id', '!=', $id)
+            ->where('id', '!=', $id)
+            ->get()
+            ->toArray();
+
+        return $this->createTree($categories);
+    }
+    protected function createTree($array, $sub = null, $tab = '', $parent_name = ''): array
+    {
+        $category = [];
+        if ($sub > 0) {
+            $tab .= "&nbsp;&nbsp;&nbsp;";
+            $arrow = ' -> ';
+        }
+        foreach ($array as $v) {
+            if ($sub === $v['parent_id']) {
+                $category_name = $tab;
+                $category_name .= $parent_name;
+                if (isset($arrow)) {
+                    $category_name .= $arrow;
+                }
+                $category_name .=  $v['name'];
+
+                $category[$v['id']] = $category_name;
+                $category = array_merge($category, $this->createTree($array, $v['id'], $tab, $category_name));
+            }
+        }
+        return $category;
     }
 
     public function filterRows($request)

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\FilterGroup;
+use App\Models\FilterGroupDescription;
 use App\Repositories\BaseRepository;
 
 class FilterGroupRepository extends BaseRepository
@@ -103,5 +104,49 @@ class FilterGroupRepository extends BaseRepository
             $item->name = optional($item->descriptions->first())->name;
             return $item;
         });
+    }
+    public function save(array $input, ?int $id = null)
+    {
+        $descriptions = $input['descriptions'] ?? [];
+
+        unset($input['descriptions'], $input['path'], $input['stores']);
+
+        $filterGroupSave = $input;
+
+        $filterGroup = $this->model->updateOrCreate(['id' => $id], $filterGroupSave);
+
+        foreach ($descriptions as $languageId => $descData) {
+            FilterGroupDescription::updateOrInsert(
+                [
+                    'filter_group_id' => (int)$filterGroup->id,
+                    'language_id' => $languageId
+                ],
+                $descData
+            );
+        }
+
+        return $filterGroup;
+    }
+
+    public function copy($ids): void
+    {
+        $filterGroups = FilterGroup::with('descriptions')->whereIn('id', $ids)->get();
+
+        foreach ($filterGroups as $filterGroup) {
+            $newFilterGroup = $filterGroup->replicate();
+            $newFilterGroup->save();
+
+            foreach ($filterGroup->descriptions as $description) {
+                $newDescription = $description->replicate();
+                $newDescription->filter_group_id = $newFilterGroup->id;
+                $newDescription->save();
+            }
+        }
+    }
+
+    public function multiDelete($ids): void
+    {
+        FilterGroup::whereIn('id', $ids)->delete();
+        FilterGroupDescription::whereIn('filter_group_id', $ids)->delete();
     }
 }

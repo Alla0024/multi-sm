@@ -137,4 +137,4 @@ $arrData = [
 ];
 
 @endphp
-@include('components.table.table_items', ['inputType' => $arrData, 'data' => $filter ?? [], 'dataMultiSelect' => isset($options) ? $options->firstWhere('description.option_id', $filterGroup['option_id'])['optionValueGroups'] ?? '' : '', 'name' => 'filter', 'id_name' => 'filter_id', 'tab' => 'main'])
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $filters ?? [], 'dataMultiSelect' => isset($options) ? $options->firstWhere('description.option_id', $filterGroup['option_id'])['optionValueGroups'] ?? '' : '', 'name' => 'filter', 'id_name' => 'filter_id', 'tab' => 'main'])
