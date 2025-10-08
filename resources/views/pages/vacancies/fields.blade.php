@@ -20,7 +20,6 @@
         @endforeach
     </div>
 </div>
-{{--@dd($vacancy)--}}
 <!-- Description Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}

@@ -73,17 +73,23 @@
                     //line-height: 110%;
                     background: #81A4FF;
                     padding: 6px 8px 2px;
+                    &:hover{
+                        background: #81A4FF;
+                        opacity: 0.8;
+                    }
                 }
                 .btn-copy{
-                    background: $col_blue_light;
+                    background: #6CCCFF;
                     &:hover{
-                        background: $col_blue_light_hover;
+                        background: #6CCCFF;
+                        opacity: 0.8;
                     }
                 }
                 .btn-deleted{
-                    background: $col_red;
+                    background: #FF8FA9;
                     &:hover{
-                        background: $col_red_hover;
+                        background: #FF8FA9;
+                        opacity: 0.8;
                     }
                 }
             }
@@ -181,6 +187,7 @@
         .cast-butt{
             border: 1px solid #81A4FF;
             display: flex;
+            background-color: white;
             justify-content: center;
             border-radius: 8px;
             margin-top: 4px;
@@ -302,15 +309,16 @@
             color: $col_item;
         }
         .status_active, .status_enable{
-            background: #27ff68;
+            background: #83BB8A;
             display: flex;
             width: min-content;
             margin: 0;
             padding: 4px 10px;
+            color: white;
             border-radius: 4px;
         }
         .status_enable{
-            background: #ff5b5b;
+            background: #E97F7F;
         }
         .butt-show{
             //background-color: $col_blue_light;

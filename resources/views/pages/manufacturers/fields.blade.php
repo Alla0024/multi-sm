@@ -1,4 +1,4 @@
-<input type="hidden" name="is_vtm" value="@if(isset($manufacturer) && isset($manufacturer['is_vtm']) ) {{$manufacturer['is_vtm']}} @else 0 @endif">
+
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}
@@ -9,6 +9,16 @@
                 {!! Form::text("descriptions[$language->id][name]", null, ['class' => '', 'rows' => 2, 'required' ]) !!}
             </div>
         @endforeach
+    </div>
+</div>
+
+<!-- Status Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
+    {!! Form::label('is_vtm', 'Vtm') !!}
+    <div class="flex-row input">
+        <div class="input-group">
+            {!! Form::select('is_vtm', ['0' => $word['status_inactive'], '1' => $word['status_active']], null, ['class' => 'form-control', 'required']) !!}
+        </div>
     </div>
 </div>
 

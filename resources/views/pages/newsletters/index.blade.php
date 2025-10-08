@@ -11,7 +11,7 @@
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">
                         @isset($sortFields)
-                            <div style="display: flex; column-gap: 10px; margin-right: 20px">
+                            <div style="display: flex; width: 177px; flex-shrink: 0; flex-direction: column; align-items: start; text-align: start; row-gap: 10px; margin-right: 20px">
                                 <label for="sortBy">{{ $word['sort_by'] }}</label>
                                 <select name="sortBy" id="sortBy" onchange="this.form.submit()">
                                     @foreach($sortFields as $field)
@@ -23,7 +23,7 @@
                                 </select>
                             </div>
                         @endisset
-                        <div style="display: flex; column-gap: 10px; margin-right: 20px">
+                            <div style="display: flex; width: 177px; flex-shrink: 0; flex-direction: column; align-items: start; text-align: start; row-gap: 10px; margin-right: 20px">
                             <label for="perPage">{{ $word['show_by'] }}</label>
                             <select name="perPage" id="perPage" onchange="this.form.submit()">
                                 @foreach([10, 25, 50, 100] as $size)
