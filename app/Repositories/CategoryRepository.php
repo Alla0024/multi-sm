@@ -226,20 +226,6 @@ class CategoryRepository extends BaseRepository
 
         $categorySave = $input;
 
-        if (!empty($input['image'])) {
-            PictureHelper::rewrite(
-                $input['image'],
-                config('settings.images.category.width'),
-                config('settings.images.category.height')
-            );
-
-            if (str_contains($input['image'], 'storage/images')) {
-                $input['image'] = substr($input['image'], 15);
-            }
-
-            $categorySave['image'] = $input['image'];
-        }
-
         $category = $this->model->updateOrCreate(['id' => $id], $categorySave);
 
         foreach ($descriptions as $languageId => $descData) {

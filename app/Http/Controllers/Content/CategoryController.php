@@ -17,6 +17,7 @@ class CategoryController extends AppBaseController
 {
     /** @var CategoryRepository $categoryRepository*/
     private $categoryRepository;
+
     /** @var FilterRepository $filterRepository*/
     private $filterRepository;
 
@@ -108,6 +109,11 @@ class CategoryController extends AppBaseController
 
         $filters = $this->filterRepository->getFiltersByCategoryId($id);
 
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            CategoryDescription::class,
+            Category::class,
+        ]);
+
         if (empty($category)) {
             Flash::error(__('common.flash_not_found'));
 
@@ -116,7 +122,7 @@ class CategoryController extends AppBaseController
 
         $this->template = 'pages.categories.edit';
 
-        return $this->renderOutput(compact('category', 'categories', 'activeCategories', 'filters'));
+        return $this->renderOutput(compact('category', 'categories', 'activeCategories', 'filters', 'fields'));
     }
 
     /**
@@ -146,7 +152,7 @@ class CategoryController extends AppBaseController
      */
     public function destroy($ids)
     {
-        $category = $this->categoryRepository->multiDelete(explode(',', $id));
+       $this->categoryRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
