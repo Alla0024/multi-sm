@@ -73,9 +73,9 @@ class Category extends Model
         return $this->belongsToMany(PaymentMethod::class, 'payment_method_to_categories');
     }
 
-    public function news(): HasMany
+    public function news(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\News', 'App\Models\NewToCategory', 'category_id',  'new_id')
+        return $this->belongsToMany('App\Models\News', 'App\Models\NewsToCategory', 'category_id',  'new_id')
             ->with('description')->withPivot('sort_order');
     }
 
