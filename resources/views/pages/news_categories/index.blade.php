@@ -19,18 +19,6 @@
                        href="{{ route('newsCategories.create') }}">
                         {!! $word['add'] !!}
                     </a>
-                    <div class="btn btn-primary btn-copy float-right" >
-                        {!! $word['copy'] !!}
-                    </div>
-                    <div class="btn btn-primary btn-deleted float-right">
-                        {!! $word['deleted'] !!}
-                    </div>
-                </div>
-                <div class="col-sm-2 action-item">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('newsCategories.create') }}">
-                        {!! $word['add'] !!}
-                    </a>
                     <div class="btn btn-primary btn-copy float-right" data-action="copy_newsCategories" data-name="newsCategories_id" @click="$store.page.copyItem($event.target)">
                         {!! $word['copy'] !!}
                     </div>

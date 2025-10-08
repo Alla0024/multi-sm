@@ -94,7 +94,6 @@
                 }
             }
 
-
         }
     }
 }
@@ -385,8 +384,9 @@
     .item{
         border-right: 1px solid $col_border;
         //border-left: 1px solid $col_border;
-        padding: 10px 20px;
+        padding: 10px 10px;
         display: flex;
+        font-size: 12px;
         align-items: center;
         .icon{
             font-size: 16px;
@@ -406,7 +406,22 @@
                 height: min-content;
             }
         }
+        input{
+            padding: 0 7px !important;
+        }
     }
+
+    .custom-type-switch{
+        max-width: 80px;
+    }
+    .custom-type-number{
+        max-width: 70px;
+    }
+    .custom-type-multi{
+        width: 300px !important;
+        flex-shrink: 0;
+    }
+
     .add-item{
         display: flex;
         .icon{
@@ -416,6 +431,7 @@
             }
         }
     }
+
     .rm-item{
         display: flex;
         .icon {

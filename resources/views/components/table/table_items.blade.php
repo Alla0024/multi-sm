@@ -3,16 +3,29 @@
     <div class="table-items">
         <div class="table-item item-head">
             <template x-for='(item, key) in inputType'>
-                <div class="item" style="width: 30%" x-text="item.name"></div>
+                <div class="item" style="width: 30%"
+                     :class='{
+                     "custom-type-switch": item.type == "switch",
+                     "custom-type-number": item.type == "number",
+                     "custom-type-multi": item.type == "multi_select_static_filter",
+                     }'
+                     x-text="item.name"></div>
             </template>
-            <div class="item" style=" text-align: center; width: 70px; flex-shrink: 0">Дія</div>
+            <div class="item" style=" text-align: center; width: 51px; flex-shrink: 0">Дія</div>
         </div>
 
         <template x-for='(itemData, keyData) in data'>
             <div class="table-item">
                 <input type="hidden" :class="{'ignore_form': !itemData.id}" :name="'{{$name}}[' + keyData + '][{{$id_name}}]'" :value="itemData.id">
                 <template x-for='(itemInput, keyInput) in inputType'>
-                    <div class="item" style="width: 30%">
+                    <div class="item"
+                         :class='{
+                         "custom-type-switch": itemInput.type == "switch",
+                         "custom-type-number": itemInput.type == "number",
+                         "custom-type-multi": itemInput.type == "multi_select_static_filter",
+                         }'
+                         style="width: 30%"
+                    >
 
                         <template x-if="keyInput in itemData">
                             <div class="input">
@@ -153,7 +166,7 @@
                         </template>
                     </div>
                 </template>
-                <div class="item rm-item" style="width: 70px;">
+                <div class="item rm-item" style="width: 51px;">
                     <div class="icon" @click="deletedItem(keyData)" :id="keyData">
                         <i class="bi bi-x-lg fs-20"></i>
                     </div>
