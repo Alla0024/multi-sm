@@ -422,6 +422,10 @@
         flex-shrink: 0;
     }
 
+    .choices__inner{
+        flex-direction: column-reverse;
+    }
+
     .add-item{
         display: flex;
         .icon{
