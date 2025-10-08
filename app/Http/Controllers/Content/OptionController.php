@@ -39,8 +39,10 @@ class OptionController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $options = $this->optionRepository->filterRows($request);
-        $categories = $this->categoryRepository->getDropdownItems($request->all());
+        $input = $request->all();
+
+        $options = $this->optionRepository->filterRows($input);
+        $categories = $this->categoryRepository->getDropdownItems($input);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Option::class
@@ -83,7 +85,7 @@ class OptionController extends AppBaseController
     {
         $input = $request->all();
 
-        $option = $this->optionRepository->upsert($input);
+        $option = $this->optionRepository->save($input);
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -143,7 +145,7 @@ class OptionController extends AppBaseController
             return redirect(route('options.index'));
         }
 
-        $option = $this->optionRepository->upsert($request->all(), $id);
+        $option = $this->optionRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
 

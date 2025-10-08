@@ -90,45 +90,74 @@ class OptionRepository extends BaseRepository
             ])
             ->get();
     }
-
-    public function filterRows(Request $request)
+    public function filterRows(array $input)
     {
-        $perPage = $request->get('perPage', 15);
-        $language_id = $request->get('language_id', config('settings.locale.default_language_id'));
-        $params = $request->all();
+        $perPage    = $input['perPage'] ?? 10;
+        $languageId = $input['language_id'] ?? config('settings.locale.default_language_id');
 
-        $options = $this->model
-            ->leftJoin((new OptionDescription())->getTable() . " as od", 'od.option_id', '=', 'options.id')
-            ->select('options.*', 'od.*')
-            ->where('od.language_id', $language_id)
-            ->withCount('valueGroups as value_groups_count')
-            ->with(['products' => function ($query) use ($language_id) {
-                return $query->select('id', 'category_id')->with([
-                    'category.descriptions' => function ($query) use ($language_id) {
-                        return $query->select('category_id', 'name')->where('language_id', $language_id);
-                    }
-                ]);
-            }])
-            ->when(isset($params['name']), function ($q) use ($params) {
-                return $q->searchSimilarity(['od.name'], $params['name']);
-            })
-            ->when(isset($params['appears_in_categories']), function ($q) use ($params, $language_id) {
-                return $q->whereHas('products.category.descriptions', function ($query) use ($params, $language_id) {
-                    $query->where('language_id', $language_id)
-                        ->where('category_id', $params['appears_in_categories']);
+        $query = $this->model::with([
+            'descriptions' => fn($q) => $q->where('language_id', $languageId),
+            'products.category.descriptions' => fn($q) => $q
+                ->select('category_id', 'name')
+                ->where('language_id', $languageId),
+        ])
+            ->withCount('valueGroups as value_groups_count');
+
+        foreach (['sort_order', 'status'] as $field) {
+            $query->when($input[$field] ?? null, fn($q, $value) => $q->where($field, $value));
+        }
+
+        $query->when($input['name'] ?? null, function ($q, $name) use ($languageId) {
+            $q->whereHas('descriptions', function ($sub) use ($languageId, $name) {
+                $sub->where('language_id', $languageId)
+                    ->where('name', 'LIKE', "%{$name}%");
+            });
+        });
+
+        $query->when($input['appears_in_categories'] ?? null, function ($q, $categories) use ($languageId) {
+            if (!is_array($categories)) {
+                $categories = array_filter(explode(',', $categories));
+            }
+            if (count($categories) > 0) {
+                $q->whereHas('products.category.descriptions', function ($sub) use ($languageId, $categories) {
+                    $sub->where('language_id', $languageId)
+                        ->whereIn('category_id', $categories);
                 });
-            })
-            ->paginate($perPage);
+            }
+        });
+
+        $query->when($input['sortBy'] ?? null, function ($q, $sortBy) use ($languageId) {
+            if (in_array($sortBy, ['name_asc', 'name_desc'])) {
+                $q->withAggregate(
+                    ['descriptions as name' => fn($sub) => $sub->where('language_id', $languageId)],
+                    'name'
+                )->orderBy('name', $sortBy === 'name_asc' ? 'asc' : 'desc');
+            } elseif ($sortBy === 'created_at_asc') {
+                $q->orderBy('created_at', 'asc');
+            } elseif ($sortBy === 'created_at_desc') {
+                $q->orderBy('created_at', 'desc');
+            } elseif ($sortBy === 'sort_order_asc') {
+                $q->orderBy('sort_order', 'asc');
+            } elseif ($sortBy === 'sort_order_desc') {
+                $q->orderBy('sort_order', 'desc');
+            }
+        });
+
+        $options = $query->paginate($perPage);
 
         $options->getCollection()->transform(function ($option) {
-            $names = collect($option->products)
-                ->pluck('category.descriptions.*.name')
-                ->flatten()
+            $option->setAttribute('name', optional($option->descriptions->first())->name);
+
+            $categories = collect($option->products)
+                ->flatMap(fn($p) => $p->category?->descriptions ?? collect())
+                ->pluck('name')
+                ->filter()
                 ->unique()
                 ->sort()
                 ->values();
 
-            $option->appears_in_categories = $names->toArray();
+            $option->setAttribute('appears_in_categories', $categories->toArray());
+
             unset($option->products);
 
             return $option;
@@ -142,54 +171,42 @@ class OptionRepository extends BaseRepository
         $option = $this->model
             ->with([
                 'descriptions',
-                'valueGroups' => function ($q) {
-                    $q->with('descriptions');
-                }
+                'valueGroups.descriptions',
             ])
             ->find($id);
 
-        $preshaped_descriptions = $option->descriptions
+        if (!$option) {
+            return null;
+        }
+
+        $option->descriptions = $option->descriptions
             ->keyBy('language_id')
             ->toArray();
 
-        unset($option->descriptions);
-
-        $option->setAttribute('descriptions', $preshaped_descriptions);
-
-        foreach ($option->valueGroups as $option_value_group) {
-            $desc = $option_value_group->descriptions
+        $option->valueGroups->transform(function ($group) {
+            $group->descriptions = $group->descriptions
                 ->keyBy('language_id')
                 ->toArray();
-
-            unset($option_value_group->descriptions);
-            $option_value_group->setAttribute('descriptions', $desc);
-        }
+            return $group;
+        });
 
         return $option;
     }
 
-    public function upsert($input, $id = null)
+    public function save(array $data, ?int $id = null)
     {
-        $descriptions = $input['descriptions'] ?? [];
-        $optionValueGroups = $input['option_value'] ?? [];
+        $descriptions = $data['descriptions'] ?? [];
+        $optionValueGroups = $data['option_value'] ?? [];
 
-        unset($input['descriptions'], $input['option_value']);
+        unset($data['descriptions'], $data['option_value']);
 
-        $option = isset($id) ? $this->model->find($id) : null;
+        $option = $id ? $this->model->find($id) : $this->model->newInstance();
 
-        if (!$option) {
-            $option = new $this->model();
-        }
-
-        $option->fill($input);
-        $option->save();
+        $option->fill($data)->save();
 
         foreach ($descriptions as $languageId => $descData) {
             OptionDescription::updateOrCreate(
-                [
-                    'option_id' => $option->id,
-                    'language_id' => $languageId
-                ],
+                ['option_id' => $option->id, 'language_id' => $languageId],
                 $descData
             );
         }
