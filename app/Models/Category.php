@@ -75,7 +75,8 @@ class Category extends Model
 
     public function news(): HasMany
     {
-        return $this->hasMany(News::class, 'category_id');
+        return $this->belongsToMany('App\Models\News', 'App\Models\NewToCategory', 'category_id',  'new_id')
+            ->with('description')->withPivot('sort_order');
     }
 
     public function filterToCategories(): HasMany
@@ -105,7 +106,7 @@ class Category extends Model
 
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class, 'attribute_to_category');
+        return $this->belongsToMany('App\Models\Attribute', 'App\Models\AttributeToCategory', 'category_id',  'attribute_id')->with('description','attribute_group')->withPivot('sort_order');
     }
 
     public function descriptions(): HasMany
