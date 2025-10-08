@@ -12,7 +12,10 @@ class NewsCategoryRepository extends BaseRepository
         'status',
         'sort_order'
     ];
-    
+
+    protected $additionalFields = [
+
+    ];
     public function getFieldsSearchable(): array
     {
         return $this->fieldSearchable;
