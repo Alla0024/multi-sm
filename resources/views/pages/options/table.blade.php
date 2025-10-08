@@ -32,7 +32,7 @@
                                             <div class="input-group input-tags table-search-input-multi">
                                                 <select form="search_form" class="tag-select" name="appears_in_categories[]" data-no-search="true" multiple data-url="">
                                                     @foreach($categories as $item)
-                                                        <option value="{{$item['id']}}" @if(in_array($item['id'], request($index))) selected @endif>{{$item['text']}}</option>
+                                                        <option value="{{$item['id']}}" @if(request($index) && in_array($item['id'], request($index))) selected @endif>{{$item['text']}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
