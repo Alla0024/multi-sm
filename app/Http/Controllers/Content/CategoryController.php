@@ -17,6 +17,7 @@ class CategoryController extends AppBaseController
 {
     /** @var CategoryRepository $categoryRepository*/
     private $categoryRepository;
+
     /** @var FilterRepository $filterRepository*/
     private $filterRepository;
 

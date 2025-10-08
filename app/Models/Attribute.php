@@ -57,4 +57,15 @@ class Attribute extends Model
     {
         return $this->hasMany(AttributeDescription::class, 'attribute_id');
     }
+
+    public function description(): HasOne
+    {
+        return $this->hasOne(AttributeDescription::class, 'attribute_id')->where('language_id', config('settings.locale.default_language_id'));
+    }
+
+    public function attribute_group(): BelongsTo
+    {
+        return $this->belongsTo('App\Models\AttributeGroup')->with('description');
+
+    }
 }

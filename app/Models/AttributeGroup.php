@@ -24,6 +24,11 @@ class AttributeGroup extends Model
         'updated_at' => 'nullable'
     ];
 
+    public function description(): HasOne
+    {
+        return $this->hasOne(AttributeGroupDescription::class, 'attribute_group_id')->where('language_id', config('settings.locale.default_language_id'));
+    }
+
     public function descriptions(): HasMany
     {
         return $this->hasMany(AttributeGroupDescription::class, 'attribute_group_id');

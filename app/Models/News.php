@@ -62,6 +62,11 @@ class News extends Model
         return $this->belongsToMany(Language::class, NewsDescription::class);
     }
 
+    public function description(): HasOne
+    {
+        return $this->hasOne(NewsDescription::class, 'news_id')->where('language_id', config('settings.locale.default_language_id'));
+    }
+
     public function descriptions(): HasMany
     {
         return $this->hasMany(NewsDescription::class, 'news_id');
