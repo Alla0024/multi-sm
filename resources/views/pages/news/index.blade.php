@@ -5,7 +5,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{!!  $word['New'] !!}</h1>
+                    <div class="title-head">{!!  $word['New'] !!}</div>
+                    <div class="count-elements">Вього елементів: {{$news->total()}}</div>
                 </div>
                 <div class="col-sm-4">
                     <form class="view-form d-flex gap-2" method="GET" action="{{url()->current()}}">

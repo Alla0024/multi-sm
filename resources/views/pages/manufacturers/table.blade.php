@@ -2,22 +2,15 @@
 
     <div class="table-responsive">
         <table class="table" id="manufacturers-table">
+
             <thead>
-            <tr>
-                @include('components.basic.search')
-            </tr>
-            <tr>
-                @if(isset($fields))
-                    <th></th>
-                    @foreach($fields as $index => $field)
-                         @if($index != 'id' && $field['inTable'])
-                            <th>{{ $word['title_'.$index] }}</th>
-                        @endif
-                    @endforeach
-                @endif
-                <th colspan="3">{{ $word['action'] }}</th>
-            </tr>
+
+                <tr>
+                    @include('components.basic.search')
+                </tr>
+
             </thead>
+
             <tbody>
             @foreach($manufacturers as $manufacturer)
                 <tr>
@@ -52,6 +45,7 @@
                 </tr>
             @endforeach
             </tbody>
+
         </table>
     </div>
 

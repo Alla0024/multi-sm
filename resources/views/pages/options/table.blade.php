@@ -6,17 +6,6 @@
             <tr>
                 @include('components.basic.search')
             </tr>
-            <tr>
-                @if(isset($fields))
-                    <th></th>
-                    @foreach($fields as $index => $field)
-                         @if($index != 'id' && $field['inTable'])
-                            <th>{{ $word['title_'.$index] }}</th>
-                        @endif
-                    @endforeach
-                @endif
-                <th colspan="3">{{ $word['action'] }}</th>
-            </tr>
             </thead>
             <tbody>
 {{--            @dump($options)--}}
@@ -57,7 +46,7 @@
                                  ">
                                  @foreach($option[$index] as $category)
                                      <div style="
-                                        background: #FBFCFCFF;
+                                        background: #eaebf0;
                                         padding: 2px 4px;
                                         margin: 1px 4px;
                                         height: 20px;

@@ -5,6 +5,7 @@
 .cke_notifications_area{
     display: none !important;
 }
+
 body{
     background-color: $col_bg_main !important;
     color: $col_item !important;
@@ -15,51 +16,63 @@ body{
     line-height: normal;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
+
 .hide{
     display: none !important;
 }
+
 .hide_opacity{
     opacity: 0 !important;
 }
+
 .show{
     display: flex !important;
     flex-direction: column;
 }
+
 .footer{
     background-color: $col_bg;
     color: $col_item;
     border-top: 1px solid $col_border;
     box-shadow: $shadow_header;
 }
+
 .main {
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: 100vh;
 }
+
 .layout{
     padding: 0 40px;
     margin-bottom: 100px;
 }
+
 .wrapper-main{
     display: flex;
 }
+
 .wrapper{
-    padding: 20px;
+    padding: 0 0 20px 0;
+    border-radius: 14px;
+    overflow: hidden;
     background-color: $col_bg;
-    border-radius: 10px;
     box-shadow: $shadow;
     position: relative;
 }
+
 .title{
     margin: 0 auto 20px;
     text-align: center;
     font-size: 24px;
     font-weight: 500;
 }
+
 img{
     width: 100%;
 }
+
 a{
     text-decoration: none;
     color: $col_item ;
@@ -68,9 +81,11 @@ a{
         color: $col_item_hover ;
     }
 }
+
 i{
     pointer-events: none;
 }
+
 form{
     display: flex;
     flex-direction: column;
@@ -157,7 +172,6 @@ form{
     column-gap: 6px;
     font-size: 14px;
     margin: 20px 0;
-    justify-content: end;
     .breadcrumb-item-custom{
         width: max-content;
         color: $col_item;

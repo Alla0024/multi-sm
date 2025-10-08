@@ -1,4 +1,4 @@
-
+<input type="hidden" name="is_vtm" value="0">
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}

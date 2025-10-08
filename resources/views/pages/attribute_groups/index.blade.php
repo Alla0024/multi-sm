@@ -5,7 +5,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{!!  $word['attribute_groups'] !!}</h1>
+                    <div class="title-head">{!!  $word['attribute_groups'] !!}</div>
+                    <div class="count-elements">Вього елементів: {{$attributeGroups->total()}}</div>
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">

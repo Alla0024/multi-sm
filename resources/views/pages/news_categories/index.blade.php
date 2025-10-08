@@ -4,8 +4,10 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
+
                 <div class="col-sm-6">
-                    <h1>{!!  $word['News_Category'] !!}</h1>
+                    <div class="title-head">{!!  $word['News_Category'] !!}</div>
+                    <div class="count-elements">Вього елементів: {{$newsCategories->total()}}</div>
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">

@@ -5,7 +5,8 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{!!  $word['attributes'] !!}</h1>
+                    <div class="title-head">{!!  $word['attributes'] !!}</div>
+                    <div class="count-elements">Вього елементів: {{$attributes->total()}}</div>
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">

@@ -6,17 +6,6 @@
             <tr>
                 @include('components.basic.search')
             </tr>
-            <tr>
-                @if(isset($fields))
-                    <th></th>
-                    @foreach($fields as $index => $field)
-                         @if($index != 'id' && $field['inTable'])
-                            <th>{{ $word['title_'.$index] }}</th>
-                        @endif
-                    @endforeach
-                @endif
-                <th colspan="3">{{ $word['action'] }}</th>
-            </tr>
             </thead>
             <tbody>
             @foreach($attributeIcons as $attributeIcon)
@@ -36,7 +25,7 @@
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
                         @elseif($index == 'image')
-                            <td><img style="width: 100px;" src="{{isset($attributeIcon[$index]) && $attributeIcon[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$attributeIcon[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                            <td><img style="width: 100px;  border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($attributeIcon[$index]) && $attributeIcon[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$attributeIcon[$index] : '/images/common/no_images.png'}}" alt=""></td>
                         @else
                          @if($index != 'id' && $field['inTable'])
                             <td>{{ $attributeIcon[$index] }}</td>

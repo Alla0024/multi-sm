@@ -6,17 +6,6 @@
             <tr>
                 @include('components.basic.search')
             </tr>
-            <tr>
-                @if(isset($fields))
-                    <th></th>
-                    @foreach($fields as $index => $field)
-                         @if($index != 'id' && $field['inTable'])
-                            <th>{{ $word['title_'.$index] }}</th>
-                        @endif
-                    @endforeach
-                @endif
-                <th colspan="3">{{ $word['action'] }}</th>
-            </tr>
             </thead>
             <tbody>
             @foreach($newsletters as $newsletter)
@@ -38,7 +27,7 @@
                             @endif
 
                          @elseif($index == 'image' && $field['inTable'])
-                            <td><img style="width: 140px;" src="{{isset($newsletter[$index]) && $newsletter[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$newsletter[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                            <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($newsletter[$index]) && $newsletter[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$newsletter[$index] : '/images/common/no_images.png'}}" alt=""></td>
                         @elseif($index == 'type' && $field['inTable'])
                             <td>{{config('settings.message_types')[$newsletter[$index]]}}</td>
                         @else

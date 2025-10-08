@@ -1,3 +1,9 @@
+@dump($category)
+@dump($category['top_sale'])
+@dump($category['attributes'])
+@dump($activeCategories)
+@dump($categories)
+@dump($filters)
 <!-- Name Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sub', $word['title_name']) !!}
@@ -5,7 +11,7 @@
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
-                {!! Form::text("descriptions[$language->id][name]", '', ['class' => 'form-control']) !!}
+                {!! Form::text("descriptions[$language->id][name]", null, ['class' => 'form-control']) !!}
             </div>
         @endforeach
     </div>
@@ -16,7 +22,7 @@
     {!! Form::label('sub', $word['title_path']) !!}
     <div class="flex-row input">
          <div class="input-group">
-             {!! Form::text("path", '', ['class' => 'form-control', 'name' => 'seo_url']) !!}
+             {!! Form::text("path", null, ['class' => 'form-control', 'name' => 'seo_url']) !!}
          </div>
     </div>
 </div>

@@ -5,22 +5,19 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-@if($config->options->localized)
-                    <h1>@@lang('models/{{ $config->modelNames->camelPlural }}.plural')</h1>
-@else
-                    <h1>@{!!  $word['{{ $config->modelNames->camelPlural }}'] !!}</h1>
-@endif
+                    @if($config->options->localized)
+                        <h1>@@lang('models/{{ $config->modelNames->camelPlural }}.plural')</h1>
+                    @else
+                        <div class="col-sm-6">
+                            <div class="title-head">@{!!  $word['{{ $config->modelNames->camelPlural }}'] !!}</div>
+                            <div class="count-elements">Вього елементів: @{{ {!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}->total() }}</div>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">
                         @@include('components.basic.sort')
                     </form>
-                </div>
-                <div class="col-sm-2 action-item">
-                    <a class="btn btn-primary float-right"
-                       href="@{{ route('{!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}.create') }}">
-                        @{!! $word['add'] !!}
-                    </a>
                 </div>
                 <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"

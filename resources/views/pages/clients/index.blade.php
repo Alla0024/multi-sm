@@ -5,18 +5,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>{!!  $word['clients'] !!}</h1>
+                    <div class="title-head">{!!  $word['clients'] !!}</div>
+                    <div class="count-elements">Вього елементів: {{$clients->total()}}</div>
                 </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">
                         @include('components.basic.sort')
                     </form>
-                </div>
-                <div class="col-sm-2 action-item">
-                    <a class="btn btn-primary float-right"
-                       href="{{ route('clients.create') }}">
-                        {!! $word['add'] !!}
-                    </a>
                 </div>
                 <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"

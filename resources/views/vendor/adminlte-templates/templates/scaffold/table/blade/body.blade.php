@@ -6,21 +6,6 @@
             <tr>
                 @@include('components.basic.search')
             </tr>
-            <tr>
-                @@if(isset($fields))
-                    <th></th>
-                    @@foreach($fields as $index => $field)
-                         @@if($index != 'id' && $field['inTable'])
-                            <th>@{{ $word['title_'.$index] }}</th>
-                        @@endif
-                    @@endforeach
-                @@endif
-@if($config->options->localized)
-                <th colspan="3">@lang('crud.action')</th>
-@else
-                <th colspan="3">@{{ $word['action'] }}</th>
-@endif
-            </tr>
             </thead>
             <tbody>
             @@foreach(${{ $config->modelNames->camelPlural }} as ${{ $config->modelNames->camel }})
@@ -41,7 +26,7 @@
                                 <td><div class="status_enable">@{{ $word['status_0'] }}</div></td>
                             @@endif
                          @@elseif($index == 'image' && $field['inTable'])
-                            <td><img style="width: 140px;" src="@{{isset(${!! $config->modelNames->camel !!}[$index]) && ${!! $config->modelNames->camel !!}[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.${!! $config->modelNames->camel !!}[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                            <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="@{{isset(${!! $config->modelNames->camel !!}[$index]) && ${!! $config->modelNames->camel !!}[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.${!! $config->modelNames->camel !!}[$index] : '/images/common/no_images.png'}}" alt=""></td>
                          @@else
                              @@if($index != 'id' && $field['inTable'])
                                 <td>@{{ ${!! $config->modelNames->camel !!}[$index] }}</td>

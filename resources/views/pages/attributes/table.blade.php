@@ -6,17 +6,6 @@
             <tr>
                 @include('components.basic.search')
             </tr>
-            <tr>
-                @if(isset($fields))
-                    <th></th>
-                    @foreach($fields as $index => $field)
-                         @if($index != 'id' && $field['inTable'])
-                            <th>{{ $word['title_'.$index] }}</th>
-                        @endif
-                    @endforeach
-                @endif
-                <th colspan="3">{{ $word['action'] }}</th>
-            </tr>
             </thead>
             <tbody>
             @foreach($attributes as $attribute)
