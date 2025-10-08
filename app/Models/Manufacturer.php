@@ -18,12 +18,14 @@ class Manufacturer extends Model
 
     protected $casts = [
         'image' => 'string',
-        'sort_order' => 'integer'
+        'sort_order' => 'integer',
+        'is_vtm' => 'boolean'
     ];
 
     public static array $rules = [
         'image' => 'required',
-        'sort_order' => 'required'
+        'sort_order' => 'required',
+        'is_vtm' => 'required',
     ];
 
     public function descriptions(): HasMany
