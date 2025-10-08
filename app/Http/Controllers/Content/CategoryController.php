@@ -151,7 +151,7 @@ class CategoryController extends AppBaseController
      */
     public function destroy($ids)
     {
-        $category = $this->categoryRepository->multiDelete(explode(',', $id));
+       $this->categoryRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
