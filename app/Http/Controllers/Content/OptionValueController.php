@@ -32,9 +32,10 @@ class OptionValueController extends AppBaseController
      */
     public function index(Request $request, $id = null)
     {
+        $input = $request->all();
         $optionValues = $this->optionValueRepository->filterRows($request, $id);
-
-        $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id);
+        $languageId = $input['language_id'] ?? config('settings.locale.default_language_id');
+        $breadcrumbs = $this->optionValueRepository->getBreadCrumbsRecursive($id, $languageId);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             OptionValue::class
