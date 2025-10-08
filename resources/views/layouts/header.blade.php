@@ -61,23 +61,6 @@
                 <div class="name">
                     {{ Auth::user()->name }}
                 </div>
-                <div class="description">
-                    @switch(Auth::user()->id)
-                        @case(3)
-                            Старша контент-менеджерка
-                            @break
-                        @case(42)
-                            Дизайнерка
-                            @break
-                        @case(44)
-                            Backend developer
-                            @break
-                        @default
-                            Frontend developer
-                        @break
-                    @endswitch
-
-                </div>
             </div>
         </div>
 

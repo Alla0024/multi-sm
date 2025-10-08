@@ -10,7 +10,7 @@
         @endforeach
     </div>
 </div>
-
+@dump($option['valueGroups'][0])
 <!-- Comment Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_comment', $word['title_descriptions_comment']) !!}
