@@ -23,6 +23,8 @@
                             @else
                                 <td><div class="status_enable">{{ $word['status_1'] }}</div></td>
                             @endif
+                        @elseif($index == 'name')
+                            <td><a href="{{ route('optionValues.show', [$optionValue->id]) }}">{{ $optionValue[$index] }}</a></td>
                         @elseif($index == 'image')
                             <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($optionValue[$index]) && $optionValue[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$optionValue[$index] : '/images/common/no_images.png'}}" alt=""></td>
                         @else

@@ -35,9 +35,6 @@
                                                         <option value="{{$item['id']}}" @if(in_array($item['id'], explode(',', request($index)))) selected @endif>{{$item['text']}}</option>
                                                     @endforeach
                                                 </select>
-{{--                                                @foreach($categories as $item)--}}
-{{--                                                    <option value="{{$item['id']}}" @if(request($index) && in_array($item['id'], request($index))) selected @endif>{{$item['text']}}</option>--}}
-{{--                                                @endforeach--}}
                                             </div>
                                         @else
                                             <div class="">

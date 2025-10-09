@@ -1,4 +1,3 @@
-
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}
@@ -12,12 +11,12 @@
     </div>
 </div>
 
-<!-- Status Field -->
+<!-- vtm Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    {!! Form::label('is_vtm', 'Vtm') !!}
+    {!! Form::label('is_vtm', 'Продукт ВТМ') !!}
     <div class="flex-row input">
         <div class="input-group">
-            {!! Form::select('is_vtm', ['0' => $word['status_inactive'], '1' => $word['status_active']], null, ['class' => 'form-control', 'required']) !!}
+            {!! Form::select('is_vtm', ['0' => 'ні', '1' => 'так'], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
 </div>
