@@ -2,15 +2,7 @@
 
 @section('content')
     <section class="content-header edit-container">
-        <div class="container-fluid ">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1>
-                        {{ $word['edit'] }}
-                    </h1>
-                </div>
-            </div>
-        </div>
+        @include('components.basic.head-form', ['data' => $articleAuthor])
     </section>
 
     <div class="content px-3">

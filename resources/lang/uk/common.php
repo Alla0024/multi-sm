@@ -8,6 +8,8 @@ return [
     'details' => 'Деталі',
     'delete' => 'Видалити',
     'edit' => 'Редагувати',
+    'edit_form' => 'Форма редагування',
+    'create_form' => 'Форма створення',
     'add' => '<i class="bi bi-plus-circle"></i>',
     'copy' => '<i class="bi bi-files"></i>',
     'deleted' => '<i class="bi bi-trash-fill"></i>',
@@ -18,15 +20,17 @@ return [
     'select' => 'Вибрати',
     'all' => 'Всі',
 
+    'tab_main' => 'Основна інформація',
+
     'language' => 'Мова',
     'language_ru' => 'Російська',
     'language_uk' => 'Українська',
     'language_es' => 'Іспанська',
 
     'status_0' => 'Вимкнено',
-    'status_1' => 'Увікнено',
+    'status_1' => 'Увімкнено',
 
-    'status_active' => 'Увікнено',
+    'status_active' => 'Увімкнено',
     'status_inactive' => 'Вимкнено',
 
     'input_radio' => 'Прапорець (радіо-кнопка)',

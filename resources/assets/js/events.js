@@ -256,21 +256,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const multiselects = document.querySelector('#multiple_search');
 
         if(multiselects){
-            const name = multiselects.name.replace('[]', ''); // наприклад appears_in_categories
+            const name = multiselects.name.replace('[]', '');
             const selected = Array.from(multiselects.selectedOptions).map(o => o.value);
 
-            // видаляємо попередній hidden input якщо був
             const existing = formSearch.querySelector(`input[name="${name}"]`);
             if (existing) existing.remove();
 
-            // додаємо прихований інпут із значеннями через кому
             const hidden = document.createElement('input');
             hidden.type = 'hidden';
             hidden.name = name;
             hidden.value = selected.join(',');
             formSearch.appendChild(hidden);
 
-            // вимикаємо name у select, щоб не дублювалось
             multiselects.disabled = true;
         }
     });

@@ -2,7 +2,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('title', $word['title_title']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::text('title', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
@@ -13,7 +13,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::select('type', $newsletter['types'] ?? '', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
@@ -39,7 +39,7 @@
 <div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('viber_message', $word['title_viber_message']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::textarea('viber_message', null, ['class' => '']) !!}
         </div>
     </div>
@@ -49,7 +49,7 @@
 <div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sms_message', $word['title_sms_message']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::textarea('sms_message', null, ['class' => '']) !!}
         </div>
     </div>
@@ -60,7 +60,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('button_text', $word['title_button_text']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::text('button_text', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
         </div>
     </div>
@@ -71,7 +71,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('button_url', $word['title_button_url']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::text('button_url', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
         </div>
     </div>
@@ -82,7 +82,7 @@
 <div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('phones', $word['title_phones']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::textarea('phones', null, ['class' => '', 'maxlength' => 65535, 'maxlength' => 65535]) !!}
         </div>
     </div>
@@ -93,7 +93,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('start_in', $word['title_start_in']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::datetimelocal('start_in', null, ['class' => 'form-control','id'=>'start_in']) !!}
         </div>
     </div>
@@ -110,7 +110,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('author', $word['title_author']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::select('author', $newsletter['authors'] ?? [], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
@@ -121,7 +121,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>

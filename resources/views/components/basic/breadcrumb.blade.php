@@ -24,13 +24,9 @@
 {{--</div>--}}
 
 <div class="breadcrumb-custom">
-    <div class="breadcrumb-item-custom-link">
-        <a href="/">
-            Головна
-        </a>
-    </div>
+
     @if(!empty($breadcrumbs))
-        <div class="breadcrumb-item-custom-arrow"><i class="bi bi-chevron-right fs-20"></i></div>
+{{--        <div class="breadcrumb-item-custom-arrow"><i class="bi bi-chevron-right fs-20"></i></div>--}}
         <div class="breadcrumb-item-custom-link">
             <a href="{{ route('optionValues.index') }}">
                 {!!  $word['option_values'] !!}

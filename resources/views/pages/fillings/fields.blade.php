@@ -1,9 +1,9 @@
 <!-- Name Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('title_descriptions_title', $word['title_descriptions_title']) !!}
-    <div class="flex-row input">
+    <div class="flex-row input lang-block">
         @foreach($languages as $language)
-            <div class="input-group mt-3">
+            <div class="input-group mt-3 input-min">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
                 {!! Form::text("descriptions[$language->id][title]", null, ['class' => '', 'required']) !!}
             </div>
@@ -14,9 +14,9 @@
 <!-- Header Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('title_descriptions_header', $word['title_descriptions_header']) !!}
-    <div class="flex-row input">
+    <div class="flex-row input lang-block">
         @foreach($languages as $language)
-            <div class="input-group mt-3">
+            <div class="input-group mt-3 input-min">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
                 {!! Form::text("descriptions[$language->id][header]", null, ['class' => '', 'required']) !!}
             </div>
@@ -27,7 +27,7 @@
 <!-- Description Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('title_descriptions_description', $word['title_descriptions_description']) !!}
-    <div class="flex-row input">
+    <div class="flex-row input lang-block">
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
@@ -62,7 +62,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>

@@ -3,7 +3,7 @@
     <div class="table-items">
         <div class="table-item item-head">
             <template x-for='(item, key) in inputType'>
-                <div class="item" style="width: 30%"
+                <div class="item" style=""
                      :class='{
                      "custom-type-switch": item.type == "switch",
                      "custom-type-number": item.type == "number",
@@ -24,7 +24,6 @@
                          "custom-type-number": itemInput.type == "number",
                          "custom-type-multi": itemInput.type == "multi_select_static_filter",
                          }'
-                         style="width: 30%"
                     >
 
                         <template x-if="keyInput in itemData">
@@ -142,11 +141,11 @@
                         </template>
 
                         <template x-if="itemData['descriptions'] && keyInput in itemData.descriptions[5]">
-                            <div class="input">
+                            <div class="input lang-block">
 
                                 <template x-if="itemInput.type == 'string'">
                                     <template x-for="itemLang in language">
-                                        <div class="input-group">
+                                        <div class="input-group ">
                                             <template x-if="itemLang.id == 1">
                                                 <span class="input-group-text" id="basic-addon1">{!! $word['1'] !!}</span>
                                             </template>
