@@ -17,9 +17,9 @@
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}
-    <div class="flex-row input">
+    <div class="flex-row input lang-block">
         @foreach($languages as $language)
-            <div class="input-group mt-3">
+            <div class="input-group mt-3 input-min">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
                 {!! Form::text("descriptions[$language->id][name]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
@@ -30,9 +30,9 @@
 <!-- Type Material Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_type_material', $word['title_descriptions_type_material']) !!}
-    <div class="flex-row input">
+    <div class="flex-row input lang-block">
         @foreach($languages as $language)
-            <div class="input-group mt-3">
+            <div class="input-group mt-3 input-min">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
                 {!! Form::text("descriptions[$language->id][type_material]", null, ['class' => '', 'rows' => 2, 'required']) !!}
             </div>
@@ -44,7 +44,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('parent_id', $word['title_parent_id']) !!}
     <div class="flex-row input">
-        <div class="input-group input-list-search" style="position: relative;">
+        <div class="input-group input-list-search " style="position: relative;">
             @isset($optionValue['parent_id'])
                 <input type="hidden" name="parent_id" value="{{$optionValue['parent_id']}}">
             @else
@@ -90,7 +90,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('type', $word['title_type']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::select('type', $optionValueTypes, null, ['class' => 'form-control', 'required', 'maxlength' => 255]) !!}
         </div>
     </div>
@@ -100,7 +100,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sort_order', $word['title_sort_order']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::number('sort_order', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
@@ -110,7 +110,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('status', $word['title_status']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::select('status', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
@@ -121,7 +121,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('default', $word['title_default']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::select('default', ['1' => $word['status_active'] , '0' => $word['status_inactive']], null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
@@ -132,7 +132,7 @@
     <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
         {!! Form::label('children_status', $word['title_children_status']) !!}
         <div class="flex-row input">
-            <div class="input-group">
+            <div class="input-group input-min">
                 {!! Form::select('children_status', [null => 'Змінити статус дочірніх елементів', true => 'Активний', false => 'Неактивний'], null, ['class' => 'form-control']) !!}
             </div>
         </div>
@@ -142,7 +142,7 @@
     <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
         {!! Form::label('level', $word['title_level']) !!}
         <div class="flex-row input">
-            <div class="input-group">
+            <div class="input-group input-min">
                 {!! Form::number('level', null, ['class' => 'form-control', 'required', 'disabled']) !!}
             </div>
         </div>

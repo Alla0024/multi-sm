@@ -17,7 +17,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('surname', $word['title_surname']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::text('surname', null, ['class' => 'form-control', 'maxlength' => 255, 'maxlength' => 255]) !!}
         </div>
     </div>
@@ -27,7 +27,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('name', $word['title_name']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::text('name', null, ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
         </div>
     </div>
@@ -36,7 +36,7 @@
 <!-- Birthday Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('birthday', $word['title_birthday']) !!}
-    <div class="flex-row input">
+    <div class="flex-row input input-min">
         <div class="input-group">
             {!! Form::datetimelocal('birthday', null, ['class' => 'form-control','id'=>'birthday', 'disabled']) !!}
         </div>
@@ -53,7 +53,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('email', $word['title_email']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::email('email', '', ['class' => 'form-control', 'disabled']) !!}
         </div>
     </div>
@@ -63,7 +63,7 @@
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('phone', $word['title_phone']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::text('phone', null, ['class' => 'form-control', 'required', 'disabled']) !!}
         </div>
     </div>

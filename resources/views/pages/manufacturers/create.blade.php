@@ -1,19 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1>
-                            {{ $word['create'] }} {!!  $word['Manufacturer'] !!}
-                    </h1>
-                </div>
-            </div>
-        </div>
+    <section class="content-header create-container">
+        @include('components.basic.head-form', ['data' => $manufacturer ?? null])
     </section>
 
-    <div class="content px-3">
+    <div class="content px-3 edit-from-block">
 
         @include('adminlte-templates::common.errors')
 

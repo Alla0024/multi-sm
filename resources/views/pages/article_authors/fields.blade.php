@@ -23,8 +23,8 @@
 <div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('path', $word['title_path']) !!}
     <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::text('path', null, ['class' => 'form-control', 'required']) !!}
+        <div class="input-group input-min">
+            {!! Form::text('path', null, ['class' => 'form-control input-min', 'required']) !!}
         </div>
     </div>
 </div>
@@ -33,7 +33,7 @@
 <div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('facebook', $word['title_facebook']) !!}
     <div class="flex-row input">
-        <div class="input-group">
+        <div class="input-group input-min">
             {!! Form::text('facebook', null, ['class' => 'form-control', 'required']) !!}
         </div>
     </div>
@@ -44,8 +44,8 @@
 <div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="main">
     {!! Form::label('instagram', $word['title_instagram']) !!}
     <div class="flex-row input">
-        <div class="input-group">
-            {!! Form::text('instagram', null, ['class' => 'form-control', 'required']) !!}
+        <div class="input-group input-min">
+            {!! Form::text('instagram', null, ['class' => 'form-control ', 'required']) !!}
         </div>
     </div>
 </div>
@@ -53,9 +53,9 @@
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name', $word['title_descriptions_name']) !!}
-    <div class="flex-row input">
+    <div class="flex-row input lang-block">
         @foreach($languages as $language)
-            <div class="input-group mt-3">
+            <div class="input-group mt-3  input-min">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
                 {!! Form::text("descriptions[$language->id][name]", null, ['class' => 'form-control', 'required' ]) !!}
             </div>
@@ -66,7 +66,7 @@
 <!-- Description Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_description', $word['title_descriptions_description']) !!}
-    <div class="flex-row input">
+    <div class="flex-row input lang-block">
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>

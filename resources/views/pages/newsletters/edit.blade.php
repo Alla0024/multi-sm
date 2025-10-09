@@ -2,23 +2,14 @@
 
 @section('content')
     <section class="content-header edit-container">
-        <div class="container-fluid ">
-            <div class="row mb-2">
-                <div class="col-sm-12">
-                    <h1>
-                        {{ $word['edit'] }}
-                    </h1>
-                </div>
-            </div>
-        </div>
+        @include('components.basic.head-form', ['data' => $newsletter])
     </section>
 
-    <div class="content px-3">
+    <div class="content px-3 edit-from-block">
 
         @include('adminlte-templates::common.errors')
 
         <div class="card">
-
             {!! Form::model($newsletter, ['route' => ['newsletters.update', $newsletter->id], 'method' => 'patch']) !!}
 
             <div class="card-body">

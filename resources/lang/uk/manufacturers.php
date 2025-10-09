@@ -6,7 +6,7 @@ return [
     'title_name' => 'Виробник',
     'title_image' => 'Зоображення',
     'title_sort_order' => 'Сортування',
-    'title_stores' => 'Сортування',
+    'title_stores' => 'Магазини',
     'title_path' => 'Seo-Url',
     'title_descriptions_name' => 'Назва',
     'title_descriptions_description' => 'Опис',

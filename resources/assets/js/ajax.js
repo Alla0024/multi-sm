@@ -2,7 +2,11 @@ import axios from "axios";
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
-
+    // Btn head submit
+    const btn_head_submit = document.querySelector('.head-submit');
+    btn_head_submit.addEventListener('click', () => {
+        document.querySelector('form[accept-charset]').submit()
+    })
 
     // Logout
     Alpine.store('page').logout = function() {

@@ -12,15 +12,15 @@
     border-color: $col_border;
     .nav-item{
         .nav-link{
-            color: $col_item_head;
+            color: #81A4FF;
             &:hover{
-                border-color: $col_border;
+
                 color: $col_blue_pr_hover;
             }
         }
         .nav-link.active{
-            background-color: $col_bg;
-            color: $col_item_active;
+            background-color: #81A4FF;
+            color: white;
             border-color: $col_border;
             border-bottom: 1px solid $col_bg;
         }
@@ -66,6 +66,25 @@ input, textarea, select{
     &:focus{
         box-shadow: 0 0 0 0.1rem rgba(13, 110, 253, .25) !important;
     }
+}
+//input[type=number], select{
+//    max-width: 370px;
+//}
+input[type=datetime-local], input[type=datetime], input[type=date]{
+    position: relative;
+    padding-right: 10px !important;
+
+    &:before{
+        content: ' ';
+        position: absolute;
+        height: 100%;
+        border-right: 1px solid $col_border;
+        top: 0;
+        right: 40px;
+    }
+}
+.input-min{
+    max-width: 520px;
 }
 select{
     padding-right: 30px;
@@ -114,6 +133,10 @@ select{
     .input{
         width: 100% !important;
         //max-width: 930px;
+    }
+    .lang-block{
+        display: flex;
+        flex-direction: column-reverse !important;
     }
     .name, label{
         width: 130px;
@@ -209,9 +232,13 @@ select{
         display: flex;
         align-items: center;
     }
+    .choices__item{
+
+    }
     .choices__list--multiple{
         .choices__item--selectable{
-            background-color: $col_blue_pr;
+            background-color: #81A4FF;
+            border: 1px solid #81A4FF;
         }
     }
 
