@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 class Manufacturer extends Model
 {
@@ -40,5 +41,10 @@ class Manufacturer extends Model
     public function seoPath()
     {
         return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'manufacturer');
+    }
+
+    public function stores(): BelongsToMany
+    {
+        return $this->belongsToMany(Store::class, ManufacturerToStore::class);
     }
 }
