@@ -6,6 +6,7 @@ use App\Helpers\PictureHelper;
 use App\Models\FirstPathQuery;
 use App\Models\Manufacturer;
 use App\Models\ManufacturerDescription;
+use App\Models\ManufacturerToStore;
 
 class ManufacturerRepository extends BaseRepository
 {
@@ -42,6 +43,7 @@ class ManufacturerRepository extends BaseRepository
             ->with([
                 'descriptions.language:id,code',
                 'seoPath:type_id,path',
+                'stores:id,name',
             ])
             ->find($id, $columns);
 
@@ -117,6 +119,7 @@ class ManufacturerRepository extends BaseRepository
     public function save(array $input, ?int $id = null)
     {
         $seoPath = $input['path'] ?? null;
+        $stores = $input['stores'] ?? [];
         $descriptions = $input['descriptions'] ?? [];
 
         unset($input['descriptions'], $input['path'], $input['stores']);
@@ -149,6 +152,8 @@ class ManufacturerRepository extends BaseRepository
             );
         }
 
+        $stores && $manufacturer->stores()->sync($stores);
+
         $seoPath && FirstPathQuery::updateOrCreate(
             ['type' => 'manufacturer', 'type_id' => $manufacturer->id],
             ['path' => $seoPath]
@@ -164,6 +169,14 @@ class ManufacturerRepository extends BaseRepository
         foreach ($manufacturers as $manufacturer) {
             $newManufacturer = $manufacturer->replicate();
             $newManufacturer->save();
+
+            $stores = ManufacturerToStore::where(['manufacturer_id' => $manufacturer->id])->get();
+
+            foreach ($stores as $store) {
+                $newStore = $store->toArray();
+                $newStore['manufacturer_id'] = $newManufacturer->id;
+                ManufacturerToStore::create($newStore);
+            }
 
             foreach ($manufacturer->descriptions as $description) {
                 $newDescription = $description->replicate();
