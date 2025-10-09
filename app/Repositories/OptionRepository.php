@@ -183,11 +183,11 @@ class OptionRepository extends BaseRepository
             ->keyBy('language_id')
             ->toArray();
 
-        $option->valueGroups->transform(function ($group) {
-            $group->descriptions = $group->descriptions
-                ->keyBy('language_id')
-                ->toArray();
-            return $group;
+        $option->valueGroups->each(function ($group) {
+            $group->setRelation(
+                'descriptions',
+                $group->descriptions->keyBy('language_id')
+            );
         });
 
         return $option;
