@@ -193,7 +193,7 @@
     })
 </script>
 
-
+{{--@dump($news["products"])--}}
 <!-- Products Fields -->
 {{--@include('components.table.products_for_new', ['tab' => 'product'])--}}
 @php
@@ -202,4 +202,4 @@
         'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
     ]
 @endphp
-@include('components.table.table_items', ['inputType' => $arrData, 'data' => $news["products"] ?? [], 'name' => 'products', 'id_name' => 'item_id', 'url' => 'getProducts', 'tab' => 'product'])
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $news["products"] ?? [], 'name' => 'products', 'id_name' => 'item_id', 'url' => 'getProducts', 'search_select_type' => 'id', 'tab' => 'product'])

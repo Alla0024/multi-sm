@@ -54,6 +54,7 @@
     </div>
 </div>
 {{--@dump($option)--}}
+@dump($option['valueGroups'][0])
 <!-- Option Value Groups Field -->
 @php
     $arrData = [

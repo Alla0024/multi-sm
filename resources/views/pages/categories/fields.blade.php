@@ -1,9 +1,10 @@
 {{--@dump($category)--}}
 {{--@dump($category['top_sale'])--}}
 {{--@dump($category['attributes'])--}}
-{{--@dump($activeCategories)--}}
+{{--@dump($activeCategories[1])--}}
 {{--@dump($categories)--}}
-{{--@dump($filters)--}}
+@dump($filters)
+
 <!-- Name Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('sub', $word['title_name']) !!}
@@ -59,4 +60,40 @@
         @endforeach
     </div>
 </div>
+
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="filter">
+    <div class="item-list-block">
+        @foreach($filters as $key => $filter)
+            <div class="list" x-data="{hide: true}">
+                <div class="name-list" @click="hide = !hide">
+                    {{ $key }}
+                </div>
+                <div class="list-item hide" :class="{'hide': hide}">
+                    @foreach($filter as $item)
+                        <div class="item">
+                            <input type="hidden" disabled id="{{ $item['filter_group_id'] }}-{{ $item['id'] }}" name="filter[]" />
+                            <div class="check-input">
+
+                            </div>
+                            <div class="name-item">
+                                {{ $item['name'] }}
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
+    </div>
+</div>
+
+
+
+@php
+    $arrData = [
+        'product_id' => ['type' => 'search_select_categories', 'name' => 'Виберіть товар', 'description' => false],
+        'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
+        'image' => ['type' => 'image', 'name' => 'Зображення', 'description' => false],
+    ];
+@endphp
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $category['top_sale'] ?? [], 'name' => 'top__sale', 'id_name' => 'id', 'url' => 'getProducts', 'tab' => 'top'])
 

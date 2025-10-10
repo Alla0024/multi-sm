@@ -252,24 +252,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Search multi
     const formSearch = document.getElementById('search_form');
-    formSearch.addEventListener('submit', function (e) {
-        const multiselects = document.querySelector('#multiple_search');
+    if(formSearch){
+        formSearch.addEventListener('submit', function (e) {
+            const multiselects = document.querySelector('#multiple_search');
 
-        if(multiselects){
-            const name = multiselects.name.replace('[]', '');
-            const selected = Array.from(multiselects.selectedOptions).map(o => o.value);
+            if(multiselects){
+                const name = multiselects.name.replace('[]', '');
+                const selected = Array.from(multiselects.selectedOptions).map(o => o.value);
 
-            const existing = formSearch.querySelector(`input[name="${name}"]`);
-            if (existing) existing.remove();
+                const existing = formSearch.querySelector(`input[name="${name}"]`);
+                if (existing) existing.remove();
 
-            const hidden = document.createElement('input');
-            hidden.type = 'hidden';
-            hidden.name = name;
-            hidden.value = selected.join(',');
-            formSearch.appendChild(hidden);
+                const hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = name;
+                hidden.value = selected.join(',');
+                formSearch.appendChild(hidden);
 
-            multiselects.disabled = true;
-        }
-    });
+                multiselects.disabled = true;
+            }
+        });
+    }
 
 })

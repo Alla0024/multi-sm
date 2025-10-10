@@ -113,6 +113,31 @@
                                     </div>
                                 </template>
 
+                                <template x-if="itemInput.type == 'search_select_categories'">
+                                    <div class="input-group input-list-search" style="position: relative;">
+                                        <input type="hidden" :name="'{{$name}}[' + keyData + ']['+ {{isset($search_select_type) ? "'".$search_select_type."'" : "keyInput"}} +']'" x-model="itemData['description'][{{isset($search_select_type) ? "'".$search_select_type."'" : "keyInput"}}]" :value="itemData['description'][{{isset($search_select_type) ? "'".$search_select_type."'" : "keyInput"}}]">
+                                        <input
+                                            class="ignore_form"
+                                            :name="'{{$name}}[' + keyData + ']['+ {{isset($search_select_type) ? "'".$search_select_type."'" : "keyInput"}} +']'"
+                                            placeholder="Пошук..."
+                                            autocomplete="off"
+                                            :value="itemData['description'][keyInput]"
+                                            x-model="itemData['description'][keyInput]"
+                                            data-url="@isset($url){{route($url)}}@endisset"
+                                            @input="$store.page.searchSelect($event.target)"
+                                            @focus="$store.page.searchSelect($event.target)"
+                                            custom="false"
+                                        >
+                                        <ul class="custom-list hide">
+
+                                        </ul>
+                                        <div class="svg">
+                                            <img src="/images/common/arrow_select.png" alt="">
+                                        </div>
+
+                                    </div>
+                                </template>
+
                                 <template x-if="itemInput.type == 'multi_select_static_filter'">
                                     <div class="input-group input-tags">
 

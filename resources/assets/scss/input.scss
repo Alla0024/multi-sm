@@ -86,17 +86,21 @@ input[type=datetime-local], input[type=datetime], input[type=date]{
 .input-min{
     max-width: 520px;
 }
+
 select{
     padding-right: 30px;
 }
+
 input[type=file]{
     display: none;
 }
+
 textarea{
     height: auto;
     min-height: 150px;
     padding: 10px 20px;
 }
+
 select{
     border: 1px solid $col_border !important;
     color: $col_item !important;
@@ -107,6 +111,7 @@ select{
     background-position: center;
     background-position-x: calc(100% - 7px);
 }
+
 .input-block{
     display: flex;
     column-gap: 20px;
@@ -134,13 +139,16 @@ select{
         width: 100% !important;
         //max-width: 930px;
     }
+
     .lang-block{
         display: flex;
         flex-direction: column-reverse !important;
     }
+
     .name, label{
         width: 130px;
     }
+
     .form-switch{
         position: relative;
         margin: 0 auto;
@@ -195,7 +203,6 @@ select{
         }
     }
 
-
     // Input search
     .custom-list {
         position: absolute;
@@ -211,30 +218,37 @@ select{
         max-height: 150px;
         overflow-y: auto;
     }
+
     .custom-list li {
         padding: 8px;
         cursor: pointer;
     }
+
     .custom-list li:hover {
         background-color: $col_bg_light;
     }
+
     .choices{
         width: 100%;
     }
+
     .choices__input, .choices__inner{
         background-color: $col_bg_input;
         input{
             box-shadow: none !important;
         }
     }
+
     .choices__inner{
         border: 1px solid $col_border;
         display: flex;
         align-items: center;
     }
+
     .choices__item{
 
     }
+
     .choices__list--multiple{
         .choices__item--selectable{
             background-color: #81A4FF;
@@ -245,13 +259,35 @@ select{
     .choices__item--selectable{
         background-color: $col_bg;
     }
+
     .is-highlighted{
         background-color: $col_bg_light !important;
     }
+
     .has-no-results{
         background-color: $col_bg_light !important;
     }
 
+    .item-list-block{
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 40px;
+        row-gap: 40px;
+        font-size: 18px;
+
+        .name-list{
+            cursor: pointer;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .list-item{
+            font-size: 14px;
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+        }
+    }
 }
 
 .image-block{
