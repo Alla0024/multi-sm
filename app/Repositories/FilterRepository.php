@@ -53,7 +53,6 @@ class FilterRepository extends BaseRepository
                     $query->where('categories.id', $categoryId);
                 },
             ])
-            ->whereHas('categories', fn($q) => $q->where('categories.id', $categoryId))
             ->get()
             ->map(function ($filter) {
                 return [
