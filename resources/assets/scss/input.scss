@@ -275,17 +275,40 @@ select{
         row-gap: 40px;
         font-size: 18px;
 
+        .list{
+            border: 1px solid $col_border;
+            border-radius: 4px;
+            padding: 12px 12px 12px 12px;
+            width: 260px;
+            height: min-content;
+        }
+
         .name-list{
             cursor: pointer;
-            margin-bottom: 12px;
+
             font-weight: 500;
         }
         .list-item{
+            margin-top: 12px;
             font-size: 14px;
-            padding-left: 20px;
             display: flex;
             flex-direction: column;
             row-gap: 8px;
+
+            .item{
+                display: flex;
+                align-items: center;
+                column-gap: 6px;
+                cursor: pointer;
+            }
+            .check-input{
+                border: 1px solid $col_blue_light;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 30px;
+                height: 30px;
+            }
         }
     }
 }
