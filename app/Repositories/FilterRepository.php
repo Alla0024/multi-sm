@@ -48,7 +48,10 @@ class FilterRepository extends BaseRepository
                 },
                 'filterGroup.descriptions' => function ($query) {
                     $query->where('language_id', 5);
-                }
+                },
+                'categories' => function ($query) use ($categoryId) {
+                    $query->where('categories.id', $categoryId);
+                },
             ])
             ->whereHas('categories', fn($q) => $q->where('categories.id', $categoryId))
             ->get()
@@ -58,6 +61,7 @@ class FilterRepository extends BaseRepository
                     'name' => $filter->descriptions->first()?->name,
                     'group_name' => $filter->filterGroup->descriptions->first()?->name,
                     'filter_group_id' => $filter->filter_group_id,
+                    'categories' => $filter->categories->pluck('id')->toArray(),
                 ];
             });
 
