@@ -1,9 +1,10 @@
 {{--@dump($category)--}}
 {{--@dump($category['top_sale'])--}}
 {{--@dump($category['attributes'])--}}
+{{--@dump($category['news'])--}}
 {{--@dump($activeCategories[1])--}}
 {{--@dump($categories)--}}
-{{--@dump($filters)--}}
+{{--@dump($filters['Розмір'])--}}
 
 <!-- Name Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
@@ -71,7 +72,7 @@
                 </div>
                 <div class="list-item hide" :class="{'hide': hide}">
                     @foreach($filter as $item)
-                        <div class="item" x-data="{active: false}" @click="active = !active">
+                        <div class="item" x-data="{active: {{count($item['categories']) > 0 ? 'true' : 'false'}}}" @click="active = !active">
                             <input type="hidden" :disabled="!active" id="{{ $item['filter_group_id'] }}-{{ $item['id'] }}" value="{{ $item['filter_group_id'] }}-{{ $item['id'] }}" name="filter[]" />
                             <div class="check-input">
                                 <svg class="hide" :class="{'hide': !active}" xmlns="http://www.w3.org/2000/svg" width="21" height="16" viewBox="0 0 21 16" fill="none">
@@ -92,11 +93,27 @@
 
 
 @php
-    $arrData = [
+    $arrDataTop = [
         'product_id' => ['type' => 'search_select_categories', 'name' => 'Виберіть товар', 'description' => false],
         'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
         'image' => ['type' => 'image', 'name' => 'Зображення', 'description' => false],
     ];
 @endphp
-@include('components.table.table_items', ['inputType' => $arrData, 'data' => $category['top_sale'] ?? [], 'name' => 'top__sale', 'id_name' => 'id', 'url' => 'getProducts', 'tab' => 'top'])
 
+@include('components.table.table_items', ['inputType' => $arrDataTop, 'data' => $category['top_sale'] ?? [], 'search_select_type' => 'product_id', 'name' => 'top__sale', 'id_name' => 'id', 'url' => 'getProducts', 'tab' => 'top', 'parse' => true])
+
+@php
+    $arrDataAttribute = [
+        'id' => ['type' => 'search_select_categories', 'name' => 'Виберіть атрибут', 'description' => false],
+        'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
+    ];
+@endphp
+@include('components.table.table_items', ['inputType' => $arrDataAttribute, 'data' => $category['attributes'] ?? [], 'search_select_type' => 'attribute_id', 'name' => 'attributes', 'id_name' => 'id', 'url' => 'getAttributes', 'tab' => 'attribute', 'parse' => true])
+
+@php
+    $arrDataNews = [
+        'id' => ['type' => 'search_select_categories', 'name' => 'Виберіть атрибут', 'description' => false],
+        'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
+    ];
+@endphp
+@include('components.table.table_items', ['inputType' => $arrDataNews, 'data' => $category['news'] ?? [], 'search_select_type' => 'new_id', 'name' => 'news', 'id_name' => 'id', 'url' => 'get_news', 'tab' => 'news', 'parse' => true])

@@ -1,6 +1,6 @@
-<div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products"  data-for-tab="{{$tab}}">
+<div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products_{{$search_select_type ?? ""}}"  data-for-tab="{{$tab}}">
 
-    <div class="table-items">
+    <div class="table-items" x-init="parseData()">
         <div class="table-item item-head">
             <template x-for='(item, key) in inputType'>
                 <div class="item" style=""
@@ -115,14 +115,14 @@
 
                                 <template x-if="itemInput.type == 'search_select_categories'">
                                     <div class="input-group input-list-search" style="position: relative;">
-                                        <input type="hidden" :name="'{{$name}}[' + keyData + ']['+ {{isset($search_select_type) ? "'".$search_select_type."'" : "keyInput"}} +']'" x-model="itemData['description'][{{isset($search_select_type) ? "'".$search_select_type."'" : "keyInput"}}]" :value="itemData['description'][{{isset($search_select_type) ? "'".$search_select_type."'" : "keyInput"}}]">
+                                        <input type="hidden" :name="'{{$name}}[' + keyData + ']['+ {{isset($search_select_type) ? "'".$search_select_type."'" : "'"."id"."'"}} +']'" x-model="itemData['id']" :value="itemData['id']">
                                         <input
                                             class="ignore_form"
-                                            :name="'{{$name}}[' + keyData + ']['+ {{isset($search_select_type) ? "'".$search_select_type."'" : "keyInput"}} +']'"
+                                            :name="'{{$name}}[' + keyData + ']['+ {{isset($search_select_type) ? "'".$search_select_type."'" : "'"."id"."'"}} +']'"
                                             placeholder="Пошук..."
                                             autocomplete="off"
-                                            :value="itemData['description'][keyInput]"
-                                            x-model="itemData['description'][keyInput]"
+                                            :value="itemData['text']"
+                                            x-model="itemData['text']"
                                             data-url="@isset($url){{route($url)}}@endisset"
                                             @input="$store.page.searchSelect($event.target)"
                                             @focus="$store.page.searchSelect($event.target)"
@@ -208,18 +208,30 @@
     </div>
 </div>
 
-<script id="payload" type="application/json">@json($data, JSON_UNESCAPED_UNICODE)</script>
+<script id="payload_{{$search_select_type ?? ''}}" type="application/json">@json($data, JSON_UNESCAPED_UNICODE)</script>
 <script id="payloadMultiSelect" type="application/json">@json($dataMultiSelect ?? '', JSON_UNESCAPED_UNICODE)</script>
 <script>
     document.addEventListener('alpine:init', () => {
-        console.log(JSON.parse(document.getElementById('payload').textContent))
+        console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))
         console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
 
-        Alpine.data('table_products', () => ({
+        Alpine.data('table_products_{{$search_select_type ?? ""}}', () => ({
             inputType: JSON.parse('@json($inputType ?? [])'),
-            data: JSON.parse(document.getElementById('payload').textContent),
+            data: JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent),
             dataMultiSelect: JSON.parse(document.getElementById('payloadMultiSelect').textContent),
             language: JSON.parse('@json($languages ?? [])'),
+            parse: JSON.parse('@json($parse ?? false)'),
+
+            parseData(){
+                console.log(this.parse)
+                if(this.parse){
+                    this.data.forEach(item => {
+                        item.id = item.description['{{$search_select_type}}']
+                        item.text = item.description.name ?? item.description.text ?? item.description.title
+                    })
+                    console.log(this.data)
+                }
+            },
 
              deletedItem(key){
                 Alpine.store('page').multiSelectDestroy();
@@ -253,6 +265,7 @@
                 this.data[key].id = id;
                 this.data[key].text = text;
                 e.parentElement.classList.add('hide');
+                console.log(this.data)
             },
             view(){
                 // console.log(this.inputType)
