@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\FirstPathQuery;
 use App\Models\ProductDescription;
 use App\Repositories\ProductRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -51,8 +52,15 @@ class ProductController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.products.create';
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Product::class,
+            ProductDescription::class,
+            FirstPathQuery::class
+        ]);
 
-        return $this->renderOutput();
+        return $this->renderOutput([
+            'fields' => $fields,
+        ]);
     }
 
     /**
@@ -62,7 +70,7 @@ class ProductController extends AppBaseController
     {
         $input = $request->all();
 
-        $product = $this->productRepository->create($input);
+        $product = $this->productRepository->save($input);
 
         Flash::success(__('common.flash_saved_successfully'));
 
@@ -74,7 +82,7 @@ class ProductController extends AppBaseController
      */
     public function show($id)
     {
-        $product = $this->productRepository->find($id);
+        $product = $this->productRepository->findFull($id);
 
         if (empty($product)) {
             Flash::error(__('common.flash_not_found'));
@@ -92,7 +100,7 @@ class ProductController extends AppBaseController
      */
     public function edit($id)
     {
-        $product = $this->productRepository->find($id);
+        $product = $this->productRepository->findFull($id);
 
         if (empty($product)) {
             Flash::error(__('common.flash_not_found'));
@@ -100,9 +108,15 @@ class ProductController extends AppBaseController
             return redirect(route('products.index'));
         }
 
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            Product::class,
+            ProductDescription::class,
+            FirstPathQuery::class
+        ]);
+
         $this->template = 'pages.products.edit';
 
-        return $this->renderOutput(compact('product'));
+        return $this->renderOutput(compact('product', 'fields'));
     }
 
     /**
@@ -118,9 +132,13 @@ class ProductController extends AppBaseController
             return redirect(route('products.index'));
         }
 
-        $product = $this->productRepository->update($request->all(), $id);
+        $product = $this->productRepository->save($request->all(), $id);
 
         Flash::success(__('common.flash_updated_successfully'));
+
+        if($request->ajax()){
+            return redirect(route('products.edit', $id));
+        }
 
         return redirect(route('products.index'));
     }
@@ -130,20 +148,32 @@ class ProductController extends AppBaseController
      *
      * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        $product = $this->productRepository->find($id);
-
-        if (empty($product)) {
-            Flash::error(__('common.flash_not_found'));
-
-            return redirect(route('products.index'));
-        }
-
-        $this->productRepository->delete($id);
+        $this->productRepository->multiDelete(explode(',', $ids));
 
         Flash::success(__('common.flash_deleted_successfully'));
 
         return redirect(route('products.index'));
     }
+
+    public function copy(Request $request)
+    {
+        $ids = $request->input('product_ids');
+
+        if ($request->ajax() && filled($ids)) {
+            $ids = is_array($ids) ? $ids : explode(',', $ids);
+
+            $this->productRepository->copy($ids);
+
+            Flash::success(__('common.flash_copied_successfully'));
+
+            return redirect()->route('products.index');
+        }
+
+        Flash::error(__('common.flash_error'));
+
+        return redirect()->route('products.index');
+    }
+
 }
