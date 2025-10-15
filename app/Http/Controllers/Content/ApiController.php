@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Content;
 
 use App\Http\Controllers\AppBaseController;
+use App\Models\Attribute;
+use App\Models\AttributeGroup;
 use App\Models\Filter;
 use App\Models\Language;
+use App\Models\NewDescription;
+use App\Models\NewsDescription;
 use App\Models\OptionValueGroup;
+use App\Models\Product;
 use App\Repositories\ArticleAuthorRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\LocationRepository;
@@ -147,5 +152,76 @@ class ApiController extends AppBaseController
         } else {
             return abort(404);
         }
+    }
+    public function getAttributes(Request $request)
+    {
+        $attributes = Attribute::with('description')->get();
+
+        $attribute_groups = AttributeGroup::with('description')->get();
+
+        $languages = Language::getLanguages();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'attributes' => $attributes,
+                'attribute_groups' => $attribute_groups,
+                'languages' => $languages,
+                'words' => $this->vars['word'],
+            ]);
+        }
+
+        return abort(404);
+    }
+    public function getNews(Request $request)
+    {
+        if (! $request->ajax()) {
+            return abort(404);
+        }
+
+        $articles = NewsDescription::selectRaw('news_id, MIN(title) as title')
+            ->where('title', 'LIKE', '%' . $request->q . '%')
+            ->groupBy('news_id')
+            ->paginate(10);
+
+        $data = $articles->map(function ($article) {
+            return [
+                'id'   => $article->news_id,
+                'text' => $article->title,
+            ];
+        });
+
+        return response()->json(['items' => $data]);
+    }
+
+    public function getProduct(Request $request)
+    {
+        if (! $request->ajax()) {
+            return abort(404);
+        }
+
+        $query = Product::with('description')
+            ->where('status', 1)
+            ->where('stock_status_id', 7)
+            ->where(function ($q) use ($request) {
+                $search = $request->q;
+                if (is_numeric($search)) {
+                    $q->where('article', 'LIKE', "%{$search}%");
+                } else {
+                    $q->whereHas('description', function ($subQuery) use ($search) {
+                        $subQuery->where('name', 'LIKE', "%{$search}%");
+                    });
+                }
+            });
+
+        $products = $query->paginate(10);
+
+        $data = $products->map(function ($product) {
+            return [
+                'id'   => $product->id,
+                'text' => $product->description?->name ?? '',
+            ];
+        });
+
+        return response()->json(['items' => $data]);
     }
 }

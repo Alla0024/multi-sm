@@ -26,7 +26,8 @@ class AttributeGroup extends Model
 
     public function description(): HasOne
     {
-        return $this->hasOne(AttributeGroupDescription::class, 'attribute_group_id')->where('language_id', config('settings.locale.default_language_id'));
+        return $this->hasOne(AttributeGroupDescription::class, 'attribute_group_id')
+                    ->where('language_id', config('settings.locale.default_language_id'));
     }
 
     public function descriptions(): HasMany

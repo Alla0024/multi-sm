@@ -165,7 +165,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('api/get_option_to_filter', 'ApiController@getOptionToFilter')->name('get_option_to_filter');
         Route::get('api/get_option_groups', 'ApiController@getOptionGroups')->name('get_option_groups');
         Route::get('api/get_attributes', 'ApiController@getAttributes')->name('get_attributes');
-        Route::get('api/get_news', 'ApiController@getNews')->name('get_news');
         Route::get('api/get_attribute_icons', 'ApiController@getIcons')->name('get_attribute_icons');
         Route::get('api/get_words', 'ApiController@getWords')->name('get_words');
         Route::get('api/get_attribute_words', 'ApiController@getAttributeWords')->name('get_attribute_words');
@@ -209,9 +208,9 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::get('getProducts', 'App\Http\Controllers\Content\ApiController@getProducts')->name('getProducts');
             Route::get('getStores', 'App\Http\Controllers\Content\ApiController@getStores')->name('getStores');
             Route::get('getLocations', 'App\Http\Controllers\Content\ApiController@getLocations')->name('getLocations');
-
-
-            Route::get('getAttributes', 'Content\AttributeController@getAttributes')->name('getAttributes');
+            Route::get('getProduct', 'App\Http\Controllers\Content\ApiController@getProduct')->name('getProduct');
+            Route::get('getNews', 'App\Http\Controllers\Content\ApiController@getNews')->name('getNews');
+            Route::get('getAttributes', 'App\Http\Controllers\Content\ApiController@getAttributes')->name('getAttributes');
             Route::get('getFilters', 'Content\FilterController@getFilters')->name('getFilters');
             Route::get('getOptionValues', 'Content\OptionValueController@getOptionValues')->name('getOptionValues');
             Route::any('getSeoData', 'Content\SeoDataController@getSeoData')->name('getSeoData');
