@@ -735,4 +735,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductDescription::class, 'product_id')->where('language_id', config('settings.locale.default_language_id'));
     }
+
+    public function stores(): BelongsToMany
+    {
+        return $this->belongsToMany(Store::class, ProductToStore::class);
+    }
 }
