@@ -116,4 +116,4 @@
         'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
     ];
 @endphp
-@include('components.table.table_items', ['inputType' => $arrDataNews, 'data' => $category['news'] ?? [], 'search_select_type' => 'new_id', 'name' => 'news', 'id_name' => 'id', 'url' => 'get_news', 'tab' => 'news', 'parse' => true])
+@include('components.table.table_items', ['inputType' => $arrDataNews, 'data' => $category['news'] ?? [], 'search_select_type' => 'new_id', 'name' => 'news', 'id_name' => 'id', 'url' => 'getNews', 'tab' => 'news', 'parse' => true])
