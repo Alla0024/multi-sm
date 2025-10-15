@@ -740,4 +740,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Store::class, ProductToStore::class);
     }
+
+    public function seoPath()
+    {
+        return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'product');
+    }
 }
