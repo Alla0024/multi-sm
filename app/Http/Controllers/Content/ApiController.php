@@ -153,24 +153,48 @@ class ApiController extends AppBaseController
             return abort(404);
         }
     }
+//    public function getAttributesWithGroups(Request $request)
+//    {
+//        $attributes = Attribute::with('description')->get();
+//
+//        $attribute_groups = AttributeGroup::with('description')->get();
+//
+//        $languages = Language::getLanguages();
+//
+//        if ($request->ajax()) {
+//            return response()->json([
+//                'attributes' => $attributes,
+//                'attribute_groups' => $attribute_groups,
+//                'languages' => $languages,
+//            ]);
+//        }
+//
+//        return abort(404);
+//    }
+
     public function getAttributes(Request $request)
     {
-        $attributes = Attribute::with('description')->get();
+        $term = $request->get('term');
 
-        $attribute_groups = AttributeGroup::with('description')->get();
+        $attributes = Attribute::with(['description', 'attributeGroup.description'])
+            ->when($term, function ($query, $term) {
+                $query->whereHas('description', function ($q) use ($term) {
+                    $q->where('name', 'LIKE', '%' . $term . '%');
+                });
+            })
+            ->get();
 
-        $languages = Language::getLanguages();
+        $data = $attributes->map(function ($attribute) {
+            $groupName = optional($attribute->attributeGroup->description)->name;
+            $attrName = optional($attribute->description)->name;
 
-        if ($request->ajax()) {
-            return response()->json([
-                'attributes' => $attributes,
-                'attribute_groups' => $attribute_groups,
-                'languages' => $languages,
-                'words' => $this->vars['word'],
-            ]);
-        }
+            return [
+                'id' => $attribute->id,
+                'text' => trim($groupName . ' > ' . $attrName),
+            ];
+        })->filter(fn($item) => !empty($item['text']))->values();
 
-        return abort(404);
+        return response()->json(['items' => $data]);
     }
     public function getNews(Request $request)
     {
