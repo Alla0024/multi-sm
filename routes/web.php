@@ -69,7 +69,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('fiscalization', 'Content\FiscalizationController@index')->name('fiscalization');
         Route::resource('option_values', 'Content\OptionValueController');
         Route::resource('categories', 'App\Http\Controllers\Content\CategoryController');
-        Route::resource('products', 'Content\ProductController');
+        Route::resource('products', 'App\Http\Controllers\Content\ProductController');
         Route::resource('panoramas', 'Content\PanoramaController');
         Route::resource('reviews', 'Content\ReviewController');
         Route::resource('sales', 'Content\SaleController');
