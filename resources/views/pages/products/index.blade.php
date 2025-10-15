@@ -7,7 +7,7 @@
                 <div class="col-sm-6">
                                             <div class="col-sm-6">
                             <div class="title-head">{!!  $word['products'] !!}</div>
-                            <div class="count-elements">Вього елементів: {{ products->total() }}</div>
+                            <div class="count-elements">Вього елементів: {{ $products->total() }}</div>
                         </div>
                                     </div>
                 <div class="col-sm-2">

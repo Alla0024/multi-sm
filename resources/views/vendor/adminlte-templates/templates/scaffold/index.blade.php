@@ -10,7 +10,7 @@
                     @else
                         <div class="col-sm-6">
                             <div class="title-head">@{!!  $word['{{ $config->modelNames->camelPlural }}'] !!}</div>
-                            <div class="count-elements">Вього елементів: @{{ {!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}->total() }}</div>
+                            <div class="count-elements">Вього елементів: @{{ ${!! $config->prefixes->getRoutePrefixWith('.') !!}{!! $config->modelNames->camelPlural !!}->total() }}</div>
                         </div>
                     @endif
                 </div>

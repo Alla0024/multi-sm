@@ -63,3 +63,4 @@ class AppBaseController extends BaseController
         $this->vars['word'] += $defaultWord;
     }
 }
+
