@@ -68,7 +68,7 @@ class Product extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Category::class, 'category_id');
+        return $this->belongsTo(\App\Models\Category::class, 'category_id')->with('description');
     }
 
     public function currency(): BelongsTo
@@ -78,7 +78,7 @@ class Product extends Model
 
     public function stockStatus(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\StockStatus::class, 'stock_status_id');
+        return $this->belongsTo(\App\Models\StockStatus::class, 'stock_status_id')->with('description');
     }
 
     public function kit(): BelongsTo
@@ -93,7 +93,7 @@ class Product extends Model
 
     public function manufacturer(): BelongsTo
     {
-        return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
+        return $this->belongsTo(Manufacturer::class, 'manufacturer_id')->with('description');
     }
 
     //    public function id82ProductPrices(): HasMany

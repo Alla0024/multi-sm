@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class StockStatus extends Model
+{
+    public $table = 'stock_statuses';
+
+    public $fillable = [
+        'status'
+    ];
+
+    protected $casts = [
+        'status' => 'boolean'
+    ];
+
+    public static array $rules = [
+        'status' => 'required|boolean'
+    ];
+
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Product::class, 'stock_status_id');
+    }
+
+    public function languages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\Language::class, 'stock_status_descriptions');
+    }
+    public function descriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StockStatusDescription::class, 'stock_status_id');
+    }
+
+    public function description()
+    {
+        return $this->hasOne(StockStatusDescription::class, 'stock_status_id')
+            ->where('language_id', config('settings.locale.default_language_id'));
+    }
+
+    public static function getStockStatuses()
+    {
+        return self::with('descriptions')->where('status', 1)->get();
+    }
+}

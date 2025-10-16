@@ -29,6 +29,13 @@ class Manufacturer extends Model
         'is_vtm' => 'required',
     ];
 
+    public function description()
+    {
+        return $this->hasOne(ManufacturerDescription::class, 'manufacturer_id')
+            ->where('language_id', config('settings.locale.default_language_id'));
+
+    }
+
     public function descriptions(): HasMany
     {
         return $this->hasMany(ManufacturerDescription::class, 'manufacturer_id');

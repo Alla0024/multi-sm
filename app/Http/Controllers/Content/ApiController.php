@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Content;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Attribute;
 use App\Models\AttributeGroup;
+use App\Models\Category;
 use App\Models\Filter;
 use App\Models\Language;
+use App\Models\Manufacturer;
 use App\Models\NewDescription;
 use App\Models\NewsDescription;
 use App\Models\OptionValueGroup;
@@ -248,4 +250,55 @@ class ApiController extends AppBaseController
 
         return response()->json(['items' => $data]);
     }
+
+    public function getManufacturers()
+    {
+        $term = request('term');
+
+        $manufacturers = Manufacturer::with(['description' => function ($query) {
+            $query->select('manufacturer_id', 'name');
+        }])
+            ->when($term, function ($query, $term) {
+                $query->whereHas('description', function ($q) use ($term) {
+                    $q->where('name', 'LIKE', "%{$term}%");
+                });
+            })
+            ->orderByDesc('id')
+            ->get(['id']);
+
+        $data = $manufacturers->map(function ($manufacturer) {
+            return [
+                'id'   => $manufacturer->id,
+                'text' => $manufacturer->description->name ?? '',
+            ];
+        });
+
+        return response()->json(['items' => $data]);
+    }
+
+    public function getCategoriesInfo()
+    {
+        $term = request('term');
+
+        $categories = Category::with(['description' => function ($query) {
+            $query->select('category_id', 'name');
+        }])
+            ->when($term, function ($query, $term) {
+                $query->whereHas('description', function ($q) use ($term) {
+                    $q->where('name', 'LIKE', "%{$term}%");
+                });
+            })
+            ->orderByDesc('id')
+            ->get(['id']);
+
+        $data = $categories->map(function ($category) {
+            return [
+                'id'   => $category->id,
+                'text' => $category->description->name ?? '',
+            ];
+        });
+
+        return response()->json(['items' => $data]);
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\FirstPathQuery;
 use App\Models\ProductDescription;
+use App\Models\StockStatus;
 use App\Repositories\ProductRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ class ProductController extends AppBaseController
     public function index(Request $request)
     {
         $products = $this->productRepository->filterRows($request->all());
+        $stockStatuses = StockStatus::getStockStatuses();
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ProductDescription::class,
@@ -41,6 +43,7 @@ class ProductController extends AppBaseController
 
         return $this->renderOutput([
             'products' => $products,
+            'stockStatuses' => $stockStatuses,
             'fields' => $fields,
         ]);
     }

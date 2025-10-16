@@ -51,6 +51,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('attributes', 'App\Http\Controllers\Content\AttributeController');
         Route::resource('fillings', 'App\Http\Controllers\Content\FillingController');
         Route::resource('clients', 'App\Http\Controllers\Content\ClientController');
+        Route::resource('stockStatuses', 'App\Http\Controllers\Content\StockStatusController');
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
         Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
@@ -200,9 +201,10 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('/badReviews', 'Content\ReviewController@badReviewsIndex')->name('bad_reviews');
         Route::post('/getBadReviews', 'Content\ReviewController@getBadReviews')->name('get_bad_reviews');
         Route::group(['prefix' => 'api'], function () {
-            Route::get('getManufacturers', 'Content\ManufacturerController@getManufacturers')->name('getManufacturers');
+            Route::get('getManufacturers', 'App\Http\Controllers\Content\ApiController@getManufacturers')->name('getManufacturers');
             Route::get('getKits', 'Content\KitController@getKits')->name('getKits');
             Route::get('getCategories', 'App\Http\Controllers\Content\ApiController@getCategories')->name('getCategories');
+            Route::get('getCategoriesInfo', 'App\Http\Controllers\Content\ApiController@getCategoriesInfo')->name('getCategoriesInfo');
             Route::get('getNewsCategories', 'App\Http\Controllers\Content\ApiController@getNewsCategories')->name('getNewsCategories');
             Route::get('getAuthors', 'App\Http\Controllers\Content\ApiController@getAuthors')->name('getAuthors');
             Route::get('getProducts', 'App\Http\Controllers\Content\ApiController@getProducts')->name('getProducts');
@@ -244,3 +246,5 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
     });
 });
+
+Route::resource('stock-statuses', App\Http\Controllers\Content\StockStatusController::class);
