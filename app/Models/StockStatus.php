@@ -29,4 +29,19 @@ class StockStatus extends Model
     {
         return $this->belongsToMany(\App\Models\Language::class, 'stock_status_descriptions');
     }
+    public function descriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StockStatusDescription::class, 'stock_status_id');
+    }
+
+    public function description()
+    {
+        return $this->hasOne(StockStatusDescription::class, 'stock_status_id')
+            ->where('language_id', config('settings.locale.default_language_id'));
+    }
+
+    public function getStockStatuses()
+    {
+        return $this->with('description')->where('status', 1)->get();
+    }
 }

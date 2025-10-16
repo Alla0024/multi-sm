@@ -88,6 +88,7 @@ class ProductRepository extends BaseRepository
             'seoPath',
             'manufacturer',
             'category',
+            'stockStatus',
             'descriptions' => fn($q) => $q->where('language_id', $languageId),
         ]);
 

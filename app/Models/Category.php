@@ -122,4 +122,10 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\TopSales')->with('description');
     }
+
+    public function description()
+    {
+        return $this->hasOne('App\Models\CategoryDescription')
+            ->where('language_id', config('settings.locale.default_language_id'));
+    }
 }
