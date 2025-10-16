@@ -36,6 +36,10 @@ return [
     'input_radio' => 'Прапорець (радіо-кнопка)',
     'input_checkbox' => 'Перемикач (чекбокс)',
 
+    'status_stock_4' => '#D79898',
+    'status_stock_7' => '#64BE6F',
+    'status_stock_9' => '#B7A6A6',
+
     // Menu
     '1' => '🤢',
     '5' => '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"><rect width="22" height="10" fill="#0057B7"/><rect width="22" height="10" y="10" fill="#FFD700"/></svg>',
