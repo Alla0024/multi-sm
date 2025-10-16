@@ -201,9 +201,10 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('/badReviews', 'Content\ReviewController@badReviewsIndex')->name('bad_reviews');
         Route::post('/getBadReviews', 'Content\ReviewController@getBadReviews')->name('get_bad_reviews');
         Route::group(['prefix' => 'api'], function () {
-            Route::get('getManufacturers', 'Content\ManufacturerController@getManufacturers')->name('getManufacturers');
+            Route::get('getManufacturers', 'App\Http\Controllers\Content\ApiController@getManufacturers')->name('getManufacturers');
             Route::get('getKits', 'Content\KitController@getKits')->name('getKits');
             Route::get('getCategories', 'App\Http\Controllers\Content\ApiController@getCategories')->name('getCategories');
+            Route::get('getCategoriesInfo', 'App\Http\Controllers\Content\ApiController@getCategoriesInfo')->name('getCategoriesInfo');
             Route::get('getNewsCategories', 'App\Http\Controllers\Content\ApiController@getNewsCategories')->name('getNewsCategories');
             Route::get('getAuthors', 'App\Http\Controllers\Content\ApiController@getAuthors')->name('getAuthors');
             Route::get('getProducts', 'App\Http\Controllers\Content\ApiController@getProducts')->name('getProducts');
