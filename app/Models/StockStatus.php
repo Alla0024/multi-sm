@@ -40,8 +40,8 @@ class StockStatus extends Model
             ->where('language_id', config('settings.locale.default_language_id'));
     }
 
-    public function getStockStatuses()
+    public static function getStockStatuses()
     {
-        return $this->with('description')->where('status', 1)->get();
+        return self::with('descriptions')->where('status', 1)->get();
     }
 }
