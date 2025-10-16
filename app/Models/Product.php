@@ -14,32 +14,11 @@ class Product extends Model
 
     public $fillable = [
         'article',
-        'hash',
-        'sku',
-        'kit',
-        'currency_id',
         'manufacturer_id',
         'category_id',
-        'kit_id',
         'stock_status_id',
         'sort_order',
         'status',
-        'rozetka_status',
-        'google_remarketing_status',
-        'rating',
-        'reviews',
-        'location_id',
-        'name_in_1c',
-        'copy',
-        'image',
-        'image_path',
-        'viewers_number_from',
-        'viewers_number_to',
-        'show_in_stock',
-        'show_count_viewers',
-        'mini_images',
-        'mark',
-        'cashback'
     ];
 
     protected $casts = [

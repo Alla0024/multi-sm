@@ -86,12 +86,18 @@ class ProductRepository extends BaseRepository
 
         $query = $this->model::with([
             'seoPath',
+            'manufacturer',
+            'category',
             'descriptions' => fn($q) => $q->where('language_id', $languageId),
         ]);
 
-        foreach (['sort_order', 'status'] as $field) {
+        foreach (['sort_order', 'status', 'manufacturer_id', 'category_id', 'stock_status_id'] as $field) {
             $query->when($input[$field] ?? null, fn($q, $value) => $q->where($field, $value));
         }
+
+        $query->when(!empty($input['article']), function ($q) use ($input) {
+            $q->where('article', 'LIKE', "%{$input['article']}%");
+        });
 
         $query->when($input['name'] ?? null, function ($q, $name) use ($languageId) {
             $q->whereHas('descriptions', function ($sub) use ($languageId, $name) {
