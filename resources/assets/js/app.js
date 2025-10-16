@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ignore inputs value ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('form').forEach(function(form) {
         form.addEventListener('submit', function() {
-            form.querySelectorAll('.ignore_form').forEach(function(el) {
+            document.querySelectorAll('.ignore_form').forEach(function(el) {
                 el.disabled = true;
             });
         });

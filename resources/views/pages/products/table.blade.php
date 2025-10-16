@@ -8,7 +8,8 @@
             </tr>
             </thead>
             <tbody>
-            @dump($products)
+{{--            @dump($products[0])--}}
+{{--            @dump($stockStatuses)--}}
             @foreach($products as $product)
                 <tr>
                     <th>
@@ -28,7 +29,13 @@
                             @endif
                          @elseif($index == 'image' && $field['inTable'])
                             <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($product[$index]) && $product[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$product[$index] : '/images/common/no_images.png'}}" alt=""></td>
-                         @else
+                        @elseif($index == 'manufacturer_id')
+                            <td>{{$product['manufacturer']['description']['name']}}</td>
+                        @elseif($index == 'category_id')
+                            <td>{{$product['category']['description']['name']}}</td>
+                        @elseif($index == 'stock_status_id')
+                            <td>{{$product['stockStatus']['description']['name']}}</td>
+                        @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $product[$index] }}</td>
                              @endif

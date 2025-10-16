@@ -22,6 +22,62 @@
                                 <option value="1" @if(request($index) == '1') selected @endif>{{$word['status_1']}}</option>
                                 <option value="0" @if(request($index) == '0') selected @endif>{{$word['status_0']}}</option>
                             </select>
+
+                        @elseif($index == 'manufacturer_id')
+                            <div class="flex-row input input-block">
+                                <div class="input-group input-list-search" style="position: relative;">
+                                    <input type="hidden" name="{{$index}}" value="{{request($index)}}">
+                                <input
+                                    class="ignore_form"
+                                    name="{{$index}}"
+                                    placeholder="Пошук..."
+                                    autocomplete="off"
+                                    value="{{request($index)}}"
+                                    data-url="api/getManufacturers"
+                                    @input="$store.page.searchSelect($event.target)"
+                                    @focus="$store.page.searchSelect($event.target)"
+                                    custom="true"
+                                >
+                                <ul class="custom-list hide">
+
+                                </ul>
+                                <div class="svg">
+                                    <img src="/images/common/arrow_select.png" alt="">
+                                </div>
+                            </div>
+                            </div>
+                        @elseif($index == 'category_id')
+                            <div class="flex-row input input-block">
+                                <div class="input-group input-list-search" style="position: relative;">
+                                    <input type="hidden" name="{{$index}}" value="{{request($index)}}">
+                                    <input
+                                        class="ignore_form"
+                                        name="{{$index}}"
+                                        placeholder="Пошук..."
+                                        autocomplete="off"
+                                        value="{{request($index)}}"
+                                        data-url="api/getCategoriesInfo"
+                                        @input="$store.page.searchSelect($event.target)"
+                                        @focus="$store.page.searchSelect($event.target)"
+                                        custom="true"
+                                    >
+                                    <ul class="custom-list hide">
+
+                                    </ul>
+                                    <div class="svg">
+                                        <img src="/images/common/arrow_select.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        @elseif($index == 'stock_status_id')
+                            <select class="" name="{{ $index }}" aria-label="{{ $word['search_'.$index] }}" aria-describedby="select-addon">
+                                <option value=""  selected >Усе</option>
+                                @foreach($stockStatuses as $item)
+                                    <option value="{{$item['id']}}" @if(request($index) == $item['id']) selected @endif>{{$item['descriptions'][1]['name']}}</option>
+                                @endforeach
+                            </select>
+                        @elseif($index == 'sort_order')
+                            <div></div>
                         @else
                             <div class="">
                                 <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">

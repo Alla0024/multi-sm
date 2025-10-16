@@ -34,26 +34,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const list = block.querySelector('.custom-list');
         const url = input.dataset.url;
         let debounceTimeout;
-        const renderList = (items) => {
+        const renderList = (items, value = '') => {
             list.innerHTML = '';
             if (Array.isArray(items) && items.length > 0) {
                 items.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = item.text;
-                    if(input.getAttribute('custom') === 'true'){
-                        function setItem(){
-                            input.value = item.text;
-                            hidden.value = item.id;
-                            list.classList.add('hide');
+                    if(item.text.toLowerCase().includes(value)){
+                        const li = document.createElement('li');
+                        li.textContent = item.text;
+                        if(input.getAttribute('custom') === 'true'){
+                            function setItem(){
+                                input.value = item.text;
+                                hidden.value = item.id;
+                                list.classList.add('hide');
+                            }
+                            li.removeEventListener('click', setItem);
+                            li.addEventListener('click', setItem);
+                        } else {
+                            li.setAttribute('x-on:click', `setItem($event.target, keyData, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
                         }
-                        li.removeEventListener('click', setItem);
-                        li.addEventListener('click', setItem);
-                    } else {
-                        li.setAttribute('x-on:click', `setItem($event.target, keyData, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
-                    }
 
-                    list.appendChild(li);
+                        list.appendChild(li);
+                    }
                 });
+                if(list.innerHTML == ''){
+                    list.innerHTML = '<li style="color:#999;cursor:default;">Нічого не знайдено</li>';
+                }
             } else {
                 list.innerHTML = '<li style="color:#999;cursor:default;">Нічого не знайдено</li>';
             }
@@ -66,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (url) {
                     axios.get(url, { params: { q: value } })
                         .then(response => {
-                            renderList(response.data.items  || []);
+                            renderList(response.data.items  || [], value);
                             list.classList.remove('hide');
                         })
                         .catch(error => {

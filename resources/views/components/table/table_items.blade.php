@@ -226,7 +226,7 @@
                 console.log(this.parse)
                 if(this.parse){
                     this.data.forEach(item => {
-                        item.id = item.description['{{$search_select_type}}']
+                        item.id = item.description['{{$search_select_type ?? ''}}']
                         item.text = item.description.name ?? item.description.text ?? item.description.title
                     })
                     console.log(this.data)
