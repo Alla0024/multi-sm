@@ -10,7 +10,6 @@ class ProductDescriptionRepository extends BaseRepository
 {
     protected $fieldSearchable = [
         'name',
-        'meta_title',
     ];
 
     protected $additionalFields = [

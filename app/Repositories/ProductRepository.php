@@ -13,7 +13,6 @@ class ProductRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
         'article',
-        'hash',
         'manufacturer_id',
         'category_id',
         'stock_status_id',

@@ -13,7 +13,7 @@
 
         @foreach($fields as $index => $field)
             @if($index != 'id' && $field['inTable'])
-                <th class="">
+                <th class="" @if($index == 'status' || $index == 'article')style="width: 132px" @endif>
                     @if(isset($field['searchable']) && $field['searchable'])
                         <div class="search-name-input">{{ $word['title_'.$index] }}</div>
                         @if($index == 'status')

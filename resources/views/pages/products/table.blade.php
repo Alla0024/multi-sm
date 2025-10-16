@@ -8,6 +8,7 @@
             </tr>
             </thead>
             <tbody>
+            @dump($products)
             @foreach($products as $product)
                 <tr>
                     <th>
