@@ -59,7 +59,10 @@ class OptionValue extends Model
     {
         return $this->hasOne(OptionValueDescription::class);
     }
-
+    public function description()
+    {
+        return $this->hasOne(OptionValueDescription::class)->where('language_id', config('settings.locale.default_language_id'));
+    }
     public function descriptions(): HasMany
     {
         return $this->hasMany(OptionValueDescription::class, 'option_value_id');

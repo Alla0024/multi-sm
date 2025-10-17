@@ -57,6 +57,15 @@ class ProductRepository extends BaseRepository
                 'productOptions',
                 'manufacturer',
                 'category',
+                'oversize',
+                'productOptionValues',
+                'related',
+                'videos',
+                'companions',
+                'similarProducts',
+                'certificates',
+                'filling',
+                'kitProducts',
             ])
             ->find($id, $columns);
 

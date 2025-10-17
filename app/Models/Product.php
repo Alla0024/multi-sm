@@ -466,9 +466,9 @@ class Product extends Model
         return $this->hasMany(\App\Models\ProductReview::class, 'product_id');
     }
 
-    public function productRelated(): HasOne
+    public function productRelated()
     {
-        return $this->hasOne(\App\Models\ProductRelated::class);
+        return $this->hasOne(ProductRelated::class)->with('description');
     }
 
     public function productRelated4s(): HasMany
@@ -483,7 +483,7 @@ class Product extends Model
 
     public function productOversizes(): HasMany
     {
-        return $this->hasMany(\App\Models\ProductOversize::class, 'product_id');
+        return $this->hasMany(ProductOversize::class, 'product_id')->distinct();
     }
 
     public function options(): BelongsToMany
@@ -721,7 +721,7 @@ class Product extends Model
     }
     public function images()
     {
-        return $this->hasMany('App\Models\ProductImage')->orderBy('sort_order');
+        return $this->hasMany(ProductImage::class)->orderBy('sort_order');
     }
     public function filters()
     {
@@ -729,16 +729,45 @@ class Product extends Model
     }
     public function icons()
     {
-        return $this->hasMany('App\Models\ProductAttributeIcon');
+        return $this->hasMany(ProductAttributeIcon::class);
     }
 
     public function optionValueGroups()
     {
-        return $this->hasMany('App\Models\ProductOptionValueGroup')->with( 'optionValueGroup');
+        return $this->hasMany(ProductOptionValueGroup::class)->with( 'optionValueGroup');
     }
 
     public function productOptions()
     {
         return $this->hasMany(ProductOption::class)->with('option');
+    }
+    public function productOptionValues()
+    {
+        return $this->hasMany(ProductOptionValueToOptionValueGroup::class)->with('option_value');
+    }
+    public function videos()
+    {
+        return $this->hasMany(ProductToYoutube::class);
+    }
+    public function companions()
+    {
+        return $this->hasMany(CompanionProduct::class)->with('description');
+    }
+
+    public function similarProducts()
+    {
+        return $this->hasMany(ProductSimilar::class)->with('description', 'product')->orderBy('sort_order');
+    }
+    public function certificates()
+    {
+        return $this->hasMany(ProductCertificate::class);
+    }
+    public function filling()
+    {
+        return $this->hasMany(ProductFilling::class)->with('description');
+    }
+    public function kitProducts()
+    {
+        return $this->hasMany(ProductKit::class)->with('description', 'kitProduct');
     }
 }
