@@ -52,6 +52,7 @@ class ProductRepository extends BaseRepository
                 'stores:id,name',
                 'images',
                 'filters',
+                'productAttributes',
                 'icons',
                 'optionValueGroups',
                 'productOptions',

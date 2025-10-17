@@ -30,7 +30,7 @@ class Attribute extends Model
 
     public function attributeGroup(): BelongsTo
     {
-        return $this->belongsTo(AttributeGroup::class, 'attribute_group_id');
+        return $this->belongsTo(AttributeGroup::class, 'attribute_group_id')->with('description');
     }
 
     public function categories(): BelongsToMany
@@ -43,9 +43,9 @@ class Attribute extends Model
         return $this->hasMany(AttributeIconToAttribute::class, 'attribute_id');
     }
 
-    public function productAttributeIcons(): HasMany
+    public function productAttributeIcons()
     {
-        return $this->hasMany(ProductAttributeIcon::class, 'attribute_id');
+        return $this->hasManyThrough(ProductAttributeIcon::class, AttributeIconToAttribute::class, 'attribute_id', 'id', 'id', 'attribute_icon_id')->with('description');
     }
 
     public function productAttributes(): HasMany

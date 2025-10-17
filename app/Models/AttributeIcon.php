@@ -33,6 +33,11 @@ class AttributeIcon extends Model
     {
         return $this->hasMany(AttributeIconToAttribute::class, 'attribute_icon_id');
     }
+    public function description(): HasOne
+    {
+        return $this->hasOne(AttributeIconDescription::class, 'attribute_icon_id')
+                    ->where('language_id', config('settings.locale.default_language_id'));
+    }
 
     public function descriptions(): HasMany
     {
