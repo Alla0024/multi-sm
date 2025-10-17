@@ -122,7 +122,7 @@
 </div>
 
 <!-- Description Fields -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
     {!! Form::label('descriptions_description', 'Опис') !!}
     <div class="flex-row input lang-block">
         @foreach($languages as $language)
@@ -138,12 +138,64 @@
     </div>
 </div>
 
+<!-- Type Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+    {!! Form::label('type', 'Тип') !!}
+    <div class="flex-row input lang-block">
+        @foreach($languages as $language)
+            <div class="input-group mt-3 input-min">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
+                {!! Form::text("descriptions[$language->id][type]", null, ['class' => 'form-control']) !!}
+            </div>
+        @endforeach
+    </div>
+</div>
+
+<!-- Tag Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+    {!! Form::label('tag', 'Теги') !!}
+    <div class="flex-row input lang-block">
+        @foreach($languages as $language)
+            <div class="input-group mt-3 input-min">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
+                {!! Form::text("descriptions[$language->id][tag]", null, ['class' => 'form-control']) !!}
+            </div>
+        @endforeach
+    </div>
+</div>
+
+<!-- Meta-title Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+    {!! Form::label('meta', 'META Title') !!}
+    <div class="flex-row input lang-block">
+        @foreach($languages as $language)
+            <div class="input-group mt-3 input-min">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
+                {!! Form::text("descriptions[$language->id][meta_title]", null, ['class' => 'form-control']) !!}
+            </div>
+        @endforeach
+    </div>
+</div>
+
+<!-- Meta-Description Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+    {!! Form::label('meta-desc', 'META Description') !!}
+    <div class="flex-row input lang-block">
+        @foreach($languages as $language)
+            <div class="input-group mt-3 input-min">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
+                {!! Form::textarea("descriptions[$language->id][meta_description]", null, ['class' => 'form-control']) !!}
+            </div>
+        @endforeach
+    </div>
+</div>
+
 
 
 
 
 <!-- Sku Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('sku', $word['title_sku']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -153,7 +205,7 @@
 </div>
 
 <!-- Currency Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('currency_id', $word['title_currency_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -164,7 +216,7 @@
 
 
 <!-- Manufacturer Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('manufacturer_id', $word['title_manufacturer_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -175,7 +227,7 @@
 
 
 <!-- Category Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('category_id', $word['title_category_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -186,7 +238,7 @@
 
 
 <!-- Kit Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('kit_id', $word['title_kit_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -197,7 +249,7 @@
 
 
 <!-- Stock Status Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('stock_status_id', $word['title_stock_status_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -207,7 +259,7 @@
 </div>
 
 <!-- Rozetka Status Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('rozetka_status', $word['title_rozetka_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -218,7 +270,7 @@
 
 
 <!-- Google Remarketing Status Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('google_remarketing_status', $word['title_google_remarketing_status']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -229,7 +281,7 @@
 
 
 <!-- Rating Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('rating', $word['title_rating']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -240,7 +292,7 @@
 
 
 <!-- Reviews Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('reviews', $word['title_reviews']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -251,7 +303,7 @@
 
 
 <!-- Location Id Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('location_id', $word['title_location_id']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -262,7 +314,7 @@
 
 
 <!-- Name In 1C Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('name_in_1c', $word['title_name_in_1c']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -273,7 +325,7 @@
 
 
 <!-- Copy Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('copy', $word['title_copy']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -284,7 +336,7 @@
 
 
 <!-- Image Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('image', $word['title_image']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -295,7 +347,7 @@
 
 
 <!-- Image Path Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('image_path', $word['title_image_path']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -306,7 +358,7 @@
 
 
 <!-- Viewers Number From Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('viewers_number_from', $word['title_viewers_number_from']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -317,7 +369,7 @@
 
 
 <!-- Viewers Number To Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('viewers_number_to', $word['title_viewers_number_to']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -328,7 +380,7 @@
 
 
 <!-- Show In Stock Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     <div class="form-check">
         {!! Form::hidden('show_in_stock', 0, ['class' => 'form-check-input']) !!}
         {!! Form::checkbox('show_in_stock', '1', null, ['class' => 'form-check-input']) !!}
@@ -338,7 +390,7 @@
 
 
 <!-- Show Count Viewers Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     <div class="form-check">
         {!! Form::hidden('show_count_viewers', 0, ['class' => 'form-check-input']) !!}
         {!! Form::checkbox('show_count_viewers', '1', null, ['class' => 'form-check-input']) !!}
@@ -348,7 +400,7 @@
 
 
 <!-- Mini Images Field -->
-<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-12 col-lg-12 tab-pane input-block" data-for-tab="">
     {!! Form::label('mini_images', $word['title_mini_images']) !!}
     <div class="flex-row input">
         <div class="input-group">
@@ -362,7 +414,7 @@
 
 
 <!-- Cashback Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
     {!! Form::label('cashback', $word['title_cashback']) !!}
     <div class="flex-row input">
         <div class="input-group">
