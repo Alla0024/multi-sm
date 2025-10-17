@@ -52,6 +52,11 @@ class ProductRepository extends BaseRepository
                 'stores:id,name',
                 'images',
                 'filters',
+                'icons',
+                'optionValueGroups',
+                'productOptions',
+                'manufacturer',
+                'category',
             ])
             ->find($id, $columns);
 

@@ -727,4 +727,18 @@ class Product extends Model
     {
         return $this->belongsToMany(Filter::class, ProductFilter::class)->with('description');
     }
+    public function icons()
+    {
+        return $this->hasMany('App\Models\ProductAttributeIcon');
+    }
+
+    public function optionValueGroups()
+    {
+        return $this->hasMany('App\Models\ProductOptionValueGroup')->with( 'optionValueGroup');
+    }
+
+    public function productOptions()
+    {
+        return $this->hasMany(ProductOption::class)->with('option');
+    }
 }
