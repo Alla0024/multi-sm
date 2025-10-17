@@ -60,7 +60,7 @@ class ProductRepository extends BaseRepository
                 'category',
                 'productOversizes',
                 'productOptionValues',
-                'related',
+                'productRelated',
                 'videos',
                 'companions',
                 'similarProducts',
