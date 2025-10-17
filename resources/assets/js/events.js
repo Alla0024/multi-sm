@@ -100,7 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         list.classList.add('hide');
                     }
-                }}, 300)
+                }
+                if(value == ''){
+                    hidden.value = '';
+                }
+            }, 300)
         };
         // input.addEventListener('focus', updateList);
         // input.addEventListener('input', updateList);

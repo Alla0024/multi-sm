@@ -1,9 +1,9 @@
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{!! $fields[$name]['inTab'] !!}">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="{{$tab ?? 'main'}}">
     {!! Form::label($name, $word['title_'.$name]) !!}
     <div class="flex-row input">
         <div class="input-group input-list-search" style="position: relative;">
             @isset($value[$name])
-                <input type="hidden" name="{{$name}}" value="{{$value[$name]['id']}}">
+                <input type="hidden" name="{{$name}}" value="{{$value[$name]['id'] ?? $value[$name]}}">
             @else
                 <input type="hidden" name="{{$name}}" value="">
             @endisset

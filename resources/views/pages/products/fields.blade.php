@@ -116,7 +116,7 @@
     </div>
 </div>
 
-<!-- Damage Field -->
+<!-- Location Damage Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="data">
     Тут має бути Розташування з містами які я не зробив
 </div>
@@ -190,19 +190,81 @@
     </div>
 </div>
 
+<!-- Category Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="connections">
+    {!! Form::label('category_id', 'Головна категорія') !!}
+    <div class="flex-row input input-min">
+        <div class="input-group input-list-search" style="position: relative;">
+            @isset($product['category_id'])
+                <input type="hidden" name="category_id" value="{{$product['category_id']}}">
+            @else
+                <input type="hidden" name="category_id" value="">
+            @endisset
+            <input
+                class="ignore_form"
+                name="category_id"
+                placeholder="Пошук..."
+                autocomplete="off"
+                value="{{$product['category']['description']['name'] ?? ''}}"
+                data-url="{{route('getCategories')}}"
+                @input="$store.page.searchSelect($event.target)"
+                @focus="$store.page.searchSelect($event.target)"
+                custom="true"
+            >
+            <ul class="custom-list hide">
 
-
-
+            </ul>
+            <div class="svg">
+                <img src="/images/common/arrow_select.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Sku Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
-    {!! Form::label('sku', $word['title_sku']) !!}
-    <div class="flex-row input">
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="connections">
+    {!! Form::label('sku', 'СКУ') !!}
+    <div class="flex-row input input-min">
         <div class="input-group">
             {!! Form::text('sku', null, ['class' => 'form-control', 'required', 'maxlength' => 255, 'maxlength' => 255]) !!}
         </div>
     </div>
 </div>
+
+<!-- Manufacture Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="connections">
+    {!! Form::label('manufacturer_id', 'Виробник') !!}
+    <div class="flex-row input input-min">
+        <div class="input-group input-list-search" style="position: relative;">
+            @isset($product['manufacturer_id'])
+                <input type="hidden" name="manufacturer_id" value="{{$product['manufacturer_id']}}">
+            @else
+                <input type="hidden" name="manufacturer_id" value="">
+            @endisset
+            <input
+                class="ignore_form"
+                name="manufacturer_id"
+                placeholder="Пошук..."
+                autocomplete="off"
+                value="{{$product['manufacturer']['description']['name'] ?? ''}}"
+                data-url="{{route('getManufacturers')}}"
+                @input="$store.page.searchSelect($event.target)"
+                @focus="$store.page.searchSelect($event.target)"
+                custom="true"
+            >
+            <ul class="custom-list hide">
+
+            </ul>
+            <div class="svg">
+                <img src="/images/common/arrow_select.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <!-- Currency Id Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="">
@@ -408,6 +470,7 @@
         </div>
     </div>
 </div>
+
 
 
 
