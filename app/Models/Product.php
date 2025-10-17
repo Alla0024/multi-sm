@@ -521,11 +521,6 @@ class Product extends Model
         return $this->hasMany(\App\Models\ProductKit::class, 'product_id');
     }
 
-    public function productImages(): HasMany
-    {
-        return $this->hasMany(\App\Models\ProductImage::class, 'product_id');
-    }
-
     public function productHash(): HasOne
     {
         return $this->hasOne(\App\Models\ProductHash::class);
@@ -723,5 +718,13 @@ class Product extends Model
     public function seoPath()
     {
         return $this->hasOne(FirstPathQuery::class, 'type_id')->where('type', 'product');
+    }
+    public function images()
+    {
+        return $this->hasMany('App\Models\ProductImage')->orderBy('sort_order');
+    }
+    public function filters()
+    {
+        return $this->belongsToMany(Filter::class, ProductFilter::class)->with('description');
     }
 }

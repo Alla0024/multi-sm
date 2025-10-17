@@ -38,6 +38,10 @@ class Filter extends Model
     {
         return $this->belongsTo(\App\Models\FilterGroup::class, 'filter_group_id');
     }
+    public function description()
+    {
+        return $this->hasOne(FilterDescription::class)->where('language_id', config('settings.locale.default_language_id'));
+    }
 
     public function descriptions(): HasMany
     {
