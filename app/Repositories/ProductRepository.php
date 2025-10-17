@@ -50,6 +50,23 @@ class ProductRepository extends BaseRepository
                 'descriptions.language:id,code',
                 'seoPath:type_id,path',
                 'stores:id,name',
+                'images',
+                'filters',
+                'productAttributes',
+                'icons',
+                'optionValueGroups',
+                'productOptions',
+                'manufacturer',
+                'category',
+                'oversize',
+                'productOptionValues',
+                'related',
+                'videos',
+                'companions',
+                'similarProducts',
+                'certificates',
+                'filling',
+                'kitProducts',
             ])
             ->find($id, $columns);
 

@@ -34,9 +34,9 @@ class ProductOptionValueGroup extends Model
         return $this->belongsTo(\App\Models\Option::class, 'option_id');
     }
 
-    public function optionValueGroup(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function optionValueGroup()
     {
-        return $this->belongsTo(\App\Models\OptionValueGroup::class, 'option_value_group_id');
+        return $this->belongsTo(OptionValueGroup::class, 'option_value_group_id')->with('description');
     }
 
     public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo

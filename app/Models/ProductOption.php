@@ -37,9 +37,9 @@ class ProductOption extends Model
         'hide_option' => 'required'
     ];
 
-    public function option(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function option()
     {
-        return $this->belongsTo(\App\Models\Option::class, 'option_id');
+        return $this->belongsTo(Option::class, 'option_id')->with('description');
     }
 
     public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
