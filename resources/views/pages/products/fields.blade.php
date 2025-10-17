@@ -121,6 +121,23 @@
     Тут має бути Розташування з містами які я не зробив
 </div>
 
+<!-- Description Fields -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
+    {!! Form::label('descriptions_description', 'Опис') !!}
+    <div class="flex-row input lang-block">
+        @foreach($languages as $language)
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
+                @if(isset($product))
+                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="description[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1">{!! $product['descriptions'][$language->id]['description'] ?? '' !!}</textarea>
+                @else
+                    <textarea class="form-control dynamic-editor" required id="editor-description-{{$language->id}}" placeholder="Username" name="description[{{$language->id}}][description]" aria-label="Username" aria-describedby="basic-addon1"></textarea>
+                @endif
+            </div>
+        @endforeach
+    </div>
+</div>
+
 
 
 
