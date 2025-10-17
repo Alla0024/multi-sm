@@ -53,6 +53,7 @@ class ProductRepository extends BaseRepository
                 'images',
                 'filters',
                 'productAttributes',
+                'productAttributes.attribute',
                 'icons',
                 'optionValueGroups',
                 'productOptions',
@@ -156,10 +157,10 @@ class ProductRepository extends BaseRepository
             })
             ->toArray();
 
-        $product_option_values = $product->product_option_values
+        $product_option_values = $product->productOptionValues
             ->keyBy('option_value_group_id');
 
-        $product_option_value_groups = $product->option_value_groups
+        $product_option_value_groups = $product->optionValueGroups
             ->sortBy('option_value_group.sort_order')
             ->groupBy('option_id')
             ->mapWithKeys(function ($groups, $optionId) use ($product_option_values) {

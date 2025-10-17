@@ -21,7 +21,7 @@ class ProductAttribute extends Model
     public function attribute()
     {
         return $this->hasOne(Attribute::class, 'id', 'attribute_id')
-            ->with('description', 'attributeGroup', 'productAttributeIcons');
+            ->with('description', 'attributeGroup', 'icons');
     }
 
     public function words()

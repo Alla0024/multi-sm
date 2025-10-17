@@ -43,9 +43,10 @@ class Attribute extends Model
         return $this->hasMany(AttributeIconToAttribute::class, 'attribute_id');
     }
 
-    public function productAttributeIcons()
+    public function icons()
     {
-        return $this->hasManyThrough(ProductAttributeIcon::class, AttributeIconToAttribute::class, 'attribute_id', 'id', 'id', 'attribute_icon_id')->with('description');
+        return $this->hasManyThrough(AttributeIcon::class, AttributeIconToAttribute::class, 'attribute_id',  'id', 'id', 'attribute_icon_id')
+            ->with('description');
     }
 
     public function productAttributes(): HasMany
