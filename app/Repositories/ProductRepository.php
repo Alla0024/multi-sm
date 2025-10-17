@@ -89,8 +89,120 @@ class ProductRepository extends BaseRepository
             ])
             ->toArray();
 
+        $product_filters = $product->filters
+            ->mapWithKeys(fn($filter) => [
+                $filter->id => [
+                    'id' => $filter->id,
+                    'filter_group_id' => $filter->filter_group_id,
+                    'group_name' => $filter->filterGroup->description->name ?? '',
+                    'name' => $filter->description->name ?? '',
+                ],
+            ])
+            ->toArray();
+
+        $product_attributes = $product->productAttributes
+            ->mapWithKeys(function ($productAttribute) {
+                $texts = $productAttribute->descriptions->mapWithKeys(fn($desc) => [
+                    $desc->language_id => [
+                        'text_with_keys' => $desc->text_with_keys ?: $desc->text,
+                        'text' => $desc->text,
+                    ],
+                ]);
+
+                return [
+                    $productAttribute->attribute_id => [
+                        'text_with_keys' => $texts->map(fn($t) => $t['text_with_keys'])->toArray(),
+                        'text' => $texts->map(fn($t) => $t['text'])->toArray(),
+                        'mark' => $productAttribute->mark,
+                        'attribute' => [
+                            'name' => $productAttribute->attribute->description->name ?? '',
+                        ],
+                        'group' => [
+                            'name' => $productAttribute->attribute->attributeGroup->description->name ?? '',
+                        ],
+                        'icons' => $productAttribute->attribute->icons ?? [],
+                    ],
+                ];
+            })
+            ->toArray();
+
+        $product_icons = $product->icons
+            ->groupBy('attribute_id')
+            ->mapWithKeys(fn($icons, $attributeId) => [
+                $attributeId => $icons->mapWithKeys(fn($icon) => [
+                    $icon->icon_id => $icon->icon_id,
+                ])->toArray()
+            ])
+            ->toArray();
+
+        $product_options = $product->options
+            ->mapWithKeys(function ($option) use ($id) {
+                $comments = $option->descriptions
+                    ->where('product_id', $id)
+                    ->pluck('comment', 'language_id')
+                    ->toArray();
+
+                return [
+                    $option->option_id => [
+                        'id' => $option->option_id,
+                        'name' => $option->option->description->name ?? '',
+                        'c1' => $option->c1 ?? null,
+                        'hide_option' => $option->hide_option ?? false,
+                        'image_change' => $option->image_change ?? 0,
+                        'hash' => $option->hash ?? '',
+                        'comments' => $comments,
+                    ],
+                ];
+            })
+            ->toArray();
+
+        $product_option_values = $product->product_option_values
+            ->keyBy('option_value_group_id');
+
+        $product_option_value_groups = $product->option_value_groups
+            ->sortBy('option_value_group.sort_order')
+            ->groupBy('option_id')
+            ->mapWithKeys(function ($groups, $optionId) use ($product_option_values) {
+                return [
+                    $optionId => $groups->map(function ($group) use ($product_option_values) {
+                        return [
+                            'id' => $group->option_value_group_id,
+                            'c1' => $group->c1,
+                            'hash' => $group->hash,
+                            'sort_order' => $group->sort_order,
+                            'name' => $group->option_value_group->description->name ?? '',
+                            'option_value' => $product_option_values[$group->option_value_group_id] ?? null,
+                        ];
+                    })->toArray()
+                ];
+            })
+            ->toArray();
+
+        $product_kits = [];
+
+        if ($product->kit && $product->kits) {
+            $product_kits = $product->kits
+                ->map(function ($kit) {
+                    $kitProduct = $kit->kitProduct()->with('description')->first();
+
+                    return [
+                        'product_id' => $kitProduct->id,
+                        'name' => $kitProduct->description->name ?? '',
+                        'sort_order' => $kit->sort_order,
+                        'quantity' => $kit->quantity,
+                    ];
+                })
+                ->toArray();
+        }
+
         return $product
             ->setRelation('descriptions', $descriptions)
+            ->setRelation('filters', $product_filters)
+            ->setRelation('productAttributes', $product_attributes)
+            ->setRelation('icons', $product_icons)
+            ->setRelation('productOptions', $product_options)
+            ->setRelation('optionValueGroups', $product_option_value_groups)
+            ->setRelation('kitProducts', $product_kits)
             ->setAttribute('path', $product->seoPath->path ?? '')
             ->makeHidden('seoPath');
     }
