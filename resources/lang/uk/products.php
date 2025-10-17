@@ -46,6 +46,8 @@ return [
     'title_article' => 'Артикул',
     'search_article' => 'Пошук за артикулом',
 
+    'title_path' => 'Seo-url',
+
     'title_hash' => 'Хеш-код',
     'search_hash' => 'Пошук за хеш-кодом',
 
