@@ -10,8 +10,9 @@ class ProductFilling extends Model
 
     protected $table = 'product_filling';
 
+    public $incrementing = false;
     public function description()
     {
-        return $this->hasOne(ProductDescription::class)->where('language_id', config('settings.locale.default_language_id'));
+        return $this->hasOne(ProductDescription::class, 'product_id', 'product_id')->where('language_id', config('settings.locale.default_language_id'));
     }
 }
