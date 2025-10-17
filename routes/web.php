@@ -185,7 +185,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::post('copy_promo_code', 'Content\PromoCodesController@copyPromoCode')->name('copy_promo_code');
         Route::post('copy_sale', 'Content\SaleController@copySale')->name('copy_sale');
         Route::post('copy_segment', 'Content\SegmentController@copySegment')->name('copy_segment');
-        Route::post('change_sort_order', 'Content\ProductController@changeSortOrder')->name('change_sort_order');
+        Route::post('change_sort_order', 'App\Http\Controllers\Content\ProductController@changeSortOrder')->name('change_sort_order');
         Route::post('change_sort_order_sale', 'Content\SaleController@changeSortOrder')->name('change_sort_order_sale');
         Route::post('/add-product-to-segment', 'Content\SegmentController@addProductToSegment')->name('addProductToSegment');
         Route::get('/segments/{id}/edit_segment', 'Content\SegmentController@edit_segment')->name('segments.edit_segment');

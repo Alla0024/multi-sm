@@ -179,4 +179,19 @@ class ProductController extends AppBaseController
         return redirect()->route('products.index');
     }
 
+    public function changeSortOrder(Request $request)
+    {
+        if ($request->ajax() && $request->filled(['product_id', 'sort_order'])) {
+            $updated = $this->productRepository->update(
+                ['sort_order' => $request->sort_order],
+                $request->product_id
+            );
+
+            return response()->json(['success' => (bool) $updated]);
+        }
+
+        return response()->json(['success' => false]);
+    }
+
+
 }
