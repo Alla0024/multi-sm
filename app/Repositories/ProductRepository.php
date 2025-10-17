@@ -92,7 +92,9 @@ class ProductRepository extends BaseRepository
         ]);
 
         foreach (['sort_order', 'status', 'manufacturer_id', 'category_id', 'stock_status_id'] as $field) {
-            $query->when($input[$field] ?? null, fn($q, $value) => $q->where($field, $value));
+            if (array_key_exists($field, $input) && $input[$field] !== '' && $input[$field] !== null) {
+                $query->where($field, $input[$field]);
+            }
         }
 
         $query->when(!empty($input['article']), function ($q) use ($input) {
