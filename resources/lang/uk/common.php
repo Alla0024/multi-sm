@@ -40,6 +40,13 @@ return [
     'status_stock_7' => '#64BE6F',
     'status_stock_9' => '#B7A6A6',
 
+    'status_stock_text_4' => 'Продано',
+    'status_stock_text_5' => 'Немає в наявності',
+    'status_stock_text_6' => 'Очікування',
+    'status_stock_text_7' => 'В наявності',
+    'status_stock_text_8' => 'Під замовлення',
+    'status_stock_text_9' => 'Знятий з виробництва',
+
     // Menu
     '1' => '🤢',
     '5' => '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="20"><rect width="22" height="10" fill="#0057B7"/><rect width="22" height="10" y="10" fill="#FFD700"/></svg>',

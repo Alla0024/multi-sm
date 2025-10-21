@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tab change //////////////////////////////////./////////////////////////////////////////
     const buttons = document.querySelectorAll('[data-tab]');
     const contents = document.querySelectorAll('[data-for-tab]');
-
     function switchTab(tab) {
         buttons.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.tab === tab);
@@ -149,23 +148,57 @@ document.addEventListener('DOMContentLoaded', () => {
                         .then(response => {
                             const items = response.data.items || [];
 
-                            const existingValues = Array.from(select.options).filter(opt => opt.selected).map(opt => opt.value);
+                            if (items[0] && items[0].children) {
+                                const existingValues = Array.from(select.options)
+                                    .filter(opt => opt.selected)
+                                    .map(opt => opt.value);
 
-                            const newOptions = items.filter(item => !existingValues.includes(item.id.toString()));
+                                const groupedOptions = items.map(group => {
+                                    const children = (group.children || []).filter(
+                                        item => !existingValues.includes(item.id.toString())
+                                    );
 
-                            if (newOptions.length) {
-                                choices.setChoices(
-                                    newOptions.map(item => ({
-                                        value: item.id,
-                                        label: item.text,
-                                        selected: false,
-                                        disabled: false,
-                                    })),
-                                    'value',
-                                    'label',
-                                    false
+                                    return {
+                                        label: group.text,
+                                        id: group.text.toLowerCase().replace(/\s+/g, '_'),
+                                        choices: children.map(child => ({
+                                            value: child.id,
+                                            label: child.text,
+                                            selected: false,
+                                            disabled: false,
+                                        })),
+                                    };
+                                }).filter(group => group.choices.length > 0);
+
+                                if (groupedOptions.length) {
+                                    choices.setChoices(groupedOptions, 'value', 'label', false);
+                                }
+
+                            } else {
+
+                                const existingValues = Array.from(select.options)
+                                    .filter(opt => opt.selected)
+                                    .map(opt => opt.value);
+
+                                const newOptions = items.filter(
+                                    item => !existingValues.includes(item.id.toString())
                                 );
+
+                                if (newOptions.length) {
+                                    choices.setChoices(
+                                        newOptions.map(item => ({
+                                            value: item.id,
+                                            label: item.text,
+                                            selected: false,
+                                            disabled: false,
+                                        })),
+                                        'value',
+                                        'label',
+                                        false
+                                    );
+                                }
                             }
+
                         })
                         .catch(err => {
                             console.error('AJAX error:', err);
@@ -281,6 +314,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 multiselects.disabled = true;
             }
         });
+    }
+
+    // Change sort order for product page
+    const sort_orders = document.querySelectorAll('.change-sort-order');
+    if(sort_orders.length > 0){
+        sort_orders.forEach(item => {
+            let product_id = item.parentElement.querySelector('input[name="product_id"]');
+            let new_value = item.parentElement.querySelector('input[name="new_value"]');
+            let action = product_id.dataset.action;
+            item.addEventListener('click', (()=>{
+                item.classList.add('hide');
+                new_value.classList.remove('hide')
+                new_value.focus();
+                new_value.addEventListener("keypress", function (event) {
+                    if (event.key === "Enter") {
+                        axios.post(action, {
+                            product_id: product_id.value,
+                            new_value: new_value.value
+                        }).then(response => {
+                            console.log(response)
+                            new_value.classList.add('hide')
+                            item.classList.remove('hide');
+                            item.innerHTML = new_value.value;
+
+                        }).catch(e => console.log(e))
+                    }
+                });
+            }))
+        })
     }
 
 })

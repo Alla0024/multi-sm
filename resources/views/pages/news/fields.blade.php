@@ -96,7 +96,7 @@
 @include('components.inputs.input_search', ['name' => 'category_id', 'value' => $news ?? [], 'url' => 'getCategories'])
 
 <!-- Category News Field -->
-@include('components.inputs.multi_select', ['name' => 'news_categories', 'value' => $news ?? [], 'url' => 'getNewsCategories'])
+@include('components.inputs.multi_select', ['name' => 'news_categories', 'name_input' => 'news_categories[]', 'value' => $news ?? [], 'url' => 'getNewsCategories'])
 
 <!-- Author Id Field -->
 @include('components.inputs.input_search', ['name' => 'author_id', 'value' => $news ?? [], 'url' => 'getAuthors'])

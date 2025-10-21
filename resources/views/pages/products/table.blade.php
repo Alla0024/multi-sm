@@ -35,6 +35,12 @@
                             <td>{{$product['category']['description']['name']}}</td>
                         @elseif($index == 'stock_status_id')
                             <td><div style="padding: 4px 10px; width: max-content; color: white; border-radius: 4px; background: {{$word['status_stock_'.$product['stock_status_id']]}}">{{$product['stockStatus']['description']['name']}}</div></td>
+                        @elseif($index == 'sort_order')
+                            <td>
+                                <input type="hidden" data-action="{{ route('change_sort_order') }}" name="product_id" value="{{$product['id']}}">
+                                <input class="hide" name="new_value" value="{{ $product[$index] }}">
+                                <div class="change-sort-order">{{ $product[$index] }}</div>
+                            </td>
                         @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $product[$index] }}</td>

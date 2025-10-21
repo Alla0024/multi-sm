@@ -93,6 +93,11 @@
             <div class="name">{{$word['menu_products']}}</div>
         </a>
 
+        <a href="{{ route('stockStatuses.index') }}" class="item {{ Request::is($adminPath.'/stockStatuses*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-cart2 fs-20"></i></div>
+            <div class="name">Статуси товарів</div>
+        </a>
+
         <a href="{{ route('vacancies.index') }}" class="item {{ Request::is($adminPath.'/vacancies*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-person-vcard fs-20"></i></div>
             <div class="name">{{$word['menu_vacancies']}}</div>

@@ -1,0 +1,20 @@
+<?php
+return [
+    'stockStatuses' => 'Статуси',
+    'title_id' => 'ID',
+    'title_name' => 'Мови',
+    'title_code' => 'Код',
+    'search_code' => 'Пошук по коду',
+    'title_path' => 'Посилання',
+    'search_path' => 'Пошук по посиланню',
+    'title_status' => 'Статус',
+    'search_status' => 'Пошук по статусу',
+    'title_sort_order' => 'Сортування',
+    'search_sort_order' => 'Пошук по сортуванню',
+    'title_created_at' => 'Створено',
+    'search_created_at' => 'Пошук за дотою створення',
+    'title_updated_at' => 'Оновлено',
+    'search_updated_at' => 'Пошук за дотою оновлення',
+    'tab_main' => 'Головна',
+    'tab_sort' => 'Сортування',
+];

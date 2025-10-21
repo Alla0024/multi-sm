@@ -1,8 +1,9 @@
 <!-- Status Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    <div class="form-check">
-        {!! Form::hidden('status', 0, ['class' => 'form-check-input']) !!}
-        {!! Form::checkbox('status', '1', null, ['class' => 'form-check-input']) !!}
-        {!! Form::label('status', $word['title_status'], ['class' => 'form-check-label']) !!}
+    {!! Form::label('status', $word['title_status']) !!}
+    <div class="flex-row input">
+        <div class="input-group input-min">
+            {!! Form::select('status', ['0' => $word['status_inactive'], '1' => $word['status_active']], null, ['class' => 'form-control', 'required']) !!}
+        </div>
     </div>
 </div>

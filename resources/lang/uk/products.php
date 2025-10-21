@@ -48,6 +48,10 @@ return [
 
     'title_path' => 'Seo-url',
 
+    'title_filters' => 'Фільтри',
+
+    'title_companions' => 'Компаньйони',
+
     'title_hash' => 'Хеш-код',
     'search_hash' => 'Пошук за хеш-кодом',
 
