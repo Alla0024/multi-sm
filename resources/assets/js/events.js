@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-
     // Tab change //////////////////////////////////./////////////////////////////////////////
     const buttons = document.querySelectorAll('[data-tab]');
     const contents = document.querySelectorAll('[data-for-tab]');
@@ -253,7 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
-
 
     // Mask number
     Alpine.store('page').mask = (el) => {
