@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Location;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Cache;
 
 class LocationRepository extends BaseRepository
 {
@@ -77,5 +78,11 @@ class LocationRepository extends BaseRepository
         }
 
         return $result ?? [];
+    }
+    public function getCachedLocations()
+    {
+        return Cache::remember('locations', config('settings.time_cache_admin'), function () {
+            return Location::with('description')->get()->keyBy('id');
+        });
     }
 }
