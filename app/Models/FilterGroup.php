@@ -33,6 +33,11 @@ class FilterGroup extends Model
     {
         return $this->belongsTo(\App\Models\Option::class)->with('description');
     }
+    public function description()
+    {
+        return $this->hasOne(FilterGroupDescription::class, 'filter_group_id')
+            ->where('language_id', config('settings.locale.default_language_id'));
+    }
 
     public function descriptions()
     {
@@ -51,6 +56,6 @@ class FilterGroup extends Model
 
     public function filters(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(\App\Models\Filter::class, 'filter_group_id');
+        return $this->hasMany(\App\Models\Filter::class, 'filter_group_id')->with(['description']);
     }
 }
