@@ -9,6 +9,8 @@ use App\Models\AttributeGroup;
 use App\Models\AttributeIconToAttribute;
 use App\Models\Category;
 use App\Models\Filter;
+use App\Models\FilterDescription;
+use App\Models\FilterGroup;
 use App\Models\Language;
 use App\Models\Manufacturer;
 use App\Models\NewDescription;
@@ -330,5 +332,60 @@ class ApiController extends AppBaseController
             });
 
         return response()->json(['attribute_icons' => $attributeIcons]);
+    }
+
+    public function getFilters(Request $request)
+    {
+        $term = $request->input('term');
+        $data = [];
+
+        $searchDescriptions = [];
+        if ($term) {
+            $searchDescriptions = FilterDescription::query()
+                ->where('name', 'LIKE', "%{$term}%")
+                ->orderBy('name', 'asc')
+                ->pluck('name', 'filter_id')
+                ->toArray();
+        }
+
+        $filterGroupsQuery = FilterGroup::query()
+            ->with([
+                'description',
+                'filters' => function ($query) use ($term) {
+                    $query->with(['description' => function ($descQuery) {
+                        $descQuery->orderBy('name', 'asc');
+                    }]);
+
+                    if ($term) {
+                        $query->whereHas('description', function ($q) use ($term) {
+                            $q->where('name', 'LIKE', "%{$term}%");
+                        });
+                    }
+                },
+            ]);
+
+        $filterGroups = $filterGroupsQuery->get();
+
+        foreach ($filterGroups as $filterGroup) {
+            $children = [];
+
+            foreach ($filterGroup->filters as $filter) {
+                if (!$term || isset($searchDescriptions[$filter->id])) {
+                    $children[] = [
+                        'id' => "{$filterGroup->id}-{$filter->id}",
+                        'text' => $filter->description->name ?? '',
+                    ];
+                }
+            }
+
+            if ($children) {
+                $data[] = [
+                    'text' => $filterGroup->description->name ?? '',
+                    'children' => $children,
+                ];
+            }
+        }
+
+        return response()->json(['items' => $data]);
     }
 }
