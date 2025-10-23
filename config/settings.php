@@ -99,6 +99,10 @@ return [
             'width' => 420,
             'height' => 420,
         ],
+        'icons' => [
+            'width' => 68,
+            'height' => 68,
+        ],
     ],
     'message_authors' => [
         'a0db5e39-76c2-11e8-a9b2-000c2999dc71' => 'Кашул Олександр',

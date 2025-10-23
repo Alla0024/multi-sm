@@ -213,6 +213,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::get('getLocations', 'App\Http\Controllers\Content\ApiController@getLocations')->name('getLocations');
             Route::get('getProduct', 'App\Http\Controllers\Content\ApiController@getProduct')->name('getProduct');
             Route::get('getNews', 'App\Http\Controllers\Content\ApiController@getNews')->name('getNews');
+            Route::get('getAttributeIcons', 'App\Http\Controllers\Content\ApiController@getAttributeIcons')->name('getAttributeIcons');
             Route::get('getAttributes', 'App\Http\Controllers\Content\ApiController@getAttributes')->name('getAttributes');
             Route::get('getFilters', 'Content\FilterController@getFilters')->name('getFilters');
             Route::get('getOptionValues', 'Content\OptionValueController@getOptionValues')->name('getOptionValues');
