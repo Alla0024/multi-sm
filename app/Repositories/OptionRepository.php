@@ -11,6 +11,7 @@ use App\Models\Option;
 use App\Models\OptionDescription;
 use App\Repositories\BaseRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use function Symfony\Component\String\s;
 
 class OptionRepository extends BaseRepository
@@ -57,6 +58,13 @@ class OptionRepository extends BaseRepository
     public function model(): string
     {
         return Option::class;
+    }
+
+    public function getCachedOptions()
+    {
+        return Cache::remember('options', config('settings.time_cache_admin'), function () {
+            return Option::with('description', 'optionValueGroups')->get()->keyBy('id');
+        });
     }
 
     public function isOptionWithProvidedPathExists($path, int|null $id = null): bool

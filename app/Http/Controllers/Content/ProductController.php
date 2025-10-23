@@ -8,6 +8,9 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\FirstPathQuery;
 use App\Models\ProductDescription;
 use App\Models\StockStatus;
+use App\Repositories\CurrencyRepository;
+use App\Repositories\LocationRepository;
+use App\Repositories\OptionRepository;
 use App\Repositories\ProductRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -16,14 +19,30 @@ use Flash;
 
 class ProductController extends AppBaseController
 {
-    /** @var ProductRepository $productRepository*/
+    /** @var ProductRepository $productRepository */
     private $productRepository;
 
-    public function __construct(ProductRepository $productRepo)
+    /** @var LocationRepository $locationRepository */
+    private $locationRepository;
+
+    /** @var OptionRepository $optionRepository */
+    private $optionRepository;
+
+    /** @var $currencyRepository */
+    private $currencyRepository;
+
+    public function __construct(
+        ProductRepository  $productRepo,
+        LocationRepository $locationRepo,
+        OptionRepository   $optionRepo,
+        CurrencyRepository $currencyRepo)
     {
         parent::__construct();
 
         $this->productRepository = $productRepo;
+        $this->locationRepository = $locationRepo;
+        $this->optionRepository = $optionRepo;
+        $this->currencyRepository = $currencyRepo;
     }
 
     /**
@@ -60,9 +79,17 @@ class ProductController extends AppBaseController
             ProductDescription::class,
             FirstPathQuery::class
         ]);
+        $stockStatuses = StockStatus::getStockStatuses();
+        $options = $this->optionRepository->getCachedOptions();
+        $locations = $this->locationRepository->getCachedLocations();
+        $currencies = $this->currencyRepository->getCachedCurrencies();
 
         return $this->renderOutput([
             'fields' => $fields,
+            'options' => $options,
+            'locations' => $locations,
+            'currencies' => $currencies,
+            'stockStatuses' => $stockStatuses,
         ]);
     }
 
@@ -96,7 +123,7 @@ class ProductController extends AppBaseController
         $this->template = 'pages.products.show';
 
         return $this->renderOutput(compact('product'));
-}
+    }
 
     /**
      * Show the form for editing the specified Product.
@@ -116,10 +143,15 @@ class ProductController extends AppBaseController
             ProductDescription::class,
             FirstPathQuery::class
         ]);
+        $stockStatuses = StockStatus::getStockStatuses();
+
+        $options = $this->optionRepository->getCachedOptions();
+        $locations = $this->locationRepository->getCachedLocations();
+        $currencies = $this->currencyRepository->getCachedCurrencies();
 
         $this->template = 'pages.products.edit';
 
-        return $this->renderOutput(compact('product', 'fields'));
+        return $this->renderOutput(compact('product', 'fields', 'options', 'locations', 'currencies' ,'stockStatuses'));
     }
 
     /**
@@ -139,7 +171,7 @@ class ProductController extends AppBaseController
 
         Flash::success(__('common.flash_updated_successfully'));
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return redirect(route('products.edit', $id));
         }
 
@@ -187,7 +219,7 @@ class ProductController extends AppBaseController
                 $request->product_id
             );
 
-            return response()->json(['success' => (bool) $updated]);
+            return response()->json(['success' => (bool)$updated]);
         }
 
         return response()->json(['success' => false]);

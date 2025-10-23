@@ -83,4 +83,9 @@ class Location extends Model
     {
         return $this->hasMany(LocationDescription::class, 'location_id');
     }
+
+    public function description()
+    {
+        return $this->hasOne(LocationDescription::class)->where('language_id', config('settings.locale.default_language_id'));
+    }
 }
