@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\PictureHelper;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Attribute;
 use App\Models\AttributeGroup;
+use App\Models\AttributeIconToAttribute;
 use App\Models\Category;
 use App\Models\Filter;
 use App\Models\Language;
@@ -301,4 +303,32 @@ class ApiController extends AppBaseController
         return response()->json(['items' => $data]);
     }
 
+    public function getAttributeIcons(Request $request)
+    {
+        if (!$request->ajax() || !$request->filled('id_attribute')) {
+            return abort(404);
+        }
+
+        $attributeIcons = AttributeIconToAttribute::with('icon')
+            ->where('attribute_id', $request->id_attribute)
+            ->get()
+            ->map(function ($item) {
+                $image = $item->icon->image ?? null;
+
+                if (!$image) {
+                    $item->icon->image = asset(app()->settings->get('no_image'));
+                    return $item;
+                }
+
+                $extension = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+
+                $item->icon->image = in_array($extension, ['jpeg', 'jpg', 'png'])
+                    ? PictureHelper::rewrite($image, config('settings.images.icons.width'), config('settings.images.icons.height'))
+                    : image_path($image);
+
+                return $item;
+            });
+
+        return response()->json(['attribute_icons' => $attributeIcons]);
+    }
 }

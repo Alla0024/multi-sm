@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.6",
         "laravelcollective/html": "^6.4",
+        "phpoffice/phpspreadsheet": "^5.1",
         "thiagoprz/eloquent-composite-key": "^1.0",
         "unisharp/laravel-filemanager": "^2.10"
     },
@@ -34,7 +35,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/ImageHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

@@ -14,7 +14,7 @@ class AttributeIconToAttribute extends Model
     ];
 
     protected $casts = [
-        
+
     ];
 
     public static array $rules = [
@@ -30,5 +30,8 @@ class AttributeIconToAttribute extends Model
     public function attribute(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\App\Models\Attribute::class, 'attribute_id');
+    }
+    public function icon(){
+        return $this->belongsTo(AttributeIcon::class, 'attribute_icon_id', 'id')->with('description');
     }
 }
