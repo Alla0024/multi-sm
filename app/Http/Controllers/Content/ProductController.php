@@ -79,7 +79,7 @@ class ProductController extends AppBaseController
             ProductDescription::class,
             FirstPathQuery::class
         ]);
-
+        $stockStatuses = StockStatus::getStockStatuses();
         $options = $this->optionRepository->getCachedOptions();
         $locations = $this->locationRepository->getCachedLocations();
         $currencies = $this->currencyRepository->getCachedCurrencies();
@@ -89,6 +89,7 @@ class ProductController extends AppBaseController
             'options' => $options,
             'locations' => $locations,
             'currencies' => $currencies,
+            'stockStatuses' => $stockStatuses,
         ]);
     }
 
@@ -142,6 +143,7 @@ class ProductController extends AppBaseController
             ProductDescription::class,
             FirstPathQuery::class
         ]);
+        $stockStatuses = StockStatus::getStockStatuses();
 
         $options = $this->optionRepository->getCachedOptions();
         $locations = $this->locationRepository->getCachedLocations();
@@ -149,7 +151,7 @@ class ProductController extends AppBaseController
 
         $this->template = 'pages.products.edit';
 
-        return $this->renderOutput(compact('product', 'fields', 'options', 'locations', 'currencies'));
+        return $this->renderOutput(compact('product', 'fields', 'options', 'locations', 'currencies' ,'stockStatuses'));
     }
 
     /**
