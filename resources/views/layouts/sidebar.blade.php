@@ -93,11 +93,6 @@
             <div class="name">{{$word['menu_products']}}</div>
         </a>
 
-        <a href="{{ route('stockStatuses.index') }}" class="item {{ Request::is($adminPath.'/stockStatuses*') ? 'active' : '' }}">
-            <div class="icon"><i class="bi bi-cart2 fs-20"></i></div>
-            <div class="name">Статуси товарів</div>
-        </a>
-
         <a href="{{ route('vacancies.index') }}" class="item {{ Request::is($adminPath.'/vacancies*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-person-vcard fs-20"></i></div>
             <div class="name">{{$word['menu_vacancies']}}</div>
@@ -121,6 +116,18 @@
             </div>
             <div class="list" :class="{'list-open': open_list}">
                 <a class="item {{ Request::is($adminPath.'/clients*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/clients')}}">Клієнти</a>
+            </div>
+        </div>
+
+        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*']) ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*']) ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="icon"><i class="bi bi-sliders2 fs-20"></i></div>
+                <div class="name">Налаштування</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is($adminPath.'/currencies*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/currencies')}}">Валюти</a>
+                <a class="item {{ Request::is($adminPath.'/stockStatuses*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/stockStatuses')}}">Статуси товарів</a>
             </div>
         </div>
 
