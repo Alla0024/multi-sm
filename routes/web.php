@@ -52,6 +52,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('fillings', 'App\Http\Controllers\Content\FillingController');
         Route::resource('clients', 'App\Http\Controllers\Content\ClientController');
         Route::resource('stockStatuses', 'App\Http\Controllers\Content\StockStatusController');
+        Route::resource('currencies', 'App\Http\Controllers\Content\CurrencyController');
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
         Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
@@ -246,5 +247,3 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 
     });
 });
-
-Route::resource('stock-statuses', App\Http\Controllers\Content\StockStatusController::class);
