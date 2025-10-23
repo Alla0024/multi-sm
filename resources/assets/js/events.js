@@ -112,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 list.classList.add('hide');
             }
         });
-
     }
 
     // Choices Multi-select ///////////////////////////////////////////////////////////////////////////
@@ -329,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (event.key === "Enter") {
                         axios.post(action, {
                             product_id: product_id.value,
-                            new_value: new_value.value
+                            sort_order: new_value.value
                         }).then(response => {
                             console.log(response)
                             new_value.classList.add('hide')

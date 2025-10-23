@@ -1,6 +1,7 @@
 <div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products_{{$search_select_type ?? ""}}"  data-for-tab="{{$tab}}">
 
     <div class="table-items" x-init="parseData()">
+
         <div class="table-item item-head">
             <template x-for='(item, key) in inputType'>
                 <div class="item" style=""
@@ -15,8 +16,10 @@
         </div>
 
         <template x-for='(itemData, keyData) in data'>
+
             <div class="table-item">
-                <input type="hidden" :class="{'ignore_form': !itemData.id}" :name="'{{$name}}[' + keyData + '][{{$id_name}}]'" :value="itemData.id">
+                <input type="hidden" :class="{'ignore_form': !itemData.id}" :name="'{{$name}}[' + keyData + '][{{$id_name}}]'" :value="itemData['{{$id_name}}']">
+
                 <template x-for='(itemInput, keyInput) in inputType'>
                     <div class="item"
                          :class='{
@@ -189,21 +192,18 @@
                         </template>
                     </div>
                 </template>
+
                 <div class="item rm-item" style="width: 51px;">
                     <div class="icon" @click="deletedItem(keyData)" :id="keyData">
                         <i class="bi bi-x-lg fs-20"></i>
                     </div>
                 </div>
+
             </div>
+
         </template>
 
-        <div class="table-item item-footer">
-            <div class="item add-item" style="width: 70px; margin-left: auto">
-                <div class="icon" @click="addItem()">
-                    <i class="bi bi-plus-lg fs-20"></i>
-                </div>
-            </div>
-        </div>
+
 
     </div>
 </div>
