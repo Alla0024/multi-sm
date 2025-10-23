@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 list.classList.add('hide');
             }
         });
+
     }
 
     // Choices Multi-select ///////////////////////////////////////////////////////////////////////////
@@ -216,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Image upload ///////////////////////////////////////////////////////////////////////////
-    let img_items = document.querySelectorAll('.image-uploaddd')
+    let img_items = document.querySelectorAll('.image-upload')
     if(img_items){
         img_items.forEach(block => {
             const input = block.querySelector('input[type="file"]');

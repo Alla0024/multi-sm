@@ -1,10 +1,4 @@
 <!-- Attributes table Field -->
-@php
-    $arrData = [
-        'text' => ['type' => 'string', 'name' => 'Зображення', 'description' => false],
-    ];
-@endphp
-
 <div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products_attributes"  data-for-tab="attributes">
 
     <div class="table-items">
@@ -38,7 +32,7 @@
                                     name=""
                                     placeholder="Пошук..."
                                     autocomplete="off"
-                                    value=""
+                                    :value="itemData.attribute.name"
                                     data-url="{{route('getAttributes')}}"
                                     @input="$store.page.searchSelect($event.target)"
                                     @focus="$store.page.searchSelect($event.target)"
@@ -72,7 +66,7 @@
                                 <template x-if="itemLang.id == 6">
                                     <span class="input-group-text" id="basic-addon1">{!! $word['6'] !!}</span>
                                 </template>
-                                <input type="text" :name="'attributes[' + keyData + '][description][' + itemLang.id + '][text]'" x-model="itemData['text_with_keys'][itemLang.id]" >
+                                <input type="text" :name="'attributes[' + itemData.id + '][description][' + itemLang.id + '][text]'" x-model="itemData['text_with_keys'][itemLang.id]" >
                             </div>
                         </template>
                     </div>
@@ -86,7 +80,7 @@
                                     <div class="icon-item">
                                         <img class="img-icon" :title="icon.description.title" :src="'https://i.svit-matrasiv.com.ua/images/' + icon.image" alt="">
                                         <div class="checkbox">
-                                            <input type="checkbox" class="icon-item-input" :checked="icon.value" :name="'attribute_icons[' + keyData + '][]'" :value="icon.id">
+                                            <input type="checkbox" class="icon-item-input" :checked="icon.value" :name="'attribute_icons[' + itemData.id + '][]'" :value="icon.id">
                                         </div>
                                     </div>
                                 </template>
@@ -156,7 +150,7 @@
     }
 </style>
 
-<script id="payload_attributes" type="application/json">@json($product['productAttributes'], JSON_UNESCAPED_UNICODE)</script>
+<script id="payload_attributes" type="application/json">@json(array_values($product['productAttributes'] ?? []), JSON_UNESCAPED_UNICODE)</script>
 <script>
     document.addEventListener('alpine:init', () => {
         console.log(JSON.parse(document.getElementById('payload_attributes').textContent))
@@ -167,18 +161,12 @@
             item_count: -1,
 
             deletedItem(key){
-                let newData = {};
-                for(let item_key in this.data){
-                    if(key != item_key){
-                        newData[item_key] = this.data[item_key];
-                    }
-                }
-                this.data = newData;
+                this.data.splice(key, 1);
             },
 
             addItem(){
-                let newItem = {};
-                this.data[this.item_count] = {
+
+                this.data.push({
                     'attribute_search': true,
                     'attribute': {
                         'name': ''
@@ -196,22 +184,22 @@
                         1: '',
                         5: ''
                     }
-                }
-                this.item_count--;
-                console.log(this.data)
+                })
             },
 
             setItem(e, key, id, text){
-                // this.data[key].id = id;
-                // this.data[key].text = text;
-                // e.parentElement.classList.add('hide');
-                axios.get('{{route('get_attribute_icons')}}', { params: { id_attribute: id }}).then(response => {
-                    console.log(response)
+                axios.get('{{route('getAttributeIcons')}}',
+                    { params: { id_attribute: id }}
+                ).then(response => {
+                    response.data.attribute_icons.forEach(item => {
+                        this.data[key].icons.push(item.icon)
+                    })
+                    this.data[key].attribute.name = text
+                    this.data[key].id = id
+
                 }).catch(e => console.log(e))
-                console.log(e)
-                console.log(key)
-                console.log(id)
-                console.log(text)
+                e.parentElement.classList.add('hide');
+
             },
         }))
     })

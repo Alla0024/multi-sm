@@ -107,21 +107,15 @@
     <div class="flex-row input input-min">
         <div class="input-group">
             <select  name="currency_id"  >
-                <option value=""  selected >Усе</option>
-                <option value="3" @if(isset($product['currency_id']) && $product['currency_id'] == 3) selected @endif>
-                    EUR
-                </option>
-                <option value="4" @if(isset($product['currency_id']) && $product['currency_id'] == 4) selected @endif>
-                    UAH
-                </option>
-                <option value="5" @if(isset($product['currency_id']) && $product['currency_id'] == 5) selected @endif>
-                    USD
-                </option>
-                {{--                @foreach($currencies as $item)--}}
-                {{--                    <option value="{{$item['id']}}" @if(isset($product['currency_id']) && $product['currency_id'] == $item['id']) selected @endif>--}}
-                {{--                        {{$item['code']}}--}}
-                {{--                    </option>--}}
-                {{--                @endforeach--}}
+                @if(!isset($product['currency_id']))
+                    <option value=""  selected >Виберіть валюту</option>
+                @endif
+
+                @foreach($currencies as $item)
+                    <option value="{{$item['id']}}" @if(isset($product['currency_id']) && $product['currency_id'] == $item['id']) selected @endif>
+                        {{$item['code']}}
+                    </option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -136,29 +130,11 @@
                 @if(!isset($product['stock_status_id']))
                     <option selected disabled value="">Виберіть статус</option>
                 @endif
-                <option value="4" @if(isset($product['stock_status_id']) && $product['stock_status_id'] == 4) selected @endif>
-                    Продано
-                </option>
-                <option value="5" @if(isset($product['stock_status_id']) && $product['stock_status_id'] == 5) selected @endif>
-                    Немає в наявності
-                </option>
-                <option value="6" @if(isset($product['stock_status_id']) && $product['stock_status_id'] == 6) selected @endif>
-                    Очікування
-                </option>
-                <option value="7" @if(isset($product['stock_status_id']) && $product['stock_status_id'] == 7) selected @endif>
-                    В наявності
-                </option>
-                <option value="8" @if(isset($product['stock_status_id']) && $product['stock_status_id'] == 8) selected @endif>
-                    Під замовлення
-                </option>
-                <option value="9" @if(isset($product['stock_status_id']) && $product['stock_status_id'] == 9) selected @endif>
-                    Знятий з виробництва
-                </option>
-                {{--                @foreach($stock_statuses as $item)--}}
-                {{--                    <option value="{{$item['id']}}" @if(isset($product['stock_status_id']) && $product['stock_status_id'] == $item['id']) selected @endif>--}}
-                {{--                        {{$item['description']['name'}}--}}
-                {{--                    </option>--}}
-                {{--                @endforeach--}}
+                @foreach($stockStatuses as $item)
+                    <option value="{{$item['id']}}" @if(isset($product['stock_status_id']) && $product['stock_status_id'] == $item['id']) selected @endif>
+                        {{$item['description']['name']}}
+                    </option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -168,7 +144,7 @@
 @include('components.inputs.multi_select', ['name' => 'filters', 'name_input' => 'filter[]', 'value' => $product ?? [], 'url' => 'getFilters', 'tab' => 'connections', 'second_id' => 'filter_group_id'])
 
 <!-- Companion Field -->
-@include('components.inputs.multi_select', ['name' => 'companions', 'name_input' => 'companions[]', 'value' => $product ?? [], 'url' => 'getFilters', 'tab' => 'connections', 'id_name' => 'companion_id'])
+@include('components.inputs.multi_select', ['name' => 'companions', 'name_input' => 'companions[]', 'value' => $product ?? [], 'url' => 'getProduct', 'tab' => 'connections', 'id_name' => 'companion_id'])
 
 <!-- Rozetka Status Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="connections">
