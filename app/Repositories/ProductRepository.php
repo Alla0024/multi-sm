@@ -124,6 +124,7 @@ class ProductRepository extends BaseRepository
                 'certificates',
                 'filling',
                 'kitProducts',
+                'segments'
             ])
             ->find($id, $columns);
 
