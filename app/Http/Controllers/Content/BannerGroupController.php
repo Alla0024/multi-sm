@@ -48,9 +48,10 @@ class BannerGroupController extends AppBaseController
         $bannerGroups = $this->bannerGroupRepository->filterRows($request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            BannerDescription::class,
+            BannerGroup::class,
             Banner::class,
-            BannerGroup::class
+            BannerDescription::class,
+
         ]);
 
         $categories = $this->categoryRepository->getActiveCategories();

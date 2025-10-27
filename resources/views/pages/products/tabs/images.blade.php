@@ -27,6 +27,7 @@
 @php
     $arrData = [
         'image' => ['type' => 'image', 'name' => 'Зображення', 'description' => false],
+        'alt' => ['type' => 'string', 'name' => 'Alt', 'description' => false],
         'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
         'show_second' => ['type' => 'switch', 'name' => 'Показувати другою картинкою в категорії', 'description' => false],
     ];

@@ -13,6 +13,8 @@ return [
     'title_product_id' => 'ID товару',
     'search_product_id' => 'Пошук за ID товару',
 
+    'title_segments' => 'Сегмент',
+
     'title_language_id' => 'Мова',
     'search_language_id' => 'Пошук за мовою',
 

@@ -8,7 +8,6 @@ use App\Repositories\BaseRepository;
 class BannerDescriptionRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'title'
     ];
 
     protected array $additionalFields = [

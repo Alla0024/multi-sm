@@ -11,8 +11,6 @@ class BannerRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
         'status',
-        'banner_group_id',
-        'sort_order',
     ];
 
     protected array $additionalFields = [

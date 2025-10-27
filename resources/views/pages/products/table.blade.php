@@ -47,6 +47,11 @@
                              @endif
                         @endif
                     @endforeach
+                    @if(isset($products))
+                        <td style="width: 110px">
+
+                        </td>
+                    @endif
 
                     <td  colspan="3">
                         {!! Form::open(['route' => ['products.destroy', $product->id], 'method' => 'delete']) !!}

@@ -93,6 +93,22 @@
             <div class="name">{{$word['menu_products']}}</div>
         </a>
 
+        <a href="{{ route('bannerGroups.index') }}" class="item {{ Request::is($adminPath.'/bannerGroups*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-images fs-20"></i></div>
+            <div class="name">Банери</div>
+        </a>
+
+        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/segments*') ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is($adminPath.'/segments*') ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="icon"><i class="bi bi-percent fs-20"></i></div>
+                <div class="name">Налаштування знижок</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is($adminPath.'/segments*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/segments')}}">Сегменти</a>
+            </div>
+        </div>
+
         <a href="{{ route('vacancies.index') }}" class="item {{ Request::is($adminPath.'/vacancies*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-person-vcard fs-20"></i></div>
             <div class="name">{{$word['menu_vacancies']}}</div>

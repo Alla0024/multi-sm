@@ -1,5 +1,5 @@
 {{--@dump($product)--}}
-{{--@dump($product['productOversizes'])--}}
+{{--@dump($product['segments'])--}}
 
 <!-- Main tab -->
 @include('pages.products.tabs.main')
@@ -21,6 +21,9 @@
 
 <!-- Filling tab -->
 @include('pages.products.tabs.filling')
+
+<!-- Segment tab -->
+@include('pages.products.tabs.segment')
 
 <!-- Similar tab -->
 @include('pages.products.tabs.similar')

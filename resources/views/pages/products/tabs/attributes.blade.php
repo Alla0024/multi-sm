@@ -6,6 +6,7 @@
         <div class="table-item item-head">
             <div class="item" style="">Атрибути</div>
             <div class="item" style="">Текст</div>
+            <div class="item" style="">Жорсткість</div>
             <div class="item" style="">Мініатюра</div>
             <div class="item" style=" text-align: center; width: 51px; flex-shrink: 0">Дія</div>
         </div>
@@ -69,6 +70,12 @@
                                 <input type="text" :name="'attributes[' + itemData.id + '][description][' + itemLang.id + '][text]'" x-model="itemData['text_with_keys'][itemLang.id]" >
                             </div>
                         </template>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="input">
+                        <input type="number" :name="'attributes[' + itemData.id + '][value]'" x-model="itemData['value']">
                     </div>
                 </div>
 
@@ -176,6 +183,7 @@
                     },
                     'icons': [],
                     'mark': 0,
+                    'value': 0,
                     'text': {
                         1: '',
                         5: ''

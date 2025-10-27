@@ -10,7 +10,7 @@
             </div>
         </th>
 
-
+{{--@dump($fields)--}}
         @foreach($fields as $index => $field)
             @if($index != 'id' && $field['inTable'])
                 <th class="" @if($index == 'status' || $index == 'article')style="width: 132px" @endif>
@@ -85,8 +85,19 @@
                         @endif
                     @endif
                 </th>
+
             @endif
         @endforeach
+        @if(isset($products))
+            <th class="" style="width: 110px" >
+                <div class="search-name-input">Vtm</div>
+                <select class="" name="is_vtm"  aria-describedby="select-addon">
+                    <option value=""  selected hidden> Вибрати </option>
+                    <option value="1" @if(request('is_vtm') == '1') selected @endif>Так</option>
+                    <option value="0" @if(request('is_vtm') == '0') selected @endif>Ні</option>
+                </select>
+            </th>
+        @endif
     @endif
 
     @if(request()->has('language_id'))
