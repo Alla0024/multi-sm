@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Image upload ///////////////////////////////////////////////////////////////////////////
-    let img_items = document.querySelectorAll('.image-upload')
+    let img_items = document.querySelectorAll('.image-uploaddd')
     if(img_items){
         img_items.forEach(block => {
             const input = block.querySelector('input[type="file"]');

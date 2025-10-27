@@ -203,7 +203,17 @@
 
         </template>
 
+        <div class="table-item item-footer">
 
+            <div class="item add-item" style="width: 51px; margin-left: auto">
+
+                <div class="icon" @click="addItem()">
+                    <i class="bi bi-plus-lg fs-20"></i>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 </div>
@@ -212,8 +222,8 @@
 <script id="payloadMultiSelect" type="application/json">@json($dataMultiSelect ?? '', JSON_UNESCAPED_UNICODE)</script>
 <script>
     document.addEventListener('alpine:init', () => {
-        console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))
-        console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
+        {{--console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))--}}
+        // console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
 
         Alpine.data('table_products_{{$search_select_type ?? ""}}', () => ({
             inputType: JSON.parse('@json($inputType ?? [])'),

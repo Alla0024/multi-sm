@@ -11,7 +11,7 @@
 
         <div class="card">
 
-            {!! Form::model($product, ['route' => ['products.update', $product->id], 'method' => 'patch']) !!}
+            {!! Form::model($product, ['route' => ['products.update', $product->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
@@ -25,7 +25,7 @@
                         <button class="nav-link " type="button" data-tab="connections">Звязки</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link active" type="button" data-tab="attributes">Атрибути</button>
+                        <button class="nav-link " type="button" data-tab="attributes">Атрибути</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" type="button" data-tab="images">Зображення</button>
@@ -43,7 +43,7 @@
                         <button class="nav-link " type="button" data-tab="similar">Схожі товари</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link " type="button" data-tab="count">Кількість товарів</button>
+                        <button class="nav-link active" type="button" data-tab="count">Кількість товарів</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="filling">Наповнення</button>

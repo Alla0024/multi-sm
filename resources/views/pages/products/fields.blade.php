@@ -1,4 +1,5 @@
-{{--@dump($product)--}}
+@dump($product)
+@dump($product['filling'])
 
 <!-- Main tab -->
 @include('pages.products.tabs.main')
@@ -17,6 +18,9 @@
 
 <!-- Count tab -->
 @include('pages.products.tabs.count')
+
+<!-- Filling tab -->
+@include('pages.products.tabs.filling')
 
 
 

@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const btn_head_submit = document.querySelector('.head-submit');
     if(btn_head_submit){
         btn_head_submit.addEventListener('click', () => {
-            document.querySelector('form[accept-charset]').submit()
+            document.querySelector('form[accept-charset]').requestSubmit()
         })
     }
 
