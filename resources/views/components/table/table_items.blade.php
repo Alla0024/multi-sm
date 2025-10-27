@@ -1,6 +1,7 @@
 <div class="form-group col-sm-6 tab-pane input-block table-data-items" x-data="table_products_{{$search_select_type ?? ""}}"  data-for-tab="{{$tab}}">
 
     <div class="table-items" x-init="parseData()">
+
         <div class="table-item item-head">
             <template x-for='(item, key) in inputType'>
                 <div class="item" style=""
@@ -8,6 +9,7 @@
                      "custom-type-switch": item.type == "switch",
                      "custom-type-number": item.type == "number",
                      "custom-type-multi": item.type == "multi_select_static_filter",
+                     "custom-type-select-oversize": item.type == "select_oversize",
                      }'
                      x-text="item.name"></div>
             </template>
@@ -15,14 +17,17 @@
         </div>
 
         <template x-for='(itemData, keyData) in data'>
+
             <div class="table-item">
-                <input type="hidden" :class="{'ignore_form': !itemData.id}" :name="'{{$name}}[' + keyData + '][{{$id_name}}]'" :value="itemData.id">
+                <input type="hidden" :class="{'ignore_form': !itemData.id}" :name="'{{$name}}[' + keyData + '][{{$id_name}}]'" :value="itemData['{{$id_name}}']">
+
                 <template x-for='(itemInput, keyInput) in inputType'>
                     <div class="item"
                          :class='{
                          "custom-type-switch": itemInput.type == "switch",
                          "custom-type-number": itemInput.type == "number",
                          "custom-type-multi": itemInput.type == "multi_select_static_filter",
+                         "custom-type-select-oversize": itemInput.type == "select_oversize",
                          }'
                     >
 
@@ -38,6 +43,17 @@
                                 <template x-if="itemInput.type == 'number'">
                                     <div class="input-group">
                                         <input type="number" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" :value="itemData[keyInput]" >
+                                    </div>
+                                </template>
+
+                                <template x-if="itemInput.type == 'select_oversize'">
+                                    <div class="input-group">
+                                        <select :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" class="form-control">
+                                            <option :selected="itemData[keyInput] == '='" value="=">=</option>
+                                            <option :selected="itemData[keyInput] == '%'" value="%">%</option>
+                                            <option :selected="itemData[keyInput] == '*'" value="*">*</option>
+                                            <option :selected="itemData[keyInput] == '+'" value="+">+</option>
+                                        </select>
                                     </div>
                                 </template>
 
@@ -189,20 +205,27 @@
                         </template>
                     </div>
                 </template>
+
                 <div class="item rm-item" style="width: 51px;">
                     <div class="icon" @click="deletedItem(keyData)" :id="keyData">
                         <i class="bi bi-x-lg fs-20"></i>
                     </div>
                 </div>
+
             </div>
+
         </template>
 
         <div class="table-item item-footer">
-            <div class="item add-item" style="width: 70px; margin-left: auto">
+
+            <div class="item add-item" style="width: 51px; margin-left: auto">
+
                 <div class="icon" @click="addItem()">
                     <i class="bi bi-plus-lg fs-20"></i>
                 </div>
+
             </div>
+
         </div>
 
     </div>
@@ -212,8 +235,8 @@
 <script id="payloadMultiSelect" type="application/json">@json($dataMultiSelect ?? '', JSON_UNESCAPED_UNICODE)</script>
 <script>
     document.addEventListener('alpine:init', () => {
-        console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))
-        console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
+        {{--console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))--}}
+        // console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
 
         Alpine.data('table_products_{{$search_select_type ?? ""}}', () => ({
             inputType: JSON.parse('@json($inputType ?? [])'),
@@ -226,10 +249,10 @@
                 console.log(this.parse)
                 if(this.parse){
                     this.data.forEach(item => {
-                        item.id = item.description['{{$search_select_type ?? ''}}']
+                        item.id = item.description['{{$search_select_type ?? ''}}'] ?? item['{{$search_select_type ?? ''}}']
                         item.text = item.description.name ?? item.description.text ?? item.description.title
                     })
-                    console.log(this.data)
+                    // console.log(this.data)
                 }
             },
 
@@ -257,7 +280,7 @@
                 }
                 console.log(newItem)
                 this.data.push(newItem)
-                console.log(this.data)
+                // console.log(this.data)
                 Alpine.store('page').multiSelectDestroy();
                 setTimeout(() => {Alpine.store('page').multiSelect()}, 100)
             },
@@ -265,7 +288,7 @@
                 this.data[key].id = id;
                 this.data[key].text = text;
                 e.parentElement.classList.add('hide');
-                console.log(this.data)
+                // console.log(this.data)
             },
             view(){
                 // console.log(this.inputType)

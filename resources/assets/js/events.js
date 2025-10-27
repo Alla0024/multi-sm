@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (event.key === "Enter") {
                         axios.post(action, {
                             product_id: product_id.value,
-                            new_value: new_value.value
+                            sort_order: new_value.value
                         }).then(response => {
                             console.log(response)
                             new_value.classList.add('hide')
@@ -341,6 +341,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }))
         })
+    }
+
+    // Show hide oversize content for product
+    Alpine.store('page').showOversize = function (blockSelector, disabled = true){
+        const block = document.querySelector(blockSelector);
+        if (!block) return;
+
+        block.querySelectorAll('input, select, textarea, button').forEach(el => {
+            el.disabled = disabled;
+        });
+
+        disabled ? block.classList.remove('active') : block.classList.add('active')
     }
 
 })

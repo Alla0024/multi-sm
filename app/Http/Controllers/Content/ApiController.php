@@ -327,7 +327,7 @@ class ApiController extends AppBaseController
 
                 $item->icon->image = in_array($extension, ['jpeg', 'jpg', 'png'])
                     ? PictureHelper::rewrite($image, config('settings.images.icons.width'), config('settings.images.icons.height'))
-                    : image_path($image);
+                    : $image;
 
                 return $item;
             });

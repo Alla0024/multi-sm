@@ -490,6 +490,9 @@
         width: 300px !important;
         flex-shrink: 0;
     }
+    .custom-type-select-oversize{
+        max-width: 120px;
+    }
 
     .choices__inner{
         flex-direction: column-reverse;

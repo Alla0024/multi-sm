@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         })
     }
+
     // Ignore inputs value ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('form').forEach(function(form) {
         form.addEventListener('submit', function() {

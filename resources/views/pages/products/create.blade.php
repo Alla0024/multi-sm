@@ -16,13 +16,13 @@
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
                     <li class="nav-item">
-                        <button class="nav-link " type="button" data-tab="main">Загальні</button>
+                        <button class="nav-link active" type="button" data-tab="main">Загальні</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="data">Данні</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link active" type="button" data-tab="connections">Звязки</button>
+                        <button class="nav-link " type="button" data-tab="connections">Звязки</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="attributes">Атрибути</button>

@@ -15,7 +15,7 @@
                     <th>
                         <div class="input-block input-toggle flex">
                             <div class="form-check form-switch">
-                                <input class="form-check-input checkbox-child" data-content="{{  $product['id']}}" name="input-toggle_{{ $product['id']}}" type="checkbox" role="switch" id="switchCheckChecked_{{ $product['id']}}">
+                                <input class="form-check-input checkbox-child" data-content="{{ $product['id']}}" name="input-toggle_{{ $product['id']}}" type="checkbox" role="switch" id="switchCheckChecked_{{ $product['id']}}">
                             </div>
                         </div>
                     </th>

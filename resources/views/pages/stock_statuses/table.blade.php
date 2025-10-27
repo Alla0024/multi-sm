@@ -78,7 +78,7 @@
             </tr>
             </thead>
             <tbody>
-            @dump($stockStatuses)
+{{--            @dump($stockStatuses)--}}
             @foreach($stockStatuses as $stockStatus)
                 <tr>
                     <th>

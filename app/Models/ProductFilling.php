@@ -13,6 +13,6 @@ class ProductFilling extends Model
     public $incrementing = false;
     public function description()
     {
-        return $this->hasOne(ProductDescription::class, 'product_id', 'product_id')->where('language_id', config('settings.locale.default_language_id'));
+        return $this->hasOne(FillingDescription::class, 'filling_id', 'filling_id')->where('language_id', config('settings.locale.default_language_id'));
     }
 }
