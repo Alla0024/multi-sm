@@ -287,6 +287,12 @@ class ProductRepository extends BaseRepository
             $q->where('article', 'LIKE', "%{$input['article']}%");
         });
 
+        if (isset($input['is_vtm']) && $input['is_vtm'] !== '') {
+            $query->whereHas('manufacturer', function ($sub) use ($input) {
+                $sub->where('is_vtm', (int) $input['is_vtm']);
+            });
+        }
+
         $query->when($input['name'] ?? null, function ($q, $name) use ($languageId) {
             $q->whereHas('descriptions', function ($sub) use ($languageId, $name) {
                 $sub->where('language_id', $languageId)
