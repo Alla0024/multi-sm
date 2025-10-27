@@ -83,8 +83,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('shops', 'Content\ShopController');
         Route::resource('orders', 'Content\OrderController');
         Route::resource('notifications', 'Content\NotificationController');
-        Route::resource('banners', 'Content\BannerController');
-        Route::resource('banner_groups', 'Content\BannerGroupController');
+        Route::resource('bannerGroups', 'App\Http\Controllers\Content\BannerGroupController');
         Route::resource('stocks', 'Content\StockController');
 
         Route::resource('questions', 'Content\QuestionController');
