@@ -13,7 +13,7 @@
 
             {!! Form::model($product, ['route' => ['products.update', $product->id], 'method' => 'patch', 'novalidate']) !!}
 
-            <div class="card-body">
+            <div class="card-body" x-data="{oversize: @if(isset($product['productOversizes']) && $product['productOversizes']->count() > 0) true @else false @endif}">
                 <ul class="nav nav-tabs" id="customTabs">
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="main">Загальні</button>

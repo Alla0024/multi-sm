@@ -10,7 +10,7 @@ class ProductSimilar extends Model
 
     public function description()
     {
-        return $this->hasOne(ProductDescription::class, 'product_id', 'product_id')
+        return $this->hasOne(ProductDescription::class, 'product_id', 'similar_id')
             ->where('language_id', config('settings.locale.default_language_id'));
     }
 

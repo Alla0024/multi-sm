@@ -1,5 +1,5 @@
 @dump($product)
-@dump($product['filling'])
+@dump($product['productOversizes'])
 
 <!-- Main tab -->
 @include('pages.products.tabs.main')
@@ -21,6 +21,9 @@
 
 <!-- Filling tab -->
 @include('pages.products.tabs.filling')
+
+<!-- Similar tab -->
+@include('pages.products.tabs.similar')
 
 
 

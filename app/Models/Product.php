@@ -126,10 +126,10 @@ class Product extends Model
         return $this->hasMany(\App\Models\ProductToYoutube::class, 'product_id');
     }
 
-    public function productSimilar(): HasOne
-    {
-        return $this->hasOne(\App\Models\ProductSimilar::class);
-    }
+//    public function productSimilar(): HasOne
+//    {
+//        return $this->hasOne(\App\Models\ProductSimilar::class);
+//    }
 
     public function productSimilar3s(): HasMany
     {

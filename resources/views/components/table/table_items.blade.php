@@ -9,6 +9,7 @@
                      "custom-type-switch": item.type == "switch",
                      "custom-type-number": item.type == "number",
                      "custom-type-multi": item.type == "multi_select_static_filter",
+                     "custom-type-select-oversize": item.type == "select_oversize",
                      }'
                      x-text="item.name"></div>
             </template>
@@ -26,6 +27,7 @@
                          "custom-type-switch": itemInput.type == "switch",
                          "custom-type-number": itemInput.type == "number",
                          "custom-type-multi": itemInput.type == "multi_select_static_filter",
+                         "custom-type-select-oversize": itemInput.type == "select_oversize",
                          }'
                     >
 
@@ -41,6 +43,17 @@
                                 <template x-if="itemInput.type == 'number'">
                                     <div class="input-group">
                                         <input type="number" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" :value="itemData[keyInput]" >
+                                    </div>
+                                </template>
+
+                                <template x-if="itemInput.type == 'select_oversize'">
+                                    <div class="input-group">
+                                        <select :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" class="form-control">
+                                            <option :selected="itemData[keyInput] == '='" value="=">=</option>
+                                            <option :selected="itemData[keyInput] == '%'" value="%">%</option>
+                                            <option :selected="itemData[keyInput] == '*'" value="*">*</option>
+                                            <option :selected="itemData[keyInput] == '+'" value="+">+</option>
+                                        </select>
                                     </div>
                                 </template>
 
@@ -236,10 +249,10 @@
                 console.log(this.parse)
                 if(this.parse){
                     this.data.forEach(item => {
-                        item.id = item.description['{{$search_select_type ?? ''}}']
+                        item.id = item.description['{{$search_select_type ?? ''}}'] ?? item['{{$search_select_type ?? ''}}']
                         item.text = item.description.name ?? item.description.text ?? item.description.title
                     })
-                    console.log(this.data)
+                    // console.log(this.data)
                 }
             },
 
@@ -267,7 +280,7 @@
                 }
                 console.log(newItem)
                 this.data.push(newItem)
-                console.log(this.data)
+                // console.log(this.data)
                 Alpine.store('page').multiSelectDestroy();
                 setTimeout(() => {Alpine.store('page').multiSelect()}, 100)
             },
@@ -275,7 +288,7 @@
                 this.data[key].id = id;
                 this.data[key].text = text;
                 e.parentElement.classList.add('hide');
-                console.log(this.data)
+                // console.log(this.data)
             },
             view(){
                 // console.log(this.inputType)

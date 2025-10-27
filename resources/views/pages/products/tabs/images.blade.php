@@ -35,10 +35,13 @@
 @include('components.table.table_items', ['inputType' => $arrData, 'data' => $product['images'] ?? [], 'search_select_type' => 'def', 'name' => 'images', 'id_name' => 'product_id', 'tab' => 'images', 'parse' => false])
 
 <style>
-    .custom-type-switch{
-        max-width: 200px !important;
+    .table-data-items[data-for-tab='images']{
+        .custom-type-switch{
+            max-width: 200px !important;
+        }
+        .custom-type-number{
+            max-width: 100% !important;
+        }
     }
-    .custom-type-number{
-        max-width: 100% !important;
-    }
+
 </style>
