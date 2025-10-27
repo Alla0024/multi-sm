@@ -19,6 +19,26 @@ class Product extends Model
         'stock_status_id',
         'sort_order',
         'status',
+        'hash',
+        'sku',
+        'currency_id',
+        'rozetka_status',
+        'google_remarketing_status',
+        'rating',
+        'reviews',
+        'location_id',
+        'name_in_1c',
+        'copy',
+        'image',
+        'image_path',
+        'viewers_number_from',
+        'viewers_number_to',
+        'show_in_stock',
+        'show_count_viewers',
+        'mini_images',
+        'mark',
+        'cashback',
+        'store_only_description'
     ];
 
     protected $casts = [
