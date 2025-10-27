@@ -276,7 +276,7 @@ class Product extends Model
 
     public function segments(): BelongsToMany
     {
-        return $this->belongsToMany(Segment::class, SegmentToProduct::class);
+        return $this->belongsToMany(Segment::class, SegmentToProduct::class)->with('description');
     }
 
     public function seoPath()

@@ -10,7 +10,7 @@ class SegmentToProduct extends Model
 {
     use HasCompositeKey;
 
-    public $table = 'segment_to_product';
+    public $table = 'segment_to_products';
 
     public $timestamps = false;
 

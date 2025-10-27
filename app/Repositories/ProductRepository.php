@@ -7,6 +7,7 @@ use App\Models\FirstPathQuery;
 use App\Models\Product;
 use App\Models\ProductDescription;
 use App\Models\ProductToStore;
+use App\Models\SegmentToProduct;
 use App\Repositories\BaseRepository;
 
 class ProductRepository extends BaseRepository
@@ -333,9 +334,10 @@ class ProductRepository extends BaseRepository
     {
         $seoPath = $input['path'] ?? null;
         $stores = $input['stores'] ?? [];
+        $segments = $input['segments'] ?? [];
         $descriptions = $input['descriptions'] ?? [];
 
-        unset($input['descriptions'], $input['path'], $input['stores']);
+        unset($input['descriptions'], $input['path'], $input['stores'], $input['segments']);
 
         $productSave = $input;
 
@@ -367,6 +369,8 @@ class ProductRepository extends BaseRepository
 
         $stores && $product->stores()->sync($stores);
 
+        $segments && $product->segments()->sync($segments);
+
         $seoPath && FirstPathQuery::updateOrCreate(
             ['type' => 'product', 'type_id' => $product->id],
             ['path' => $seoPath]
@@ -389,6 +393,14 @@ class ProductRepository extends BaseRepository
                 $newStore = $store->toArray();
                 $newStore['product_id'] = $newProduct->id;
                 ProductToStore::create($newStore);
+            }
+
+            $segments = SegmentToProduct::where(['product_id' => $product->id])->get();
+
+            foreach ($segments as $segment){
+                $newSegment = $segments->toArray();
+                $newSegment['product_id'] = $newProduct->id;
+                SegmentToProduct::create($newSegment);
             }
 
             foreach ($product->descriptions as $description) {
