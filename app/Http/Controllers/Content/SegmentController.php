@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateSegmentRequest;
 use App\Http\Requests\UpdateSegmentRequest;
 use App\Http\Controllers\AppBaseController;
-use App\Models\Manufacturer;
 use App\Models\SegmentDescription;
 use App\Repositories\SegmentRepository;
 use App\Helpers\ModelSchemaHelper;
