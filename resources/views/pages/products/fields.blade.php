@@ -1,5 +1,5 @@
-@dump($product)
-@dump($product['productOversizes'])
+{{--@dump($product)--}}
+{{--@dump($product['productOversizes'])--}}
 
 <!-- Main tab -->
 @include('pages.products.tabs.main')
