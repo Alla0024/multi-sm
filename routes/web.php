@@ -63,7 +63,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('seodata', 'Content\SeoDataController');
         Route::resource('informations', 'Content\InformationController');
-        Route::resource('shipping_methods', 'Content\ShippingController');
+        Route::resource('shippingMethods', 'App\Http\Controllers\Content\ShippingController');
         Route::resource('filters', 'App\Http\Controllers\Content\FilterController');
 //        Route::resource('attributes', 'Content\AttributeController');
 //        Route::resource('attribute_groups', 'Content\AttributeGroupController');
@@ -74,13 +74,13 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('categories', 'App\Http\Controllers\Content\CategoryController');
         Route::resource('products', 'App\Http\Controllers\Content\ProductController');
         Route::resource('panoramas', 'Content\PanoramaController');
-        Route::resource('reviews', 'Content\ReviewController');
+        Route::resource('reviews', 'App\Http\Controllers\Content\ReviewController');
         Route::resource('sales', 'Content\SaleController');
         Route::resource('sale_groups', 'Content\SaleGroupController');
         Route::resource('bonus_programs', 'Content\BonusProgramController');
         Route::resource('promo_codes', 'Content\PromoCodesController');
         Route::resource('promo_code_groups', 'Content\PromoCodeGroupsController');
-        Route::resource('shops', 'Content\ShopController');
+        Route::resource('shops', 'App\Http\Controllers\Content\ShopController');
         Route::resource('orders', 'Content\OrderController');
         Route::resource('notifications', 'Content\NotificationController');
         Route::resource('bannerGroups', 'App\Http\Controllers\Content\BannerGroupController');
