@@ -171,7 +171,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('api/get_words', 'ApiController@getWords')->name('get_words');
         Route::get('api/get_attribute_words', 'ApiController@getAttributeWords')->name('get_attribute_words');
         Route::get('api/get_languages', 'ApiController@getLanguage')->name('get_languages');
-        Route::get('api/get_filling', 'ApiController@getFilling')->name('get_filling');
+        Route::get('api/getFilling', 'App\Http\Controllers\Content\ApiController@getFilling')->name('getFilling');
         Route::get('api/get_combinations', 'ApiController@getCombination')->name('get_combinations');
         Route::get('api/get_orders', 'ApiController@getOrders')->name('get_orders');
         Route::post('copy_manufacturers', 'App\Http\Controllers\Content\ManufacturerController@copy')->name('copy_manufacturers');

@@ -8,6 +8,7 @@ use App\Models\Attribute;
 use App\Models\AttributeGroup;
 use App\Models\AttributeIconToAttribute;
 use App\Models\Category;
+use App\Models\FillingDescription;
 use App\Models\Filter;
 use App\Models\FilterDescription;
 use App\Models\FilterGroup;
@@ -388,4 +389,24 @@ class ApiController extends AppBaseController
 
         return response()->json(['items' => $data]);
     }
+    public function getFilling(Request $request)
+    {
+        abort_unless($request->ajax(), 404);
+
+        $query = $request->get('q', '');
+
+        $fillings = FillingDescription::query()
+            ->select('filling_id', 'title')
+            ->when($query, fn($q) => $q->where('title', 'like', "%{$query}%"))
+            ->groupBy('filling_id', 'title')
+            ->limit(10)
+            ->get()
+            ->map(fn($item) => [
+                'id' => $item->filling_id,
+                'text' => $item->title,
+            ]);
+
+        return response()->json(['items' => $fillings]);
+    }
+
 }
