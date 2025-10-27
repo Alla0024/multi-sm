@@ -181,7 +181,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::post('copy_attributeWords', 'App\Http\Controllers\Content\AttributeWordController@copy')->name('copy_attributeWords');
         Route::post('copy_fillings', 'App\Http\Controllers\Content\FillingController@copy')->name('copy_fillings');
         Route::post('copy_newsletters', 'App\Http\Controllers\Content\NewsletterController@copy')->name('copy_newsletters');
-        Route::post('copy_product', 'Content\ProductController@copyProduct')->name('copy_product');
+        Route::post('copy_products', 'App\Http\Controllers\Content\ProductController@copy')->name('copy_products');
         Route::post('copy_promo_code_group', 'Content\PromoCodeGroupsController@copyPromoCodeGroup')->name('copy_promo_code_group');
         Route::post('copy_promo_code', 'Content\PromoCodesController@copyPromoCode')->name('copy_promo_code');
         Route::post('copy_sale', 'Content\SaleController@copySale')->name('copy_sale');

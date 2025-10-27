@@ -385,6 +385,10 @@ class ProductRepository extends BaseRepository
 
         foreach ($products as $product) {
             $newProduct = $product->replicate();
+            $newProduct->article = $this->generateArticleCode();
+            $newProduct->status = 0;
+            $newProduct->rating = 0;
+            $newProduct->reviews = 0;
             $newProduct->save();
 
             $stores = ProductToStore::where(['product_id' => $product->id])->get();
@@ -416,5 +420,11 @@ class ProductRepository extends BaseRepository
         Product::whereIn('id', $ids)->delete();
         ProductDescription::whereIn('product_id', $ids)->delete();
         FirstPathQuery::where('type', 'product')->whereIn('type_id', $ids)->delete();
+    }
+
+    private function generateArticleCode()
+    {
+        $maxArticle = Product::max('article');
+        return (string)($maxArticle + 1);
     }
 }
