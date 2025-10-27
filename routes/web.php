@@ -63,7 +63,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('seodata', 'Content\SeoDataController');
         Route::resource('informations', 'Content\InformationController');
-        Route::resource('shipping_methods', 'Content\ShippingController');
+        Route::resource('shippingMethods', 'App\Http\Controllers\Content\ShippingController');
         Route::resource('filters', 'App\Http\Controllers\Content\FilterController');
 //        Route::resource('attributes', 'Content\AttributeController');
 //        Route::resource('attribute_groups', 'Content\AttributeGroupController');
