@@ -7,6 +7,7 @@ use App\Models\FirstPathQuery;
 use App\Models\Product;
 use App\Models\ProductDescription;
 use App\Models\ProductToStore;
+use App\Models\SegmentToProduct;
 use App\Repositories\BaseRepository;
 
 class ProductRepository extends BaseRepository
@@ -124,6 +125,7 @@ class ProductRepository extends BaseRepository
                 'certificates',
                 'filling',
                 'kitProducts',
+                'segments'
             ])
             ->find($id, $columns);
 
@@ -288,6 +290,12 @@ class ProductRepository extends BaseRepository
             $q->where('article', 'LIKE', "%{$input['article']}%");
         });
 
+        if (isset($input['is_vtm']) && $input['is_vtm'] !== '') {
+            $query->whereHas('manufacturer', function ($sub) use ($input) {
+                $sub->where('is_vtm', (int) $input['is_vtm']);
+            });
+        }
+
         $query->when($input['name'] ?? null, function ($q, $name) use ($languageId) {
             $q->whereHas('descriptions', function ($sub) use ($languageId, $name) {
                 $sub->where('language_id', $languageId)
@@ -327,9 +335,10 @@ class ProductRepository extends BaseRepository
     {
         $seoPath = $input['path'] ?? null;
         $stores = $input['stores'] ?? [];
+        $segments = $input['segments'] ?? [];
         $descriptions = $input['descriptions'] ?? [];
 
-        unset($input['descriptions'], $input['path'], $input['stores']);
+        unset($input['descriptions'], $input['path'], $input['stores'], $input['segments']);
 
         $productSave = $input;
 
@@ -361,6 +370,8 @@ class ProductRepository extends BaseRepository
 
         $stores && $product->stores()->sync($stores);
 
+        $segments && $product->segments()->sync($segments);
+
         $seoPath && FirstPathQuery::updateOrCreate(
             ['type' => 'product', 'type_id' => $product->id],
             ['path' => $seoPath]
@@ -375,6 +386,10 @@ class ProductRepository extends BaseRepository
 
         foreach ($products as $product) {
             $newProduct = $product->replicate();
+            $newProduct->article = $this->generateArticleCode();
+            $newProduct->status = 0;
+            $newProduct->rating = 0;
+            $newProduct->reviews = 0;
             $newProduct->save();
 
             $stores = ProductToStore::where(['product_id' => $product->id])->get();
@@ -383,6 +398,14 @@ class ProductRepository extends BaseRepository
                 $newStore = $store->toArray();
                 $newStore['product_id'] = $newProduct->id;
                 ProductToStore::create($newStore);
+            }
+
+            $segments = SegmentToProduct::where(['product_id' => $product->id])->get();
+
+            foreach ($segments as $segment){
+                $newSegment = $segments->toArray();
+                $newSegment['product_id'] = $newProduct->id;
+                SegmentToProduct::create($newSegment);
             }
 
             foreach ($product->descriptions as $description) {
@@ -398,5 +421,11 @@ class ProductRepository extends BaseRepository
         Product::whereIn('id', $ids)->delete();
         ProductDescription::whereIn('product_id', $ids)->delete();
         FirstPathQuery::where('type', 'product')->whereIn('type_id', $ids)->delete();
+    }
+
+    private function generateArticleCode()
+    {
+        $maxArticle = Product::max('article');
+        return (string)($maxArticle + 1);
     }
 }

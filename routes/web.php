@@ -53,6 +53,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('clients', 'App\Http\Controllers\Content\ClientController');
         Route::resource('stockStatuses', 'App\Http\Controllers\Content\StockStatusController');
         Route::resource('currencies', 'App\Http\Controllers\Content\CurrencyController');
+        Route::resource('segments', 'App\Http\Controllers\Content\SegmentController');
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
         Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
@@ -77,7 +78,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('sales', 'Content\SaleController');
         Route::resource('sale_groups', 'Content\SaleGroupController');
         Route::resource('bonus_programs', 'Content\BonusProgramController');
-        Route::resource('segments', 'Content\SegmentController');
         Route::resource('promo_codes', 'Content\PromoCodesController');
         Route::resource('promo_code_groups', 'Content\PromoCodeGroupsController');
         Route::resource('shops', 'Content\ShopController');
@@ -171,7 +171,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('api/get_words', 'ApiController@getWords')->name('get_words');
         Route::get('api/get_attribute_words', 'ApiController@getAttributeWords')->name('get_attribute_words');
         Route::get('api/get_languages', 'ApiController@getLanguage')->name('get_languages');
-        Route::get('api/get_filling', 'ApiController@getFilling')->name('get_filling');
+        Route::get('api/getFilling', 'App\Http\Controllers\Content\ApiController@getFilling')->name('getFilling');
         Route::get('api/get_combinations', 'ApiController@getCombination')->name('get_combinations');
         Route::get('api/get_orders', 'ApiController@getOrders')->name('get_orders');
         Route::post('copy_manufacturers', 'App\Http\Controllers\Content\ManufacturerController@copy')->name('copy_manufacturers');
@@ -181,7 +181,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::post('copy_attributeWords', 'App\Http\Controllers\Content\AttributeWordController@copy')->name('copy_attributeWords');
         Route::post('copy_fillings', 'App\Http\Controllers\Content\FillingController@copy')->name('copy_fillings');
         Route::post('copy_newsletters', 'App\Http\Controllers\Content\NewsletterController@copy')->name('copy_newsletters');
-        Route::post('copy_product', 'Content\ProductController@copyProduct')->name('copy_product');
+        Route::post('copy_products', 'App\Http\Controllers\Content\ProductController@copy')->name('copy_products');
         Route::post('copy_promo_code_group', 'Content\PromoCodeGroupsController@copyPromoCodeGroup')->name('copy_promo_code_group');
         Route::post('copy_promo_code', 'Content\PromoCodesController@copyPromoCode')->name('copy_promo_code');
         Route::post('copy_sale', 'Content\SaleController@copySale')->name('copy_sale');
