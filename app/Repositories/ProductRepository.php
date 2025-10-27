@@ -173,6 +173,7 @@ class ProductRepository extends BaseRepository
                         'text_with_keys' => $texts->map(fn($t) => $t['text_with_keys'])->toArray(),
                         'text' => $texts->map(fn($t) => $t['text'])->toArray(),
                         'mark' => $productAttribute->mark,
+                        'value' => $productAttribute->value,
                         'attribute' => [
                             'name' => $productAttribute->attribute->description->name ?? '',
                         ],
