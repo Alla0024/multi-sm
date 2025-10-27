@@ -53,6 +53,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('clients', 'App\Http\Controllers\Content\ClientController');
         Route::resource('stockStatuses', 'App\Http\Controllers\Content\StockStatusController');
         Route::resource('currencies', 'App\Http\Controllers\Content\CurrencyController');
+        Route::resource('segments', 'App\Http\Controllers\Content\SegmentController');
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
         Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
@@ -77,7 +78,6 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('sales', 'Content\SaleController');
         Route::resource('sale_groups', 'Content\SaleGroupController');
         Route::resource('bonus_programs', 'Content\BonusProgramController');
-        Route::resource('segments', 'Content\SegmentController');
         Route::resource('promo_codes', 'Content\PromoCodesController');
         Route::resource('promo_code_groups', 'Content\PromoCodeGroupsController');
         Route::resource('shops', 'Content\ShopController');
