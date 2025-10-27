@@ -30,7 +30,7 @@ class SegmentController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $segments = $this->segmentRepository->filterRow($request->all());
+        $segments = $this->segmentRepository->filterRows($request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Segment::class,
