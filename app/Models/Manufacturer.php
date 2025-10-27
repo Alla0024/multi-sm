@@ -14,7 +14,8 @@ class Manufacturer extends Model
 
     public $fillable = [
         'image',
-        'sort_order'
+        'sort_order',
+        'is_vtm'
     ];
 
     protected $casts = [
