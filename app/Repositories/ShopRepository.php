@@ -21,6 +21,7 @@ class ShopRepository extends BaseRepository
         'fake_status',
         'status',
         'show_form',
+        'birthday',
         'quarantine',
         'hash',
         'google_path',
