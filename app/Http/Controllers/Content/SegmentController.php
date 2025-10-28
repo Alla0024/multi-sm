@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateSegmentRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\SegmentDescription;
 use App\Repositories\SegmentRepository;
+use App\Repositories\ProductRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
 use App\Models\Segment;
@@ -17,10 +18,13 @@ class SegmentController extends AppBaseController
     /** @var SegmentRepository $segmentRepository */
     private $segmentRepository;
 
-    public function __construct(SegmentRepository $segmentRepo)
+    /** @var ProductRepository $productRepository */
+    private $productRepository;
+
+    public function __construct(SegmentRepository $segmentRepo, ProductRepository $productRepo)
     {
         parent::__construct();
-
+        $this->productRepository = $productRepo;
         $this->segmentRepository = $segmentRepo;
     }
 
@@ -81,7 +85,7 @@ class SegmentController extends AppBaseController
      */
     public function show($id)
     {
-        $segment = $this->segmentRepository->findFull($id);
+        $segment = $this->segmentRepository->findFull((int) $id);
 
         if (empty($segment)) {
             Flash::error(__('common.flash_not_found'));
@@ -102,15 +106,17 @@ class SegmentController extends AppBaseController
     /**
      * Show the form for editing the specified Segment.
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $segment = $this->segmentRepository->findFull($id);
+        $segment = $this->segmentRepository->findFull((int) $id);
 
         if (empty($segment)) {
             Flash::error(__('common.flash_not_found'));
 
             return redirect(route('segments.index'));
         }
+
+        $products = $this->productRepository->filterRows($request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             SegmentDescription::class,
@@ -119,7 +125,7 @@ class SegmentController extends AppBaseController
 
         $this->template = 'pages.segments.edit';
 
-        return $this->renderOutput(compact('segment', 'fields'));
+        return $this->renderOutput(compact('segment', 'products','fields'));
     }
 
     /**

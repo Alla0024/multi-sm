@@ -2,15 +2,15 @@
 
 namespace App\Repositories;
 
-use App\Models\Segment;
-use App\Models\SegmentDescription;
+use App\Models\SaleGroup;
+use App\Models\SaleGroupDescription;
 
-class SegmentRepository extends BaseRepository
+class SaleGroupRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
+        'type',
         'status',
-        'sort_order',
-        'hash'
+        'sort_order'
     ];
 
     protected array $additionalFields = [
@@ -28,7 +28,7 @@ class SegmentRepository extends BaseRepository
 
     public function model(): string
     {
-        return Segment::class;
+        return SaleGroup::class;
     }
 
     public function with($relations)
@@ -38,18 +38,17 @@ class SegmentRepository extends BaseRepository
 
     public function findFull($id, $columns = ['*'])
     {
-        $segment = $this->model
+        $saleGroup = $this->model
             ->with([
                 'descriptions.language:id,code',
-                'segmentProducts'
             ])
             ->find($id, $columns);
 
-        if (!$segment) {
+        if (!$saleGroup) {
             return null;
         }
 
-        $descriptions = $segment->descriptions
+        $descriptions = $saleGroup->descriptions
             ->mapWithKeys(fn($desc) => [
                 (string)($desc->language_id ?? $desc->language->code) => [
                     'name' => $desc->name,
@@ -57,7 +56,7 @@ class SegmentRepository extends BaseRepository
             ])
             ->toArray();
 
-        return $segment
+        return $saleGroup
             ->setRelation('descriptions', $descriptions);
     }
 
@@ -94,14 +93,14 @@ class SegmentRepository extends BaseRepository
             }
         });
 
-        $segments = $query->paginate($perPage);
+        $saleGroups = $query->paginate($perPage);
 
-        $segments->getCollection()->transform(function ($item) {
+        $saleGroups->getCollection()->transform(function ($item) {
             $item->setAttribute('name', optional($item->descriptions->first())->name);
             return $item;
         });
 
-        return $segments;
+        return $saleGroups;
     }
 
     public function save(array $input, ?int $id = null)
@@ -110,43 +109,27 @@ class SegmentRepository extends BaseRepository
 
         unset($input['descriptions']);
 
-        $segmentSave = $input;
+        $saleGroupSave = $input;
 
-        $segment = $this->model->updateOrCreate(['id' => $id], $segmentSave);
+        $saleGroup = $this->model->updateOrCreate(['id' => $id], $saleGroupSave);
 
         foreach ($descriptions as $languageId => $descData) {
-            SegmentDescription::updateOrInsert(
+            SaleGroupDescription::updateOrInsert(
                 [
-                    'segment_id' => (int)$segment->id,
+                    'sale_group_id' => (int)$saleGroup->id,
                     'language_id' => $languageId
                 ],
                 $descData
             );
         }
 
-        return $segment;
-    }
-
-    public function copy($ids): void
-    {
-        $segments = Segment::with('descriptions')->whereIn('id', $ids)->get();
-
-        foreach ($segments as $segment) {
-            $newSegment = $segment->replicate();
-            $newSegment->save();
-
-            foreach ($segment->descriptions as $description) {
-                $newDescription = $description->replicate();
-                $newDescription->segment_id = $newSegment->id;
-                $newDescription->save();
-            }
-        }
+        return $saleGroup;
     }
 
     public function multiDelete($ids): void
     {
-        SegmentDescription::whereIn('segment_id', $ids)->delete();
-        Segment::whereIn('id', $ids)->delete();
+        SaleGroup::whereIn('id', $ids)->delete();
+        SaleGroupDescription::whereIn('sale_group_id', $ids)->delete();
     }
 }
 

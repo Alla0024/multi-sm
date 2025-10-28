@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
+use App\Models\Store;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -34,6 +35,7 @@ class AppBaseController extends BaseController
 
         $this->vars['word'] = Lang::get('common', []);
         $this->vars['languages'] = Language::getLanguages();
+        $this->vars['stores'] = Store::getStores();
         $this->vars['sortFields'] = $this->defaultSortFields;
     }
 

@@ -32,9 +32,10 @@ class SegmentToProduct extends Model
         'product_id' => 'required',
     ];
 
-    public function product(): BelongsTo
+    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id')
+            ->with(['description', 'category']);
     }
 
     public function segment(): BelongsTo

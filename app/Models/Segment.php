@@ -78,9 +78,9 @@ class Segment extends Model
         return $this->belongsToMany(\App\Models\Language::class, 'segment_descriptions');
     }
 
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function segmentProducts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->belongsToMany(\App\Models\Product::class, 'segment_to_products');
+        return $this->hasMany(SegmentToProduct::class, 'segment_id')->with('product');
     }
 
     public function shippingMethods(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

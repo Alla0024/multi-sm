@@ -9,6 +9,7 @@ use App\Models\ProductDescription;
 use App\Models\ProductToStore;
 use App\Models\SegmentToProduct;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Cache;
 
 class ProductRepository extends BaseRepository
 {

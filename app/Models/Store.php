@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
+
 class Store extends Model
 {
     use HasFactory;
@@ -26,4 +28,12 @@ class Store extends Model
         'name' => 'required',
         'url' => 'required|url'
     ];
+
+    public static function getStores()
+    {
+        return Cache::rememberForever('stores', function () {
+            return self::all();
+        });
+    }
+
 }

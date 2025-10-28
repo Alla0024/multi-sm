@@ -77,13 +77,13 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('panoramas', 'Content\PanoramaController');
         Route::resource('reviews', 'App\Http\Controllers\Content\ReviewController');
         Route::resource('sales', 'App\Http\Controllers\Content\SaleController');
-        Route::resource('sale_groups', 'Content\SaleGroupController');
-        Route::resource('bonus_programs', 'Content\BonusProgramController');
+        Route::resource('sale_groups', 'App\Http\Controllers\Content\SaleGroupController');
+        Route::resource('bonus_programs', 'App\Http\Controllers\Content\BonusProgramController');
         Route::resource('promo_codes', 'App\Http\Controllers\Content\PromoCodesController');
         Route::resource('promo_code_groups', 'App\Http\Controllers\Content\PromoCodeGroupsController');
         Route::resource('shops', 'App\Http\Controllers\Content\ShopController');
-        Route::resource('orders', 'Content\OrderController');
-        Route::resource('notifications', 'Content\NotificationController');
+        Route::resource('orders', 'App\Http\Controllers\Content\OrderController');
+        Route::resource('notifications', 'App\Http\Controllers\Content\NotificationController');
         Route::resource('bannerGroups', 'App\Http\Controllers\Content\BannerGroupController');
         Route::resource('stocks', 'Content\StockController');
 
