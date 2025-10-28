@@ -64,6 +64,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('seodata', 'Content\SeoDataController');
         Route::resource('informations', 'Content\InformationController');
         Route::resource('shippingMethods', 'App\Http\Controllers\Content\ShippingController');
+        Route::resource('paymentMethods', 'App\Http\Controllers\Content\PaymentMethodController');
         Route::resource('filters', 'App\Http\Controllers\Content\FilterController');
 //        Route::resource('attributes', 'Content\AttributeController');
 //        Route::resource('attribute_groups', 'Content\AttributeGroupController');
@@ -75,7 +76,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('products', 'App\Http\Controllers\Content\ProductController');
         Route::resource('panoramas', 'Content\PanoramaController');
         Route::resource('reviews', 'App\Http\Controllers\Content\ReviewController');
-        Route::resource('sales', 'Content\SaleController');
+        Route::resource('sales', 'App\Http\Controllers\Content\SaleController');
         Route::resource('sale_groups', 'Content\SaleGroupController');
         Route::resource('bonus_programs', 'Content\BonusProgramController');
         Route::resource('promo_codes', 'Content\PromoCodesController');
