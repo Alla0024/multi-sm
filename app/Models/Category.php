@@ -128,4 +128,10 @@ class Category extends Model
         return $this->hasOne('App\Models\CategoryDescription')
             ->where('language_id', config('settings.locale.default_language_id'));
     }
+    public static function getCategories()
+    {
+        return self::with('description')
+            ->where('status', 1)
+            ->get();
+    }
 }

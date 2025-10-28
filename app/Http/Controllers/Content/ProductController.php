@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\FirstPathQuery;
 use App\Models\ProductDescription;
 use App\Models\StockStatus;
-use App\Repositories\CurrencyRepository;
-use App\Repositories\LocationRepository;
-use App\Repositories\OptionRepository;
 use App\Repositories\ProductRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -22,27 +20,11 @@ class ProductController extends AppBaseController
     /** @var ProductRepository $productRepository */
     private $productRepository;
 
-    /** @var LocationRepository $locationRepository */
-    private $locationRepository;
-
-    /** @var OptionRepository $optionRepository */
-    private $optionRepository;
-
-    /** @var $currencyRepository */
-    private $currencyRepository;
-
-    public function __construct(
-        ProductRepository  $productRepo,
-        LocationRepository $locationRepo,
-        OptionRepository   $optionRepo,
-        CurrencyRepository $currencyRepo)
+    public function __construct(ProductRepository $productRepo)
     {
         parent::__construct();
 
         $this->productRepository = $productRepo;
-        $this->locationRepository = $locationRepo;
-        $this->optionRepository = $optionRepo;
-        $this->currencyRepository = $currencyRepo;
     }
 
     /**
@@ -51,7 +33,7 @@ class ProductController extends AppBaseController
     public function index(Request $request)
     {
         $products = $this->productRepository->filterRows($request->all());
-        $stockStatuses = StockStatus::getStockStatuses();
+        $stockStatuses = CacheForever::getStockStatuses();
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ProductDescription::class,
@@ -74,15 +56,17 @@ class ProductController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.products.create';
+
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Product::class,
             ProductDescription::class,
             FirstPathQuery::class
         ]);
-        $stockStatuses = StockStatus::getStockStatuses();
-        $options = $this->optionRepository->getCachedOptions();
-        $locations = $this->locationRepository->getCachedLocations();
-        $currencies = $this->currencyRepository->getCachedCurrencies();
+
+        $options = CacheForever::getOptions();
+        $locations = CacheForever::getLocations();
+        $currencies = CacheForever::getCurrencies();
+        $stockStatuses = CacheForever::getStockStatuses();
 
         return $this->renderOutput([
             'fields' => $fields,
@@ -143,11 +127,11 @@ class ProductController extends AppBaseController
             ProductDescription::class,
             FirstPathQuery::class
         ]);
-        $stockStatuses = StockStatus::getStockStatuses();
 
-        $options = $this->optionRepository->getCachedOptions();
-        $locations = $this->locationRepository->getCachedLocations();
-        $currencies = $this->currencyRepository->getCachedCurrencies();
+        $options = CacheForever::getOptions();
+        $locations = CacheForever::getLocations();
+        $currencies = CacheForever::getCurrencies();
+        $stockStatuses = CacheForever::getStockStatuses();
 
         $this->template = 'pages.products.edit';
 

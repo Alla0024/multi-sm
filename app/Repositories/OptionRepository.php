@@ -59,14 +59,6 @@ class OptionRepository extends BaseRepository
     {
         return Option::class;
     }
-
-    public function getCachedOptions()
-    {
-        return Cache::remember('options', config('settings.time_cache_admin'), function () {
-            return Option::with('description', 'optionValueGroups')->get()->keyBy('id');
-        });
-    }
-
     public function isOptionWithProvidedPathExists($path, int|null $id = null): bool
     {
         $query = $this->model->where('path', $path);

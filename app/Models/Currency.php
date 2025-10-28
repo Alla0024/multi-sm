@@ -37,4 +37,9 @@ class Currency extends Model
     {
         return $this->hasMany(\App\Models\Product::class, 'currency_id');
     }
+
+    public static function getAll()
+    {
+        return self::all();
+    }
 }

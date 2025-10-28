@@ -79,10 +79,4 @@ class LocationRepository extends BaseRepository
 
         return $result ?? [];
     }
-    public function getCachedLocations()
-    {
-        return Cache::remember('locations', config('settings.time_cache_admin'), function () {
-            return Location::with('description')->get()->keyBy('id');
-        });
-    }
 }
