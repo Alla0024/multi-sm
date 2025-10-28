@@ -5,11 +5,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                                            <div class="col-sm-6">
-                            <div class="title-head">{!!  $word['shops'] !!}</div>
-                            <div class="count-elements">Вього елементів: {{ $shops->total() }}</div>
-                        </div>
-                                    </div>
+                    <div class="col-sm-6">
+                        <div class="title-head">{!!  $word['shops'] !!}</div>
+                        <div class="count-elements">Вього елементів: {{ $shops->total() }}</div>
+                    </div>
+                </div>
                 <div class="col-sm-2">
                     <form class="view-form" method="GET" action="">
                         @include('components.basic.sort')

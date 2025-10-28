@@ -31,4 +31,8 @@ class BannerDescription extends Model
     {
         return $this->belongsTo(\App\Models\Banner::class, 'banner_id');
     }
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id');
+    }
 }

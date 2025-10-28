@@ -13,6 +13,7 @@ class ShopDescriptionRepository extends BaseRepository
     ];
 
     protected array $additionalFields = [
+
     ];
 
     public function getFieldsSearchable(): array

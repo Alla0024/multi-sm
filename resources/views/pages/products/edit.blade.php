@@ -51,12 +51,12 @@
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="segment">Сегменти</button>
                     </li>
-                    <li class="nav-item">
-                        <button class="nav-link " type="button" data-tab="img_category">Картинки в карточці категорії</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link " type="button" data-tab="credit">Доступні кредити</button>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <button class="nav-link " type="button" data-tab="img_category">Картинки в карточці категорії</button>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <button class="nav-link " type="button" data-tab="credit">Доступні кредити</button>--}}
+{{--                    </li>--}}
                 </ul>
                 <div class="row card-items">
                     @include('pages.products.fields')

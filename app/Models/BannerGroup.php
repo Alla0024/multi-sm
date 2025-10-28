@@ -47,4 +47,8 @@ class BannerGroup extends Model
     {
         return $this->hasMany(Banner::class,'banner_group_id','id')->with('descriptions');
     }
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class, BannerGroupToStore::class);
+    }
 }

@@ -36,7 +36,7 @@ class Banner extends Model
 
     public function descriptions()
     {
-        return $this->hasMany(BannerDescription::class);
+        return $this->hasMany(BannerDescription::class, 'banner_id');
     }
     public function bannerDescriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

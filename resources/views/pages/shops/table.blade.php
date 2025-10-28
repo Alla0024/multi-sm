@@ -49,16 +49,12 @@
                     <td  colspan="3">
                         {!! Form::open(['route' => ['shops.destroy', $shop->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-
-
-
-
                             <a href="{{ route('shops.edit', [$shop->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>
                                 <i class="bi bi-pencil fs-40"></i>
                             </a>
-
                         </div>
+
                         {!! Form::close() !!}
                     </td>
                 </tr>

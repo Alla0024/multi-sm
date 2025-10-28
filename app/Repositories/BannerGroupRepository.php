@@ -44,7 +44,6 @@ class BannerGroupRepository extends BaseRepository
     {
         $bannerGroup = $this->model
             ->with([
-                'descriptions.language:id,code',
                 'stores:id,name',
             ])
             ->find($id, $columns);
@@ -53,18 +52,8 @@ class BannerGroupRepository extends BaseRepository
             return null;
         }
 
-        $descriptions = $bannerGroup->descriptions
-            ->mapWithKeys(fn($desc) => [
-                (string)($desc->language_id ?? $desc->language->code) => [
-                    'name' => $desc->name,
-                    'description' => $desc->description,
-                    'tag' => $desc->tag,
-                ]
-            ])
-            ->toArray();
 
-        return $bannerGroup
-            ->setRelation('descriptions', $descriptions);
+        return $bannerGroup;
     }
 
     public function filterRows(array $input)
@@ -114,7 +103,7 @@ class BannerGroupRepository extends BaseRepository
 
     public function copy($ids): void
     {
-        $bannerGroups = BannerGroup::with('descriptions')->whereIn('id', $ids)->get();
+        $bannerGroups = BannerGroup::whereIn('id', $ids)->get();
 
         foreach ($bannerGroups as $bannerGroup) {
             $newBannerGroup = $bannerGroup->replicate();
@@ -127,12 +116,6 @@ class BannerGroupRepository extends BaseRepository
                 $newStore['banner_group_id'] = $newBannerGroup->id;
                 BannerGroupToStore::create($newStore);
             }
-
-            foreach ($bannerGroup->descriptions as $description) {
-                $newDescription = $description->replicate();
-                $newDescription->banner_group_id = $newBannerGroup->id;
-                $newDescription->save();
-            }
         }
     }
 
@@ -140,6 +123,5 @@ class BannerGroupRepository extends BaseRepository
     {
         BannerGroup::whereIn('id', $ids)->delete();
         Banner::whereIn('banner_group_id', $ids)->delete();
-//        BannerDescription::whereIn('banner_id', $ids)->delete();
     }
 }

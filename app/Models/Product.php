@@ -352,6 +352,6 @@ class Product extends Model
     }
     public function kitProducts()
     {
-        return $this->hasMany(ProductKit::class)->with('description', 'kitProduct');
+        return $this->hasMany(ProductKit::class)->with('description', 'product');
     }
 }

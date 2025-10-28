@@ -1,4 +1,4 @@
-{{--@dump($product)--}}
+@dump($product)
 {{--@dump($product['segments'])--}}
 
 <!-- Main tab -->
