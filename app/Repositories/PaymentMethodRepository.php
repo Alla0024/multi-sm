@@ -55,9 +55,8 @@ class PaymentMethodRepository extends BaseRepository
         $descriptions = $paymentMethod->descriptions
             ->mapWithKeys(fn($desc) => [
                 (string)($desc->language_id ?? $desc->language->code) => [
-                    'name' => $desc->name,
-                    'description' => $desc->description,
-                    'tag' => $desc->tag,
+                    'title' => $desc->title,
+                    'comment' => $desc->comment,
                 ]
             ])
             ->toArray();
@@ -79,19 +78,19 @@ class PaymentMethodRepository extends BaseRepository
             $query->when($input[$field] ?? null, fn($q, $value) => $q->where($field, $value));
         }
 
-        $query->when($input['name'] ?? null, function ($q, $name) use ($languageId) {
-            $q->whereHas('descriptions', function ($sub) use ($languageId, $name) {
+        $query->when($input['title'] ?? null, function ($q, $title) use ($languageId) {
+            $q->whereHas('descriptions', function ($sub) use ($languageId, $title) {
                 $sub->where('language_id', $languageId)
-                    ->where('name', 'LIKE', "%{$name}%");
+                    ->where('title', 'LIKE', "%{$title}%");
             });
         });
 
         $query->when($input['sortBy'] ?? null, function ($q, $sortBy) use ($languageId) {
-            if (in_array($sortBy, ['name_asc', 'name_desc'])) {
+            if (in_array($sortBy, ['title_asc', 'title_desc'])) {
                 $q->withAggregate(
-                    ['descriptions as name' => fn($sub) => $sub->where('language_id', $languageId)],
-                    'name'
-                )->orderBy('name', $sortBy === 'name_asc' ? 'asc' : 'desc');
+                    ['descriptions as title' => fn($sub) => $sub->where('language_id', $languageId)],
+                    'title'
+                )->orderBy('title', $sortBy === 'title_asc' ? 'asc' : 'desc');
             } elseif ($sortBy === 'created_at_asc') {
                 $q->orderBy('created_at', 'asc');
             } elseif ($sortBy === 'created_at_desc') {
@@ -102,7 +101,7 @@ class PaymentMethodRepository extends BaseRepository
         $paymentMethods = $query->paginate($perPage);
 
         $paymentMethods->getCollection()->transform(function ($item) {
-            $item->setAttribute('name', optional($item->descriptions->first())->name);;
+            $item->setAttribute('title', optional($item->descriptions->first())->title);;
             return $item;
         });
 
