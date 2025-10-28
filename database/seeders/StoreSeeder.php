@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Store;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB; // ← ось це додай
+use App\Models\Store;
 
 class StoreSeeder extends Seeder
 {
@@ -12,25 +13,23 @@ class StoreSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Store::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         Store::factory()->create([
             'name' => 'Світ Матраців',
             'url' => 'https://svit-matrasiv.com.ua',
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
         Store::factory()->create([
             'name' => 'Bon Colchón',
             'url' => 'https://boncolchon.com',
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
         Store::factory()->create([
             'name' => 'Munger',
             'url' => 'https://munger.com.ua',
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
     }
 }

@@ -2,6 +2,7 @@
 @dump($product['options'])
 @dump($options)
 @dump($options[13])
+@dump($stores)
 {{--@dump($product['segments'])--}}
 
 <!-- Main tab -->
