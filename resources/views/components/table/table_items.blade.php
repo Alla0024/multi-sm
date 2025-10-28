@@ -60,13 +60,33 @@
                                 <template x-if="itemInput.type == 'image'">
                                     <div class="input-group image-block" x-data="{open_butt: false}">
                                         <div class="custom-file image-upload" @click="open_butt = !open_butt" @keydown.escape.window="open_butt=false" @click.outside="open_butt=false">
-                                            <input :id="'thumbnail_'+keyData" type="hidden" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" >
-                                            <img class="" x-model.src="itemData[keyInput]" :src="itemData[keyInput] && itemData[keyInput] !== '' ? 'https://i.svit-matrasiv.com.ua/storage/images/'+itemData[keyInput] : '/images/common/no_images.png'" :id="'holder_'+keyData" alt="Прев’ю" style="max-width: 200px;">
+                                            <input :id="'thumbnail_'+keyData + ''+ keyInput" type="hidden" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" >
+                                            <img class="" x-model.src="itemData[keyInput]" :src="itemData[keyInput] && itemData[keyInput] !== '' ? 'https://i.svit-matrasiv.com.ua/storage/images/'+itemData[keyInput] : '/images/common/no_images.png'" :id="'holder_'+keyData + ''+ keyInput" alt="Прев’ю" style="max-width: 200px;">
                                             <div class="butt hide" :class="{'show': open_butt}">
-                                                <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" :data-input="'thumbnail_'+keyData" :data-preview="'holder_'+keyData" data-path=""><i class="bi bi-arrow-up-square"></i></div>
+                                                <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" :data-input="'thumbnail_'+keyData + ''+ keyInput" :data-preview="'holder_'+keyData + ''+ keyInput" data-path=""><i class="bi bi-arrow-up-square"></i></div>
                                                 <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
                                             </div>
                                         </div>
+                                    </div>
+                                </template>
+
+                                <template x-if="itemInput.type == 'pdf'">
+                                    <div class="input-group image-block" x-data="{open_butt: false}">
+                                        <div class="custom-file image-upload" @click="open_butt = !open_butt" @keydown.escape.window="open_butt=false" @click.outside="open_butt=false">
+                                            <input :id="'thumbnail_'+keyData + ''+ keyInput" type="hidden" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" >
+                                            <input style="width: 400px;" disabled x-model="itemData[keyInput]" >
+                                            <img style="display: none" class="" x-model.src="itemData[keyInput]" :src="itemData[keyInput] && itemData[keyInput] !== '' ? 'https://i.svit-matrasiv.com.ua/storage/images/'+itemData[keyInput] : '/images/common/no_images.png'" :id="'holder_'+keyData + ''+ keyInput" alt="Прев’ю" style="max-width: 200px;">
+                                            <div class="butt" >
+                                                <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" :data-input="'thumbnail_'+keyData + ''+ keyInput" :data-preview="'holder_'+keyData + ''+ keyInput" data-path=""><i class="bi bi-pencil"></i></div>
+                                                <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template x-if="itemInput.type == 'imageVideo'">
+                                    <div class="input-group">
+                                        <img class="" :src="'https://img.youtube.com/vi/' + itemData.url + '/maxresdefault.jpg'"  alt="Прев’ю" style="max-width: 200px;">
                                     </div>
                                 </template>
 

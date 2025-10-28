@@ -76,8 +76,21 @@
                                     <option value="{{$item['id']}}" @if(request($index) == $item['id']) selected @endif>{{$item['descriptions'][1]['name']}}</option>
                                 @endforeach
                             </select>
-                        @elseif($index == 'sort_order')
+                        @elseif($index == 'hash')
                             <div></div>
+                        @elseif($index == 'sort_order')
+                            <div>
+                                @if(isset($segments))
+                                    <select id="sort_order"  name="sort_order" >
+                                        <option @if(request()->get('sort_order') == 'all') selected
+                                                @endif value="all">Всі</option>
+                                        <option @if(request()->get('sort_order') == 'DESC') selected
+                                                @endif value="DESC">Спадання</option>
+                                        <option @if(request()->get('sort_order') == 'ASC') selected
+                                                @endif value="ASC">Зростання</option>
+                                    </select>
+                                @endif
+                            </div>
                         @else
                             <div class="">
                                 <input type="text" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">

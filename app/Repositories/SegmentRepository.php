@@ -9,8 +9,8 @@ class SegmentRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
         'status',
-        'hash',
-        'sort_order'
+        'sort_order',
+        'hash'
     ];
 
     protected array $additionalFields = [

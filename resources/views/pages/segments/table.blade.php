@@ -25,9 +25,9 @@
                             @else
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
-                         @elseif($index == 'image' && $field['inTable'])
-                            <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($segment[$index]) && $segment[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$segment[$index] : '/images/common/no_images.png'}}" alt=""></td>
-                         @else
+                        @elseif($index == 'image' && $field['inTable'])
+                           <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($segment[$index]) && $segment[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$segment[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                        @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $segment[$index] }}</td>
                              @endif
@@ -37,9 +37,6 @@
                     <td  colspan="3">
                         {!! Form::open(['route' => ['segments.destroy', $segment->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-
-
-
 
                             <a href="{{ route('segments.edit', [$segment->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>

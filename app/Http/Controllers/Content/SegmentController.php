@@ -32,8 +32,8 @@ class SegmentController extends AppBaseController
         $segments = $this->segmentRepository->filterRows($request->all());
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            Segment::class,
             SegmentDescription::class,
+            Segment::class,
         ]);
 
         $this->template = 'pages.segments.index';

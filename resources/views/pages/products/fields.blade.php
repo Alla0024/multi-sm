@@ -16,6 +16,12 @@
 <!-- Images tab -->
 @include('pages.products.tabs.images')
 
+<!-- Video tab -->
+@include('pages.products.tabs.video')
+
+<!-- Certificates tab -->
+@include('pages.products.tabs.certificates')
+
 <!-- Count tab -->
 @include('pages.products.tabs.count')
 
