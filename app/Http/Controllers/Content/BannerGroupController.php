@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreateBannerGroupRequest;
 use App\Http\Requests\UpdateBannerGroupRequest;
 use App\Http\Controllers\AppBaseController;
@@ -79,7 +80,12 @@ class BannerGroupController extends AppBaseController
             BannerGroup::class
         ]);
 
-        return $this->renderOutput(['fields' => $fields]);
+        $categories = CacheForever::getCategories();
+
+        return $this->renderOutput([
+            'fields' => $fields,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -134,9 +140,11 @@ class BannerGroupController extends AppBaseController
             BannerGroup::class,
         ]);
 
+        $categories = CacheForever::getCategories();
+
         $this->template = 'pages.banner_groups.edit';
 
-        return $this->renderOutput(compact('bannerGroup', 'fields', 'banners'));
+        return $this->renderOutput(compact('bannerGroup', 'fields', 'banners', 'categories'));
     }
 
     /**

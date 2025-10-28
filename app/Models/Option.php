@@ -83,4 +83,9 @@ class Option extends Model
     {
         return $this->hasMany('App\Models\OptionValueGroup')->with('description');
     }
+
+    public static function getAll()
+    {
+        return self::with(['description', 'optionValueGroups'])->get();
+    }
 }

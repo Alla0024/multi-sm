@@ -42,6 +42,6 @@ class StockStatus extends Model
 
     public static function getStockStatuses()
     {
-        return self::with('descriptions')->where('status', 1)->get();
+        return self::with('description')->where('status', 1)->get();
     }
 }

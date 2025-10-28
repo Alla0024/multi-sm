@@ -205,7 +205,7 @@ class ProductRepository extends BaseRepository
                     ->toArray();
 
                 return [
-                    $option->option_id => [
+                    $option->id => [
                         'id' => $option->option_id,
                         'name' => $option->option->description->name ?? '',
                         'c1' => $option->c1 ?? null,

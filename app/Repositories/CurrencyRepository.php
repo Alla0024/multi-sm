@@ -33,11 +33,4 @@ class CurrencyRepository extends BaseRepository
     {
         return Currency::class;
     }
-
-    public function getCachedCurrencies()
-    {
-        return Cache::remember('currencies', config('settings.time_cache_admin'), function () {
-            return $this->all();
-        });
-    }
 }
