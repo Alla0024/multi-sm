@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bonus_program_to_stores', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->unsignedInteger('bonus_program_id');
+            $table->unsignedBigInteger('store_id');
+
+            $table->primary(['bonus_program_id', 'store_id']);
+
+            $table->foreign('bonus_program_id')->references('id')->on('bonus_programs')->onDelete('cascade');
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
         });
     }
 
