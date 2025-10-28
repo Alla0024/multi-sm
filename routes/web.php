@@ -79,7 +79,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('sales', 'App\Http\Controllers\Content\SaleController');
         Route::resource('sale_groups', 'Content\SaleGroupController');
         Route::resource('bonus_programs', 'Content\BonusProgramController');
-        Route::resource('promo_codes', 'Content\PromoCodesController');
+        Route::resource('promo_codes', 'App\Http\Controllers\Content\PromoCodesController');
         Route::resource('promo_code_groups', 'Content\PromoCodeGroupsController');
         Route::resource('shops', 'App\Http\Controllers\Content\ShopController');
         Route::resource('orders', 'Content\OrderController');
