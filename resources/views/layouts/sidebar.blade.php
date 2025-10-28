@@ -114,6 +114,11 @@
             <div class="name">{{$word['menu_vacancies']}}</div>
         </a>
 
+        <a href="{{ route('shops.index') }}" class="item {{ Request::is($adminPath.'/shops*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-buildings fs-20"></i></div>
+            <div class="name">{{$word['menu_shops']}}</div>
+        </a>
+
         <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/newsletters*') ? 'true' : 'false' }}}">
             <div class="item {{ Request::is($adminPath.'/newsletters*') ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-telephone fs-20"></i></div>

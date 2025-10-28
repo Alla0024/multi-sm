@@ -76,7 +76,9 @@
                                     <option value="{{$item['id']}}" @if(request($index) == $item['id']) selected @endif>{{$item['descriptions'][1]['name']}}</option>
                                 @endforeach
                             </select>
-                        @elseif($index == 'hash')
+                        @elseif($index == 'hash' || $index == 'fake_status')
+                            <div></div>
+                        @elseif($index == 'address')
                             <div></div>
                         @elseif($index == 'sort_order')
                             <div>
