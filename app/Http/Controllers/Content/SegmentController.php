@@ -81,7 +81,7 @@ class SegmentController extends AppBaseController
      */
     public function show($id)
     {
-        $segment = $this->segmentRepository->findFull($id);
+        $segment = $this->segmentRepository->findFull((int) $id);
 
         if (empty($segment)) {
             Flash::error(__('common.flash_not_found'));
@@ -104,7 +104,7 @@ class SegmentController extends AppBaseController
      */
     public function edit($id)
     {
-        $segment = $this->segmentRepository->findFull($id);
+        $segment = $this->segmentRepository->findFull((int) $id);
 
         if (empty($segment)) {
             Flash::error(__('common.flash_not_found'));

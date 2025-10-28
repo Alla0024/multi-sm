@@ -286,7 +286,8 @@ class Product extends Model
     }
     public function description(): HasOne
     {
-        return $this->hasOne(ProductDescription::class, 'product_id')->where('language_id', config('settings.locale.default_language_id'));
+        return $this->hasOne(ProductDescription::class, 'product_id')
+            ->where('language_id', config('settings.locale.default_language_id'));
     }
 
     public function stores(): BelongsToMany
