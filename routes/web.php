@@ -64,6 +64,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('seodata', 'Content\SeoDataController');
         Route::resource('informations', 'Content\InformationController');
         Route::resource('shippingMethods', 'App\Http\Controllers\Content\ShippingController');
+        Route::resource('paymentMethods', 'App\Http\Controllers\Content\PaymentMethodController');
         Route::resource('filters', 'App\Http\Controllers\Content\FilterController');
 //        Route::resource('attributes', 'Content\AttributeController');
 //        Route::resource('attribute_groups', 'Content\AttributeGroupController');
