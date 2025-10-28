@@ -8,14 +8,8 @@ use App\Repositories\BaseRepository;
 class ShopDescriptionRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'language_id',
         'name',
         'address',
-        'schedule',
-        'schedule_temporary',
-        'description',
-        'sale',
-        'image_banner'
     ];
 
     protected array $additionalFields = [

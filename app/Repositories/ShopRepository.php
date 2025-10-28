@@ -10,25 +10,8 @@ use App\Repositories\BaseRepository;
 class ShopRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'location_id',
-        'geocode',
-        'path',
-        'path_sale',
-        'phone',
-        'additional_phone',
-        'image',
-        'postal_code',
         'fake_status',
         'status',
-        'show_form',
-        'birthday',
-        'quarantine',
-        'hash',
-        'google_path',
-        'date_end',
-        'date_start_temporary',
-        'date_end_temporary',
-        'date_start'
     ];
 
     protected array $additionalFields = [

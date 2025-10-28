@@ -25,9 +25,21 @@
                             @else
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
-                         @elseif($index == 'image' && $field['inTable'])
+                        @elseif($index == 'image' && $field['inTable'])
                             <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($shop[$index]) && $shop[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$shop[$index] : '/images/common/no_images.png'}}" alt=""></td>
-                         @else
+                        @elseif($index == 'address' && $field['inTable'])
+                            <td>{{ $shop['descriptions'][0]['address'] }}</td>
+                        @elseif($index == 'fake_status' && $field['inTable'])
+                            <td>
+                                @if($shop[$index] == '0')
+                                    Оригинал
+                                @elseif($shop[$index] == '1')
+                                    Фейковый магаз
+                                @elseif($shop[$index] == '2')
+                                    Франшиза
+                                @endif
+                            </td>
+                        @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $shop[$index] }}</td>
                              @endif
