@@ -1,4 +1,7 @@
 @dump($product)
+@dump($product['options'])
+@dump($options)
+@dump($options[13])
 {{--@dump($product['segments'])--}}
 
 <!-- Main tab -->
@@ -18,6 +21,14 @@
 
 <!-- Video tab -->
 @include('pages.products.tabs.video')
+
+<!-- Options tab -->
+@include('pages.products.tabs.options')
+
+<!-- Kit tab -->
+@if(isset($product['kit']))
+@include('pages.products.tabs.kit')
+@endif
 
 <!-- Certificates tab -->
 @include('pages.products.tabs.certificates')
