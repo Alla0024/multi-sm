@@ -69,7 +69,7 @@ class BonusProgram extends Model
 
     public function paymentMethods()
     {
-        return $this->belongsToMany(PaymentMethod::class, BonusProgramToPaymentMethod::class);
+        return $this->belongsToMany(PaymentMethod::class, BonusProgramToPaymentMethod::class, 'payment_id', 'bonus_program_id');
     }
 
     public function segments()

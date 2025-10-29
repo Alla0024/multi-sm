@@ -10,25 +10,25 @@ class BonusProgramToPaymentMethod extends Model
 {
     use HasCompositeKey;
 
-    public $table = 'bonus_program_to_payment_methods';
+    public $table = 'bonus_program_to_payments';
 
     public $timestamps = false;
 
     protected $primaryKey = [
         'bonus_program_id',
-        'payment_method_id'
+        'payment_id'
     ];
 
     public $fillable = [
         'bonus_program_id',
-        'payment_method_id'
+        'payment_id'
     ];
 
     protected $casts = [
     ];
 
     public static array $rules = [
-        'payment_method_id' => 'required',
+        'payment_id' => 'required',
         'bonus_program_id' => 'required',
     ];
 
@@ -39,6 +39,6 @@ class BonusProgramToPaymentMethod extends Model
 
     public function paymentMethod(): BelongsTo
     {
-        return $this->belongsTo(PaymentMethod::class, 'payment_method');
+        return $this->belongsTo(PaymentMethod::class, 'payment');
     }
 }
