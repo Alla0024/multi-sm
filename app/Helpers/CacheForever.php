@@ -7,6 +7,7 @@ use App\Models\Currency;
 use App\Models\Location;
 use App\Models\Option;
 use App\Models\PaymentMethod;
+use App\Models\PromoCodeGroup;
 use App\Models\Segment;
 use App\Models\ShippingMethod;
 use App\Models\StockStatus;
@@ -75,6 +76,19 @@ class CacheForever
             $cacheKey,
             function () {
                 return ShippingMethod::getShippingMethods();
+            }
+        );
+    }
+
+    public static function getPromoCodeGroups()
+    {
+        $cacheKey = 'promo_code_groups_' . config('settings.locale.default_language_id');
+
+        return self::rememberForever(
+            ['promo_code_groups'],
+            $cacheKey,
+            function () {
+                return PromoCodeGroup::getPromoCodeGroups();
             }
         );
     }

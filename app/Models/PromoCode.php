@@ -55,9 +55,10 @@ class PromoCode extends Model
     {
         return $this->hasMany(PromoCodeDescription::class, 'promo_code_id');
     }
-    public function promoCodeGroup(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+
+    public function promoCodeGroup()
     {
-        return $this->belongsTo(\App\Models\PromoCodeGroup::class, 'promo_code_group_id');
+        return $this->belongsTo(PromoCodeGroup::class, 'promo_code_group_id');
     }
 
     public function languages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

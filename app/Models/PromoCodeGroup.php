@@ -105,4 +105,11 @@ class PromoCodeGroup extends Model
     {
         return $this->belongsToMany(\App\Models\SaleGroup::class, 'sale_group_to_promo_code_groups');
     }
+
+    public static function getPromoCodeGroups()
+    {
+        return self::with('description')
+            ->where('status', 1)
+            ->get();
+    }
 }
