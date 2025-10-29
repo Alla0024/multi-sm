@@ -67,14 +67,14 @@ class BonusProgram extends Model
         return $this->belongsToMany(\App\Models\Language::class, 'bonus_program_descriptions');
     }
 
-    public function paymentMethods(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function paymentMethods()
     {
-        return $this->belongsToMany(\App\Models\PaymentMethod::class, 'bonus_program_to_payments');
+        return $this->belongsToMany(PaymentMethod::class, BonusProgramToPaymentMethod::class, 'payment_id', 'bonus_program_id');
     }
 
-    public function segments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function segments()
     {
-        return $this->belongsToMany(\App\Models\Segment::class, 'bonus_program_to_segments');
+        return $this->belongsToMany(Segment::class, BonusProgramToSegment::class);
     }
 
     public function clientBonusPreviousHistories(): \Illuminate\Database\Eloquent\Relations\HasMany

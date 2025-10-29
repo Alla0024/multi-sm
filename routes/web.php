@@ -63,7 +63,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('bitrix', 'Bitrix24RestApi@UpBitrixInfo')->name('bitrix');
         Route::resource('seodata', 'Content\SeoDataController');
         Route::resource('informations', 'Content\InformationController');
-        Route::resource('shippingMethods', 'App\Http\Controllers\Content\ShippingController');
+        Route::resource('shippingMethods', 'App\Http\Controllers\Content\ShippingMethodController');
         Route::resource('paymentMethods', 'App\Http\Controllers\Content\PaymentMethodController');
         Route::resource('filters', 'App\Http\Controllers\Content\FilterController');
 //        Route::resource('attributes', 'Content\AttributeController');
@@ -75,12 +75,12 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('categories', 'App\Http\Controllers\Content\CategoryController');
         Route::resource('products', 'App\Http\Controllers\Content\ProductController');
         Route::resource('panoramas', 'Content\PanoramaController');
-        Route::resource('reviews', 'App\Http\Controllers\Content\ReviewController');
+        Route::resource('reviews', 'App\Http\Controllers\Content\ProductReviewController');
         Route::resource('sales', 'App\Http\Controllers\Content\SaleController');
         Route::resource('sale_groups', 'App\Http\Controllers\Content\SaleGroupController');
-        Route::resource('bonus_programs', 'App\Http\Controllers\Content\BonusProgramController');
-        Route::resource('promo_codes', 'App\Http\Controllers\Content\PromoCodesController');
-        Route::resource('promo_code_groups', 'App\Http\Controllers\Content\PromoCodeGroupsController');
+        Route::resource('bonusPrograms', 'App\Http\Controllers\Content\BonusProgramController');
+        Route::resource('promoCodes', 'App\Http\Controllers\Content\PromoCodeController');
+        Route::resource('promoCodeGroups', 'App\Http\Controllers\Content\PromoCodeGroupController');
         Route::resource('shops', 'App\Http\Controllers\Content\ShopController');
         Route::resource('orders', 'App\Http\Controllers\Content\OrderController');
         Route::resource('notifications', 'App\Http\Controllers\Content\NotificationController');

@@ -41,6 +41,10 @@ class ProductOption extends Model
     {
         return $this->belongsTo(Option::class, 'option_id')->with('description');
     }
+    public function descriptions()
+    {
+        return $this->hasMany(ProductOptionDescription::class, 'option_id', 'option_id');
+    }
 
     public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

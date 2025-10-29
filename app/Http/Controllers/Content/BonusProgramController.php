@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreateBonusProgramRequest;
 use App\Http\Requests\UpdateBonusProgramRequest;
 use App\Http\Controllers\AppBaseController;
@@ -15,7 +16,7 @@ use Flash;
 
 class BonusProgramController extends AppBaseController
 {
-    /** @var BonusProgramRepository $bonusProgramRepository*/
+    /** @var BonusProgramRepository $bonusProgramRepository */
     private $bonusProgramRepository;
 
     public function __construct(BonusProgramRepository $bonusProgramRepo)
@@ -59,9 +60,10 @@ class BonusProgramController extends AppBaseController
             FirstPathQuery::class
         ]);
 
-        return $this->renderOutput([
-            'fields' => $fields,
-        ]);
+        $segments = CacheForever::getSegments();
+        $paymentMethods = CacheForever::getPaymentMethods();
+
+        return $this->renderOutput(compact('segments', 'paymentMethods', 'fields'));
     }
 
     /**
@@ -94,7 +96,7 @@ class BonusProgramController extends AppBaseController
         $this->template = 'pages.bonus_programs.show';
 
         return $this->renderOutput(compact('bonusProgram'));
-}
+    }
 
     /**
      * Show the form for editing the specified BonusProgram.
@@ -115,9 +117,12 @@ class BonusProgramController extends AppBaseController
             FirstPathQuery::class
         ]);
 
+        $segments = CacheForever::getSegments();
+        $paymentMethods = CacheForever::getPaymentMethods();
+
         $this->template = 'pages.bonus_programs.edit';
 
-        return $this->renderOutput(compact('bonusProgram', 'fields'));
+        return $this->renderOutput(compact('bonusProgram', 'segments', 'paymentMethods', 'fields'));
     }
 
     /**

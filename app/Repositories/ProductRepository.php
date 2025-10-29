@@ -125,7 +125,7 @@ class ProductRepository extends BaseRepository
                 'similarProducts',
                 'certificates',
                 'filling',
-                'kitProducts',
+                'kits',
                 'segments'
             ])
             ->find($id, $columns);
@@ -197,21 +197,21 @@ class ProductRepository extends BaseRepository
             ])
             ->toArray();
 
-        $product_options = $product->options
-            ->mapWithKeys(function ($option) use ($id) {
-                $comments = $option->descriptions
+        $product_options = $product->productOptions
+            ->mapWithKeys(function ($productOptions) use ($id) {
+                $comments = $productOptions->descriptions
                     ->where('product_id', $id)
                     ->pluck('comment', 'language_id')
                     ->toArray();
 
                 return [
-                    $option->id => [
-                        'id' => $option->option_id,
-                        'name' => $option->option->description->name ?? '',
-                        'c1' => $option->c1 ?? null,
-                        'hide_option' => $option->hide_option ?? false,
-                        'image_change' => $option->image_change ?? 0,
-                        'hash' => $option->hash ?? '',
+                    $productOptions->id => [
+                        'id' => $productOptions->id,
+                        'name' => $productOptions->option->description->name ?? '',
+                        'c1' => $productOptions->c1 ?? null,
+                        'hide_option' => $productOptions->hide_option ?? false,
+                        'image_change' => $productOptions->image_change ?? 0,
+                        'hash' => $productOptions->hash ?? '',
                         'comments' => $comments,
                     ],
                 ];
@@ -242,19 +242,17 @@ class ProductRepository extends BaseRepository
 
         $product_kits = [];
 
-        if ($product->kit && $product->kits) {
-            $product_kits = $product->kits
-                ->map(function ($kit) {
-                    $kitProduct = $kit->kitProduct()->with('description')->first();
+        if ($product->kit && $product->kits->isNotEmpty()) {
+            $product_kits = $product->kits->map(function ($kit) {
+                $kitProduct = $kit->kitProduct;
 
-                    return [
-                        'product_id' => $kitProduct->id,
-                        'name' => $kitProduct->description->name ?? '',
-                        'sort_order' => $kit->sort_order,
-                        'quantity' => $kit->quantity,
-                    ];
-                })
-                ->toArray();
+                return [
+                    'product_id' => $kitProduct->id ?? null,
+                    'name'       => $kitProduct->description->name ?? '',
+                    'sort_order' => $kit->sort_order,
+                    'quantity'   => $kit->quantity,
+                ];
+            })->filter(fn($item) => $item['product_id'])->values()->toArray();
         }
 
         return $product

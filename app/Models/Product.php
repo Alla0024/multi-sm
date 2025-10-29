@@ -196,16 +196,6 @@ class Product extends Model
         return $this->hasOne(\App\Models\ProductOptionDescription::class);
     }
 
-    public function productKits(): HasMany
-    {
-        return $this->hasMany(\App\Models\ProductKit::class, 'kit_product_id');
-    }
-
-    public function productKit5s(): HasMany
-    {
-        return $this->hasMany(\App\Models\ProductKit::class, 'product_id');
-    }
-
     public function productHash(): HasOne
     {
         return $this->hasOne(\App\Models\ProductHash::class);
@@ -351,8 +341,10 @@ class Product extends Model
     {
         return $this->hasMany(ProductFilling::class)->with('description');
     }
-    public function kitProducts()
+
+    public function kits()
     {
-        return $this->hasMany(ProductKit::class)->with('description', 'product');
+        return $this->hasMany(ProductKit::class, 'product_id')
+            ->with(['kitProduct.description']);
     }
 }

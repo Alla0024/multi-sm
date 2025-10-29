@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helpers\PictureHelper;
 use App\Models\BonusProgram;
 use App\Models\BonusProgramDescription;
 use App\Models\BonusProgramToStore;
@@ -50,6 +51,8 @@ class BonusProgramRepository extends BaseRepository
                 'descriptions.language:id,code',
                 'seoPath:type_id,path',
                 'stores:id,name',
+                'segments',
+                'paymentMethods'
             ])
             ->find($id, $columns);
 
@@ -130,23 +133,7 @@ class BonusProgramRepository extends BaseRepository
 
         unset($input['descriptions'], $input['path'], $input['stores']);
 
-        $bonusProgramSave = $input;
-
-        if (!empty($input['image'])) {
-            PictureHelper::rewrite(
-                $input['image'],
-                config('settings.images.bonusProgram.width'),
-                config('settings.images.bonusProgram.height')
-            );
-
-            if (str_contains($input['image'], 'storage/images')) {
-                $input['image'] = substr($input['image'], 15);
-            }
-
-            $bonusProgramSave['image'] = $input['image'];
-        }
-
-        $bonusProgram = $this->model->updateOrCreate(['id' => $id], $bonusProgramSave);
+        $bonusProgram = $this->model->updateOrCreate(['id' => $id], $input);
 
         foreach ($descriptions as $languageId => $descData) {
             BonusProgramDescription::updateOrInsert(

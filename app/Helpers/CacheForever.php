@@ -6,6 +6,9 @@ namespace App\Helpers;
 use App\Models\Currency;
 use App\Models\Location;
 use App\Models\Option;
+use App\Models\PaymentMethod;
+use App\Models\Segment;
+use App\Models\ShippingMethod;
 use App\Models\StockStatus;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Category;
@@ -34,6 +37,44 @@ class CacheForever
             $cacheKey,
             function () {
                 return Category::getCategories();
+            }
+        );
+    }
+    public static function getSegments()
+    {
+        $cacheKey = 'segments_' . config('settings.locale.default_language_id');
+
+        return self::rememberForever(
+            ['segments'],
+            $cacheKey,
+            function () {
+                return Segment::getSegments();
+            }
+        );
+    }
+
+    public static function getPaymentMethods()
+    {
+        $cacheKey = 'payment_methods_' . config('settings.locale.default_language_id');
+
+        return self::rememberForever(
+            ['payment_methods'],
+            $cacheKey,
+            function () {
+                return PaymentMethod::getPaymentMethods();
+            }
+        );
+    }
+
+    public static function getShippingMethods()
+    {
+        $cacheKey = 'shipping_methods_' . config('settings.locale.default_language_id');
+
+        return self::rememberForever(
+            ['shipping_methods'],
+            $cacheKey,
+            function () {
+                return ShippingMethod::getShippingMethods();
             }
         );
     }
