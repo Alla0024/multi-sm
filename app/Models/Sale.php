@@ -90,18 +90,13 @@ class Sale extends Model
         return $this->belongsToMany(\App\Models\SaleGroup::class, 'sale_group_to_sales_copy');
     }
 
-    public function paymentMethods(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function paymentMethods()
     {
-        return $this->belongsToMany(\App\Models\PaymentMethod::class, 'sale_to_payments');
+        return $this->belongsToMany(PaymentMethod::class, SaleToPaymentMethod::class, 'payment_id', 'sale_id');
     }
 
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function segments()
     {
-        return $this->belongsToMany(\App\Models\Product::class, 'sale_to_products');
-    }
-
-    public function segments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(\App\Models\Segment::class, 'sale_to_segments');
+        return $this->belongsToMany(Segment::class, SaleToSegment::class);
     }
 }
