@@ -5,4 +5,4 @@
         'quantity' => ['type' => 'number', 'name' => 'Кількість', 'description' => false],
     ]
 @endphp
-@include('components.table.table_items', ['inputType' => $arrData, 'data' => $product['kitProducts'] ?? [], 'search_select_type' => 'kit_product_id', 'name' => 'product_kit', 'id_name' => 'kit_product_id', 'url' => 'getProducts', 'tab' => 'kit', 'parse' => true])
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $product['kits'] ?? [], 'search_select_type' => 'kit_product_id', 'name' => 'product_kit', 'id_name' => 'kit_product_id', 'url' => 'getProducts', 'tab' => 'kit', 'parse' => true])

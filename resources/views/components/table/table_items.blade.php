@@ -255,7 +255,7 @@
 <script id="payloadMultiSelect" type="application/json">@json($dataMultiSelect ?? '', JSON_UNESCAPED_UNICODE)</script>
 <script>
     document.addEventListener('alpine:init', () => {
-        {{--console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))--}}
+        console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))
         // console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
 
         Alpine.data('table_products_{{$search_select_type ?? ""}}', () => ({
@@ -269,10 +269,14 @@
                 console.log(this.parse)
                 if(this.parse){
                     this.data.forEach(item => {
-                        item.id = item.description['{{$search_select_type ?? ''}}'] ?? item['{{$search_select_type ?? ''}}']
-                        item.text = item.description.name ?? item.description.text ?? item.description.title
+                        item.id = item?.description && item.description['{{$search_select_type ?? ''}}'] ?  item.description['{{$search_select_type ?? ''}}'] : item['{{$search_select_type ?? ''}}']
+                        if('{{$search_select_type}}' == 'kit_product_id'){
+                            item.text = item.kit_product.description.name
+                        } else {
+                            item.text = item.description.name ?? item.description.text ?? item.description.title
+                        }
                     })
-                    // console.log(this.data)
+                    console.log(this.data)
                 }
             },
 

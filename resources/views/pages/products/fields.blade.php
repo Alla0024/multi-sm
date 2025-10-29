@@ -1,7 +1,7 @@
 @dump($product)
-@dump($product['options'])
-@dump($options)
-@dump($product['options'][0])
+@dump($product['productOptions'])
+{{--@dump($options)--}}
+{{--@dump($product['options'][0])--}}
 @dump($options[16])
 
 <!-- Main tab -->
