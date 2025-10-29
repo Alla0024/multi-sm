@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreateSaleGroupRequest;
 use App\Http\Requests\UpdateSaleGroupRequest;
 use App\Http\Controllers\AppBaseController;
@@ -57,9 +58,11 @@ class SaleGroupController extends AppBaseController
             SaleGroup::class
         ]);
 
-        return $this->renderOutput([
-            'fields' => $fields,
-        ]);
+        $sales = CacheForever::getSales();
+        $bonusPrograms = CacheForever::getBonusPrograms();
+        $promoCodeGroups = CacheForever::getPromoCodeGroups();
+
+        return $this->renderOutput(compact( 'sales', 'bonusPrograms', 'promoCodeGroups','fields'));
     }
 
     /**
@@ -112,9 +115,13 @@ class SaleGroupController extends AppBaseController
             SaleGroup::class
         ]);
 
+        $sales = CacheForever::getSales();
+        $bonusPrograms = CacheForever::getBonusPrograms();
+        $promoCodeGroups = CacheForever::getPromoCodeGroups();
+
         $this->template = 'pages.sale_groups.edit';
 
-        return $this->renderOutput(compact('saleGroup', 'fields'));
+        return $this->renderOutput(compact('saleGroup', 'sales', 'bonusPrograms', 'promoCodeGroups','fields'));
     }
 
     /**

@@ -86,4 +86,9 @@ class BonusProgram extends Model
     {
         return $this->belongsToMany(\App\Models\SaleGroup::class, 'sale_group_to_bonus_programs');
     }
+
+    public static function getBonusPrograms()
+    {
+        return self::with('description')->get();
+    }
 }

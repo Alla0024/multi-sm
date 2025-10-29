@@ -99,4 +99,11 @@ class Sale extends Model
     {
         return $this->belongsToMany(Segment::class, SaleToSegment::class);
     }
+
+    public static function getSales()
+    {
+        return self::with('description')
+            ->where('status', 1)
+            ->get();
+    }
 }
