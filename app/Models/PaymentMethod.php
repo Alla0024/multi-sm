@@ -84,4 +84,11 @@ class PaymentMethod extends Model
     {
         return $this->belongsToMany(\App\Models\Sale::class, 'sale_to_payments');
     }
+
+    public static function getPaymentMethods()
+    {
+        return self::with('description')
+            ->where('status', 1)
+            ->get();
+    }
 }

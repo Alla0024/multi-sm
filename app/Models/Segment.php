@@ -92,4 +92,10 @@ class Segment extends Model
     {
         return $this->hasMany(\App\Models\UpdateSegmentProduct::class, 'segment_id');
     }
+    public static function getSegments()
+    {
+        return self::with('description')
+            ->where('status', 1)
+            ->get();
+    }
 }
