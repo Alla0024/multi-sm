@@ -56,7 +56,7 @@ class ProductReview extends Model
 
     public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id')->with('path');
+        return $this->belongsTo(Product::class, 'product_id')->with('seoPath');
     }
 
     public function productDescription()
