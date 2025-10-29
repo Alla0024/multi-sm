@@ -51,6 +51,8 @@ class BonusProgramRepository extends BaseRepository
                 'descriptions.language:id,code',
                 'seoPath:type_id,path',
                 'stores:id,name',
+                'segments',
+                'paymentMethods'
             ])
             ->find($id, $columns);
 
