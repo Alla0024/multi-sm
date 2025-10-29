@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreatePromoCodeRequest;
 use App\Http\Requests\UpdatePromoCodeRequest;
 use App\Http\Controllers\AppBaseController;
@@ -57,8 +58,11 @@ class PromoCodeController extends AppBaseController
             PromoCode::class
         ]);
 
+        $promoCodeGroups = CacheForever::getPromoCodeGroups();
+
         return $this->renderOutput([
             'fields' => $fields,
+            'promoCodeGroups' => $promoCodeGroups,
         ]);
     }
 
@@ -112,9 +116,11 @@ class PromoCodeController extends AppBaseController
             PromoCode::class
         ]);
 
+        $promoCodeGroups = CacheForever::getPromoCodeGroups();
+
         $this->template = 'pages.promo_codes.edit';
 
-        return $this->renderOutput(compact('promoCode', 'fields'));
+        return $this->renderOutput(compact('promoCode', 'promoCodeGroups', 'fields'));
     }
 
     /**

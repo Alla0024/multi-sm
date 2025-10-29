@@ -49,6 +49,7 @@ class PromoCodeRepository extends BaseRepository
         $promoCode = $this->model
             ->with([
                 'descriptions.language:id,code',
+                'promoCodeGroup'
             ])
             ->find($id, $columns);
 

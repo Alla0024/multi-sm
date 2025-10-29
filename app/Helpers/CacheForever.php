@@ -3,10 +3,13 @@
 
 namespace App\Helpers;
 
+use App\Models\BonusProgram;
 use App\Models\Currency;
 use App\Models\Location;
 use App\Models\Option;
 use App\Models\PaymentMethod;
+use App\Models\PromoCodeGroup;
+use App\Models\Sale;
 use App\Models\Segment;
 use App\Models\ShippingMethod;
 use App\Models\StockStatus;
@@ -75,6 +78,45 @@ class CacheForever
             $cacheKey,
             function () {
                 return ShippingMethod::getShippingMethods();
+            }
+        );
+    }
+
+    public static function getPromoCodeGroups()
+    {
+        $cacheKey = 'promo_code_groups_' . config('settings.locale.default_language_id');
+
+        return self::rememberForever(
+            ['promo_code_groups'],
+            $cacheKey,
+            function () {
+                return PromoCodeGroup::getPromoCodeGroups();
+            }
+        );
+    }
+
+    public static function getSales()
+    {
+        $cacheKey = 'sales_' . config('settings.locale.default_language_id');
+
+        return self::rememberForever(
+            ['sales'],
+            $cacheKey,
+            function () {
+                return Sale::getSales();
+            }
+        );
+    }
+
+    public static function getBonusPrograms()
+    {
+        $cacheKey = 'bonus_programs_' . config('settings.locale.default_language_id');
+
+        return self::rememberForever(
+            ['bonus_programs'],
+            $cacheKey,
+            function () {
+                return BonusProgram::getBonusPrograms();
             }
         );
     }

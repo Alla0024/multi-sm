@@ -55,6 +55,10 @@ class PromoCodeGroupRepository extends BaseRepository
             ->with([
                 'descriptions.language:id,code',
                 'stores:id,name',
+                'segments',
+                'activatorSegments',
+                'paymentMethods',
+                'shippingMethods',
             ])
             ->find($id, $columns);
 
@@ -67,7 +71,8 @@ class PromoCodeGroupRepository extends BaseRepository
                 (string)($desc->language_id ?? $desc->language->code) => [
                     'name' => $desc->name,
                     'description' => $desc->description,
-                    'tag' => $desc->tag,
+                    'title' => $desc->title,
+                    'image' => $desc->image,
                 ]
             ])
             ->toArray();

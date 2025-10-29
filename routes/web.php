@@ -216,6 +216,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
             Route::get('getAttributeIcons', 'App\Http\Controllers\Content\ApiController@getAttributeIcons')->name('getAttributeIcons');
             Route::get('getAttributes', 'App\Http\Controllers\Content\ApiController@getAttributes')->name('getAttributes');
             Route::get('getFilters', 'App\Http\Controllers\Content\ApiController@getFilters')->name('getFilters');
+            Route::get('generateProductPriceSortOrder', 'App\Http\Controllers\Content\ApiController@generateProductPriceSortOrder')->name('generateProductPriceSortOrder');
             Route::get('getOptionValues', 'Content\OptionValueController@getOptionValues')->name('getOptionValues');
             Route::any('getSeoData', 'Content\SeoDataController@getSeoData')->name('getSeoData');
             Route::get('autoUpdatePrice', 'ApiController@autoUpdatePrice');
