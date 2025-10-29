@@ -197,21 +197,21 @@ class ProductRepository extends BaseRepository
             ])
             ->toArray();
 
-        $product_options = $product->options
-            ->mapWithKeys(function ($option) use ($id) {
-                $comments = $option->descriptions
+        $product_options = $product->productOptions
+            ->mapWithKeys(function ($productOptions) use ($id) {
+                $comments = $productOptions->descriptions
                     ->where('product_id', $id)
                     ->pluck('comment', 'language_id')
                     ->toArray();
 
                 return [
-                    $option->id => [
-                        'id' => $option->option_id,
-                        'name' => $option->option->description->name ?? '',
-                        'c1' => $option->c1 ?? null,
-                        'hide_option' => $option->hide_option ?? false,
-                        'image_change' => $option->image_change ?? 0,
-                        'hash' => $option->hash ?? '',
+                    $productOptions->id => [
+                        'id' => $productOptions->id,
+                        'name' => $productOptions->option->description->name ?? '',
+                        'c1' => $productOptions->c1 ?? null,
+                        'hide_option' => $productOptions->hide_option ?? false,
+                        'image_change' => $productOptions->image_change ?? 0,
+                        'hash' => $productOptions->hash ?? '',
                         'comments' => $comments,
                     ],
                 ];
