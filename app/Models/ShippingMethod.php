@@ -99,4 +99,11 @@ class ShippingMethod extends Model
     {
         return $this->belongsToMany(\App\Models\Segment::class, 'shipping_method_to_segments');
     }
+
+    public static function getShippingMethods()
+    {
+        return self::with('description')
+            ->where('status', 1)
+            ->get();
+    }
 }

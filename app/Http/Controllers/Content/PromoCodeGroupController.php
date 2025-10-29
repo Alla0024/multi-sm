@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreatePromoCodeGroupRequest;
 use App\Http\Requests\UpdatePromoCodeGroupRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\PromoCodeDescription;
+use App\Models\ShippingMethod;
 use App\Repositories\PromoCodeGroupRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -57,9 +59,11 @@ class PromoCodeGroupController extends AppBaseController
             PromoCodeGroup::class
         ]);
 
-        return $this->renderOutput([
-            'fields' => $fields,
-        ]);
+        $segments = CacheForever::getSegments();
+        $paymentMethods = CacheForever::getPaymentMethods();
+        $shippingMethods = CacheForever::getShippingMethods();
+
+        return $this->renderOutput(compact('segments', 'paymentMethods', 'shippingMethods', 'fields'));
     }
 
     /**
@@ -112,9 +116,13 @@ class PromoCodeGroupController extends AppBaseController
             PromoCodeGroup::class
         ]);
 
+        $segments = CacheForever::getSegments();
+        $paymentMethods = CacheForever::getPaymentMethods();
+        $shippingMethods = CacheForever::getShippingMethods();
+
         $this->template = 'pages.promo_code_groups.edit';
 
-        return $this->renderOutput(compact('promoCodeGroup', 'fields'));
+        return $this->renderOutput(compact('promoCodeGroup', 'segments', 'paymentMethods', 'shippingMethods', 'fields'));
     }
 
     /**
