@@ -76,44 +76,29 @@ class PromoCodeGroup extends Model
         return $this->belongsToMany(\App\Models\Language::class, 'promo_code_group_descriptions');
     }
 
-    public function segments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function segments()
     {
-        return $this->belongsToMany(\App\Models\Segment::class, 'promo_code_group_to_activator_segments');
+        return $this->belongsToMany(Segment::class, PromoCodeGroupToSegment::class);
     }
 
-    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function activatorSegments()
     {
-        return $this->belongsToMany(\App\Models\Category::class, 'promo_code_group_to_categories');
+        return $this->belongsToMany(Segment::class, PromoCodeGroupToActivatorSegment::class, 'segment_id', 'promo_code_group_id');
     }
 
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function paymentMethods()
     {
-        return $this->belongsToMany(\App\Models\Product::class, 'promo_code_group_to_exception_products');
+        return $this->belongsToMany(PaymentMethod::class, PromoCodeGroupToPaymentMethod::class, 'payment_id', 'promo_code_group_id');
     }
 
-    public function paymentMethods(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function shippingMethods()
     {
-        return $this->belongsToMany(\App\Models\PaymentMethod::class, 'promo_code_group_to_payments');
+        return $this->belongsToMany(\App\Models\ShippingMethod::class, PromoCodeGroupToShippingMethod::class, 'shipping_id', 'promo_code_group_id');
     }
 
-    public function product1s(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function promoCodes()
     {
-        return $this->belongsToMany(\App\Models\Product::class, 'promo_code_group_to_products');
-    }
-
-    public function segment2s(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(\App\Models\Segment::class, 'promo_code_group_to_segments');
-    }
-
-    public function shippingMethods(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(\App\Models\ShippingMethod::class, 'promo_code_group_to_shippings');
-    }
-
-    public function promoCodes(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(\App\Models\PromoCode::class, 'promo_code_group_id');
+        return $this->hasMany(PromoCode::class, 'promo_code_group_id');
     }
 
     public function saleGroups(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
