@@ -8,6 +8,9 @@
     </div>
 </div>
 
+<!-- Stores Field -->
+@include('components.inputs.stores_multi_select', ['name' => 'stores', 'value' => $product ?? []])
+
 <!-- Hash Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('hash', $word['title_hash']) !!}

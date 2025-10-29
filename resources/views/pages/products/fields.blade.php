@@ -1,9 +1,8 @@
 @dump($product)
 @dump($product['options'])
 @dump($options)
-@dump($options[13])
-@dump($stores)
-{{--@dump($product['segments'])--}}
+@dump($product['options'][0])
+@dump($options[16])
 
 <!-- Main tab -->
 @include('pages.products.tabs.main')
