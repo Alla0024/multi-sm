@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreateSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
 use App\Http\Controllers\AppBaseController;
@@ -58,9 +59,10 @@ class SaleController extends AppBaseController
             FirstPathQuery::class,
         ]);
 
-        return $this->renderOutput([
-            'fields' => $fields,
-        ]);
+        $segments = CacheForever::getSegments();
+        $paymentMethods = CacheForever::getPaymentMethods();
+
+        return $this->renderOutput(compact('segments', 'paymentMethods', 'fields'));
     }
 
     /**
@@ -113,9 +115,12 @@ class SaleController extends AppBaseController
             FirstPathQuery::class,
         ]);
 
+        $segments = CacheForever::getSegments();
+        $paymentMethods = CacheForever::getPaymentMethods();
+
         $this->template = 'pages.sales.edit';
 
-        return $this->renderOutput(compact('sale', 'fields'));
+        return $this->renderOutput(compact('sale', 'segments', 'paymentMethods', 'fields'));
     }
 
     /**
