@@ -16,4 +16,9 @@ class ProductKit extends Model
     {
         return $this->hasOne(Product::class, 'id', 'kit_id');
     }
+
+    public function kitProduct()
+    {
+        return $this->belongsTo(Product::class, 'kit_product_id');
+    }
 }

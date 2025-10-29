@@ -125,7 +125,7 @@ class ProductRepository extends BaseRepository
                 'similarProducts',
                 'certificates',
                 'filling',
-                'kitProducts',
+                'kits',
                 'segments'
             ])
             ->find($id, $columns);
@@ -242,19 +242,17 @@ class ProductRepository extends BaseRepository
 
         $product_kits = [];
 
-        if ($product->kit && $product->kits) {
-            $product_kits = $product->kits
-                ->map(function ($kit) {
-                    $kitProduct = $kit->kitProduct()->with('description')->first();
+        if ($product->kit && $product->kits->isNotEmpty()) {
+            $product_kits = $product->kits->map(function ($kit) {
+                $kitProduct = $kit->kitProduct;
 
-                    return [
-                        'product_id' => $kitProduct->id,
-                        'name' => $kitProduct->description->name ?? '',
-                        'sort_order' => $kit->sort_order,
-                        'quantity' => $kit->quantity,
-                    ];
-                })
-                ->toArray();
+                return [
+                    'product_id' => $kitProduct->id ?? null,
+                    'name'       => $kitProduct->description->name ?? '',
+                    'sort_order' => $kit->sort_order,
+                    'quantity'   => $kit->quantity,
+                ];
+            })->filter(fn($item) => $item['product_id'])->values()->toArray();
         }
 
         return $product
