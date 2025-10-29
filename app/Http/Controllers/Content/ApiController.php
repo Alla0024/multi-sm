@@ -26,6 +26,7 @@ use App\Repositories\ProductRepository;
 use App\Repositories\StoreRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends AppBaseController
 {
@@ -152,7 +153,7 @@ class ApiController extends AppBaseController
             if (isset($_GET['option_id'])) {
                 $option_id = $_GET['option_id'];
                 $option_values = OptionValueGroup::where('option_id', $option_id)->with('description')->get();
-                return response()->json(['option_values' => $option_values, 'filters' => $filters, 'words' => $this->vars['word'], 'languages' => $languages]);
+                return response()->json(['option_values' => $option_values, 'filters' => $filters, 'words' => $this->vars['word']]);
             }
 
             return response()->json(['filters' => $filters ]);
@@ -407,6 +408,42 @@ class ApiController extends AppBaseController
             ]);
 
         return response()->json(['items' => $fillings]);
+    }
+
+    public static function generateProductPriceSortOrder()
+    {
+        $request = request();
+        $productId = $request->input('product_id');
+
+        if (!$productId) {
+            abort_if(!$request->ajax(), 404);
+        }
+
+        $product = Product::find($productId);
+
+        if (!$product) {
+            abort_if(!$request->ajax(), 404);
+        }
+
+        $tablePrices = "{$product->category_id}_product_prices";
+        $tableLinks = "{$product->category_id}_product_price_to_options";
+
+        $subQuery = DB::table("$tableLinks as ppto")
+            ->select('ppto.product_price_id', DB::raw('SUM(povg.sort_order) as sum_order'))
+            ->leftJoin('product_option_value_groups as povg', 'ppto.option_value_group_id', '=', 'povg.option_value_group_id')
+            ->where('ppto.product_id', $product->id)
+            ->where('povg.product_id', $product->id)
+            ->groupBy('ppto.product_price_id');
+
+        $affected = DB::table("$tablePrices as pp")
+            ->joinSub($subQuery, 'po', function ($join) {
+                $join->on('po.product_price_id', '=', 'pp.id');
+            })
+            ->update(['pp.sort_order' => DB::raw('po.sum_order')]);
+
+        return response()->json([
+            'updated_rows' => $affected,
+        ]);
     }
 
 }
