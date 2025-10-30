@@ -8,6 +8,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Models\ShopDescription;
 use App\Repositories\ShopRepository;
 use App\Helpers\ModelSchemaHelper;
+use App\Repositories\LocationRepository;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use Flash;
@@ -17,11 +18,17 @@ class ShopController extends AppBaseController
     /** @var ShopRepository $shopRepository*/
     private $shopRepository;
 
-    public function __construct(ShopRepository $shopRepo)
+    private LocationRepository $locationRepository;
+
+    public function __construct(
+        ShopRepository $shopRepo,
+        LocationRepository $locationRepo,
+    )
     {
         parent::__construct();
 
         $this->shopRepository = $shopRepo;
+        $this->locationRepository = $locationRepo;
     }
 
     /**
@@ -48,16 +55,17 @@ class ShopController extends AppBaseController
     /**
      * Show the form for creating a new Shop.
      */
-    public function create()
+    public function create(Request $request)
     {
         $this->template = 'pages.shops.create';
-
+        $locations = $this->locationRepository->getDropdownItems(5, $request->all());
+        $locations = collect($locations)->pluck('text', 'id')->toArray();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ShopDescription::class,
             Shop::class
         ]);
 
-        return $this->renderOutput(['fields' => $fields]);
+        return $this->renderOutput(['fields' => $fields, 'locations' => $locations]);
     }
 
     /**
@@ -95,10 +103,11 @@ class ShopController extends AppBaseController
     /**
      * Show the form for editing the specified Shop.
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $shop = $this->shopRepository->findFull($id);
-
+        $locations = $this->locationRepository->getDropdownItems(5, $request->all());
+        $locations = collect($locations)->pluck('text', 'id')->toArray();
         if (empty($shop)) {
             Flash::error(__('common.flash_not_found'));
 
@@ -112,7 +121,7 @@ class ShopController extends AppBaseController
 
         $this->template = 'pages.shops.edit';
 
-        return $this->renderOutput(compact('shop', 'fields'));
+        return $this->renderOutput(compact('shop', 'fields', 'locations'));
     }
 
     /**

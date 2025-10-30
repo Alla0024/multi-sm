@@ -1,4 +1,4 @@
-@dump($promoCodeGroup)
+{{--@dump($promoCodeGroup)--}}
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_name', 'Назва промокоду') !!}

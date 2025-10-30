@@ -96,6 +96,7 @@ return [
 
     'title_updated_at' => 'Оновлено',
     'search_updated_at' => 'Пошук за датою оновлення',
+    'title_google_path' => 'Пошук за датою оновлення',
 
     'tab_main' => 'Основна інформація',
     'tab_sort' => 'Сортування',
