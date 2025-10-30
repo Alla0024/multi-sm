@@ -119,10 +119,12 @@ class BonusProgramController extends AppBaseController
 
         $segments = CacheForever::getSegments();
         $paymentMethods = CacheForever::getPaymentMethods();
+        $selectedSegmentIds = array_column($bonusProgram['segments']->toArray(), 'id');
+        $selectedPaymentsIds = array_column($bonusProgram['paymentMethods']->toArray(), 'id');
 
         $this->template = 'pages.bonus_programs.edit';
 
-        return $this->renderOutput(compact('bonusProgram', 'segments', 'paymentMethods', 'fields'));
+        return $this->renderOutput(compact('bonusProgram', 'segments', 'paymentMethods', 'selectedSegmentIds', 'selectedPaymentsIds', 'fields'));
     }
 
     /**

@@ -1,3 +1,6 @@
+{{--@dump($bonusProgram)--}}
+
+
 <!-- Hash Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('hash', $word['title_hash']) !!}
@@ -93,6 +96,34 @@
     <div class="flex-row input">
         <div class="input-group">
             {!! Form::number('priority', null, ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
+</div>
+
+<!-- Segments Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="segment">
+    {!! Form::label('segments', 'Сегменти') !!}
+    <div class="flex-row input">
+        <div class="input-group input-tags">
+            <select class="tag-select" name="bonus_program_to_segment[]" data-no-search="true" multiple>
+                @foreach($segments as $item)
+                    <option value="{{$item['id']}}" @if(isset($selectedSegmentIds) && in_array((int)$item['id'], $selectedSegmentIds)) selected @endif >{{$item['id']}} - {{$item['description']['name']}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Payments Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="payment">
+    {!! Form::label('payment', 'Способи оплати') !!}
+    <div class="flex-row input">
+        <div class="input-group input-tags">
+            <select class="tag-select" name="bonus_program_to_payment[]" data-no-search="true" multiple>
+                @foreach($paymentMethods as $item)
+                    <option value="{{$item['id']}}" @if(isset($selectedPaymentsIds) && in_array((int)$item['id'], $selectedPaymentsIds)) selected @endif >{{$item['id']}} - {{$item['description']['title']}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 </div>
