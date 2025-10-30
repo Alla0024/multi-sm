@@ -37,7 +37,8 @@ class ShopController extends AppBaseController
     public function index(Request $request)
     {
         $shops = $this->shopRepository->filterRows($request->all());
-
+        $locations = $this->locationRepository->getDropdownItems(5, $request->all());
+        $locations = collect($locations)->pluck('text', 'id')->toArray();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             ShopDescription::class,
             Shop::class
@@ -47,6 +48,7 @@ class ShopController extends AppBaseController
 
         return $this->renderOutput([
             'shops' => $shops,
+            'locations' => $locations,
             'fields' => $fields,
         ]);
     }

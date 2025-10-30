@@ -10,7 +10,6 @@
             </div>
         </th>
 
-{{--@dump($fields)--}}
         @foreach($fields as $index => $field)
             @if($index != 'id' && $field['inTable'])
                 <th class="" @if($index == 'status' || $index == 'article')style="width: 132px" @endif>
@@ -79,7 +78,18 @@
                         @elseif($index == 'hash' || $index == 'fake_status')
                             <div></div>
                         @elseif($index == 'address')
-                            <div></div>
+                            <div>
+                                <select name="location_id" class="form-control">
+                                    @if(!request()->get('location_id'))
+                                        <option selected value="all">Усе</option>
+                                    @endif
+
+                                    @foreach($locations as $key => $item)
+                                            <option value="{{$key}}" @if(request('location_id') == $key) selected @endif>
+                                                {{$item}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         @elseif($index == 'sort_order')
                             <div>
                                 @if(isset($segments) || isset($promoCodes) || isset($promoCodeGroups))
