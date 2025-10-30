@@ -44,7 +44,7 @@
             right: 0;
             background: white;
             margin-top: 1px;
-            max-height: 100px;
+            max-height: 150px;
             overflow-y: auto;
             border: 1px solid #BFBFBF;
             border-radius: 4px 4px 0 0;
@@ -158,6 +158,31 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group col-sm-6 input-block mt-3">
+                        <label for="hide_option">Статус опції</label>
+                        <div class="flex-row input">
+                            <div class="input-group">
+                                <select  :name="'option['+ item.id + '][hide_option]'" class="form-control">
+                                    <option :selected="item.hide_option == 0" value="0">Вимкнено</option>
+                                    <option :selected="item.hide_option == 1" value="1">Увімкнено</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6 input-block mt-3">
+                        <label for="image_change">Впливає на зміну зображення</label>
+                        <div class="flex-row input">
+                            <div class="input-group">
+                                <select  :name="'option['+ item.id + '][image_change]'" class="form-control">
+                                    <option :selected="+item.image_change == 0" value="0">Вимкнено</option>
+                                    <option :selected="+item.image_change == 1" value="1">Увімкнено</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="form-group col-sm-6 input-block mt-3" >
                         <label for="hash">Хеш</label>
