@@ -42,6 +42,7 @@ class ShopRepository extends BaseRepository
         $shop = $this->model
             ->with([
                 'descriptions.language:id,code',
+                'shopImages',
             ])
             ->find($id, $columns);
 

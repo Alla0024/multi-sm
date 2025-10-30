@@ -93,8 +93,8 @@ class Shop extends Model
         return $this->hasOne(\App\Models\ShopDescription::class);
     }
 
-    public function shopImages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function shopImages()
     {
-        return $this->hasMany(\App\Models\ShopImage::class, 'shop_id');
+        return $this->hasMany(ShopImage::class, 'shop_id')->orderBy('sort_order');
     }
 }
