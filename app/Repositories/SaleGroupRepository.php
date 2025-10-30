@@ -41,6 +41,9 @@ class SaleGroupRepository extends BaseRepository
         $saleGroup = $this->model
             ->with([
                 'descriptions.language:id,code',
+                'sales',
+                'bonusPrograms',
+                'promoCodeGroups',
             ])
             ->find($id, $columns);
 

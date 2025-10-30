@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SaleGroup extends Model
+class
+SaleGroup extends Model
 {
     public $table = 'sale_groups';
 
@@ -51,19 +52,19 @@ class SaleGroup extends Model
         return $this->belongsToMany(\App\Models\Language::class, 'sale_group_descriptions');
     }
 
-    public function bonusPrograms(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function bonusPrograms()
     {
-        return $this->belongsToMany(\App\Models\BonusProgram::class, 'sale_group_to_bonus_programs');
+        return $this->belongsToMany(BonusProgram::class, SaleGroupToBonusProgram::class);
     }
 
-    public function promoCodeGroups(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function promoCodeGroups()
     {
-        return $this->belongsToMany(\App\Models\PromoCodeGroup::class, 'sale_group_to_promo_code_groups');
+        return $this->belongsToMany(PromoCodeGroup::class, SaleGroupToPromoCodeGroup::class);
     }
 
-    public function sales(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function sales()
     {
-        return $this->belongsToMany(\App\Models\Sale::class, 'sale_group_to_sales');
+        return $this->belongsToMany(Sale::class, SaleGroupToSale::class);
     }
 
     public function sale2s(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
