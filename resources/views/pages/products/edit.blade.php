@@ -16,7 +16,7 @@
             <div class="card-body" x-data="{oversize: @if(isset($product['productOversizes']) && $product['productOversizes']->count() > 0) true @else false @endif}">
                 <ul class="nav nav-tabs" id="customTabs">
                     <li class="nav-item">
-                        <button class="nav-link " type="button" data-tab="main">Загальні</button>
+                        <button class="nav-link active" type="button" data-tab="main">Загальні</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="data">Данні</button>
@@ -34,7 +34,7 @@
                         <button class="nav-link " type="button" data-tab="video">Відео</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link active" type="button" data-tab="options">Опції</button>
+                        <button class="nav-link " type="button" data-tab="options">Опції</button>
                     </li>
                     @if(isset($product['kit']))
                         <li class="nav-item">
