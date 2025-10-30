@@ -58,8 +58,10 @@ class BonusProgramRepository extends BaseRepository
                 (string)($desc->language_id ?? $desc->language->code) => [
                     'name' => $desc->name,
                     'description' => $desc->description,
-                    'tag' => $desc->tag,
-                ]
+                    'header' => $desc->header,
+                    'mini_description' => $desc->mini_description,
+                    'text' => $desc->text,
+                    ]
             ])
             ->toArray();
 
