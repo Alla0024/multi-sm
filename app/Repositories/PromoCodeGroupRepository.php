@@ -12,16 +12,6 @@ class PromoCodeGroupRepository extends BaseRepository
     protected array $fieldSearchable = [
         'status',
         'sort_order',
-        'value',
-        'change_number',
-        'apply_immediately',
-        'must_be_all_products',
-        'type_number',
-        'min_total_price',
-        'min_product_price',
-        'max_total_price',
-        'max_product_price',
-        'apply_for_products',
         'date_start',
         'date_end'
     ];

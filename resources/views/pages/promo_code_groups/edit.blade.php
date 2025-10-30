@@ -16,7 +16,19 @@
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
                     <li class="nav-item">
-                        <button class="nav-link active" type="button" data-tab="main">{{$word["tab_main"]}}</button>
+                        <button class="nav-link active" type="button" data-tab="main">Налаштування групи промокодів</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-tab="segment">Сегменти</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-tab="segment-activator">Сегменти-активатори</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-tab="payment">Способи оплати</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" type="button" data-tab="shipping">Доставка</button>
                     </li>
                 </ul>
                 <div class="row card-items">

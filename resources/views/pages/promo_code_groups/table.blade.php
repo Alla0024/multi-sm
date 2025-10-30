@@ -27,7 +27,9 @@
                             @endif
                          @elseif($index == 'image' && $field['inTable'])
                             <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($promoCodeGroup[$index]) && $promoCodeGroup[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$promoCodeGroup[$index] : '/images/common/no_images.png'}}" alt=""></td>
-                         @else
+                        @elseif($index == 'date_start' || $index == 'date_end')
+                            <td>{{ date("d-m-Y",strtotime($promoCodeGroup[$index])) }}</td>
+                        @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $promoCodeGroup[$index] }}</td>
                              @endif

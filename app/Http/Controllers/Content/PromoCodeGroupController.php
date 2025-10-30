@@ -119,10 +119,14 @@ class PromoCodeGroupController extends AppBaseController
         $segments = CacheForever::getSegments();
         $paymentMethods = CacheForever::getPaymentMethods();
         $shippingMethods = CacheForever::getShippingMethods();
+        $selectedSegmentIds = array_column($promoCodeGroup['segments']->toArray(), 'id');
+        $selectedPaymentsIds = array_column($promoCodeGroup['paymentMethods']->toArray(), 'id');
+        $selectedActivatorSegmentsIds = array_column($promoCodeGroup['activatorSegments']->toArray(), 'id');
+        $selectedShippingIds = array_column($promoCodeGroup['shippingMethods']->toArray(), 'id');
 
         $this->template = 'pages.promo_code_groups.edit';
 
-        return $this->renderOutput(compact('promoCodeGroup', 'segments', 'paymentMethods', 'shippingMethods', 'fields'));
+        return $this->renderOutput(compact('promoCodeGroup', 'segments', 'paymentMethods', 'shippingMethods', 'selectedSegmentIds', 'selectedShippingIds', 'selectedActivatorSegmentsIds', 'selectedPaymentsIds', 'fields'));
     }
 
     /**
