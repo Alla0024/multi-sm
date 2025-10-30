@@ -8,12 +8,7 @@ use App\Repositories\BaseRepository;
 class PromoCodeDescriptionRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'promo_code_id',
-        'language_id',
         'name',
-        'image',
-        'title',
-        'description'
     ];
 
     protected array $additionalFields = [

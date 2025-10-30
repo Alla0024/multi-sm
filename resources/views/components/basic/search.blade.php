@@ -82,7 +82,7 @@
                             <div></div>
                         @elseif($index == 'sort_order')
                             <div>
-                                @if(isset($segments))
+                                @if(isset($segments) || isset($promoCodes))
                                     <select id="sort_order"  name="sort_order" >
                                         <option @if(request()->get('sort_order') == 'all') selected
                                                 @endif value="all">Всі</option>
@@ -92,6 +92,10 @@
                                                 @endif value="ASC">Зростання</option>
                                     </select>
                                 @endif
+                            </div>
+                        @elseif($index == 'date_start' || $index == 'date_end')
+                            <div class="">
+                                <input type="date" name="{{ $index }}" placeholder="{{ $word['search_'.$index] }}" value="{{ request($index) }}">
                             </div>
                         @else
                             <div class="">

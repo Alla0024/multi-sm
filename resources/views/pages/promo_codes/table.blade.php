@@ -27,7 +27,9 @@
                             @endif
                          @elseif($index == 'image' && $field['inTable'])
                             <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($promoCode[$index]) && $promoCode[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$promoCode[$index] : '/images/common/no_images.png'}}" alt=""></td>
-                         @else
+                         @elseif($index == 'date_start' || $index == 'date_end')
+                            <td>{{ date("d-m-Y",strtotime($promoCode[$index])) }}</td>
+                        @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $promoCode[$index] }}</td>
                              @endif
@@ -37,9 +39,6 @@
                     <td  colspan="3">
                         {!! Form::open(['route' => ['promoCodes.destroy', $promoCode->id], 'method' => 'delete']) !!}
                         <div class='btn-group'>
-
-
-
 
                             <a href="{{ route('promoCodes.edit', [$promoCode->id]) }}"
                                class='btn btn-default butt-edit btn-xs'>

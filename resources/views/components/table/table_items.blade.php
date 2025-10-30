@@ -270,7 +270,7 @@
                 if(this.parse){
                     this.data.forEach(item => {
                         item.id = item?.description && item.description['{{$search_select_type ?? ''}}'] ?  item.description['{{$search_select_type ?? ''}}'] : item['{{$search_select_type ?? ''}}']
-                        if('{{$search_select_type}}' == 'kit_product_id'){
+                        if('{{$search_select_type ?? ''}}' == 'kit_product_id'){
                             item.text = item.kit_product.description.name
                         } else {
                             item.text = item.description.name ?? item.description.text ?? item.description.title

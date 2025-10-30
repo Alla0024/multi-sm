@@ -11,12 +11,6 @@ class PromoCodeRepository extends BaseRepository
     protected array $fieldSearchable = [
         'status',
         'sort_order',
-        'code',
-        'value',
-        'change_number',
-        'type_number',
-        'promo_code_group_id',
-        'number_of_uses',
         'date_start',
         'date_end'
     ];
