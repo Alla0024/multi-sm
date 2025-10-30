@@ -12,14 +12,7 @@ use App\Repositories\BaseRepository;
 class BonusProgramRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'hash',
-        'type',
-        'usage_percentage',
-        'min_total_price',
-        'color',
-        'started_at',
-        'finished_at',
-        'priority'
+
     ];
 
     protected array $additionalFields = [

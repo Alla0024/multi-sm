@@ -232,7 +232,7 @@ class ProductRepository extends BaseRepository
                             'c1' => $group->c1,
                             'hash' => $group->hash,
                             'sort_order' => $group->sort_order,
-                            'name' => $group->option_value_group->description->name ?? '',
+                            'name' => $group->optionValueGroup->description->name ?? '',
                             'option_value' => $product_option_values[$group->option_value_group_id] ?? null,
                         ];
                     })->toArray()

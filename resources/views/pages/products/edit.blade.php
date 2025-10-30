@@ -36,6 +36,11 @@
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="options">Опції</button>
                     </li>
+                    @if(isset($product['kit']))
+                        <li class="nav-item">
+                            <button class="nav-link " type="button" data-tab="kit">Комплект</button>
+                        </li>
+                    @endif
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="instructions">Інструкції</button>
                     </li>
