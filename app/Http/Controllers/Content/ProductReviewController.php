@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateProductReviewRequest;
 use App\Http\Requests\UpdateProductReviewRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Product;
 use App\Repositories\ProductReviewRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -97,6 +98,10 @@ class ProductReviewController extends AppBaseController
     public function edit($id)
     {
         $productReview = $this->productReviewRepository->findFull($id);
+        $product = Product::with('description')
+            ->whereStatus(1)
+            ->where('id', $productReview['product_id'])
+            ->first();
 
         if (empty($productReview)) {
             Flash::error(__('common.flash_not_found'));
@@ -110,7 +115,7 @@ class ProductReviewController extends AppBaseController
 
         $this->template = 'pages.product_reviews.edit';
 
-        return $this->renderOutput(compact('productReview', 'fields'));
+        return $this->renderOutput(compact('productReview', 'product', 'fields'));
     }
 
     /**

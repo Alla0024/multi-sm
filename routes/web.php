@@ -75,7 +75,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('categories', 'App\Http\Controllers\Content\CategoryController');
         Route::resource('products', 'App\Http\Controllers\Content\ProductController');
         Route::resource('panoramas', 'Content\PanoramaController');
-        Route::resource('reviews', 'App\Http\Controllers\Content\ProductReviewController');
+        Route::resource('productReviews', 'App\Http\Controllers\Content\ProductReviewController');
         Route::resource('sales', 'App\Http\Controllers\Content\SaleController');
         Route::resource('saleGroups', 'App\Http\Controllers\Content\SaleGroupController');
         Route::resource('bonusPrograms', 'App\Http\Controllers\Content\BonusProgramController');

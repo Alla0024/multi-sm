@@ -10,16 +10,12 @@ use App\Repositories\BaseRepository;
 class ProductReviewRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'product_id',
         'author',
-        'answer',
+        'product_id',
         'rating',
         'status',
         'type',
-        'helpful',
-        'unhelpful',
         'date_value',
-        'author_answer'
     ];
 
     protected array $additionalFields = [

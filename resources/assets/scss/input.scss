@@ -250,6 +250,19 @@ select{
                 content: 'ВКЛ';
             }
         }
+        .form-check-input-reviews{
+            &:before {
+                content: 'ПИТАННЯ';
+            }
+        }
+        .form-check-input-reviews:checked{
+            &:before{
+                content: '';
+            }
+            &:after{
+                content: 'ВІДГУК';
+            }
+        }
     }
 
     .input-list-search{

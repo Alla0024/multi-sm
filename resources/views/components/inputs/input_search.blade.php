@@ -12,7 +12,7 @@
                 name="{{$name}}"
                 placeholder="Пошук..."
                 autocomplete="off"
-                value="{{$value[$name]['text'] ?? ''}}"
+                value="{{$value[$name]['text'] ?? $value['name'] ?? ''}}"
                 data-url="@isset($url){{route($url)}}@endisset"
                 @input="$store.page.searchSelect($event.target)"
                 @focus="$store.page.searchSelect($event.target)"

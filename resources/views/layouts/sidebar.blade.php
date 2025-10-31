@@ -93,6 +93,11 @@
             <div class="name">{{$word['menu_products']}}</div>
         </a>
 
+        <a href="{{ route('productReviews.index') }}" class="item {{ Request::is($adminPath.'/productReviews*') ? 'active' : '' }}">
+            <div class="icon"><i class="bi bi-postcard-fill fs-20"></i></div>
+            <div class="name">{{$word['menu_reviews']}}</div>
+        </a>
+
         <a href="{{ route('bannerGroups.index') }}" class="item {{ Request::is($adminPath.'/bannerGroups*') ? 'active' : '' }}">
             <div class="icon"><i class="bi bi-images fs-20"></i></div>
             <div class="name">Банери</div>
