@@ -184,7 +184,61 @@
     </div>
 </div>
 
+<!-- Segments Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="segment">
+    {!! Form::label('segments', 'Сегменти') !!}
+    <div class="flex-row input">
+        <div class="input-group input-tags">
+            <select class="tag-select" name="promo_code_group_to_segment[]" data-no-search="true" multiple>
+                @foreach($segments as $item)
+                    <option value="{{$item['id']}}" @if(isset($selectedSegmentIds) && in_array((int)$item['id'], $selectedSegmentIds)) selected @endif >{{$item['id']}} - {{$item['description']['name']}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
 
+<!-- Segments activator Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="segment-activator">
+    {!! Form::label('activator_segment', 'Сегменти-активатори') !!}
+    <div class="flex-row input">
+        <div class="input-group input-tags">
+            <select class="tag-select" name="promo_code_group_to_activator_segment[]" data-no-search="true" multiple>
+                @foreach($segments as $item)
+                    <option value="{{$item['id']}}" @if(isset($selectedActivatorSegmentsIds) && in_array((int)$item['id'], $selectedActivatorSegmentsIds)) selected @endif >{{$item['id']}} - {{$item['description']['name']}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Payments Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="payment">
+    {!! Form::label('payment', 'Способи оплати') !!}
+    <div class="flex-row input">
+        <div class="input-group input-tags">
+            <select class="tag-select" name="promo_to_payment[]" data-no-search="true" multiple>
+                @foreach($paymentMethods as $item)
+                    <option value="{{$item['id']}}" @if(isset($selectedPaymentsIds) && in_array((int)$item['id'], $selectedPaymentsIds)) selected @endif >{{$item['id']}} - {{$item['description']['title']}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Shipping Field -->
+<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="shipping">
+    {!! Form::label('shipping', 'Доставка') !!}
+    <div class="flex-row input">
+        <div class="input-group input-tags">
+            <select class="tag-select" name="promo_to_shipping[]" data-no-search="true" multiple>
+                @foreach($shippingMethods as $item)
+                    <option value="{{$item['id']}}" @if(isset($selectedShippingIds) && in_array((int)$item['id'], $selectedShippingIds)) selected @endif >{{$item['id']}} - {{$item['description']['title']}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
 
 
 

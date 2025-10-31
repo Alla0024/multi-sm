@@ -141,9 +141,11 @@
 
     <th class="butt-action action-item">
         <div class="butt-action-block">
+
             <div class="name-action">
                 Дії
             </div>
+
             <div class="action-block-search">
 
                 <button class="btn btn-primary search-change-butt" type="submit" style="margin: 0 auto 6px">

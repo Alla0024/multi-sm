@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreateSegmentRequest;
 use App\Http\Requests\UpdateSegmentRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\SegmentDescription;
+use App\Models\StockStatus;
 use App\Repositories\SegmentRepository;
 use App\Repositories\ProductRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -117,7 +119,8 @@ class SegmentController extends AppBaseController
         }
 
         $products = $this->productRepository->filterRows($request->all());
-
+        $stockStatuses = CacheForever::getStockStatuses();
+        $stockStatusesDescription = StockStatus::with('description')->get()->keyBy('id')->toArray();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             SegmentDescription::class,
             Segment::class,
@@ -125,7 +128,7 @@ class SegmentController extends AppBaseController
 
         $this->template = 'pages.segments.edit';
 
-        return $this->renderOutput(compact('segment', 'products','fields'));
+        return $this->renderOutput(compact('segment', 'stockStatuses', 'stockStatusesDescription', 'products','fields'));
     }
 
     /**

@@ -110,10 +110,10 @@
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
-                <a class="item {{ Request::is($adminPath.'/segments*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/segments')}}">Сегменти</a>
                 <a class="item {{ Request::is($adminPath.'/promoCodes*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/promoCodes')}}">Промокоди</a>
                 <a class="item {{ Request::is($adminPath.'/promoCodeGroups*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/promoCodeGroups')}}">Група промокодів</a>
                 <a class="item {{ Request::is($adminPath.'/bonusPrograms*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/bonusPrograms')}}">Бонусні програми</a>
+                <a class="item {{ Request::is($adminPath.'/segments*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/segments')}}">Сегменти</a>
 
             </div>
         </div>
