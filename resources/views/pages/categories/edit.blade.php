@@ -16,7 +16,7 @@
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
                     <li class="nav-item">
-                        <button class="nav-link " type="button" data-tab="main">{{$word["tab_main"]}}</button>
+                        <button class="nav-link active" type="button" data-tab="main">{{$word["tab_main"]}}</button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link " type="button" data-tab="filter">Фільтра</button>
@@ -28,7 +28,7 @@
                         <button class="nav-link" type="button" data-tab="attribute">Атрибути</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link active" type="button" data-tab="news">Статті</button>
+                        <button class="nav-link " type="button" data-tab="news">Статті</button>
                     </li>
                 </ul>
                 <div class="row card-items">

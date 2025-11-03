@@ -80,7 +80,7 @@
             </tr>
             </thead>
             <tbody>
-            @dump($options)
+{{--            @dump($options)--}}
             @foreach($options as $option)
                 <tr>
                     <th>

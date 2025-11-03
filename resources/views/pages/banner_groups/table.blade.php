@@ -71,7 +71,7 @@
             </tr>
             </thead>
             <tbody>
-            @dump($bannerGroups)
+{{--            @dump($bannerGroups)--}}
             @foreach($bannerGroups as $bannerGroup)
                 <tr>
                     <th>

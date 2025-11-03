@@ -1,4 +1,3 @@
-
 <!-- Data create Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('product_id', 'Дата додавання') !!}
