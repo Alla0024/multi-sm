@@ -8,7 +8,6 @@ use App\Models\SaleGroupDescription;
 class SaleGroupRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'type',
         'status',
         'sort_order'
     ];

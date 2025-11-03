@@ -14,20 +14,9 @@ class SaleRepository extends BaseRepository
     protected array $fieldSearchable = [
         'sort_order',
         'status',
-        'hidden',
         'date_start',
         'date_end',
-        'time_start',
-        'time_end',
         'loop',
-        'show_in_product',
-        'show_in_sale',
-        'show_more_sale_url',
-        'default_sale_shop',
-        'compare_options',
-        'has_one_activator',
-        'accrue',
-        'icon'
     ];
 
     protected array $additionalFields = [
