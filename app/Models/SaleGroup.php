@@ -37,14 +37,22 @@ SaleGroup extends Model
     {
         return $this->hasMany(SaleGroupDescription::class, 'sale_group_id');
     }
-    public function saleGroupClosures(): \Illuminate\Database\Eloquent\Relations\HasMany
+
+    public function closure()
     {
-        return $this->hasMany(\App\Models\SaleGroupClosure::class, 'ancestor_id');
+        return $this->hasMany(SaleGroupClosure::class, 'descendant_id');
     }
 
-    public function saleGroupClosure1s(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function ancestors()
     {
-        return $this->hasMany(\App\Models\SaleGroupClosure::class, 'descendant_id');
+        return $this->belongsToMany(SaleGroup::class, SaleGroupClosure::class, 'descendant_id', 'ancestor_id'
+        )->withPivot('depth');
+    }
+
+    public function descendants()
+    {
+        return $this->belongsToMany(SaleGroup::class, SaleGroupClosure::class, 'ancestor_id', 'descendant_id'
+        )->withPivot('depth');
     }
 
     public function languages(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

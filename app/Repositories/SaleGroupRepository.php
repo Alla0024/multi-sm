@@ -65,41 +65,54 @@ class SaleGroupRepository extends BaseRepository
 
     public function filterRows(array $input)
     {
-        $perPage = $input['perPage'] ?? 10;
+        $perPage = $input['items_per_page'] ?? $input['perPage'] ?? config('settings.admin_items_per_page');
         $languageId = $input['language_id'] ?? config('settings.locale.default_language_id');
 
         $query = $this->model::with([
-            'descriptions' => fn($q) => $q->where('language_id', $languageId),
+            'description' => fn($q) => $q->where('language_id', $languageId),
         ]);
 
-        foreach (['sort_order', 'status'] as $field) {
-            $query->when($input[$field] ?? null, fn($q, $value) => $q->where($field, $value));
+        if (isset($input['ancestor_id']) && is_numeric($input['ancestor_id'])) {
+            $ancestorId = (int)$input['ancestor_id'];
+            $query->whereIn('id', function ($sub) use ($ancestorId) {
+                $sub->select('descendant_id')
+                    ->from('sale_group_closure')
+                    ->where('ancestor_id', $ancestorId)
+                    ->whereColumn('ancestor_id', '!=', 'descendant_id');
+            });
+        } else {
+            $query->whereHas('closure', fn($q) => $q->where('depth', 0));
         }
 
-        $query->when($input['name'] ?? null, function ($q, $name) use ($languageId) {
-            $q->whereHas('descriptions', function ($sub) use ($languageId, $name) {
-                $sub->where('language_id', $languageId)
-                    ->where('name', 'LIKE', "%{$name}%");
-            });
-        });
+        if (!empty($input['filter_status']) && is_numeric($input['filter_status'])) {
+            $query->where('status', $input['filter_status']);
+        }
 
-        $query->when($input['sortBy'] ?? null, function ($q, $sortBy) use ($languageId) {
-            if (in_array($sortBy, ['name_asc', 'name_desc'])) {
-                $q->withAggregate(
-                    ['descriptions as name' => fn($sub) => $sub->where('language_id', $languageId)],
-                    'name'
-                )->orderBy('name', $sortBy === 'name_asc' ? 'asc' : 'desc');
-            } elseif ($sortBy === 'created_at_asc') {
-                $q->orderBy('created_at', 'asc');
-            } elseif ($sortBy === 'created_at_desc') {
-                $q->orderBy('created_at', 'desc');
-            }
-        });
+        if (!empty($input['search'])) {
+            $search = trim($input['search']);
+            $query->whereHas('description', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%");
+            });
+        }
+
+        if (!empty($input['sort_order']) && $input['sort_order'] !== 'all') {
+            $query->orderBy('sort_order', $input['sort_order']);
+        }
+
+        $query->orderByDesc('status')->orderByDesc('sort_order');
 
         $saleGroups = $query->paginate($perPage);
 
+        $saleGroups->appends([
+            'items_per_page' => $perPage,
+            'search' => $input['search'] ?? null,
+            'sort_order' => $input['sort_order'] ?? null,
+            'filter_status' => $input['filter_status'] ?? null,
+            'ancestor_id' => $input['ancestor_id'] ?? null,
+        ]);
+
         $saleGroups->getCollection()->transform(function ($item) {
-            $item->setAttribute('name', optional($item->descriptions->first())->name);
+            $item->setAttribute('name', optional($item->description)->name);
             return $item;
         });
 
