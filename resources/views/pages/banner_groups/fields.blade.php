@@ -1,5 +1,6 @@
-@dump($bannerGroup)
-@dump($banners)
+{{--@dump($bannerGroup)--}}
+{{--@dump($banners)--}}
+{{--@dump($categories[0])--}}
 
 <!-- Name Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
@@ -70,7 +71,19 @@
     </div>
 </div>
 
+@php
+    $arrData = [
+        'title' => ['type' => 'string', 'name' => 'Назва банера', 'description' => true],
+        'status' => ['type' => 'select', 'name' => 'Статус', 'description' => false],
+        'image' => ['type' => 'image', 'name' => 'Зображення', 'description' => true],
+        'link' => ['type' => 'string', 'name' => 'Назва банера', 'description' => false],
+        'category_ids' => ['type' => 'multi_select_static_banner', 'name' => 'Категорії', 'description' => false],
+        'sort_order' => ['type' => 'number', 'name' => 'Порядок сортування', 'description' => false],
+        'datetime_start' => ['type' => 'date', 'name' => 'Дата початку показу', 'description' => false],
+        'datetime_end' => ['type' => 'date', 'name' => 'Дата закінчення', 'description' => false],
 
+    ];
+@endphp
 
-@include('components.table.table_items', ['inputType' => $arrData, 'data' => $filters ?? [], 'dataMultiSelect' => isset($options) ? $options->firstWhere('description.option_id', $filterGroup['option_id'])['optionValueGroups'] ?? '' : '', 'name' => 'filter', 'id_name' => 'filter_id', 'tab' => 'main'])
+@include('components.table.table_items', ['inputType' => $arrData, 'data' => $banners ?? [], 'dataMultiSelect' => $categories, 'name' => 'banners', 'id_name' => 'id', 'tab' => 'main'])
 

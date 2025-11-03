@@ -56,8 +56,7 @@ class BannerRepository extends BaseRepository
                         'title' => $desc->title,
                         'image' => $desc->image,
                     ]
-                ])
-                ->toArray();
+                ]);
             $item->setRelation('descriptions', $descriptions);
         };
 

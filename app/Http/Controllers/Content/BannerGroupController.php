@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateBannerGroupRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Banner;
 use App\Models\BannerDescription;
+use App\Models\BannerToCategory;
 use App\Models\FirstPathQuery;
 use App\Repositories\BannerGroupRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -139,7 +140,9 @@ class BannerGroupController extends AppBaseController
             Banner::class,
             BannerGroup::class,
         ]);
-
+        foreach ($banners as $banner) {
+            $banner['category_ids'] = BannerToCategory::getCategoryIds($banner->id);
+        }
         $categories = CacheForever::getCategories();
 
         $this->template = 'pages.banner_groups.edit';
