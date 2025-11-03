@@ -286,7 +286,7 @@
 
         if (isCheckedAll) {
             debugger;
-            axios.post('{{ 'add-filtered-products-to-segment/' . $segment['id'] }}', formData)
+            axios.post('{{ route('addFilteredProductsToSegment', ['segmentId' => $segment->id]) }}', formData)
                 .then(r => console.log(r))
                 .catch(e => console.error(e));
         } else {
@@ -298,7 +298,7 @@
                 }
             });
 
-            axios.post('{{ 'add-product-to-segment' }}', formData)
+            axios.post('{{ route('addProductToSegment') }}', formData)
                 .then(r => console.log(r))
                 .catch(e => console.error(e));
         }
@@ -314,7 +314,7 @@
 
         if (isCheckedAll) {
             debugger;
-            axios.post('{{ 'remove-filtered-products-from-segment/' . $segment['id'] }}', formData)
+            axios.post('{{ route('removeFilteredProductsFromSegment', ['segmentId' => $segment->id])}}', formData)
                 .then(r => console.log(r))
                 .catch(e => console.error(e));
         } else {
@@ -326,7 +326,7 @@
                 }
             });
 
-            axios.post('{{ 'remove-product-from-segment' }}', formData)
+            axios.post('{{ route('removeProductFromSegment') }}', formData)
                 .then(r => console.log(r))
                 .catch(e => console.error(e));
         }

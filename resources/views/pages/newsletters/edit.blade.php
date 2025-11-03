@@ -10,7 +10,7 @@
         @include('adminlte-templates::common.errors')
 
         <div class="card">
-            {!! Form::model($newsletter, ['route' => ['newsletters.update', $newsletter->id], 'method' => 'patch']) !!}
+            {!! Form::model($newsletter, ['route' => ['newsletters.update', $newsletter->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">

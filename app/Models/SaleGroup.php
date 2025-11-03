@@ -62,17 +62,17 @@ SaleGroup extends Model
 
     public function bonusPrograms()
     {
-        return $this->belongsToMany(BonusProgram::class, SaleGroupToBonusProgram::class);
+        return $this->belongsToMany(BonusProgram::class, SaleGroupToBonusProgram::class)->with('description');
     }
 
     public function promoCodeGroups()
     {
-        return $this->belongsToMany(PromoCodeGroup::class, SaleGroupToPromoCodeGroup::class);
+        return $this->belongsToMany(PromoCodeGroup::class, SaleGroupToPromoCodeGroup::class)->with('description');
     }
 
     public function sales()
     {
-        return $this->belongsToMany(Sale::class, SaleGroupToSale::class);
+        return $this->belongsToMany(Sale::class, SaleGroupToSale::class)->with('description');
     }
 
     public function sale2s(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

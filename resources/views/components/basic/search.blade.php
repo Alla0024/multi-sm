@@ -92,7 +92,7 @@
                             </div>
                         @elseif($index == 'sort_order')
                             <div>
-                                @if(isset($segments) || isset($promoCodes) || isset($promoCodeGroups) || isset($saleGroups))
+                                @if(isset($segments) || isset($promoCodes) || isset($promoCodeGroups) || isset($saleGroups) || isset($sales))
                                     <select id="sort_order"  name="sort_order" >
                                         <option @if(request()->get('sort_order') == 'all') selected
                                                 @endif value="all">Всі</option>

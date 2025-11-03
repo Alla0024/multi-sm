@@ -11,7 +11,7 @@
 
         <div class="card">
 
-            {!! Form::model($promoCode, ['route' => ['promoCodes.update', $promoCode->id], 'method' => 'patch']) !!}
+            {!! Form::model($promoCode, ['route' => ['promoCodes.update', $promoCode->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">

@@ -19,7 +19,7 @@
 
         <div class="card">
 
-            {!! Form::model($lang, ['route' => ['langs.update', $lang->id], 'method' => 'patch']) !!}
+            {!! Form::model($lang, ['route' => ['langs.update', $lang->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">

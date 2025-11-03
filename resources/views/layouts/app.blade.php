@@ -44,6 +44,13 @@
         <div class="layout">
             @include('components.basic.breadcrumb')
             @include('layouts.content')
+            <div id="missingModal" class="modal-overlay">
+                <div class="modal-box">
+                    <h3>Не заповнені обов’язкові поля:</h3>
+                    <ul id="missingList"></ul>
+                    <button id="closeMissingModal">Закрити</button>
+                </div>
+            </div>
         </div>
         @include('layouts.footer')
     </div>
