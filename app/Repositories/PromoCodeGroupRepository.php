@@ -4,8 +4,14 @@ namespace App\Repositories;
 
 use App\Models\PromoCodeGroup;
 use App\Models\PromoCodeGroupDescription;
+use App\Models\PromoCodeGroupToActivatorSegment;
+use App\Models\PromoCodeGroupToPaymentMethod;
+use App\Models\PromoCodeGroupToSegment;
+use App\Models\PromoCodeGroupToShippingMethod;
 use App\Models\PromoCodeGroupToStore;
+use App\Models\SegmentDescription;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\DB;
 
 class PromoCodeGroupRepository extends BaseRepository
 {
@@ -116,57 +122,106 @@ class PromoCodeGroupRepository extends BaseRepository
 
     public function save(array $input, ?int $id = null)
     {
-        $stores = $input['stores'] ?? [];
         $descriptions = $input['descriptions'] ?? [];
+        $promoToPayment = $input['promo_to_payment'] ?? [];
+        $promoToShipping = $input['promo_to_shipping'] ?? [];
+        $promoToSegment = $input['promo_code_group_to_segment'] ?? [];
+        $promoToActivatorSegment = $input['promo_code_group_to_activator_segment'] ?? [];
 
-        unset($input['descriptions'], $input['stores']);
+        unset(
+            $input['descriptions'],
+            $input['promo_to_payment'],
+            $input['promo_to_shipping'],
+            $input['promo_code_group_to_segment'],
+            $input['promo_code_group_to_activator_segment']
+        );
 
-        $promoCodeGroupSave = $input;
-
-        $promoCodeGroup = $this->model->updateOrCreate(['id' => $id], $promoCodeGroupSave);
+        $segment = $this->model->updateOrCreate(['id' => $id], $input);
 
         foreach ($descriptions as $languageId => $descData) {
-            PromoCodeGroupDescription::updateOrInsert(
+            SegmentDescription::updateOrInsert(
                 [
-                    'promo_code_group_id' => (int)$promoCodeGroup->id,
+                    'segment_id' => (int)$segment->id,
                     'language_id' => $languageId
                 ],
                 $descData
             );
         }
 
-        $stores && $promoCodeGroup->stores()->sync($stores);
+        $syncRelated = function ($model, string $foreignKey, string $relatedKey, array $items) use ($segment) {
+            $model::where($foreignKey, $segment->id)->delete();
+            foreach ($items as $itemId) {
+                $model::create([
+                    $foreignKey => $segment->id,
+                    $relatedKey => (int)$itemId
+                ]);
+            }
+        };
 
-        return $promoCodeGroup;
+        if (!empty($promoToPayment)) {
+            $syncRelated(PromoCodeGroupToPaymentMethod::class, 'promo_code_group_id', 'payment_id', $promoToPayment);
+        }
+
+        if (!empty($promoToShipping)) {
+            $syncRelated(PromoCodeGroupToShippingMethod::class, 'promo_code_group_id', 'shipping_id', $promoToShipping);
+        }
+
+        if (!empty($promoToSegment)) {
+            $syncRelated(PromoCodeGroupToSegment::class, 'promo_code_group_id', 'segment_id', $promoToSegment);
+        }
+
+        if (!empty($promoToActivatorSegment)) {
+            $syncRelated(PromoCodeGroupToActivatorSegment::class, 'promo_code_group_id', 'segment_id', $promoToActivatorSegment);
+        }
+
+        return $segment;
     }
 
     public function copy($ids): void
     {
-        $promoCodeGroups = PromoCodeGroup::with('descriptions')->whereIn('id', $ids)->get();
+        DB::transaction(function () use ($ids) {
+            $promoCodeGroups = PromoCodeGroup::with(['descriptions'])->whereIn('id', $ids)->get();
 
-        foreach ($promoCodeGroups as $promoCodeGroup) {
-            $newPromoCodeGroup = $promoCodeGroup->replicate();
-            $newPromoCodeGroup->save();
+            foreach ($promoCodeGroups as $promoCodeGroup) {
+                $newPromoCodeGroup = $promoCodeGroup->replicate();
+                $newPromoCodeGroup->status = 0;
+                $newPromoCodeGroup->save();
 
-            $stores = PromoCodeGroupToStore::where(['promo_code_group_id' => $promoCodeGroup->id])->get();
+                foreach ($promoCodeGroup->descriptions as $description) {
+                    $newDescription = $description->replicate();
+                    $newDescription->promo_code_group_id = $newPromoCodeGroup->id;
+                    $newDescription->save();
+                }
 
-            foreach ($stores as $store) {
-                $newStore = $store->toArray();
-                $newStore['promo_code_group_id'] = $newPromoCodeGroup->id;
-                PromoCodeGroupToStore::create($newStore);
+                $copyRelations = function ($model, string $foreignKey, int $oldId, int $newId) {
+                    $relatedItems = $model::where($foreignKey, $oldId)->get();
+                    foreach ($relatedItems as $item) {
+                        $data = $item->toArray();
+                        $data[$foreignKey] = $newId;
+                        $model::create($data);
+                    }
+                };
+
+                $copyRelations(PromoCodeGroupToStore::class, 'promo_code_group_id', $promoCodeGroup->id, $newPromoCodeGroup->id);
+                $copyRelations(PromoCodeGroupToPaymentMethod::class, 'promo_code_group_id', $promoCodeGroup->id, $newPromoCodeGroup->id);
+                $copyRelations(PromoCodeGroupToShippingMethod::class, 'promo_code_group_id', $promoCodeGroup->id, $newPromoCodeGroup->id);
+                $copyRelations(PromoCodeGroupToSegment::class, 'promo_code_group_id', $promoCodeGroup->id, $newPromoCodeGroup->id);
+                $copyRelations(PromoCodeGroupToActivatorSegment::class, 'promo_code_group_id', $promoCodeGroup->id, $newPromoCodeGroup->id);
             }
-
-            foreach ($promoCodeGroup->descriptions as $description) {
-                $newDescription = $description->replicate();
-                $newDescription->promo_code_group_id = $newPromoCodeGroup->id;
-                $newDescription->save();
-            }
-        }
+        });
     }
 
-    public function multiDelete($ids): void
+    public function multiDelete(array $ids): void
     {
-        PromoCodeGroup::whereIn('id', $ids)->delete();
-        PromoCodeGroupDescription::whereIn('promo_code_group_id', $ids)->delete();
+        DB::transaction(function () use ($ids) {
+            PromoCodeGroup::whereIn('id', $ids)->delete();
+            PromoCodeGroupDescription::whereIn('promo_code_group_id', $ids)->delete();
+            PromoCodeGroupToStore::whereIn('promo_code_group_id', $ids)->delete();
+            PromoCodeGroupToPaymentMethod::whereIn('promo_code_group_id', $ids)->delete();
+            PromoCodeGroupToShippingMethod::whereIn('promo_code_group_id', $ids)->delete();
+            PromoCodeGroupToSegment::whereIn('promo_code_group_id', $ids)->delete();
+            PromoCodeGroupToActivatorSegment::whereIn('promo_code_group_id', $ids)->delete();
+        });
     }
+
 }
