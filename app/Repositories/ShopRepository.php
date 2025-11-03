@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Helpers\PictureHelper;
 use App\Models\Shop;
 use App\Models\ShopDescription;
+use App\Models\ShopImage;
 use App\Repositories\BaseRepository;
 
 class ShopRepository extends BaseRepository
@@ -119,24 +120,25 @@ class ShopRepository extends BaseRepository
         unset($input['descriptions']);
 
         $shopSave = $input;
-
         if (!empty($input['image'])) {
-            PictureHelper::rewrite(
+            $shopSave['image'] = PictureHelper::process(
                 $input['image'],
-                config('settings.images.shop.width'),
-                config('settings.images.shop.height')
+                config('settings.images.shop.list.width'),
+                config('settings.images.shop.list.height')
             );
-
-            if (str_contains($input['image'], 'storage/images')) {
-                $input['image'] = substr($input['image'], 15);
-            }
-
-            $shopSave['image'] = $input['image'];
         }
 
         $shop = $this->model->updateOrCreate(['id' => $id], $shopSave);
 
         foreach ($descriptions as $languageId => $descData) {
+            if (!empty($descData['image_banner'])) {
+                $descData['image_banner'] = PictureHelper::process(
+                    $descData['image_banner'],
+                    config('settings.images.shop.banner.width'),
+                    config('settings.images.shop.banner.height')
+                );
+            }
+
             ShopDescription::updateOrInsert(
                 [
                     'shop_id' => (int)$shop->id,
@@ -144,6 +146,42 @@ class ShopRepository extends BaseRepository
                 ],
                 $descData
             );
+        }
+
+        if (!empty($images)) {
+            ShopImage::where('shop_id', $shop->id)->delete();
+
+            $first = true;
+            foreach ($images as $image) {
+                $shopImage = new ShopImage();
+                $shopImage->shop_id = $shop->id;
+                $shopImage->sort_order = $image['sort_order'] ?? 0;
+
+                if (!empty($image['image'])) {
+                    if ($first) {
+                        $processed = PictureHelper::process(
+                            $image['image'],
+                            config('settings.images.shop.first_image.width'),
+                            config('settings.images.shop.first_image.height'),
+                            true
+                        );
+                        $first = false;
+                    } else {
+                        $processed = PictureHelper::process(
+                            $image['image'],
+                            config('settings.images.shop.images.width'),
+                            config('settings.images.shop.images.height'),
+                            true
+                        );
+                    }
+
+                    $shopImage->image = $processed;
+                } else {
+                    $shopImage->image = '';
+                }
+
+                $shopImage->save();
+            }
         }
 
         $stores && $shop->stores()->sync($stores);

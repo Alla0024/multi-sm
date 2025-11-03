@@ -82,6 +82,10 @@ return [
                 'width' => 322,
                 'height' => 242,
             ],
+            'banner' => [
+                'width' => 800,
+                'height' => 531,
+            ],
             'first_image' => [
                 'width' => 1500,
                 'height' => 640,

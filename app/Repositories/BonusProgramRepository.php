@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Helpers\PictureHelper;
 use App\Models\BonusProgram;
 use App\Models\BonusProgramDescription;
+use App\Models\BonusProgramToPaymentMethod;
+use App\Models\BonusProgramToSegment;
 use App\Models\BonusProgramToStore;
 use App\Models\FirstPathQuery;
 use App\Repositories\BaseRepository;
@@ -125,8 +127,16 @@ class BonusProgramRepository extends BaseRepository
         $seoPath = $input['path'] ?? null;
         $stores = $input['stores'] ?? [];
         $descriptions = $input['descriptions'] ?? [];
+        $bonusProgramToPayment = $input['bonus_program_to_payment'] ?? [];
+        $bonusProgramToSegment = $input['bonus_program_to_segment'] ?? [];
 
-        unset($input['descriptions'], $input['path'], $input['stores']);
+        unset(
+            $input['descriptions'],
+            $input['bonus_program_to_payment'],
+            $input['bonus_program_to_payment'],
+            $input['path'],
+            $input['stores'],
+        );
 
         $bonusProgram = $this->model->updateOrCreate(['id' => $id], $input);
 
@@ -146,6 +156,24 @@ class BonusProgramRepository extends BaseRepository
             ['type' => 'bonus_program', 'type_id' => $bonusProgram->id],
             ['path' => $seoPath]
         );
+
+        $syncRelated = function ($model, string $foreignKey, string $relatedKey, array $items) use ($bonusProgram) {
+            $model::where($foreignKey, $bonusProgram->id)->delete();
+            foreach ($items as $itemId) {
+                $model::create([
+                    $foreignKey => $bonusProgram->id,
+                    $relatedKey => (int)$itemId
+                ]);
+            }
+        };
+
+        if (!empty($bonusProgramToPayment)) {
+            $syncRelated(BonusProgramToPaymentMethod::class, 'bonus_program_id', 'payment_id', $bonusProgramToPayment);
+        }
+
+        if (!empty($bonusProgramToSegment)) {
+            $syncRelated(BonusProgramToSegment::class, 'bonus_program_id', 'segment_id', $bonusProgramToSegment);
+        }
 
         return $bonusProgram;
     }
@@ -171,6 +199,20 @@ class BonusProgramRepository extends BaseRepository
                 $newDescription->bonus_program_id = $newBonusProgram->id;
                 $newDescription->save();
             }
+
+            $payments = BonusProgramToPaymentMethod::where('bonus_program_id', $bonusProgram->id)->get();
+            foreach ($payments as $payment) {
+                $newPayment = $payment->replicate();
+                $newPayment->bonus_program_id = $newBonusProgram->id;
+                $newPayment->save();
+            }
+
+            $segments = BonusProgramToSegment::where('bonus_program_id', $bonusProgram->id)->get();
+            foreach ($segments as $segment) {
+                $newSegment = $segment->replicate();
+                $newSegment->bonus_program_id = $newBonusProgram->id;
+                $newSegment->save();
+            }
         }
     }
 
@@ -178,6 +220,9 @@ class BonusProgramRepository extends BaseRepository
     {
         BonusProgram::whereIn('id', $ids)->delete();
         BonusProgramDescription::whereIn('bonus_program_id', $ids)->delete();
+        BonusProgramToStore::whereIn('bonus_program_id', $ids)->delete();
+        BonusProgramToPaymentMethod::whereIn('bonus_program_id', $ids)->delete();
+        BonusProgramToSegment::whereIn('bonus_program_id', $ids)->delete();
         FirstPathQuery::where('type', 'bonus_program')->whereIn('type_id', $ids)->delete();
     }
 }
