@@ -57,6 +57,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('currencies', 'App\Http\Controllers\Content\CurrencyController');
         Route::resource('segments', 'App\Http\Controllers\Content\SegmentController');
         Route::resource('cities', 'App\Http\Controllers\Content\CityController');
+        Route::resource('provinces', 'App\Http\Controllers\Content\ProvinceController');
 
         Route::post('copy_information', 'App\Http\Controllers\Content\InformationController@copy');
         Route::post('copy_news', 'App\Http\Controllers\Content\NewsController@copy');
