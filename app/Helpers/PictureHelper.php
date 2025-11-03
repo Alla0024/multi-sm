@@ -8,6 +8,20 @@ use Intervention\Image\Drivers\Gd\Driver;
 class PictureHelper
 {
 
+    public static function process(?string $imagePath, ?int $width = null, ?int $height = null, bool $force = false): ?string
+    {
+        if (empty($imagePath)) {
+            return null;
+        }
+
+        self::rewrite($imagePath, $width, $height, $force);
+
+        if (str_contains($imagePath, 'storage/images')) {
+            $imagePath = substr($imagePath, 15);
+        }
+
+        return $imagePath;
+    }
     public static function rewrite($filepath, $width = null, $height = null, $checkExists = true)
     {
         $filepath = trim($filepath, '/');
