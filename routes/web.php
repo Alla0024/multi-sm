@@ -35,6 +35,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('example','App\Http\Controllers\Content\ExampleController');
         Route::resource('languages', 'App\Http\Controllers\Content\LanguageController');
         Route::resource('individualEntrepreneurs', 'App\Http\Controllers\Content\IndividualEntrepreneurController');
+        Route::resource('bankPrograms', 'App\Http\Controllers\Content\BankProgramController');
         Route::resource('banks', 'App\Http\Controllers\Content\BankController');
         Route::resource('stores', 'App\Http\Controllers\Content\StoreController');
         Route::resource('manufacturers', 'App\Http\Controllers\Content\ManufacturerController');
