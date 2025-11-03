@@ -51,8 +51,6 @@ class CityRepository extends BaseRepository
             ->mapWithKeys(fn($desc) => [
                 (string)($desc->language_id ?? $desc->language->code) => [
                     'name' => $desc->name,
-                    'description' => $desc->description,
-                    'tag' => $desc->tag,
                 ]
             ])
             ->toArray();
