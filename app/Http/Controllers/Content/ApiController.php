@@ -18,6 +18,7 @@ use App\Models\NewDescription;
 use App\Models\NewsDescription;
 use App\Models\OptionValueGroup;
 use App\Models\Product;
+use App\Models\SegmentDescription;
 use App\Repositories\ArticleAuthorRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\LocationRepository;
@@ -408,6 +409,26 @@ class ApiController extends AppBaseController
             ]);
 
         return response()->json(['items' => $fillings]);
+    }
+
+    public function getSegments(Request $request)
+    {
+        abort_unless($request->ajax(), 404);
+
+        $query = $request->get('q', '');
+
+        $segments = SegmentDescription::query()
+            ->select('segment_id', 'name')
+            ->when($query, fn($q) => $q->where('name', 'like', "%{$query}%"))
+            ->groupBy('segment_id', 'name')
+            ->limit(10)
+            ->get()
+            ->map(fn($item) => [
+                'id' => $item->segment_id,
+                'text' => $item->name,
+            ]);
+
+        return response()->json(['items' => $segments]);
     }
 
     public static function generateProductPriceSortOrder()
