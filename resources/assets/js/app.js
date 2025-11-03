@@ -124,7 +124,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (labelEl) {
                         label = labelEl.textContent.trim();
                     } else {
-                        label = input.getAttribute('placeholder') || input.name;
+                        if(input.parentElement.parentElement.querySelector('label')){
+                            label = input.parentElement.parentElement.querySelector('label').innerText
+                        } else {
+                            if(input.parentElement.parentElement.parentElement.querySelector('label')){
+                                label = input.parentElement.parentElement.parentElement.querySelector('label').innerText
+                            } else {
+                                if(input.parentElement.parentElement.parentElement.parentElement.querySelector('label')){
+                                    label = input.parentElement.parentElement.parentElement.parentElement.querySelector('label').innerText
+                                } else{
+                                    label = input.getAttribute('placeholder') || input.name;
+                                }
+                            }
+                        }
+
                     }
                     missing.push(label);
                 }
