@@ -6,6 +6,7 @@ use App\Helpers\CacheForever;
 use App\Http\Requests\CreateSaleGroupRequest;
 use App\Http\Requests\UpdateSaleGroupRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\BonusProgram;
 use App\Models\SaleGroupDescription;
 use App\Repositories\SaleGroupRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -116,7 +117,7 @@ class SaleGroupController extends AppBaseController
         ]);
 
         $sales = CacheForever::getSales();
-        $bonusPrograms = CacheForever::getBonusPrograms();
+        $bonusPrograms = BonusProgram::getBonusPrograms();
         $promoCodeGroups = CacheForever::getPromoCodeGroups();
 
         $this->template = 'pages.sale_groups.edit';

@@ -8,8 +8,6 @@ use App\Repositories\BaseRepository;
 class SaleGroupDescriptionRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'sale_group_id',
-        'language_id',
         'name'
     ];
 

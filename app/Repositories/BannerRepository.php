@@ -49,14 +49,16 @@ class BannerRepository extends BaseRepository
             return collect();
         }
 
-//        $descriptions = $banner->descriptions
-//            ->mapWithKeys(fn($desc) => [
-//                (string)($desc->language_id ?? $desc->language->code) => [
-//                    'title' => $desc->title,
-//                    'image' => $desc->image,
-//                ]
-//            ])
-//            ->toArray();
+        foreach ($banner as $item){
+            $descriptions = $item->descriptions
+                ->mapWithKeys(fn($desc) => [
+                    (string)($desc->language_id ?? $desc->language->code) => [
+                        'title' => $desc->title,
+                        'image' => $desc->image,
+                    ]
+                ]);
+            $item->setRelation('descriptions', $descriptions);
+        };
 
         return $banner;
     }

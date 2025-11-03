@@ -89,6 +89,6 @@ class BonusProgram extends Model
 
     public static function getBonusPrograms()
     {
-        return self::with('description')->get();
+        return self::with('descriptions')->get();
     }
 }

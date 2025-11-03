@@ -7,7 +7,9 @@
                 <div class="item" style=""
                      :class='{
                      "custom-type-switch": item.type == "switch",
+                     "custom-type-select": item.type == "select",
                      "custom-type-number": item.type == "number",
+                     "custom-type-banner-multi": item.type == "multi_select_static_banner",
                      "custom-type-multi": item.type == "multi_select_static_filter",
                      "custom-type-select-oversize": item.type == "select_oversize",
                      }'
@@ -25,7 +27,9 @@
                     <div class="item"
                          :class='{
                          "custom-type-switch": itemInput.type == "switch",
+                         "custom-type-select": itemInput.type == "select",
                          "custom-type-number": itemInput.type == "number",
+                         "custom-type-banner-multi": itemInput.type == "multi_select_static_banner",
                          "custom-type-multi": itemInput.type == "multi_select_static_filter",
                          "custom-type-select-oversize": itemInput.type == "select_oversize",
                          }'
@@ -43,6 +47,22 @@
                                 <template x-if="itemInput.type == 'number'">
                                     <div class="input-group">
                                         <input type="number" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" x-model="itemData[keyInput]" :value="itemData[keyInput]" >
+                                    </div>
+                                </template>
+
+                                <template x-if="itemInput.type == 'date'">
+                                    <div class="input-group">
+                                        <input class="form-control"  style="font-size: 12px" :name="'{{$name}}[' + keyData + '][' + keyInput + ']'" type="datetime-local" :value="formatDateForInput(itemData[keyInput])">
+
+                                    </div>
+                                </template>
+
+                                <template x-if="itemInput.type == 'select'">
+                                    <div class="input-group">
+                                        <select :name="'{{$name}}[' + keyData + '][' + keyInput + ']'">
+                                            <option value="0" :selected = 'itemData[keyInput] == 0'> ні </option>
+                                            <option value="1" :selected = 'itemData[keyInput] == 1'> так </option>
+                                        </select>
                                     </div>
                                 </template>
 
@@ -198,6 +218,31 @@
                                     </div>
                                 </template>
 
+                                <template x-if="itemInput.type == 'multi_select_static_banner'">
+                                    <div class="input-group input-tags">
+
+                                        <template x-if="itemData.category_ids && itemData.category_ids.length > 0">
+                                            <select class="tag-select" :name="'{{$name}}[' + keyData + '][category_ids][]'" data-no-search="true" multiple data-url="">
+                                                <template x-for="itemMulti in itemData.category_ids">
+                                                    <option :value="itemMulti" selected x-text="dataMultiSelect.find(obj => obj.id == itemMulti).description.name"></option>
+                                                </template>
+                                                <template x-for="itemMulti in dataMultiSelect">
+                                                    <option :value="itemMulti.id" x-text="itemMulti.description.name"></option>
+                                                </template>
+                                            </select>
+                                        </template>
+
+                                        <template x-if="!itemData.category_ids || itemData.category_ids.length == 0">
+                                            <select class="tag-select" :name="'{{$name}}[' + keyData + '][category_ids][]'" data-no-search="true" multiple data-url="">
+                                                <template x-for="itemMulti in dataMultiSelect">
+                                                    <option :value="itemMulti.id" @click="itemData.category_ids.push(itemMulti.id)" x-text="itemMulti?.description?.name"></option>
+                                                </template>
+                                            </select>
+                                        </template>
+
+                                    </div>
+                                </template>
+
                             </div>
                         </template>
 
@@ -217,6 +262,34 @@
                                                 <span class="input-group-text" id="basic-addon1">{!! $word['6'] !!}</span>
                                             </template>
                                             <input type="text"  :name="'{{$name}}[' + keyData + '][description][' + itemLang.id + '][' + keyInput + ']'" x-model="itemData['descriptions'][itemLang.id][keyInput]"  :value="itemData['descriptions'][itemLang.id][keyInput]">
+                                        </div>
+                                    </template>
+                                </template>
+
+                                <template x-if="itemInput.type == 'image'">
+                                    <template x-for="itemLang in language">
+                                        <div class="input-group ">
+                                            <template x-if="itemLang.id == 1">
+                                                <span class="input-group-text" id="basic-addon1">{!! $word['1'] !!}</span>
+                                            </template>
+                                            <template x-if="itemLang.id == 5">
+                                                <span class="input-group-text" id="basic-addon1">{!! $word['5'] !!}</span>
+                                            </template>
+                                            <template x-if="itemLang.id == 6">
+                                                <span class="input-group-text" id="basic-addon1">{!! $word['6'] !!}</span>
+                                            </template>
+
+                                            <div class="input-group image-block" x-data="{open_butt: false}">
+                                                <div class="custom-file image-upload" @click="open_butt = !open_butt" @keydown.escape.window="open_butt=false" @click.outside="open_butt=false">
+                                                    <input :id="'thumbnail_'+itemLang.id + '_' +keyData + ''+ keyInput" type="hidden" :name="'{{$name}}[' + keyData + '][description][' + keyInput + ']'" x-model="itemData['descriptions'][itemLang.id][keyInput]" >
+                                                    <img class="" x-model.src="itemData['descriptions'][itemLang.id][keyInput]" :src="itemData['descriptions'][itemLang.id][keyInput] && itemData['descriptions'][itemLang.id][keyInput] !== '' ? 'https://i.svit-matrasiv.com.ua/storage/images/'+itemData['descriptions'][itemLang.id][keyInput] : '/images/common/no_images.png'" :id="'holder_'+itemLang.id + '_' +keyData + ''+ keyInput" alt="Прев’ю" style="max-width: 65px;">
+                                                    <div class="butt hide" :class="{'show': open_butt}">
+                                                        <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" :data-input="'thumbnail_'+itemLang.id + '_' +keyData + ''+ keyInput" :data-preview="'holder_'+itemLang.id + '_' +keyData + ''+ keyInput" data-path=""><i class="bi bi-arrow-up-square"></i></div>
+                                                        <div class="clear-img" @click="console.log($event.target)"><i class="bi bi-trash-fill"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </template>
                                 </template>
@@ -254,9 +327,18 @@
 <script id="payload_{{$search_select_type ?? ''}}" type="application/json">@json($data, JSON_UNESCAPED_UNICODE)</script>
 <script id="payloadMultiSelect" type="application/json">@json($dataMultiSelect ?? '', JSON_UNESCAPED_UNICODE)</script>
 <script>
+    function formatDateForInput(dateStr) {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
     document.addEventListener('alpine:init', () => {
         console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))
-        // console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
+        console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
 
         Alpine.data('table_products_{{$search_select_type ?? ""}}', () => ({
             inputType: JSON.parse('@json($inputType ?? [])'),
