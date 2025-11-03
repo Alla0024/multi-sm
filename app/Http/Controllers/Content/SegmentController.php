@@ -185,4 +185,50 @@ class SegmentController extends AppBaseController
 
         return redirect()->route('segments.index');
     }
+
+    public function addProductToSegment(Request $request)
+    {
+        $segmentId = (int) $request->get('segment_id');
+        $productIds = (array) $request->get('product_ids', []);
+
+        $this->segmentRepository->addProductsToSegment($segmentId, $productIds);
+
+        return response()->json([
+            'success' => true,
+            'message' => $this->vars['word']['successful_insert'],
+        ]);
+    }
+
+    public function removeProductFromSegment(Request $request)
+    {
+        $segmentId = (int) $request->get('segment_id');
+        $productIds = (array) $request->get('product_ids', []);
+
+        $this->segmentRepository->removeProductsFromSegment($segmentId, $productIds);
+
+        return response()->json([
+            'success' => true,
+            'message' => $this->vars['word']['successful_delete'],
+        ]);
+    }
+
+    public function addFilteredProductsToSegment(Request $request, int $segmentId)
+    {
+        $this->segmentRepository->addFilteredProductsToSegment($request->all(), $segmentId);
+
+        return response()->json([
+            'success' => true,
+            'message' => $this->vars['word']['successful_insert'],
+        ]);
+    }
+
+    public function removeFilteredProductsFromSegment(Request $request, int $segmentId)
+    {
+        $this->segmentRepository->removeFilteredProductsFromSegment($request->all(), $segmentId);
+
+        return response()->json([
+            'success' => true,
+            'message' => $this->vars['word']['successful_delete'],
+        ]);
+    }
 }

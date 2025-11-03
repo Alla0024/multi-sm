@@ -191,14 +191,14 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::post('copy_segment', 'Content\SegmentController@copySegment')->name('copy_segment');
         Route::post('change_sort_order', 'App\Http\Controllers\Content\ProductController@changeSortOrder')->name('change_sort_order');
         Route::post('change_sort_order_sale', 'Content\SaleController@changeSortOrder')->name('change_sort_order_sale');
-        Route::post('/add-product-to-segment', 'Content\SegmentController@addProductToSegment')->name('addProductToSegment');
+        Route::post('/add-product-to-segment', 'App\Http\Controllers\Content\SegmentController@addProductToSegment')->name('addProductToSegment');
         Route::get('/segments/{id}/edit_segment', 'Content\SegmentController@edit_segment')->name('segments.edit_segment');
         Route::put('/segments/{id}/edit_segment', 'Content\SegmentController@update_segment')->name('segments.update_segment');
 
-        Route::post('/remove-product-from-segment', 'Content\SegmentController@removeProductFromSegment')->name('removeProductFromSegment');
-        Route::post('/add-filtered-products-to-segment/{segmentId}', 'Content\SegmentController@addFilteredProductsToSegment')
+        Route::post('/remove-product-from-segment', 'App\Http\Controllers\Content\SegmentController@removeProductFromSegment')->name('removeProductFromSegment');
+        Route::post('/add-filtered-products-to-segment/{segmentId}', 'App\Http\Controllers\Content\SegmentController@addFilteredProductsToSegment')
             ->name('addFilteredProductsToSegment');
-        Route::post('/remove-filtered-products-from-segment/{segmentId}', 'Content\SegmentController@removeFilteredProductsFromSegment')
+        Route::post('/remove-filtered-products-from-segment/{segmentId}', 'App\Http\Controllers\Content\SegmentController@removeFilteredProductsFromSegment')
             ->name('removeFilteredProductsFromSegment');
         Route::get('cancel_changes', 'Content\ProductController@cancelChanges')->name('cancel_changes');
         Route::post('save_config_values', 'Extensions\CashbackProductsExtensionController@saveCashbackValues')->name('save_config_values');

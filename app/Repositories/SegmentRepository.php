@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\Product;
 use App\Models\Segment;
 use App\Models\SegmentDescription;
+use App\Models\SegmentToProduct;
 
 class SegmentRepository extends BaseRepository
 {
@@ -147,6 +149,92 @@ class SegmentRepository extends BaseRepository
     {
         SegmentDescription::whereIn('segment_id', $ids)->delete();
         Segment::whereIn('id', $ids)->delete();
+    }
+
+    public function addProductsToSegment(int $segmentId, array $productIds): bool
+    {
+        foreach ($productIds as $productId) {
+            SegmentToProduct::updateOrCreate([
+                'segment_id' => $segmentId,
+                'product_id' => $productId,
+            ]);
+        }
+
+        return true;
+    }
+
+    public function removeProductsFromSegment(int $segmentId, array $productIds): bool
+    {
+        SegmentToProduct::where('segment_id', $segmentId)
+            ->whereIn('product_id', $productIds)
+            ->delete();
+
+        return true;
+    }
+
+    public function addFilteredProductsToSegment(array $input, int $segmentId): bool
+    {
+        $productsQuery = Product::query()->with(['manufacturer', 'description', 'category', 'path']);
+        $this->applyFilters($productsQuery, $input, $segmentId);
+
+        $productIds = $productsQuery->pluck('id')->toArray();
+
+        foreach (array_chunk($productIds, 100) as $batch) {
+            foreach ($batch as $productId) {
+                SegmentToProduct::updateOrCreate([
+                    'segment_id' => $segmentId,
+                    'product_id' => $productId,
+                ]);
+            }
+        }
+
+        return true;
+    }
+
+    public function removeFilteredProductsFromSegment(array $input, int $segmentId): bool
+    {
+        $productsQuery = Product::query()->with(['manufacturer', 'description', 'category', 'path']);
+        $this->applyFilters($productsQuery, $input, $segmentId);
+
+        $productIds = $productsQuery->pluck('id')->toArray();
+
+        SegmentToProduct::where('segment_id', $segmentId)
+            ->whereIn('product_id', $productIds)
+            ->delete();
+
+        return true;
+    }
+
+    private function applyFilters($query, array $input, int $segmentId): void
+    {
+        if (!empty($input['sort'])) {
+            $query->orderBy($input['sort'], $input['order'] ?? 'asc');
+        }
+
+        foreach (['manufacturer_id', 'category_id', 'status', 'stock_status_id'] as $field) {
+            if (!empty($input[$field]) && is_numeric($input[$field])) {
+                $query->where($field, $input[$field]);
+            }
+        }
+
+        if (isset($input['segment']) && is_numeric($input['segment'])) {
+            $query->when($input['segment'] == 1, fn($q) =>
+            $q->whereHas('product_in_segment', fn($s) => $s->where('segment_id', $segmentId))
+            )->when($input['segment'] == 0, fn($q) =>
+            $q->whereDoesntHave('product_in_segment', fn($s) => $s->where('segment_id', $segmentId))
+            );
+        }
+
+        if (!empty($input['name'])) {
+            $name = trim($input['name']);
+            $query->whereHas('descriptions', fn($q) =>
+            $q->where('name', 'LIKE', "%{$name}%")
+            );
+        }
+
+        if (!empty($input['model'])) {
+            $query->where('article', 'LIKE', "{$input['model']}%");
+        }
     }
 }
 
