@@ -72,7 +72,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
 //        Route::resource('attribute_groups', 'Content\AttributeGroupController');
 //        Route::resource('attribute_words', 'Content\AttributeWordController');
 //        Route::resource('attribute_icons', 'Content\AttributeIconController');
-        Route::get('fiscalization', 'Content\FiscalizationController@index')->name('fiscalization');
+        Route::resource('fiscalization', 'App\Http\Controllers\Content\FiscalizationController');
         Route::resource('option_values', 'Content\OptionValueController');
         Route::resource('categories', 'App\Http\Controllers\Content\CategoryController');
         Route::resource('products', 'App\Http\Controllers\Content\ProductController');
@@ -96,7 +96,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::resource('kit', 'Content\KitController');
         Route::resource('newsletters', 'App\Http\Controllers\Content\NewsletterController');
         Route::get('newsletters_start', 'Content\NewsletterController@start');
-        Route::resource('receipts', 'Content\ReceiptController');
+        Route::resource('receipts', 'App\Http\Controllers\Content\ReceiptController');
         Route::get('combinations/generate', [
             'as' => 'combinations.generate',
             'uses' => 'Content\ChainCombinationController@show'
