@@ -107,12 +107,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ignore inputs value ///////////////////////////////////////////////////////////////////////////
     document.querySelectorAll('form').forEach(function(form) {
-        form.addEventListener('submit', function() {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
             document.querySelectorAll('.ignore_form').forEach(function(el) {
                 el.disabled = true;
             });
+
+            const requiredFields = form.querySelectorAll('[required]');
+            const missing = [];
+
+            requiredFields.forEach(input => {
+                if (!input.value.trim()) {
+                    let label = '';
+                    const labelEl = form.querySelector(`label[for="${input.id}"]`);
+                    if (labelEl) {
+                        label = labelEl.textContent.trim();
+                    } else {
+                        label = input.getAttribute('placeholder') || input.name;
+                    }
+                    missing.push(label);
+                }
+            });
+
+            if (missing.length > 0) {
+                const list = document.querySelector('#missingList');
+                list.innerHTML = '';
+                missing.forEach(field => {
+                    const li = document.createElement('li');
+                    li.textContent = field;
+                    list.appendChild(li);
+                });
+                document.querySelector('#missingModal').classList.add('active');
+            } else {
+                form.submit();
+            }
         });
     });
+
+    document.querySelector('#closeMissingModal').addEventListener('click', () => {
+        document.querySelector('#missingModal').classList.remove('active');
+    });
+
 
     // Cookie
     Alpine.store('page').getCookie = function (name) {

@@ -11,7 +11,7 @@
 
         <div class="card">
 
-            {!! Form::model($filters, ['route' => ['filters.update', $filterGroup->id], 'method' => 'patch']) !!}
+            {!! Form::model($filters, ['route' => ['filters.update', $filterGroup->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">

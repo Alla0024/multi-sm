@@ -19,7 +19,7 @@
 
         <div class="card">
 
-            {!! Form::model($optionValueGroup, ['route' => ['optionValueGroups.update', $optionValueGroup->id], 'method' => 'patch']) !!}
+            {!! Form::model($optionValueGroup, ['route' => ['optionValueGroups.update', $optionValueGroup->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">

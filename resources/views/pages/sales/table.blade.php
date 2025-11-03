@@ -8,6 +8,8 @@
             </tr>
             </thead>
             <tbody>
+            @dump($sales[0])
+            @dump($fields)
             @foreach($sales as $sale)
                 <tr>
                     <th>
@@ -26,7 +28,7 @@
                                 <td><div class="status_enable">{{ $word['status_0'] }}</div></td>
                             @endif
                          @elseif($index == 'image' && $field['inTable'])
-                            <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($sale[$index]) && $sale[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$sale[$index] : '/images/common/no_images.png'}}" alt=""></td>
+                            <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($sale['descriptions'][0][$index]) && $sale['descriptions'][0][$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$sale['descriptions'][0][$index] : '/images/common/no_images.png'}}" alt=""></td>
                          @else
                              @if($index != 'id' && $field['inTable'])
                                 <td>{{ $sale[$index] }}</td>

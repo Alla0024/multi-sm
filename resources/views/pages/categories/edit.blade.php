@@ -11,7 +11,7 @@
 
         <div class="card">
 
-            {!! Form::model($category, ['route' => ['categories.update', $category->id], 'method' => 'patch']) !!}
+            {!! Form::model($category, ['route' => ['categories.update', $category->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">

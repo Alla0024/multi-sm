@@ -11,7 +11,7 @@
 
         <div class="card">
 
-            {!! Form::model($articleAuthor, ['route' => ['articleAuthors.update', $articleAuthor->id], 'method' => 'patch']) !!}
+            {!! Form::model($articleAuthor, ['route' => ['articleAuthors.update', $articleAuthor->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">

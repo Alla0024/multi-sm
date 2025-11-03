@@ -11,7 +11,7 @@
 
         <div class="card">
 
-            {!! Form::model($currency, ['route' => ['currencies.update', $currency->id], 'method' => 'patch']) !!}
+            {!! Form::model($currency, ['route' => ['currencies.update', $currency->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">

@@ -11,7 +11,7 @@
 
         <div class="card">
 
-            {!! Form::model($optionValue, ['route' => ['optionValues.update', $optionValue->id], 'method' => 'patch']) !!}
+            {!! Form::model($optionValue, ['route' => ['optionValues.update', $optionValue->id], 'method' => 'patch', 'novalidate']) !!}
 
             <div class="card-body">
                 <ul class="nav nav-tabs" id="customTabs">
