@@ -162,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('#missingModal').classList.remove('active');
     });
 
-
     // Cookie
     Alpine.store('page').getCookie = function (name) {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -180,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.cookie = `theme=${next}; path=/; max-age=31536000`;
     }
-
 
 })
 

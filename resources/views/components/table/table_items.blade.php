@@ -337,8 +337,8 @@
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
     document.addEventListener('alpine:init', () => {
-        console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))
-        console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))
+        {{--console.log(JSON.parse(document.getElementById('payload_{{$search_select_type ?? ""}}').textContent))--}}
+        {{--console.log(JSON.parse(document.getElementById('payloadMultiSelect').textContent))--}}
 
         Alpine.data('table_products_{{$search_select_type ?? ""}}', () => ({
             inputType: JSON.parse('@json($inputType ?? [])'),

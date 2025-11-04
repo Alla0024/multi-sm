@@ -1,4 +1,7 @@
 @dump($saleGroup)
+@dump($sales[0])
+{{--@dump($bonusPrograms[0])--}}
+{{--@dump($promoCodeGroups[0])--}}
 
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
@@ -44,3 +47,11 @@
         </div>
     </div>
 </div>
+
+
+@include('pages.sale_groups.tabs.sale_table', ['tab' => 'sales', 'data' => $saleGroup['sales'], 'name' => 'sales', 'dataItems' => $sales])
+
+@include('pages.sale_groups.tabs.sale_table', ['tab' => 'bonus_programs', 'data' => $saleGroup['bonusPrograms'], 'name' => 'bonus_programs', 'dataItems' => $bonusPrograms])
+
+@include('pages.sale_groups.tabs.sale_table', ['tab' => 'promo_code_group', 'data' => $saleGroup['promoCodeGroups'], 'name' => 'promo_code_groups', 'dataItems' => $promoCodeGroups])
+

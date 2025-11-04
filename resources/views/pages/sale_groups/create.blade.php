@@ -22,10 +22,10 @@
                         <button class="nav-link " type="button" data-tab="sales">Акції</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link " type="button" data-tab="bonuses_program">Бонусні програми</button>
+                        <button class="nav-link " type="button" data-tab="bonus_programs">Бонусні програми</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link " type="button" data-tab="promocode_group">Групи промокодів</button>
+                        <button class="nav-link " type="button" data-tab="promo_code_group">Групи промокодів</button>
                     </li>
                 </ul>
                 <div class="row card-items">

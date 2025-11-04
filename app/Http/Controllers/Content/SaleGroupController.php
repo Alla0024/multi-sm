@@ -117,7 +117,7 @@ class SaleGroupController extends AppBaseController
         ]);
 
         $sales = CacheForever::getSales();
-        $bonusPrograms = BonusProgram::getBonusPrograms();
+        $bonusPrograms = CacheForever::getBonusPrograms();
         $promoCodeGroups = CacheForever::getPromoCodeGroups();
 
         $this->template = 'pages.sale_groups.edit';
