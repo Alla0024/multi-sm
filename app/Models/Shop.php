@@ -88,6 +88,11 @@ class Shop extends Model
         return $this->belongsTo(\App\Models\Location::class, 'location_id');
     }
 
+    public function postcode()
+    {
+        return $this->belongsTo(Postcode::class, 'postcode_id');
+    }
+
     public function shopDescription(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(\App\Models\ShopDescription::class);
