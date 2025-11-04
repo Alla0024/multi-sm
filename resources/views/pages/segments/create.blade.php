@@ -19,7 +19,7 @@
                         <button class="nav-link active" type="button" data-tab="main">{{$word["tab_main"]}}</button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link active" type="button" data-tab="product">Товари</button>
+                        <button class="nav-link " type="button" data-tab="product">Товари</button>
                     </li>
                 </ul>
                 <div class="row card-items">
