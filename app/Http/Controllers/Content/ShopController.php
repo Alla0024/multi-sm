@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Content;
 
+use App\Helpers\CacheForever;
 use App\Http\Requests\CreateShopRequest;
 use App\Http\Requests\UpdateShopRequest;
 use App\Http\Controllers\AppBaseController;
@@ -110,6 +111,8 @@ class ShopController extends AppBaseController
         $shop = $this->shopRepository->findFull($id);
         $locations = $this->locationRepository->getDropdownItems(5, $request->all());
         $locations = collect($locations)->pluck('text', 'id')->toArray();
+
+        $postcodes = CacheForever::getPostcodes();
         if (empty($shop)) {
             Flash::error(__('common.flash_not_found'));
 
@@ -123,7 +126,7 @@ class ShopController extends AppBaseController
 
         $this->template = 'pages.shops.edit';
 
-        return $this->renderOutput(compact('shop', 'fields', 'locations'));
+        return $this->renderOutput(compact('shop', 'fields', 'locations', 'postcodes'));
     }
 
     /**

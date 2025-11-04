@@ -45,4 +45,11 @@ class Postcode extends Model
     {
         return $this->hasOne(Municipality::class, 'municipality_id')->with('description');
     }
+
+    public function getPostcodes()
+    {
+        return self::with('description')
+            ->where('status', 1)
+            ->get();
+    }
 }

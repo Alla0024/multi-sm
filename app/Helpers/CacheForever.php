@@ -8,6 +8,7 @@ use App\Models\Currency;
 use App\Models\Location;
 use App\Models\Option;
 use App\Models\PaymentMethod;
+use App\Models\Postcode;
 use App\Models\PromoCodeGroup;
 use App\Models\Sale;
 use App\Models\Segment;
@@ -52,6 +53,19 @@ class CacheForever
             $cacheKey,
             function () {
                 return Segment::getSegments();
+            }
+        );
+    }
+
+    public static function getPostcodes()
+    {
+        $cacheKey = 'postcodes_' . config('settings.locale.default_language_id');
+
+        return self::rememberForever(
+            ['postcodes'],
+            $cacheKey,
+            function () {
+                return Postcode::getPostcodes();
             }
         );
     }
