@@ -1,5 +1,5 @@
-@dump($saleGroup)
-@dump($sales[0])
+{{--@dump($saleGroup)--}}
+{{--@dump($sales[0])--}}
 {{--@dump($bonusPrograms[0])--}}
 {{--@dump($promoCodeGroups[0])--}}
 
