@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\SaleGroup;
+use App\Models\SaleGroupClosure;
 use App\Models\SaleGroupDescription;
 use App\Models\SaleGroupToBonusProgram;
 use App\Models\SaleGroupToPromoCodeGroup;
@@ -64,63 +65,77 @@ class SaleGroupRepository extends BaseRepository
         return $saleGroup
             ->setRelation('descriptions', $descriptions);
     }
-
     public function filterRows(array $input)
     {
-        $perPage = $input['items_per_page'] ?? $input['perPage'] ?? config('settings.admin_items_per_page');
-        $languageId = $input['language_id'] ?? config('settings.locale.default_language_id');
+        $perPage = $input['items_per_page']
+            ?? $input['perPage']
+            ?? config('settings.admin_items_per_page');
+
+        $languageId = $input['language_id']
+            ?? config('settings.locale.default_language_id');
 
         $query = $this->model::with([
-            'description' => fn($q) => $q->where('language_id', $languageId),
+            'descriptions' => fn($q) => $q->where('language_id', $languageId),
         ]);
 
-        if (isset($input['ancestor_id']) && is_numeric($input['ancestor_id'])) {
-            $ancestorId = (int)$input['ancestor_id'];
-            $query->whereIn('id', function ($sub) use ($ancestorId) {
-                $sub->select('descendant_id')
-                    ->from('sale_group_closure')
-                    ->where('ancestor_id', $ancestorId)
-                    ->whereColumn('ancestor_id', '!=', 'descendant_id');
-            });
-        } else {
-            $query->whereHas('closure', fn($q) => $q->where('depth', 0));
+        $query->whereIn('id', $this->getHierarchyIds($input));
+
+        foreach (['sort_order', 'status'] as $field) {
+            if (!empty($input[$field]) && $input[$field] !== 'all') {
+                $query->where($field, $input[$field]);
+            }
         }
 
-        if (!empty($input['filter_status']) && is_numeric($input['filter_status'])) {
-            $query->where('status', $input['filter_status']);
+        if (!empty($input['name'])) {
+            $name = trim($input['name']);
+            $query->whereHas('descriptions', fn($q) =>
+            $q->where('language_id', $languageId)
+                ->where('name', 'LIKE', "%{$name}%")
+            );
         }
 
-        if (!empty($input['search'])) {
-            $search = trim($input['search']);
-            $query->whereHas('description', function ($q) use ($search) {
-                $q->where('name', 'LIKE', "%{$search}%");
-            });
-        }
+        if (!empty($input['sortBy'])) {
+            match ($input['sortBy']) {
+                'name_asc', 'name_desc' => $query->withAggregate(
+                    ['descriptions as name' => fn($q) => $q->where('language_id', $languageId)],
+                    'name'
+                )->orderBy('name', $input['sortBy'] === 'name_asc' ? 'asc' : 'desc'),
 
-        if (!empty($input['sort_order']) && $input['sort_order'] !== 'all') {
-            $query->orderBy('sort_order', $input['sort_order']);
+                'created_at_asc' => $query->orderBy('created_at', 'asc'),
+                'created_at_desc' => $query->orderBy('created_at', 'desc'),
+                default => null,
+            };
         }
-
-        $query->orderByDesc('status')->orderByDesc('sort_order');
 
         $saleGroups = $query->paginate($perPage);
 
-        $saleGroups->appends([
-            'items_per_page' => $perPage,
-            'search' => $input['search'] ?? null,
-            'sort_order' => $input['sort_order'] ?? null,
-            'filter_status' => $input['filter_status'] ?? null,
-            'ancestor_id' => $input['ancestor_id'] ?? null,
-        ]);
-
         $saleGroups->getCollection()->transform(function ($item) {
-            $item->setAttribute('name', optional($item->description)->name);
+            $item->name = optional($item->descriptions->first())->name;
+
             return $item;
         });
 
         return $saleGroups;
     }
 
+
+    private function getHierarchyIds(array $input)
+    {
+        if (!empty($input['ancestor_id']) && is_numeric($input['ancestor_id'])) {
+            return SaleGroupClosure::where('ancestor_id', (int)$input['ancestor_id'])
+                ->whereColumn('ancestor_id', '!=', 'descendant_id')
+                ->pluck('descendant_id');
+        }
+
+        if (!empty($input['parent_id']) && is_numeric($input['parent_id'])) {
+            return SaleGroupClosure::where('ancestor_id', (int)$input['parent_id'])
+                ->whereColumn('ancestor_id', '!=', 'descendant_id')
+                ->pluck('descendant_id');
+        }
+
+        return SaleGroupClosure::where('depth', 0)
+            ->pluck('descendant_id');
+    }
     public function save(array $input, ?int $id = null)
     {
         $descriptions = $input['descriptions'] ?? [];
