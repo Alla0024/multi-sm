@@ -342,6 +342,11 @@ class Product extends Model
         return $this->hasMany(ProductFilling::class)->with('description');
     }
 
+    public function productInSegment()
+    {
+        return $this->hasMany(SegmentToProduct::class);
+    }
+
     public function kits()
     {
         return $this->hasMany(ProductKit::class, 'product_id')
