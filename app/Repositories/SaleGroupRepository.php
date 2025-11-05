@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 use App\Models\SaleGroup;
 use App\Models\SaleGroupDescription;
+use App\Models\SaleGroupToBonusProgram;
+use App\Models\SaleGroupToPromoCodeGroup;
+use App\Models\SaleGroupToSale;
 
 class SaleGroupRepository extends BaseRepository
 {
@@ -121,21 +124,50 @@ class SaleGroupRepository extends BaseRepository
     public function save(array $input, ?int $id = null)
     {
         $descriptions = $input['descriptions'] ?? [];
+        $sales = $input['sales'] ?? [];
+        $bonusPrograms = $input['bonus_programs'] ?? [];
+        $promoCodeGroups = $input['promo_code_groups'] ?? [];
 
-        unset($input['descriptions']);
+        unset($input['descriptions'], $input['sales'], $input['bonus_programs'], $input['promo_code_groups']);
 
-        $saleGroupSave = $input;
-
-        $saleGroup = $this->model->updateOrCreate(['id' => $id], $saleGroupSave);
+        $saleGroup = $this->model->updateOrCreate(['id' => $id], $input);
+        $saleGroupId = $saleGroup->id;
 
         foreach ($descriptions as $languageId => $descData) {
             SaleGroupDescription::updateOrInsert(
                 [
-                    'sale_group_id' => (int)$saleGroup->id,
+                    'sale_group_id' => $saleGroupId,
                     'language_id' => $languageId
                 ],
                 $descData
             );
+        }
+
+        SaleGroupToSale::where('sale_group_id', $saleGroupId)->delete();
+        foreach ($sales as $saleId => $saleData) {
+            SaleGroupToSale::create([
+                'sale_group_id' => $saleGroupId,
+                'sale_id' => (int) $saleId,
+                'sort_order' => $saleData['sort_order'] ?? 0
+            ]);
+        }
+
+        SaleGroupToBonusProgram::where('sale_group_id', $saleGroupId)->delete();
+        foreach ($bonusPrograms as $programId => $programData) {
+            SaleGroupToBonusProgram::create([
+                'sale_group_id' => $saleGroupId,
+                'bonus_program_id' => (int) $programId,
+                'sort_order' => $programData['sort_order'] ?? 0
+            ]);
+        }
+
+        SaleGroupToPromoCodeGroup::where('sale_group_id', $saleGroupId)->delete();
+        foreach ($promoCodeGroups as $groupId => $groupData) {
+            SaleGroupToPromoCodeGroup::create([
+                'sale_group_id' => $saleGroupId,
+                'promo_code_group_id' => (int) $groupId,
+                'sort_order' => $groupData['sort_order'] ?? 0
+            ]);
         }
 
         return $saleGroup;
@@ -143,8 +175,12 @@ class SaleGroupRepository extends BaseRepository
 
     public function multiDelete($ids): void
     {
-        SaleGroup::whereIn('id', $ids)->delete();
         SaleGroupDescription::whereIn('sale_group_id', $ids)->delete();
+        SaleGroupToSale::whereIn('sale_group_id', $ids)->delete();
+        SaleGroupToBonusProgram::whereIn('sale_group_id', $ids)->delete();
+        SaleGroupToPromoCodeGroup::whereIn('sale_group_id', $ids)->delete();
+
+        SaleGroup::whereIn('id', $ids)->delete();
     }
 }
 
