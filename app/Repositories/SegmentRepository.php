@@ -43,7 +43,7 @@ class SegmentRepository extends BaseRepository
         $segment = $this->model
             ->with([
                 'descriptions.language:id,code',
-                'segmentProducts'
+//                'segmentProducts'
             ])
             ->find($id, $columns);
 

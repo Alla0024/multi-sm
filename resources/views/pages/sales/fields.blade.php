@@ -1,7 +1,7 @@
 @dump($sale)
-@dump($sale['segments'][0])
-@dump($sale['segments'][0]['description'])
-@dump($sale['segments'][0])
+{{--@dump($sale['segments'][0])--}}
+@dump($sale['segments'][0]['products'])
+{{--@dump($sale['segments'][0])--}}
 
 <!-- Name Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">

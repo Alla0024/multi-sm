@@ -1,6 +1,10 @@
-{{--@dump($segment)--}}
+@dump($segment)
 {{--@dump($products)--}}
-
+@isset($segment)
+    <input type="hidden" name="product_count" value="{{$segment['product_count']}}">
+    <input type="hidden" name="type_number" value="{{$segment['type_number']}}">
+    <input type="hidden" name="value" value="{{$segment['value']}}">
+@endisset
 <!-- Name Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('name', 'Назва') !!}
@@ -37,7 +41,7 @@
 </div>
 
 <!-- Products Field -->
-<div class="form-group col-sm-6 tab-pane input-block" data-for-tab="product">
+<div class="form-group col-sm-6 tab-pane input-block" style="flex-direction: column; align-items: start" data-for-tab="product">
 
     <div class="table-responsive">
         <table class="table" id="segments-table">
@@ -249,13 +253,13 @@
         </table>
     </div>
 
-
-</div>
-<div class="card-footer clearfix">
-    <div class="float-right">
-        @include('adminlte-templates::common.paginate', ['records' => $products])
+    <div class="card-footer clearfix">
+        <div class="float-right">
+            @include('adminlte-templates::common.paginate', ['records' => $products])
+        </div>
     </div>
 </div>
+
 
 <script>
 

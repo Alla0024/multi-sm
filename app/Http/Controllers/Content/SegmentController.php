@@ -111,7 +111,11 @@ class SegmentController extends AppBaseController
     public function edit(Request $request, $id)
     {
         $segment = $this->segmentRepository->findFull((int) $id);
-
+        if ($request->ajax()) {
+            return response()->json([
+                'segment' => $segment,
+            ]);
+        }
         if (empty($segment)) {
             Flash::error(__('common.flash_not_found'));
 
@@ -126,8 +130,9 @@ class SegmentController extends AppBaseController
             Segment::class,
         ]);
 
-        $this->template = 'pages.segments.edit';
 
+
+        $this->template = 'pages.segments.edit';
         return $this->renderOutput(compact('segment', 'stockStatuses', 'stockStatusesDescription', 'products','fields'));
     }
 
