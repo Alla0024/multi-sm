@@ -431,6 +431,43 @@ class ApiController extends AppBaseController
         return response()->json(['items' => $segments]);
     }
 
+    public function getSegmentProducts(Request $request)
+    {
+        abort_unless($request->ajax(), 404);
+
+        $query = Product::with(['description', 'manufacturer', 'productInSegment', 'category']);
+
+        $query->when(is_numeric($request->manufacturer_id ?? null),
+            fn($q) => $q->where('manufacturer_id', $request->manufacturer_id)
+        );
+
+        $query->when(is_numeric($request->category_id ?? null) && $request->category_id !== 'all',
+            fn($q) => $q->where('category_id', $request->category_id)
+        );
+
+        $query->when(
+            filled($request->search),
+            function ($q) use ($request) {
+                $search = trim($request->search);
+
+                $q->where(function ($sub) use ($search) {
+                    $sub->whereHas('description', fn($d) => $d->where('name', 'LIKE', "%{$search}%"))
+                        ->orWhere('article', 'LIKE', "{$search}%");
+                });
+            }
+        );
+
+        $query->when(!empty($request->products_id),
+            fn($q) => $q->whereIn('id', (array)$request->products_id)
+        );
+
+        $products = $query->get();
+
+        return response()->json([
+            'products' => $products,
+        ]);
+    }
+
     public static function generateProductPriceSortOrder()
     {
         $request = request();

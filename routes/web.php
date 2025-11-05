@@ -161,7 +161,7 @@ Route::group(['prefix' => env('ADMIN_DASHBOARD', 'aikqweu')], function () {
         Route::get('/api/order_confirm_url', 'ApiController@orderConfirmUrl')->name('order_confirm_url');
         Route::get('/api/check_status_liqpay', 'ApiController@checkStatusLiqpay')->name('check_status_liqpay');
         Route::get('/api/product_status_update', 'ApiController@productStatusUpdate')->name('product_status_update');
-        Route::post('api/get_segment_products', 'ApiController@getSegmentProducts')->name('get_segment_products');
+        Route::post('api/getSegmentProducts', 'App\Http\Controllers\Content\ApiController@getSegmentProducts')->name('getSegmentProducts');
         Route::post('api/get_sales', 'ApiController@getSales')->name('get_sales');
         Route::post('api/get_bonus_programs', 'ApiController@getBonusPrograms')->name('get_bonus_programs');
         Route::post('api/get_promo_code_groups', 'ApiController@getPromoCodeGroups')->name('get_promo_code_groups');
