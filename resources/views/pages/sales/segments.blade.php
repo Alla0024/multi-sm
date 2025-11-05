@@ -73,7 +73,7 @@
         }
     }
 </style>
-<div class="tab-pane input-block" data-for-tab="segment">
+<div class="tab-pane input-block" x-data="sale_segment" data-for-tab="segment">
     <input id="sale_id" value="@if(isset($sale)){{$sale->id}}@endif" type="hidden">
 
     <div class="block-segment-items">
@@ -89,7 +89,7 @@
                                 <i class="bi bi-pencil fs-40"></i>
                             </div>
                             <div class="check-show-for-sale">
-                                <input type="checkbox" class="ignore_form" @if($segment['show_in_sale']) checked @endif style="width: 40px; height: 40px; cursor: pointer;">
+                                <input type="checkbox" @click="saleInSale($event.target, {{$segment['id']}})" class="ignore_form" @if($segment['show_in_sale']) checked @endif style="width: 40px; height: 40px; cursor: pointer;">
                             </div>
                         </div>
                     </div>
@@ -168,8 +168,24 @@
 
 </div>
 
+
 <script>
     document.addEventListener('alpine:init', () => {
+        Alpine.data('sale_segment', () => ({
+            saleInSale(e, id){
+                const formData = new FormData();
 
+                formData.append('sale_id', {{$sale['id']}});
+                formData.append('show_in_sale', e.checked ? 1 : 0);
+
+                axios.post(`{{url('/')}}/aikqweu/segments/${id}`, formData)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        }))
     })
 </script>
