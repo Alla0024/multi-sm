@@ -538,6 +538,7 @@
     transition: opacity 0.2s ease, visibility 0.2s ease;
     z-index: 9999;
 
+
     .modal-required-inputs {
         background: #fff;
         padding: 20px 28px;
@@ -577,7 +578,120 @@
     }
 
     .modal-segment-edit{
+        width: 100%;
+        max-width: 1300px;
+        padding: 20px;
+        background: white;
+        max-height: 90%;
+        border-radius: 10px;
+        overflow: auto;
+        .head-block{
+            display: flex;
+            position: relative;
+            .close{
+                position: absolute;
+                top: 0;
+                right: -10px;
+                font-size: 28px;
+                cursor: pointer;
+            }
+        }
+        .add-products-block{
+            flex-direction: column;
+            row-gap: 40px;
+            margin-top: 30px;
+            border: 1px solid $col_border;
+            border-radius: 10px;
+            .section-head{
+                padding: 20px;
+                background: $col_bg_block;
+                border-bottom: 1px solid $col_border;
+            }
+            .add-items{
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                column-gap: 40px;
+                padding: 20px;
+                .input-block{
+                    align-items: center;
+                    .name{
+                        width: 90px;
+                    }
+                    .input-sale-search{
+                        width: 230px;
+                    }
+                }
 
+                .items-block{
+                    width: 100%;
+                    max-width: 1000px;
+                    height: 400px;
+                    background: #f5f5f5;
+                    overflow: hidden;
+                    .item-head{
+                        display: flex;
+                        align-items: center;
+                    }
+                    .input-check-all{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        column-gap: 10px;
+                    }
+                    input[type='checkbox']{
+                        width: 20px;
+                        cursor: pointer;
+                    }
+                    input[type='checkbox']:focus{
+                        box-shadow: none !important;
+                    }
+                    .butt-add-items{
+                        cursor: pointer;
+                        background: #3e60d5;
+                        padding: 6px 16px;
+                        color: white;
+                        border-radius: 4px;
+                    }
+                    .items{
+                        height: 100%;
+                        overflow-y: scroll;
+                        .item{
+                            .input-check{
+                                display: flex;
+                                align-items: center;
+                                column-gap: 10px;
+                                label{
+                                    width: 600px;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            .table-view-items{
+                width: 100%;
+                .table-items{
+                    width: 97%;
+                    margin: 0 auto 20px;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    border: 1px solid #BFBFBF;
+                }
+            }
+        }
+        .butt-save{
+            background: #3e60d5;
+            cursor: pointer;
+            padding: 6px 18px;
+            border-radius: 4px;
+            color: white;
+            margin-top: 14px;
+            width: max-content;
+            margin-left: auto;
+        }
     }
 
 }

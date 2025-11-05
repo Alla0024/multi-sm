@@ -1,6 +1,6 @@
-@dump($sale)
+{{--@dump($sale)--}}
 {{--@dump($sale['segments'][0])--}}
-@dump($sale['segments'][0]['products'])
+{{--@dump($sale['segments'][0]['products'])--}}
 {{--@dump($sale['segments'][0])--}}
 
 <!-- Name Fields -->

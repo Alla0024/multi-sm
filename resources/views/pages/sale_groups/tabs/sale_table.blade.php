@@ -198,7 +198,6 @@
 
             toggleSelectAll(event) {
                 const isChecked = event.target.checked;
-                // пройдемо всі чекбокси тільки тих елементів, які зараз у списку (dataItemsView)
                 this.dataItemsView.forEach(item => {
                     const box = document.querySelector(`#check_${item.id}`);
                     if (box) box.checked = isChecked;

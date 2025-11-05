@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 items.forEach(item => {
                     if(item.text.toLowerCase().includes(value)){
                         const li = document.createElement('li');
-                        li.textContent = item.text;
+                        li.textContent = item.id + ' - ' + item.text;
                         if(input.getAttribute('custom') === 'true'){
                             function setItem(){
                                 input.value = item.text;
@@ -47,6 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                             li.removeEventListener('click', setItem);
                             li.addEventListener('click', setItem);
+                        } else if(input.getAttribute('custom') === 'method'){
+                            function setItem(){
+                                input.value = item.text;
+                                hidden.value = item.id;
+                                list.classList.add('hide');
+                            }
+                            li.removeEventListener('click', setItem);
+                            li.addEventListener('click', setItem);
+                            li.setAttribute('x-on:click', `setItem($event.target, "${item.id}", "${item.text}")`)
                         } else {
                             li.setAttribute('x-on:click', `setItem($event.target, keyData, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
                         }
@@ -87,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                             li.removeEventListener('click', setItem);
                             li.addEventListener('click', setItem);
+                        } else if(input.getAttribute('custom') === 'method'){
+                            li.setAttribute('x-on:click', `setItem($event.target)`)
                         } else {
                             li.setAttribute('x-on:click', `setItem($event.target, keyData, ${item.id}, "${item.text.replace('"', '\'').replace('"', '\'')}")`)
                         }

@@ -114,6 +114,7 @@ class SegmentController extends AppBaseController
         if ($request->ajax()) {
             return response()->json([
                 'segment' => $segment,
+                'descriptions' => $segment['descriptions'],
             ]);
         }
         if (empty($segment)) {
