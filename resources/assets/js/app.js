@@ -157,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
     document.querySelector('#closeMissingModal').addEventListener('click', () => {
         document.querySelector('#missingModal').classList.remove('active');
     });

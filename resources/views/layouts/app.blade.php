@@ -45,7 +45,7 @@
             @include('components.basic.breadcrumb')
             @include('layouts.content')
             <div id="missingModal" class="modal-overlay">
-                <div class="modal-box">
+                <div class="modal-required-inputs">
                     <h3>Не заповнені обов’язкові поля:</h3>
                     <ul id="missingList"></ul>
                     <button id="closeMissingModal">Закрити</button>

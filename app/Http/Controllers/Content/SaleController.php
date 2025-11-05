@@ -117,10 +117,12 @@ class SaleController extends AppBaseController
 
         $segments = CacheForever::getSegments();
         $paymentMethods = CacheForever::getPaymentMethods();
+        $selectedPaymentsIds = array_column($sale['paymentMethods']->toArray(), 'id');
+        $selectedSegmentIds = array_column($sale['segments']->toArray(), 'id');
 
         $this->template = 'pages.sales.edit';
 
-        return $this->renderOutput(compact('sale', 'segments', 'paymentMethods', 'fields'));
+        return $this->renderOutput(compact('sale', 'segments', 'paymentMethods', 'selectedPaymentsIds', 'selectedSegmentIds', 'fields'));
     }
 
     /**
