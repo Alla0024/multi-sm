@@ -10,7 +10,6 @@ class BankRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
         'mark',
-        'logo',
         'sort_order'
     ];
 

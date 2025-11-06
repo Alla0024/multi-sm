@@ -9,9 +9,6 @@ class IndividualEntrepreneurRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
         'name',
-        'store_id',
-        'store_key',
-        'token',
         'status',
         'sort_order',
         'bank_id',
@@ -47,6 +44,7 @@ class IndividualEntrepreneurRepository extends BaseRepository
         $individualEntrepreneur = $this->model
             ->with([
                 'paymentMethods',
+                'bank',
             ])
             ->find($id, $columns);
 
@@ -64,6 +62,7 @@ class IndividualEntrepreneurRepository extends BaseRepository
 
         $query = $this->model::with([
             'paymentMethods',
+            'bank',
         ]);
 
         foreach (['sort_order', 'status'] as $field) {

@@ -79,30 +79,74 @@ document.addEventListener('DOMContentLoaded', () => {
     Alpine.store('page').ajax = (e) => {
         // e.preventDefault();
 
+        document.querySelectorAll('.ignore_form').forEach(function(el) {
+            el.disabled = true;
+        });
+
         let form = e.parentElement.parentElement;
 
         Object.keys(editors).forEach(id => {
             editors[id].updateElement();
         });
 
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
+        // if (!form.checkValidity()) {
+        //     form.reportValidity();
+        //     return;
+        // }
+
+        const requiredFieldsAjax = form.querySelectorAll('[required]');
+        const missing = [];
+
+        requiredFieldsAjax.forEach(input => {
+            if (!input.value.trim()) {
+                let label = '';
+                const labelEl = form.querySelector(`label[for="${input.id}"]`);
+                if (labelEl) {
+                    label = labelEl.textContent.trim();
+                } else {
+                    if(input.parentElement.parentElement.querySelector('label')){
+                        label = input.parentElement.parentElement.querySelector('label').innerText
+                    } else {
+                        if(input.parentElement.parentElement.parentElement.querySelector('label')){
+                            label = input.parentElement.parentElement.parentElement.querySelector('label').innerText
+                        } else {
+                            if(input.parentElement.parentElement.parentElement.parentElement.querySelector('label')){
+                                label = input.parentElement.parentElement.parentElement.parentElement.querySelector('label').innerText
+                            } else{
+                                label = input.getAttribute('placeholder') || input.name;
+                            }
+                        }
+                    }
+
+                }
+                missing.push(label);
+            }
+        });
+
+        if (missing.length > 0) {
+            const list = document.querySelector('#missingList');
+            list.innerHTML = '';
+            missing.forEach(field => {
+                const li = document.createElement('li');
+                li.textContent = field;
+                list.appendChild(li);
+            });
+            document.querySelector('#missingModal').classList.add('active');
+        } else {
+            let formData = new FormData(form)
+
+            axios({
+                method: form.method,
+                url: form.action,
+                data: formData,
+            }).then(function (response) {
+                window.scrollTo({top: 0})
+                location.reload();
+
+            }).catch(function () {
+
+            })
         }
-
-        let formData = new FormData(form)
-
-        axios({
-            method: form.method,
-            url: form.action,
-            data: formData,
-        }).then(function (response) {
-            window.scrollTo({top: 0})
-            location.reload();
-
-        }).catch(function () {
-
-        })
     }
 
     // Ignore inputs value ///////////////////////////////////////////////////////////////////////////

@@ -57,7 +57,8 @@ class SegmentController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.segments.create';
-
+        $stockStatuses = CacheForever::getStockStatuses();
+        $stockStatusesDescription = StockStatus::with('description')->get()->keyBy('id')->toArray();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             Segment::class,
             SegmentDescription::class,
@@ -65,6 +66,8 @@ class SegmentController extends AppBaseController
 
         return $this->renderOutput([
             $fields,
+            'stockStatuses' => $stockStatuses,
+            'stockStatusesDescription' => $stockStatusesDescription,
         ]);
     }
 

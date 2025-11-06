@@ -83,19 +83,21 @@ class SaleGroupController extends AppBaseController
     /**
      * Display the specified SaleGroup.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $saleGroup = $this->saleGroupRepository->findFull($id);
+        $saleGroups = $this->saleGroupRepository->filterRows($request->all());
 
-        if (empty($saleGroup)) {
-            Flash::error(__('common.flash_not_found'));
+        $fields = ModelSchemaHelper::buildSchemaFromModelNames([
+            SaleGroupDescription::class,
+            SaleGroup::class
+        ]);
 
-            return redirect(route('saleGroups.index'));
-        }
+        $this->template = 'pages.sale_groups.index';
 
-        $this->template = 'pages.sale_groups.show';
-
-        return $this->renderOutput(compact('saleGroup'));
+        return $this->renderOutput([
+            'saleGroups' => $saleGroups,
+            'fields' => $fields,
+        ]);
 }
 
     /**

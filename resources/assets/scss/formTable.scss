@@ -539,7 +539,7 @@
     z-index: 9999;
 
 
-    .modal-required-inputs {
+    .modal-required-inputs{
         background: #fff;
         padding: 20px 28px;
         border-radius: 10px;
@@ -549,20 +549,20 @@
         text-align: left;
         font-family: system-ui, sans-serif;
 
-        .modal-box h3 {
+        h3 {
             margin-top: 0;
             font-size: 18px;
             color: #222;
         }
-        .modal-box ul {
+         ul {
             margin: 12px 0;
             padding-left: 20px;
         }
-        .modal-box li {
+        li {
             color: #d62828;
             margin-bottom: 4px;
         }
-        .modal-box button {
+        button {
             display: block;
             margin: 15px auto 0;
             background: #007bff;
@@ -572,7 +572,7 @@
             border-radius: 6px;
             cursor: pointer;
         }
-        .modal-box button:hover {
+        button:hover {
             background: #0056b3;
         }
     }
@@ -607,6 +607,7 @@
                 background: $col_bg_block;
                 border-bottom: 1px solid $col_border;
             }
+
             .add-items{
                 display: flex;
                 width: 100%;

@@ -55,7 +55,7 @@
     {!! Form::label('image', $word['title_image']) !!}
     <div class="input-group">
         <div class="custom-file image-upload" @click="open_butt = !open_butt" @keydown.escape.window="open_butt=false" @click.outside="open_butt=false">
-            <input id="thumbnail" type="hidden" name="image" value="{{$manufacturer['image'] ?? ''}}">
+            <input id="thumbnail" required type="hidden" name="image" value="{{$manufacturer['image'] ?? ''}}">
             <img class="" src="{{isset($manufacturer['image']) && $manufacturer['image'] != '' ? "https://i.svit-matrasiv.com.ua/storage/images/".$manufacturer['image'] : '/images/common/no_images.png'}}" id="holder" alt="Прев’ю" style="max-width: 200px;">
             <div class="butt hide" :class="{'show': open_butt}">
                 <div class="custom-file-label lfm" @click="$store.page.bindFileManager($event.target)" data-input="thumbnail" data-preview="holder" data-path="/catalog/category/logo_wtm"><i class="bi bi-arrow-up-square"></i></div>

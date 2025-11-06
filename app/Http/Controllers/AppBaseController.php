@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
+use App\Models\BankDescription;
+use App\Models\IndividualEntrepreneur;
 use App\Models\Language;
-use App\Models\Sale;
-use App\Models\SaleDescription;
 use App\Helpers\ModelSchemaHelper;
 use App\Models\Store;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -79,8 +80,8 @@ class AppBaseController extends BaseController
     {
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            SaleDescription::class,
-            Sale::class
+            BankDescription::class,
+            Bank::class
         ]);
 
         $lang = [

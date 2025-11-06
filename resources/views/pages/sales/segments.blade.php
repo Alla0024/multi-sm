@@ -104,7 +104,7 @@
                                 <i class="bi bi-pencil fs-40"></i>
                             </div>
                             <div class="check-show-for-sale">
-                                <input type="checkbox" @click="saleInSale($event.target, {{$segment['id']}})" class="ignore_form" @if($segment['show_in_sale']) checked @endif style="width: 40px; height: 40px; cursor: pointer;">
+                                <input type="checkbox" @click="saleInSale($event.target, {{$segment['id'] ?? ''}})" class="ignore_form" @if($segment['show_in_sale']) checked @endif style="width: 40px; height: 40px; cursor: pointer;">
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                                     @if($segment['type_number'] == 'percent')
                                         %
                                     @else
-                                        {{ $word['currency'] }}
+                                        ₴
                                     @endif
                                 </div>
                             @endif
@@ -419,7 +419,7 @@
                     </div>
                 </div>
 
-                <div class="butt-save" @click="saveSegment()">
+                <div class="butt-save" @click="saveSegment('{{$segment['id'] ?? ''}}')">
                     Зберегти
                 </div>
 
@@ -440,6 +440,7 @@
             titleModal: 'Редагувати сегменту',
             dataItemsView: '',
             data: [],
+            url: '',
 
             saleInSale(e, id){
                 const formData = new FormData();
@@ -462,6 +463,7 @@
                         this.segmentData = response.data.segment;
                         this.segmentDataDescriptions = response.data.descriptions;
                         this.titleModal = 'Редагувати сегмент';
+                        this.url = '{{url('/')}}/aikqweu/segments/{{$segment['id'] ?? ''}}'
                         document.querySelector('#segmentModal').classList.add('active');
                         console.log(this.segmentDataDescriptions)
                     })
@@ -473,6 +475,7 @@
             newSegment(){
                 this.titleModal = 'Створити сегмент';
                 document.querySelector('#segmentModal').classList.add('active');
+                this.url = '{{url('/')}}/aikqweu/segments'
                 console.log(this.segmentDataDescriptions)
             },
 
@@ -490,20 +493,17 @@
             },
 
             addItem() {
-                // знайти всі чекбокси, які відмічені
                 const checkedBoxes = document.querySelectorAll('.items-block input[type="checkbox"]:checked');
                 checkedBoxes.forEach(box => {
                     const id = parseInt(box.id.replace('check_', ''), 10);
                     const itemToAdd = this.dataItemsView.find(i => i.id === id);
 
-                    // перевірити, чи вже є в таблиці
                     const alreadyExists = this.data.some(i => i.id === id);
+
                     if (!alreadyExists && itemToAdd) {
-                        // додаємо копію елемента
                         this.data.push(JSON.parse(JSON.stringify(itemToAdd)));
                     }
 
-                    // зняти позначку
                     box.checked = false;
                 });
             },
@@ -516,25 +516,24 @@
                 });
             },
 
-            saveSegment(){
+            saveSegment(id){
 
                 const container = document.querySelector('#segmentModal');
-
                 const formData = new FormData();
-
                 container.querySelectorAll('input:not([type="checkbox"]), select, textarea').forEach(el => {
                     const name = el.name || el.id;
                     if (name) formData.append(name, el.value);
                 });
-
-                axios.post('/your/api/url', formData)
+                // formData.append('_method', 'PATCH')
+                formData.append('_token', '{{ csrf_token() }}')
+                axios.post(this.url, formData)
                     .then(response => {
-                        console.log('✅ Успішно:', response.data);
+                        console.log( response.data);
+                        location.reload();
                     })
                     .catch(error => {
-                        console.error('❌ Помилка:', error);
+                        console.error(error);
                     });
-
             }
         }))
     })

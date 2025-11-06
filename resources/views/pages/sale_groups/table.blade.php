@@ -29,7 +29,7 @@
                             <td><img style="width: 140px; border: 0.7px solid rgba(172, 172, 172, 0.20);" src="{{isset($saleGroup[$index]) && $saleGroup[$index] != '' ? 'https://i.svit-matrasiv.com.ua/images/'.$saleGroup[$index] : '/images/common/no_images.png'}}" alt=""></td>
                          @else
                              @if($index != 'id' && $field['inTable'])
-                                <td>{{ $saleGroup[$index] }}</td>
+                                <td><a href="{{route('saleGroups.index').'?parent_id='.$saleGroup['id']}}">{{ $saleGroup[$index] }}</a></td>
                              @endif
                         @endif
                     @endforeach

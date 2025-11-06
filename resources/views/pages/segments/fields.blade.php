@@ -1,4 +1,4 @@
-@dump($segment)
+{{--@dump($segment)--}}
 {{--@dump($products)--}}
 @isset($segment)
     <input type="hidden" name="product_count" value="{{$segment['product_count']}}">
@@ -252,12 +252,13 @@
 
         </table>
     </div>
-
-    <div class="card-footer clearfix">
-        <div class="float-right">
-            @include('adminlte-templates::common.paginate', ['records' => $products])
+    @isset($products)
+        <div class="card-footer clearfix">
+            <div class="float-right">
+                @include('adminlte-templates::common.paginate', ['records' => $products])
+            </div>
         </div>
-    </div>
+    @endisset
 </div>
 
 
@@ -280,59 +281,59 @@
 
     document.querySelector('.search-change-butt-product').addEventListener('click', applyFilters)
 
-    document.querySelector('#add_product_to_segment').addEventListener('click', (e) => {
-        e.preventDefault();
+    @isset($products)
+        document.querySelector('#add_product_to_segment').addEventListener('click', (e) => {
+            e.preventDefault();
 
-        const isCheckedAll = document.querySelector('#switchCheckChecked')?.checked || false;
+            const isCheckedAll = document.querySelector('#switchCheckChecked')?.checked || false;
 
-        const formData = new FormData();
-        formData.append('segment_id', '{{ $segment['id'] }}');
+            const formData = new FormData();
+            formData.append('segment_id', '{{ $segment['id'] ?? '' }}');
 
-        if (isCheckedAll) {
-            debugger;
-            axios.post('{{ route('addFilteredProductsToSegment', ['segmentId' => $segment->id]) }}', formData)
-                .then(r => console.log(r))
-                .catch(e => console.error(e));
-        } else {
+            if (isCheckedAll) {
+                axios.post('{{ route('addFilteredProductsToSegment', ['segmentId' => ($segment['id'] ?? '')]) }}', formData)
+                    .then(r => console.log(r))
+                    .catch(e => console.error(e));
+            } else {
 
-            const checkItems = document.querySelectorAll('.form-check-input');
-            checkItems.forEach(item => {
-                if (item.checked) {
-                    formData.append('product_ids[]', item.dataset.content);
-                }
-            });
+                const checkItems = document.querySelectorAll('.form-check-input');
+                checkItems.forEach(item => {
+                    if (item.checked) {
+                        formData.append('product_ids[]', item.dataset.content);
+                    }
+                });
 
-            axios.post('{{ route('addProductToSegment') }}', formData)
-                .then(r => console.log(r))
-                .catch(e => console.error(e));
-        }
-    });
+                axios.post('{{ route('addProductToSegment') }}', formData)
+                    .then(r => console.log(r))
+                    .catch(e => console.error(e));
+            }
+        });
 
-    document.querySelector('#remove_product_from_segment').addEventListener('click', (e) => {
-        e.preventDefault();
+        document.querySelector('#remove_product_from_segment').addEventListener('click', (e) => {
+            e.preventDefault();
 
-        const isCheckedAll = document.querySelector('#switchCheckChecked')?.checked || false;
+            const isCheckedAll = document.querySelector('#switchCheckChecked')?.checked || false;
 
-        const formData = new FormData();
-        formData.append('segment_id', '{{ $segment['id'] }}');
+            const formData = new FormData();
+            formData.append('segment_id', '{{ $segment['id'] ?? '' }}');
 
-        if (isCheckedAll) {
-            debugger;
-            axios.post('{{ route('removeFilteredProductsFromSegment', ['segmentId' => $segment->id])}}', formData)
-                .then(r => console.log(r))
-                .catch(e => console.error(e));
-        } else {
+            if (isCheckedAll) {
+                axios.post('{{ route('removeFilteredProductsFromSegment', ['segmentId' => ($segment['id'] ?? '')])}}', formData)
+                    .then(r => console.log(r))
+                    .catch(e => console.error(e));
+            } else {
 
-            const checkItems = document.querySelectorAll('.form-check-input');
-            checkItems.forEach(item => {
-                if (item.checked) {
-                    formData.append('product_ids[]', item.dataset.content);
-                }
-            });
+                const checkItems = document.querySelectorAll('.form-check-input');
+                checkItems.forEach(item => {
+                    if (item.checked) {
+                        formData.append('product_ids[]', item.dataset.content);
+                    }
+                });
 
-            axios.post('{{ route('removeProductFromSegment') }}', formData)
-                .then(r => console.log(r))
-                .catch(e => console.error(e));
-        }
-    });
+                axios.post('{{ route('removeProductFromSegment') }}', formData)
+                    .then(r => console.log(r))
+                    .catch(e => console.error(e));
+            }
+        });
+    @endisset
 </script>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateIndividualEntrepreneurRequest;
 use App\Http\Requests\UpdateIndividualEntrepreneurRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Bank;
+use App\Models\PaymentMethod;
 use App\Repositories\IndividualEntrepreneurRepository;
 use App\Helpers\ModelSchemaHelper;
 use Illuminate\Http\Request;
@@ -33,7 +35,6 @@ class IndividualEntrepreneurController extends AppBaseController
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             IndividualEntrepreneur::class
         ]);
-
         $this->template = 'pages.individual_entrepreneurs.index';
 
         return $this->renderOutput([
@@ -97,6 +98,9 @@ class IndividualEntrepreneurController extends AppBaseController
     public function edit($id)
     {
         $individualEntrepreneur = $this->individualEntrepreneurRepository->findFull($id);
+        $bank = Bank::with('description')->get();
+        $paymentMethods = PaymentMethod::with('description')->get()->keyBy('id')->toArray();
+        $paymentMethodsIds = array_column($individualEntrepreneur['paymentMethods']->toArray(), 'payment_id');
 
         if (empty($individualEntrepreneur)) {
             Flash::error(__('common.flash_not_found'));
@@ -109,7 +113,7 @@ class IndividualEntrepreneurController extends AppBaseController
 
         $this->template = 'pages.individual_entrepreneurs.edit';
 
-        return $this->renderOutput(compact('individualEntrepreneur', 'fields'));
+        return $this->renderOutput(compact('individualEntrepreneur', 'paymentMethods', 'bank', 'paymentMethodsIds', 'fields'));
     }
 
     /**

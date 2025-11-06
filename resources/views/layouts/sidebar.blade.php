@@ -151,13 +151,14 @@
             </div>
         </div>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*']) ? 'true' : 'false' }}}">
-            <div class="item {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*']) ? 'active' : '' }}" @click="open_list = !open_list">
+        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*', $adminPath.'/individualEntrepreneurs*']) ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*', $adminPath.'/individualEntrepreneurs*']) ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-sliders2 fs-20"></i></div>
                 <div class="name">Налаштування</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is($adminPath.'/individualEntrepreneurs*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/individualEntrepreneurs')}}">ФОПи</a>
                 <a class="item {{ Request::is($adminPath.'/currencies*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/currencies')}}">Валюти</a>
                 <a class="item {{ Request::is($adminPath.'/stockStatuses*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/stockStatuses')}}">Статуси товарів</a>
             </div>

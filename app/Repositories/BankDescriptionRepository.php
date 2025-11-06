@@ -8,10 +8,7 @@ use App\Repositories\BaseRepository;
 class BankDescriptionRepository extends BaseRepository
 {
     protected array $fieldSearchable = [
-        'bank_id',
-        'language_id',
         'name',
-        'note'
     ];
 
     protected array $additionalFields = [

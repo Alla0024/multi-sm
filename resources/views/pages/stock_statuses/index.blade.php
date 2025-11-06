@@ -20,9 +20,6 @@
                        href="{{ route('stockStatuses.create') }}">
                         {!! $word['add'] !!}
                     </a>
-                    <div class="btn btn-primary btn-copy float-right" data-action="copy_stockStatuses" data-name="stockStatuses_id" @click="$store.page.copyItem($event.target)">
-                        {!! $word['copy'] !!}
-                    </div>
                     {!! Form::open(['route' => ['stockStatuses.destroy', ''], 'method' => 'delete', '@submit.prevent = $store.page.deletedItems($event.target)']) !!}
                     <button type="submit" class="btn btn-primary btn-deleted float-right">
                         {!! $word['deleted'] !!}
