@@ -102,12 +102,12 @@
 
 <!-- Bank Field -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
-    {!! Form::label('sort_order', $word['title_sort_order']) !!}
+    {!! Form::label('sort_order', 'Банк') !!}
     <div class="flex-row input input-min">
         <div class="input-group">
             <select class="" name="bank_id"  aria-describedby="select-addon">
                 @foreach($bank as $item)
-                    <option value="{{$item['id']}}" @if($individualEntrepreneur['bank_id'] == $item['id']) selected @endif>{{$item['descriptions'][1]['name']}}</option>
+                    <option value="{{$item['id']}}" @if(isset($individualEntrepreneur) && $individualEntrepreneur['bank_id'] == $item['id']) selected @endif>{{$item['descriptions'][1]['name']}}</option>
                 @endforeach
             </select>
         </div>

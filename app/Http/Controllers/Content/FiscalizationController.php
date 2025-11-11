@@ -22,6 +22,8 @@ class FiscalizationController extends AppBaseController
 
     public function index(Request $request)
     {
+        $this->template = 'pages.fiscalization.index';
+        return $this->renderOutput();
 //
     }
 

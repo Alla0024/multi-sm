@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Content;
 use App\Http\Requests\CreateBankProgramRequest;
 use App\Http\Requests\UpdateBankProgramRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Bank;
 use App\Models\BankProgramDescription;
 use App\Repositories\BankProgramRepository;
 use App\Helpers\ModelSchemaHelper;
@@ -51,7 +52,7 @@ class BankProgramController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.bank_programs.create';
-
+        $bank = Bank::with('description')->get();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             BankProgramDescription::class,
             BankProgram::class
@@ -59,6 +60,7 @@ class BankProgramController extends AppBaseController
 
         return $this->renderOutput([
             'fields' => $fields,
+            'bank' => $bank,
         ]);
     }
 
@@ -100,7 +102,7 @@ class BankProgramController extends AppBaseController
     public function edit($id)
     {
         $bankProgram = $this->bankProgramRepository->findFull($id);
-
+        $bank = Bank::with('description')->get();
         if (empty($bankProgram)) {
             Flash::error(__('common.flash_not_found'));
 
@@ -114,7 +116,7 @@ class BankProgramController extends AppBaseController
 
         $this->template = 'pages.bank_programs.edit';
 
-        return $this->renderOutput(compact('bankProgram', 'fields'));
+        return $this->renderOutput(compact('bankProgram', 'bank', 'fields'));
     }
 
     /**

@@ -41,9 +41,9 @@ class PostcodeRepository extends BaseRepository
     {
         return $this->model
             ->with([
-                'city:id,name',
-                'province:id,name',
-                'municipality:id,name',
+//                'city:id,name',
+//                'province:id,name',
+//                'municipality:id,name',
             ])
             ->find($id, $columns);
     }
@@ -53,9 +53,9 @@ class PostcodeRepository extends BaseRepository
         $perPage = $input['perPage'] ?? 10;
 
         $query = $this->model::with([
-            'city',
-            'province',
-            'municipality',
+//            'city',
+//            'province',
+//            'municipality',
         ]);
 
         if (!empty($input['status'])) {

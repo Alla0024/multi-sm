@@ -130,18 +130,19 @@
             <div class="name">{{$word['menu_shops']}}</div>
         </a>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/newsletters*') ? 'true' : 'false' }}}">
-            <div class="item {{ Request::is($adminPath.'/newsletters*') ? 'active' : '' }}" @click="open_list = !open_list">
+        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/newsletters', $adminPath.'/fiscalization*']) ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is([$adminPath.'/newsletters', $adminPath.'/fiscalization*']) ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-telephone fs-20"></i></div>
                 <div class="name">{{$word['menu_service']}}</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
                 <a class="item {{ Request::is($adminPath.'/newsletters*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/newsletters')}}">{{$word['menu_newsletters']}}</a>
+                <a class="item {{ Request::is($adminPath.'/fiscalization*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/fiscalization')}}">Фіскалізація</a>
             </div>
         </div>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is($adminPath.'/clients*') ? 'true' : 'false' }}}">
+        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/clients*']) ? 'true' : 'false' }}}">
             <div class="item {{ Request::is($adminPath.'/clients*') ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="name">CRM</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
@@ -151,14 +152,29 @@
             </div>
         </div>
 
-        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*', $adminPath.'/individualEntrepreneurs*']) ? 'true' : 'false' }}}">
-            <div class="item {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*', $adminPath.'/individualEntrepreneurs*']) ? 'active' : '' }}" @click="open_list = !open_list">
+        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/postcodes*', $adminPath.'/provinces*', $adminPath.'/cities*', $adminPath.'/municipalities*']) ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is([$adminPath.'/postcodes*', $adminPath.'/provinces*', $adminPath.'/cities*', $adminPath.'/municipalities*']) ? 'active' : '' }}" @click="open_list = !open_list">
+                <div class="name">Міста БОН</div>
+                <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
+            </div>
+            <div class="list" :class="{'list-open': open_list}">
+                <a class="item {{ Request::is($adminPath.'/postcodes*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/postcodes')}}">Посткоди</a>
+                <a class="item {{ Request::is($adminPath.'/provinces*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/provinces')}}">Провінції</a>
+                <a class="item {{ Request::is($adminPath.'/cities*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/cities')}}">Міста</a>
+                <a class="item {{ Request::is($adminPath.'/municipalities*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/municipalities')}}">Мунципалітети</a>
+            </div>
+        </div>
+
+        <div class="item-list" x-data="{open_list: {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*', $adminPath.'/individualEntrepreneurs*', $adminPath.'/banks*', $adminPath.'/bankPrograms*']) ? 'true' : 'false' }}}">
+            <div class="item {{ Request::is([$adminPath.'/currencies', $adminPath.'/stockStatuses*', $adminPath.'/individualEntrepreneurs*', $adminPath.'/banks*', $adminPath.'/bankPrograms*']) ? 'active' : '' }}" @click="open_list = !open_list">
                 <div class="icon"><i class="bi bi-sliders2 fs-20"></i></div>
                 <div class="name">Налаштування</div>
                 <div class="arrow" :class="{'rotate': open_list}"><i class="bi bi-caret-down-fill fs-20"></i></div>
             </div>
             <div class="list" :class="{'list-open': open_list}">
                 <a class="item {{ Request::is($adminPath.'/individualEntrepreneurs*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/individualEntrepreneurs')}}">ФОПи</a>
+                <a class="item {{ Request::is($adminPath.'/banks*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/banks')}}">Банки</a>
+                <a class="item {{ Request::is($adminPath.'/bankPrograms*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/bankPrograms')}}">Банківські програми</a>
                 <a class="item {{ Request::is($adminPath.'/currencies*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/currencies')}}">Валюти</a>
                 <a class="item {{ Request::is($adminPath.'/stockStatuses*') ? 'active' : '' }}" href="{{asset('/'.$adminPath.'/stockStatuses')}}">Статуси товарів</a>
             </div>

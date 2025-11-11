@@ -13,11 +13,7 @@ class BankProgramRepository extends BaseRepository
         'bank_id',
         'logo',
         'sort_order',
-        'min',
-        'max',
-        'step',
-        'value',
-        'month',
+
         'status'
     ];
 

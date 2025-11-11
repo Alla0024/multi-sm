@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Bank;
 use App\Models\BankDescription;
+use App\Models\BankProgram;
+use App\Models\BankProgramDescription;
+use App\Models\City;
+use App\Models\CityDescription;
 use App\Models\IndividualEntrepreneur;
 use App\Models\Language;
 use App\Helpers\ModelSchemaHelper;
+use App\Models\Municipality;
+use App\Models\MunicipalityDescription;
+use App\Models\Postcode;
+use App\Models\Province;
+use App\Models\ProvinceDescription;
 use App\Models\Store;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -80,8 +89,8 @@ class AppBaseController extends BaseController
     {
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            BankDescription::class,
-            Bank::class
+            MunicipalityDescription::class,
+            Municipality::class
         ]);
 
         $lang = [

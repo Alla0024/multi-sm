@@ -15,6 +15,7 @@
                         @include('components.basic.sort')
                     </form>
                 </div>
+
                 <div class="col-sm-2 action-item">
                     <a class="btn btn-primary float-right"
                        href="{{ route('municipalities.create') }}">

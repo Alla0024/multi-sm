@@ -50,13 +50,14 @@ class IndividualEntrepreneurController extends AppBaseController
     public function create()
     {
         $this->template = 'pages.individual_entrepreneurs.create';
-
+        $bank = Bank::with('description')->get();
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
             IndividualEntrepreneur::class
         ]);
 
         return $this->renderOutput([
             'fields' => $fields,
+            'bank' => $bank,
         ]);
     }
 
