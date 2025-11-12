@@ -35,8 +35,8 @@ class InformationController extends AppBaseController
         $information = $this->informationRepository->filterRows($request);
 
         $fields = ModelSchemaHelper::buildSchemaFromModelNames([
-            Information::class,
             InformationDescription::class,
+            Information::class,
         ]);
 
         $this->template = 'pages.information.index';
