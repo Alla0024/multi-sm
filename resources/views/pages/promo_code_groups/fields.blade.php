@@ -28,7 +28,7 @@
 <!-- Description Fields -->
 <div class="form-group col-sm-6 tab-pane input-block" data-for-tab="main">
     {!! Form::label('descriptions_description', 'Опис бонусної програми') !!}
-    <div class="flex-row input">
+    <div class="flex-row input lang-block">
         @foreach($languages as $language)
             <div class="input-group mt-3">
                 <span class="input-group-text" id="basic-addon1">{!! $word[$language->id] !!}</span>
